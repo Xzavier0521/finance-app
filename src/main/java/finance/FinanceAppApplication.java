@@ -26,5 +26,7 @@ public class FinanceAppApplication {
 
     public static void main(String[] args) {
         FinanceAppApplication.appContect = SpringApplication.run(FinanceAppApplication.class, args);
+
+        
     }
 }
