@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="3600 second" >
+
+    <property name="logPath" value="/JAVA_Files/finance-app/log/app" />
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <!-- 标准输出，除开发环境之外不能使用 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date|%thread|%5level|%logger{50}|%L|%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 异常错误日志文件配置 -->
+    <appender name="errorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/error.log</file>
+       <filter class="ch.qos.logback.classic.filter.LevelFilter">
+	      <level>ERROR</level>
+	      <onMatch>ACCEPT</onMatch>
+	      <onMismatch>DENY</onMismatch>
+	    </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/error.%d{yyyy-MM-dd}.%i.log.zip
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>200MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date|%thread|%5level|%logger{50}|%L|%msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="warnLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/warn.log</file>
+       <filter class="ch.qos.logback.classic.filter.LevelFilter">
+	      <level>WARN</level>
+	      <onMatch>ACCEPT</onMatch>
+	      <onMismatch>DENY</onMismatch>
+	    </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/warn.%d{yyyy-MM-dd}.%i.log.zip
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>200MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date|%thread|%5level|%logger{50}|%L|%msg%n</pattern>
+        </encoder>
+    </appender>
+   
+    <!-- 业务系统日志文件配置 -->
+    <appender name="bizLog"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/biz.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/biz.%d{yyyy-MM-dd}.%i.log.zip
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>200MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date|%thread|%5level|%logger{50}|%L|%msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- 底层框架日志文件配置 -->
+    <appender name="frameworkLog"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/framework.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/framework.%d{yyyy-MM-dd}.%i.log.zip
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>200MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date|%thread|%5level|%logger{50}|%L|%msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- 预定义如下几个logger -->
+    <logger name="finance.mapper" level="DEBUG" additivity="false">
+    		<appender-ref ref="bizLog" />
+        <appender-ref ref="frameworkLog" />
+    </logger>
+     <logger name="finance" level="INFO" additivity="false">
+        <appender-ref ref="bizLog" />
+    </logger>
+    <logger name="finance" level="WARN" additivity="false">
+        <appender-ref ref="warnLog" />
+    </logger>
+    <logger name="finance" level="ERROF" additivity="false">
+        <appender-ref ref="errorLog" />
+    </logger>
+    <logger name="org.springframework.boot" level="INFO" additivity="false">
+        <appender-ref ref="frameworkLog" />
+    </logger>
+     <!-- 默认日志,凡是没有指定的日志全部输出到frameworkLog中，业务日志一般会直接写到bizlog中，而没有配置的基本都是框架级日志 -->
+    <root level="INFO">
+        <appender-ref ref="frameworkLog" />
+    </root>
+</configuration>

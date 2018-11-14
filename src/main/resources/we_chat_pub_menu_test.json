@@ -1,0 +1,54 @@
+{
+  "button": [
+    {
+      "type": "view",
+      "name": "进入首页",
+      "url": "http://test.zhishush.cn/finance-h5/msite/?am_id=jinrongjia2#/"
+    },
+    {
+      "name": "热门活动",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "1毛钱包邮",
+          "url": "https://test.zhishush.cn/finance-h5/msite/#/login?activityName=ebay&approach=wxgzh"
+        },
+        {
+          "type": "view",
+          "name": "奖励25元",
+          "url": "https://test.zhishush.cn/finance-h5/msite/#/login?activityName=jdbt&approach=wxgzh"
+        },
+        {
+          "type": "view",
+          "name": "奖励100元",
+          "url": "https://test.zhishush.cn/finance-h5/msite/#/login?activityName=pfxyk&approach=wxgzh"
+        }
+      ]
+    },
+    {
+      "name": "关于我们",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "人脉变现",
+          "url": "https://test.zhishush.cn/finance-h5/msite/#/cooperation?approach=wxgzh"
+        },
+        {
+          "type": "click",
+          "name": "金主客服",
+          "key": "JINRONGJIA_CUSTOMER_SERVICE"
+        },
+        {
+          "type": "click",
+          "name": "APP下载",
+          "key": "JINRONGJIA_APP"
+        },
+        {
+          "type": "click",
+          "name": "金榕家介绍",
+          "key": "JINRONGJIA_INTRODUCTION"
+        }
+      ]
+    }
+  ]
+}

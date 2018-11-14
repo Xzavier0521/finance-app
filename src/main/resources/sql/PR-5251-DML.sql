@@ -1,0 +1,5 @@
+use jinrongjia;
+
+INSERT INTO finance_product_main (id, product_name, `type`, redirect_url, amount_type, total_bonus, terminal_bonus, direct_bonus, indirect_bonus, logo_url, seq_no, cashback_date, is_show, is_delete ) VALUES (1,'新概念保险', 4, 'xxx', 1, 0, 0, 0, 0, 'xxx', 0, 'xx', 0, 1 ); 
+INSERT INTO finance_product_main (id, product_name, `type`, redirect_url, amount_type, total_bonus, terminal_bonus, direct_bonus, indirect_bonus, logo_url, seq_no, cashback_date, is_show, is_delete ) VALUES (2, '众安保险', 4, 'xxx', 1, 0, 0, 0, 0, 'xxx', 0, 'xx', 0, 1 ); 
+INSERT INTO finance_product_main (id, product_name, `type`, redirect_url, amount_type, total_bonus, terminal_bonus, direct_bonus, indirect_bonus, logo_url, seq_no, cashback_date, is_show, is_delete ) VALUES (3,'代缴社保公积金', 4, 'xxx', 1, 0, 0, 0, 0, 'xxx', 0, 'xx', 0, 1 );

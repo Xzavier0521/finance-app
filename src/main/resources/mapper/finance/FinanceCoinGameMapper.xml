@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.mapper.FinanceCoinGameDAO" >
+  <resultMap id="BaseResultMap" type="finance.model.po.FinanceCoinGame" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="task_type" property="taskType" jdbcType="VARCHAR" />
+    <result column="task_name" property="taskName" jdbcType="VARCHAR" />
+    <result column="task_desc" property="taskDesc" jdbcType="VARCHAR" />
+    <result column="effect" property="effect" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="redirect_url" property="redirectUrl" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="plan_invalid_date" property="planInvalidDate" jdbcType="DATE" />
+    <result column="seq_no" property="seqNo" jdbcType="INTEGER" />
+    <result column="game_type" property="gameType" jdbcType="INTEGER" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, task_type, task_name, task_desc, effect, num, logo_url, redirect_url, `status`, 
+    plan_invalid_date, seq_no, game_type, is_delete, creator, updator, version, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from finance_coin_game
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from finance_coin_game
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="finance.model.po.FinanceCoinGame" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into finance_coin_game (task_type, task_name, task_desc, 
+      effect, num, logo_url, 
+      redirect_url, `status`, plan_invalid_date, 
+      seq_no, game_type, is_delete, 
+      creator, updator, version, 
+      create_time, update_time)
+    values (#{taskType,jdbcType=VARCHAR}, #{taskName,jdbcType=VARCHAR}, #{taskDesc,jdbcType=VARCHAR}, 
+      #{effect,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{logoUrl,jdbcType=VARCHAR}, 
+      #{redirectUrl,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{planInvalidDate,jdbcType=DATE}, 
+      #{seqNo,jdbcType=INTEGER}, #{gameType,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}, 
+      #{creator,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="finance.model.po.FinanceCoinGame" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into finance_coin_game
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="taskType != null" >
+        task_type,
+      </if>
+      <if test="taskName != null" >
+        task_name,
+      </if>
+      <if test="taskDesc != null" >
+        task_desc,
+      </if>
+      <if test="effect != null" >
+        effect,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="logoUrl != null" >
+        logo_url,
+      </if>
+      <if test="redirectUrl != null" >
+        redirect_url,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="planInvalidDate != null" >
+        plan_invalid_date,
+      </if>
+      <if test="seqNo != null" >
+        seq_no,
+      </if>
+      <if test="gameType != null" >
+        game_type,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="updator != null" >
+        updator,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="taskType != null" >
+        #{taskType,jdbcType=VARCHAR},
+      </if>
+      <if test="taskName != null" >
+        #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskDesc != null" >
+        #{taskDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="effect != null" >
+        #{effect,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="logoUrl != null" >
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="redirectUrl != null" >
+        #{redirectUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="planInvalidDate != null" >
+        #{planInvalidDate,jdbcType=DATE},
+      </if>
+      <if test="seqNo != null" >
+        #{seqNo,jdbcType=INTEGER},
+      </if>
+      <if test="gameType != null" >
+        #{gameType,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updator != null" >
+        #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.FinanceCoinGame" >
+    update finance_coin_game
+    <set >
+      <if test="taskType != null" >
+        task_type = #{taskType,jdbcType=VARCHAR},
+      </if>
+      <if test="taskName != null" >
+        task_name = #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskDesc != null" >
+        task_desc = #{taskDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="effect != null" >
+        effect = #{effect,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="logoUrl != null" >
+        logo_url = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="redirectUrl != null" >
+        redirect_url = #{redirectUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="planInvalidDate != null" >
+        plan_invalid_date = #{planInvalidDate,jdbcType=DATE},
+      </if>
+      <if test="seqNo != null" >
+        seq_no = #{seqNo,jdbcType=INTEGER},
+      </if>
+      <if test="gameType != null" >
+        game_type = #{gameType,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updator != null" >
+        updator = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByTaskType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from finance_coin_game where game_type = #{gameType,jdbcType=INTEGER}
+    and task_type = (#{taskType,jdbcType=VARCHAR})
+    limit 1
+  </select>
+
+  <select id="selectNewRegisterTask" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from finance_coin_game where game_type = #{gameType,jdbcType=INTEGER}
+    and task_type = (#{taskType,jdbcType=VARCHAR})
+  </select>
+
+  <select id="selectByGameType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from finance_coin_game where game_type = #{gameType,jdbcType=INTEGER}
+    and task_type = (#{taskType,jdbcType=VARCHAR})
+    and status = 1
+    and IFNULL(plan_invalid_date,CURDATE( )) >= CURDATE( )
+    order by seq_no,id
+  </select>
+  <select id="queryLatestLog" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from finance_coin_game_log b
+    where
+    exists (
+    select  1 from (
+    select  max(id) as id from finance_coin_game_log
+    where user_id in
+    <foreach item="userId" collection="userIds" open="(" close=")" separator=",">
+      #{userId,jdbcType=BIGINT}
+    </foreach>
+    GROUP BY user_id
+    )  a where a.id = b.id
+    )
+  </select>
+</mapper>

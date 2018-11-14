@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 公共的sql定义 -->
+<mapper namespace="base" >
+	<!-- 调用分页sql之前，请指定排序规则，而且该规则的字段值唯一 -->
+	<!-- 分页sql，两个必须的参数，起始位置和偏移量： beginNum 、 pageSize -->
+	<sql id="limit">
+		<if test=" page !=null and page.beginNum!=null and page.beginNum>=0 and page.pageSize!=null and page.pageSize>0">
+			limit #{page.beginNum,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
+		</if>
+	</sql>
+	<!-- 
+	示例：
+	<select id="queryRecordCount" resultType="java.lang.Long">
+		SELECT count(*)
+		FROM table_a where
+		update_time &gt;= #{beginTime,jdbcType=TIMESTAMP}
+		and update_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+	</select>
+	<select id="queryRecords" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM table_a where
+		update_time &gt;= #{beginTime,jdbcType=TIMESTAMP}
+		and update_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+		order by id
+		<include refid="finance.limit" />
+	</select> 
+	-->
+</mapper>

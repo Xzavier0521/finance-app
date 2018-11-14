@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="finance.mapper.InviteOpenInfoDAO">
+    <resultMap id="BaseResultMap" type="finance.model.po.InviteOpenInfoDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="invite_code" jdbcType="VARCHAR" property="inviteCode"/>
+        <result column="activity_code" jdbcType="VARCHAR" property="activityCode"/>
+        <result column="concern_status" jdbcType="BIGINT" property="concernStatus"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="creator" jdbcType="VARCHAR" property="creator"/>
+        <result column="updator" jdbcType="VARCHAR" property="updator"/>
+        <result column="is_delete" jdbcType="VARCHAR" property="isDelete"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+    </resultMap>
+    <resultMap id="WeChatSubscribeInfoMap" type="finance.model.po.WeChatSubscribeInfoDO">
+        <result column="invite_code" property="inviteCode" jdbcType="VARCHAR"/>
+        <result column="history_subscribe_num" property="historySubscribeNum" jdbcType="BIGINT"/>
+        <result column="subscribe_num" property="subscribeNum" jdbcType="BIGINT"/>
+        <result column="unsubscribe_num" property="unsubscribeNum" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, open_id, invite_code, activity_code,concern_status, create_time, update_time, creator, updator,
+        is_delete, version
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_invite_open_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from finance_invite_open_info
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="finance.model.po.InviteOpenInfoDO">
+        insert into finance_invite_open_info (id, open_id, invite_code,
+        activity_code,concern_status, create_time, update_time,
+        creator, updator, is_delete,
+        version)
+        values (#{id,jdbcType=BIGINT}, #{openId,jdbcType=VARCHAR}, #{inviteCode,jdbcType=VARCHAR},
+        #{activityCode,jdbcType=VARCHAR},#{concernStatus,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{creator,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR},
+        #{version,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="finance.model.po.InviteOpenInfoDO">
+        insert into finance_invite_open_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="openId != null">
+                open_id,
+            </if>
+            <if test="inviteCode != null">
+                invite_code,
+            </if>
+            <if test="activityCode != null">
+                activity_code,
+            </if>
+            <if test="concernStatus != null">
+                concern_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="updator != null">
+                updator,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="inviteCode != null">
+                #{inviteCode,jdbcType=VARCHAR},
+            </if>
+            <if test="activityCode != null">
+                #{activityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="concernStatus != null">
+                #{concernStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.InviteOpenInfoDO">
+        update finance_invite_open_info
+        <set>
+            <if test="openId != null">
+                open_id = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="inviteCode != null">
+                invite_code = #{inviteCode,jdbcType=VARCHAR},
+            </if>
+            <if test="activityCode != null">
+                activity_code = #{activityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                updator = #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="finance.model.po.InviteOpenInfoDO">
+        update finance_invite_open_info
+        set open_id = #{openId,jdbcType=VARCHAR},
+        invite_code = #{inviteCode,jdbcType=VARCHAR},
+        activity_code = #{activityCode,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        creator = #{creator,jdbcType=VARCHAR},
+        updator = #{updator,jdbcType=VARCHAR},
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+        version = #{version,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="batchUpdateStatusByOpenId">
+        update finance_invite_open_info
+        set concern_status=#{concernStatus,jdbcType=VARCHAR}
+        where open_id in
+        <foreach item="openId" collection="openIds" open="(" close=")" separator=",">
+            #{openId,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+    <sql id="queryCondition">
+        <trim prefix="where" prefixOverrides="AND| OR">
+            <if test="inviteCode !=null">
+                and invite_code= #{inviteCode}
+            </if>
+            <if test="openId !=null">
+                and open_id= #{openId}
+            </if>
+            <if test="activityCode !=null">
+                and activity_code= #{activityCode}
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_invite_open_info
+        <include refid="queryCondition"/>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="java.lang.Long">
+        select count(*) from finance_invite_open_info
+        <include refid="queryCondition"/>
+    </select>
+    <select id="countSubscribeInfo" resultMap="WeChatSubscribeInfoMap">
+        SELECT
+        #{inviteCode} as invite_code,
+        count(1) AS history_subscribe_num,
+        sum(concern_status) AS subscribe_num,
+        count(1)-sum(concern_status) AS unsubscribe_num
+        FROM
+        finance_invite_open_info a
+        WHERE
+        a.invite_code = #{inviteCode}
+    </select>
+    <select id="countUnSubscribeNum" resultType="java.lang.Long">
+        SELECT
+        count(open_id)
+        FROM
+        finance_invite_open_info c
+        WHERE
+        c.invite_code = #{inviteCode}
+        AND concern_status = 0
+        AND EXISTS (
+        SELECT
+        open_id
+        FROM
+        finance_third_account_info b
+        JOIN finance_user_invite_info a ON a.user_id = b.user_id
+        WHERE
+        a.parent_user_id = #{parentUserId}
+        AND invite_type = 1
+        AND b.open_id = c.open_id
+        )
+    </select>
+</mapper>

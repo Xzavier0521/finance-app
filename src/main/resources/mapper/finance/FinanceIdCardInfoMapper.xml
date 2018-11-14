@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="finance.mapper.FinanceIdCardInfoDAO">
+    <resultMap id="BaseResultMap" type="finance.model.po.FinanceIdCardInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="id_num" jdbcType="VARCHAR" property="idNum"/>
+        <result column="auth_status" jdbcType="INTEGER" property="authStatus"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="creater" jdbcType="VARCHAR" property="creater"/>
+        <result column="updater" jdbcType="VARCHAR" property="updater"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, real_name, id_num, auth_status, create_time, update_time, creater, updater,
+        version, is_delete
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_id_card_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <insert id="insertSelective" parameterType="finance.model.po.FinanceIdCardInfo">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into finance_id_card_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="realName != null">
+                real_name,
+            </if>
+            <if test="idNum != null">
+                id_num,
+            </if>
+            <if test="authStatus != null">
+                auth_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="creater != null">
+                creater,
+            </if>
+            <if test="updater != null">
+                updater,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="idNum != null">
+                #{idNum,jdbcType=VARCHAR},
+            </if>
+            <if test="authStatus != null">
+                #{authStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creater != null">
+                #{creater,jdbcType=VARCHAR},
+            </if>
+            <if test="updater != null">
+                #{updater,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.FinanceIdCardInfo">
+        update finance_id_card_info
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="realName != null">
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="idNum != null">
+                id_num = #{idNum,jdbcType=VARCHAR},
+            </if>
+            <if test="authStatus != null">
+                auth_status = #{authStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creater != null">
+                creater = #{creater,jdbcType=VARCHAR},
+            </if>
+            <if test="updater != null">
+                updater = #{updater,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=BIGINT},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_id_card_info
+        where user_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByUserIdList" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_id_card_info
+        where
+        <if test="userIds != null and !userIds.isEmpty()">
+            user_id in
+            <foreach item="userId" collection="userIds" open="(" close=")" separator=",">
+                #{userId,jdbcType=BIGINT}
+            </foreach>
+        </if>
+        <if test="userIds == null or userIds.isEmpty()">1=2</if>
+    </select>
+
+    <select id="selectByAuthId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_id_card_info
+        where id_num = #{idNum,jdbcType=VARCHAR}
+        and auth_status = #{authStatus,jdbcType=INTEGER}
+    </select>
+</mapper>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="finance.mapper.RedEnvelopeDAO">
+    <resultMap id="BaseResultMap" type="finance.model.po.LeaderBoardDO">
+        <id column="ranking" jdbcType="BIGINT" property="ranking"/>
+        <result column="leader_board_type" jdbcType="VARCHAR" property="leaderBoardType"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="mobile_phone" jdbcType="VARCHAR" property="mobilePhone"/>
+        <result column="invite_number" jdbcType="BIGINT" property="inviteNumber"/>
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="reward_amount" jdbcType="DECIMAL" property="rewardAmount"/>
+    </resultMap>
+    <resultMap id="ParticipantInfoResultMap" type="finance.model.po.ParticipantInfoDO">
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="mobile_phone" jdbcType="VARCHAR" property="mobilePhone"/>
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="first_invite_number" jdbcType="BIGINT" property="firstInviteNum"/>
+        <result column="first_reward_amount" jdbcType="DECIMAL" property="firstRewardAmount"/>
+        <result column="second_invite_number" jdbcType="BIGINT" property="secondInviteNum"/>
+        <result column="second_reward_amount" jdbcType="DECIMAL" property="secondRewardAmount"/>
+        <result column="second_unit_price" jdbcType="DECIMAL" property="secondUnitPrice"/>
+        <result column="total_invite_number" jdbcType="BIGINT" property="totalInviteNum"/>
+        <result column="total_reward_amount" jdbcType="DECIMAL" property="totalRewardAmount"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ranking,user_id,mobile_phone,invite_number,real_name,reward_amount
+    </sql>
+    <select id="queryFirstRanking" resultMap="BaseResultMap">
+        SELECT @rownum:=@rownum+1 AS ranking,
+        b.user_id,
+        '1' as leader_board_type,
+        first_invite_count as invite_number,
+        c.real_name,
+        GetActivityAmount(#{activityCode,jdbcType=VARCHAR},first_invite_count) as reward_amount,
+        d.mobile_num as mobile_phone
+        FROM (SELECT @rownum:=0) r, (
+        select * from (
+        select parent_user_id as user_id,sum(1) as first_invite_count from finance_user_invite_info a where
+        a.invite_type=1 group by parent_user_id )
+        a order by a.first_invite_count desc limit 0,#{num,jdbcType=BIGINT}
+        ) b
+        join finance_user_info d on d.id = b.user_id
+        join finance_id_card_info c on b.user_id = c.user_id;
+    </select>
+    <select id="querySecondRanking" resultMap="BaseResultMap">
+        SELECT @rownum:=@rownum+1 AS ranking,
+        b.user_id,
+        '2' as leader_board_type,
+        second_invite_count as invite_number,
+        c.real_name,
+        second_invite_count*0.2 as reward_amount,
+        d.mobile_num as mobile_phone
+        FROM (SELECT @rownum:=0) r, (
+        select * from (
+        SELECT
+        c.parent_user_id AS user_id,
+        count( 1 ) AS second_invite_count
+        FROM
+        ( SELECT b.parent_user_id, a.user_id FROM finance_user_invite_info a
+        LEFT JOIN finance_user_invite_info b ON a.parent_user_id = b.user_id
+        where a.invite_type=1
+        ) c
+        GROUP BY
+        c.parent_user_id
+        )
+        a order by a.second_invite_count desc limit 0,#{num,jdbcType=BIGINT}
+        ) b
+        join finance_user_info d on d.id = b.user_id
+        join finance_id_card_info c on b.user_id = c.user_id;
+    </select>
+
+    <select id="queryTotalRanking" resultMap="BaseResultMap">
+        SELECT
+        e.ranking,
+        e.user_id,
+        '0' as leader_board_type,
+        e.invite_number,
+        e.first_invite_count,
+        e.second_invite_count,
+        e.reward_amount as
+        reward_amount,
+        f.real_name,
+        g.mobile_num as mobile_phone
+        FROM
+        (
+        SELECT
+        @rownum := @rownum + 1 AS ranking,
+        d.user_id,
+        d.first_invite_count,
+        d.second_invite_count,
+        d.invite_number,
+        d.reward_amount
+        FROM
+        ( SELECT @rownum := 0 ) r,
+        (
+        SELECT
+        a.id AS user_id,
+        a.mobile_num AS mobile_phone,
+        IFNULL( b.first_invite_count, 0 ) AS first_invite_count,
+        IFNULL( c.second_invite_count, 0 ) AS second_invite_count,
+        GetActivityAmount ( '0001', IFNULL( b.first_invite_count, 0 ) ) + IFNULL( c.second_invite_count, 0 ) * 0.2 AS
+        reward_amount,
+        IFNULL( b.first_invite_count, 0 ) + IFNULL( c.second_invite_count, 0 ) AS invite_number
+        FROM
+        finance_user_info a
+        LEFT JOIN ( SELECT parent_user_id AS user_id, sum( 1 ) AS first_invite_count FROM finance_user_invite_info a
+        WHERE a.invite_type = 1 GROUP BY parent_user_id ) b ON a.id = b.user_id
+        LEFT JOIN (
+        SELECT
+        c.parent_user_id AS user_id,
+        count( 1 ) AS second_invite_count
+        FROM
+        ( SELECT b.parent_user_id, a.user_id FROM finance_user_invite_info a LEFT JOIN finance_user_invite_info b ON
+        a.parent_user_id = b.user_id WHERE a.invite_type = 1 ) c
+        GROUP BY
+        c.parent_user_id
+        ) c ON a.id = c.user_id
+        ) d
+        ORDER BY
+        d.reward_amount DESC
+        LIMIT 0,
+        #{num,jdbcType=BIGINT}
+        ) e
+        LEFT JOIN finance_id_card_info f ON e.user_id = f.user_id
+        left join finance_user_info g on g.id = e.user_id
+        order by e.ranking
+    </select>
+    <select id="queryJoinDetail4Page" resultMap="ParticipantInfoResultMap">
+        SELECT DISTINCT
+        a.parent_user_id as user_id,
+        #{activityCode,jdbcType=VARCHAR} as activity_code,
+        e.real_name AS real_name,
+        b.mobile_num AS mobile_phone,
+        IFNULL( c.first_invite_number, 0 ) AS first_invite_number,
+        GetActivityAmount (#{activityCode,jdbcType=VARCHAR}, IFNULL( c.first_invite_number, 0 ) ) AS
+        first_reward_amount,
+        IFNULL( d.second_invite_number, 0 ) AS second_invite_number,
+        0.2 as secondUnitPrice,
+        IFNULL( d.second_invite_number, 0 ) * 0.2 AS second_reward_amount,
+        IFNULL( c.first_invite_number, 0 ) + IFNULL( d.second_invite_number, 0 ) AS total_invite_number,
+        GetActivityAmount ('0001', IFNULL( c.first_invite_number, 0 ) ) + IFNULL( d.second_invite_number, 0 ) * 0.2 AS
+        total_reward_amount
+        FROM
+        finance_user_invite_info a
+        LEFT JOIN finance_user_info b ON a.parent_user_id = b.id
+        LEFT JOIN ( SELECT parent_user_id AS user_id, count( user_id ) AS first_invite_number FROM
+        finance_user_invite_info a WHERE a.invite_type = 1 GROUP BY parent_user_id ) c ON c.user_id = a.parent_user_id
+        LEFT JOIN (
+        SELECT
+        c.parent_user_id AS user_id,
+        count( c.user_id ) AS second_invite_number
+        FROM
+        ( SELECT b.parent_user_id, a.user_id FROM finance_user_invite_info a LEFT JOIN finance_user_invite_info b ON
+        a.parent_user_id = b.user_id WHERE a.invite_type = 1 ) c
+        GROUP BY
+        c.parent_user_id
+        ) d ON d.user_id = a.parent_user_id
+        LEFT JOIN finance_id_card_info e ON e.user_id = a.parent_user_id
+        WHERE invite_type = 1
+        <include refid="queryCondition"/>
+        <include refid="base.limit"/>
+    </select>
+    <sql id="queryCondition">
+        <trim prefix="where" prefixOverrides="AND| OR">
+            <if test="userId !=null">
+                and user_id= #{userId}
+            </if>
+            <if test="userIds != null">
+                and user_id in
+                <foreach item="userId" collection="userIds" open="(" close=")" separator=",">
+                    #{userId,jdbcType=BIGINT}
+                </foreach>
+            </if>
+            <if test="parentUserId !=null">
+                and parent_user_Id= #{parentUserId}
+            </if>
+            <if test="parentUserIds != null">
+                and parent_user_id in
+                <foreach item="parentUserId" collection="parentUserIds" open="(" close=")" separator=",">
+                    #{parentUserId,jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+    <select id="countJoinNum" resultType="java.lang.Long">
+        select count(e.user_id) from (
+        SELECT DISTINCT
+        a.parent_user_id as user_id
+        FROM
+        finance_user_invite_info a
+        LEFT JOIN finance_user_info b ON a.parent_user_id = b.id
+        LEFT JOIN ( SELECT parent_user_id AS user_id, count( user_id ) AS first_invite_number FROM
+        finance_user_invite_info a WHERE a.invite_type = 1 GROUP BY parent_user_id ) c ON c.user_id = a.parent_user_id
+        LEFT JOIN (
+        SELECT
+        c.parent_user_id AS user_id,
+        count( c.user_id ) AS second_invite_number
+        FROM
+        ( SELECT b.parent_user_id, a.user_id FROM finance_user_invite_info a LEFT JOIN finance_user_invite_info b ON
+        a.parent_user_id = b.user_id WHERE a.invite_type = 1 ) c
+        GROUP BY
+        c.parent_user_id
+        ) d ON d.user_id = a.parent_user_id
+        LEFT JOIN finance_id_card_info e ON e.user_id = a.parent_user_id
+        WHERE invite_type = 1) e
+        <include refid="queryCondition"/>
+    </select>
+    <select id="queryJoinNum" resultType="java.lang.Long">
+        select count(*) from finance_user_info a
+    </select>
+    <select id="querySingleDetail" resultMap="ParticipantInfoResultMap">
+        SELECT
+        0.2 AS second_unit_price,
+        count( a.user_id ) * 0.2 AS second_reward_amount,
+        count( a.user_id ) AS second_invite_number
+        FROM
+        finance_user_invite_info a
+        WHERE
+        parent_user_id IN ( SELECT user_id FROM finance_user_invite_info a WHERE a.parent_user_id =
+        #{userId,jdbcType=BIGINT})
+        AND a.invite_type = 1
+    </select>
+</mapper>

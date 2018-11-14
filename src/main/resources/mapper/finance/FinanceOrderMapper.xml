@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.mapper.FinanceOrderDAO">
+    <resultMap id="BaseResultMap" type="finance.model.po.FinanceOrder">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="serial_id" property="serialId" jdbcType="VARCHAR"/>
+        <result column="profit_id" property="profitId" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="trans_type" property="transType" jdbcType="VARCHAR"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="bank_card_id" property="bankCardId" jdbcType="BIGINT"/>
+        <result column="bank_fullname" property="bankFullname" jdbcType="VARCHAR"/>
+        <result column="account_no" property="accountNo" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="bank_type" property="bankType" jdbcType="VARCHAR"/>
+        <result column="audit_name" property="auditName" jdbcType="VARCHAR"/>
+        <result column="audit_id" property="auditId" jdbcType="BIGINT"/>
+        <result column="settle_patch" property="settlePatch" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="is_flag" property="isFlag" jdbcType="VARCHAR"/>
+        <result column="error_code" property="errorCode" jdbcType="VARCHAR"/>
+        <result column="error_message" property="errorMessage" jdbcType="VARCHAR"/>
+        <result column="settle_date" property="settleDate" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, serial_id, profit_id, title, user_id, user_name, trans_type, money, bank_card_id,
+        bank_fullname, account_no, phone, bank_type, audit_name, audit_id, settle_patch,
+        `status`, create_time, update_time, version, is_flag, error_code, error_message,
+        settle_date
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_order
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <insert id="insertSelective" parameterType="finance.model.po.FinanceOrder">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into finance_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="serialId != null">
+                serial_id,
+            </if>
+            <if test="profitId != null">
+                profit_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="transType != null">
+                trans_type,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="bankCardId != null">
+                bank_card_id,
+            </if>
+            <if test="bankFullname != null">
+                bank_fullname,
+            </if>
+            <if test="accountNo != null">
+                account_no,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="bankType != null">
+                bank_type,
+            </if>
+            <if test="auditName != null">
+                audit_name,
+            </if>
+            <if test="auditId != null">
+                audit_id,
+            </if>
+            <if test="settlePatch != null">
+                settle_patch,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="isFlag != null">
+                is_flag,
+            </if>
+            <if test="errorCode != null">
+                error_code,
+            </if>
+            <if test="errorMessage != null">
+                error_message,
+            </if>
+            <if test="settleDate != null">
+                settle_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="serialId != null">
+                #{serialId,jdbcType=VARCHAR},
+            </if>
+            <if test="profitId != null">
+                #{profitId,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="transType != null">
+                #{transType,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="bankCardId != null">
+                #{bankCardId,jdbcType=BIGINT},
+            </if>
+            <if test="bankFullname != null">
+                #{bankFullname,jdbcType=VARCHAR},
+            </if>
+            <if test="accountNo != null">
+                #{accountNo,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="bankType != null">
+                #{bankType,jdbcType=VARCHAR},
+            </if>
+            <if test="auditName != null">
+                #{auditName,jdbcType=VARCHAR},
+            </if>
+            <if test="auditId != null">
+                #{auditId,jdbcType=BIGINT},
+            </if>
+            <if test="settlePatch != null">
+                #{settlePatch,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="isFlag != null">
+                #{isFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="errorCode != null">
+                #{errorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="errorMessage != null">
+                #{errorMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="settleDate != null">
+                #{settleDate,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.FinanceOrder">
+        update finance_order
+        <set>
+            <if test="serialId != null">
+                serial_id = #{serialId,jdbcType=VARCHAR},
+            </if>
+            <if test="profitId != null">
+                profit_id = #{profitId,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="transType != null">
+                trans_type = #{transType,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="bankCardId != null">
+                bank_card_id = #{bankCardId,jdbcType=BIGINT},
+            </if>
+            <if test="bankFullname != null">
+                bank_fullname = #{bankFullname,jdbcType=VARCHAR},
+            </if>
+            <if test="accountNo != null">
+                account_no = #{accountNo,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="bankType != null">
+                bank_type = #{bankType,jdbcType=VARCHAR},
+            </if>
+            <if test="auditName != null">
+                audit_name = #{auditName,jdbcType=VARCHAR},
+            </if>
+            <if test="auditId != null">
+                audit_id = #{auditId,jdbcType=BIGINT},
+            </if>
+            <if test="settlePatch != null">
+                settle_patch = #{settlePatch,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+            <if test="isFlag != null">
+                is_flag = #{isFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="errorCode != null">
+                error_code = #{errorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="errorMessage != null">
+                error_message = #{errorMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="settleDate != null">
+                settle_date = #{settleDate,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="sumIncome" resultType="java.lang.Double">
+        select ifnull(sum(money),0) from finance_order
+        where user_id = #{userId,jdbcType=BIGINT}
+        and trans_type in ('charge','login')
+    </select>
+
+    <select id="selectPageByOrder" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_order
+        where 1=1
+        <if test="param.serialId != null">
+            and `serial_id` = #{param.serialId,jdbcType=VARCHAR}
+        </if>
+        <if test="param.userId != null">
+            and `user_id` = #{param.userId,jdbcType=BIGINT}
+        </if>
+        <if test="param.userName != null">
+            and `user_name` = #{param.userName,jdbcType=VARCHAR}
+        </if>
+        <if test="param.transType != null">
+            and `trans_type` = #{param.transType,jdbcType=VARCHAR}
+        </if>
+        <if test="param.phone != null">
+            and `phone` = #{param.phone,jdbcType=VARCHAR}
+        </if>
+        <if test="param.status != null">
+            and `status` = #{param.status,jdbcType=VARCHAR}
+        </if>
+        order by id DESC
+        <include refid="base.limit"/>
+    </select>
+
+    <select id="selectCountByOrder" resultType="java.lang.Long">
+        select
+        count(1)
+        from finance_order
+        where 1=1
+        <if test="param.serialId != null">
+            and `serial_id` = #{param.serialId,jdbcType=VARCHAR}
+        </if>
+        <if test="param.userId != null">
+            and `user_id` = #{param.userId,jdbcType=BIGINT}
+        </if>
+        <if test="param.userName != null">
+            and `user_name` = #{param.userName,jdbcType=VARCHAR}
+        </if>
+        <if test="param.transType != null">
+            and `trans_type` = #{param.transType,jdbcType=VARCHAR}
+        </if>
+        <if test="param.phone != null">
+            and `phone` = #{param.phone,jdbcType=VARCHAR}
+        </if>
+        <if test="param.status != null">
+            and `status` = #{param.status,jdbcType=VARCHAR}
+        </if>
+    </select>
+</mapper>

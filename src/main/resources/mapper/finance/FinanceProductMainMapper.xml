@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.mapper.FinanceProductMainDAO">
+    <resultMap id="BaseResultMap" type="finance.model.po.FinanceProductMain">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="redirect_url" property="redirectUrl" jdbcType="VARCHAR"/>
+        <result column="amount_type" property="amountType" jdbcType="INTEGER"/>
+        <result column="total_bonus" property="totalBonus" jdbcType="DECIMAL"/>
+        <result column="terminal_bonus" property="terminalBonus" jdbcType="DECIMAL"/>
+        <result column="direct_bonus" property="directBonus" jdbcType="DECIMAL"/>
+        <result column="indirect_bonus" property="indirectBonus" jdbcType="DECIMAL"/>
+        <result column="logo_url" property="logoUrl" jdbcType="VARCHAR"/>
+        <result column="seq_no" property="seqNo" jdbcType="INTEGER"/>
+        <result column="cashback_date" property="cashbackDate" jdbcType="VARCHAR"/>
+        <result column="is_show" property="isShow" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="settle_unit" property="settleUnit" jdbcType="VARCHAR"/>
+        <result column="settle_period" property="settlePeriod" jdbcType="INTEGER"/>
+        <result column="settle_day" property="settleDay" jdbcType="VARCHAR"/>
+        <result column="pre_pay_rate" property="prePayRate" jdbcType="DECIMAL"/>
+        <result column="product_desc" property="productDesc" jdbcType="VARCHAR"/>
+        <result column="promotion_url" property="promotionUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, product_name, `type`, redirect_url, amount_type, total_bonus, terminal_bonus,
+        direct_bonus, indirect_bonus, logo_url, seq_no, cashback_date, is_show, create_time,
+        update_time, is_delete, creator, updator, version, settle_unit, settle_period, settle_day,
+        pre_pay_rate, product_desc, promotion_url
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_product_main
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from finance_product_main
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="finance.model.po.FinanceProductMain">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into finance_product_main (product_name, `type`, redirect_url,
+        amount_type, total_bonus, terminal_bonus,
+        direct_bonus, indirect_bonus, logo_url,
+        seq_no, cashback_date, is_show,
+        create_time, update_time, is_delete,
+        creator, updator, version,
+        settle_unit, settle_period, settle_day,
+        pre_pay_rate, product_desc, promotion_url
+        )
+        values (#{productName,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{redirectUrl,jdbcType=VARCHAR},
+        #{amountType,jdbcType=INTEGER}, #{totalBonus,jdbcType=DECIMAL}, #{terminalBonus,jdbcType=DECIMAL},
+        #{directBonus,jdbcType=DECIMAL}, #{indirectBonus,jdbcType=DECIMAL}, #{logoUrl,jdbcType=VARCHAR},
+        #{seqNo,jdbcType=INTEGER}, #{cashbackDate,jdbcType=VARCHAR}, #{isShow,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=INTEGER},
+        #{creator,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER},
+        #{settleUnit,jdbcType=VARCHAR}, #{settlePeriod,jdbcType=INTEGER}, #{settleDay,jdbcType=VARCHAR},
+        #{prePayRate,jdbcType=DECIMAL}, #{productDesc,jdbcType=VARCHAR}, #{promotionUrl,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="finance.model.po.FinanceProductMain">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into finance_product_main
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productName != null">
+                product_name,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+            <if test="redirectUrl != null">
+                redirect_url,
+            </if>
+            <if test="amountType != null">
+                amount_type,
+            </if>
+            <if test="totalBonus != null">
+                total_bonus,
+            </if>
+            <if test="terminalBonus != null">
+                terminal_bonus,
+            </if>
+            <if test="directBonus != null">
+                direct_bonus,
+            </if>
+            <if test="indirectBonus != null">
+                indirect_bonus,
+            </if>
+            <if test="logoUrl != null">
+                logo_url,
+            </if>
+            <if test="seqNo != null">
+                seq_no,
+            </if>
+            <if test="cashbackDate != null">
+                cashback_date,
+            </if>
+            <if test="isShow != null">
+                is_show,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="updator != null">
+                updator,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="settleUnit != null">
+                settle_unit,
+            </if>
+            <if test="settlePeriod != null">
+                settle_period,
+            </if>
+            <if test="settleDay != null">
+                settle_day,
+            </if>
+            <if test="prePayRate != null">
+                pre_pay_rate,
+            </if>
+            <if test="productDesc != null">
+                product_desc,
+            </if>
+            <if test="promotionUrl != null">
+                promotion_url,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productName != null">
+                #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="redirectUrl != null">
+                #{redirectUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="amountType != null">
+                #{amountType,jdbcType=INTEGER},
+            </if>
+            <if test="totalBonus != null">
+                #{totalBonus,jdbcType=DECIMAL},
+            </if>
+            <if test="terminalBonus != null">
+                #{terminalBonus,jdbcType=DECIMAL},
+            </if>
+            <if test="directBonus != null">
+                #{directBonus,jdbcType=DECIMAL},
+            </if>
+            <if test="indirectBonus != null">
+                #{indirectBonus,jdbcType=DECIMAL},
+            </if>
+            <if test="logoUrl != null">
+                #{logoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="seqNo != null">
+                #{seqNo,jdbcType=INTEGER},
+            </if>
+            <if test="cashbackDate != null">
+                #{cashbackDate,jdbcType=VARCHAR},
+            </if>
+            <if test="isShow != null">
+                #{isShow,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="settleUnit != null">
+                #{settleUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="settlePeriod != null">
+                #{settlePeriod,jdbcType=INTEGER},
+            </if>
+            <if test="settleDay != null">
+                #{settleDay,jdbcType=VARCHAR},
+            </if>
+            <if test="prePayRate != null">
+                #{prePayRate,jdbcType=DECIMAL},
+            </if>
+            <if test="productDesc != null">
+                #{productDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="promotionUrl != null">
+                #{promotionUrl,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.FinanceProductMain">
+        update finance_product_main
+        <set>
+            <if test="productName != null">
+                product_name = #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                `type` = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="redirectUrl != null">
+                redirect_url = #{redirectUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="amountType != null">
+                amount_type = #{amountType,jdbcType=INTEGER},
+            </if>
+            <if test="totalBonus != null">
+                total_bonus = #{totalBonus,jdbcType=DECIMAL},
+            </if>
+            <if test="terminalBonus != null">
+                terminal_bonus = #{terminalBonus,jdbcType=DECIMAL},
+            </if>
+            <if test="directBonus != null">
+                direct_bonus = #{directBonus,jdbcType=DECIMAL},
+            </if>
+            <if test="indirectBonus != null">
+                indirect_bonus = #{indirectBonus,jdbcType=DECIMAL},
+            </if>
+            <if test="logoUrl != null">
+                logo_url = #{logoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="seqNo != null">
+                seq_no = #{seqNo,jdbcType=INTEGER},
+            </if>
+            <if test="cashbackDate != null">
+                cashback_date = #{cashbackDate,jdbcType=VARCHAR},
+            </if>
+            <if test="isShow != null">
+                is_show = #{isShow,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                updator = #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+            <if test="settleUnit != null">
+                settle_unit = #{settleUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="settlePeriod != null">
+                settle_period = #{settlePeriod,jdbcType=INTEGER},
+            </if>
+            <if test="settleDay != null">
+                settle_day = #{settleDay,jdbcType=VARCHAR},
+            </if>
+            <if test="prePayRate != null">
+                pre_pay_rate = #{prePayRate,jdbcType=DECIMAL},
+            </if>
+            <if test="productDesc != null">
+                product_desc = #{productDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="promotionUrl != null">
+                promotion_url = #{promotionUrl,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectProductByType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_product_main
+        WHERE
+        is_delete = 0
+        AND type = #{typ,jdbcType=INTEGER}
+        AND is_show = 1
+        ORDER BY
+        seq_no,
+        id
+        <include refid="base.limit"/>
+    </select>
+
+    <!--保险产品返现规则查询-->
+    <select id="selectRebackCashRuleList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        finance_product_main
+        WHERE
+        is_delete = 0
+        AND type = 4
+        ORDER BY
+        seq_no,
+        id
+        <include refid="base.limit"/>
+    </select>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_product_main a
+        where
+        <include refid="queryCondition"/>
+        <include refid="base.limit"/>
+    </select>
+    <sql id="queryCondition">
+        <trim prefix="where" prefixOverrides="AND| OR">
+            <if test="id !=null">
+                and id= #{userId}
+            </if>
+            <if test="userIds != null">
+                and id in
+                <foreach item="id" collection="ids" open="(" close=")" separator=",">
+                    #{id,jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+    <select id="sumBonusByIds" resultType="finance.model.po.FinanceProductMain">
+        select sum(a.indirect_bonus) as indirectBonus ,SUM(a.direct_bonus) as directBonus
+        from finance_product_main a where a.id in
+        <foreach item="id" collection="ids" open="(" close=")" separator=",">
+            #{id,jdbcType=BIGINT}
+        </foreach>
+    </select>
+</mapper>

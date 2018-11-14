@@ -1,0 +1,26 @@
+package finance.api.model.response;
+
+import java.io.Serializable;
+
+import lombok.Builder;
+import lombok.Data;
+
+/**
+ * <p>微信公众号二维码</p>
+ * @author lili
+ * @version $Id: WeChatCreateQrResponse.java, v0.1 2018/10/29 9:30 PM lili Exp $
+ */
+@Data
+@Builder
+public class WeChatCreateQrResponse implements Serializable {
+    private static final long serialVersionUID = -1258498565348908199L;
+    /**
+     *  生成的二维码url
+     */
+    private String            url;
+
+    /**
+     * 有效时间，最大30天
+     */
+     private Long              expireSeconds;
+}

@@ -1,0 +1,49 @@
+{
+  "button": [
+    {
+      "type": "view",
+      "name": "进入首页",
+      "url": "http://finance.zhishush.cn/finance-h5/msite/?am_id=jinrongjia2#/"
+    },
+    {
+      "type": "view",
+      "name": "1分购物",
+      "url": "https://finance.zhishush.cn/finance-h5/msite/?activityName=ebay&am_id=ebay&approach=wxgzh#/"
+    },
+    {
+      "name": "关于我们",
+      "sub_button": {
+        "list": [
+          {
+            "type": "text",
+            "name": "金主客服",
+            "value": "请在公众号直接留言咨询，会有人工为您一一解答哦~\n如未及时回复请添加金主微信号：17501656701进行咨询哦~\n感谢配合~"
+          },
+          {
+            "type": "img",
+            "name": "APP下载",
+            "value": "_-VXjAcRH1sKfxFC9BD9Fh4Z8nqnlUBgwxRgcHXSgPC8fjfm3JA0fpkB_m92Fkvn"
+          },
+          {
+            "type": "news",
+            "name": "金榕家介绍",
+            "value": "FdRvYwzOLqKpiuTkwMaY6WKZDKDrZWFJU6bvIShC7KI",
+            "news_info": {
+              "list": [
+                {
+                  "title": "金榕家-专业的金融产品返利平台",
+                  "author": "金主",
+                  "digest": "金榕家以共享经济为核心，以科技技术为驱动的创新型平台。做为金融机构的入口返利平台，覆盖贷款、理财、信用卡、",
+                  "show_cover": 0,
+                  "cover_url": "http://mmbiz.qpic.cn/mmbiz_jpg/kXjNrAN5B0rbMP7ialam4MIcMLbOg5SVmmBoVSRccGWyCIBNKx5ZmVmXIUrtYQe7g9houjugyIkicIETK4MrYcQA/0?wx_fmt=jpeg",
+                  "content_url": "http://mp.weixin.qq.com/s?__biz=MzAwNTgyMzM3Mg==&mid=100000053&idx=1&sn=a0e3cff4bee5a84afe48688b38f5b6a3&chksm=1b178fd62c6006c0ed81e3eab1e655d1cf36c95d7eaba86fae2c367de7915720254e6ebfba79#rd",
+                  "source_url": ""
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

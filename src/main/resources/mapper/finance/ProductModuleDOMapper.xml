@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.mapper.ProductModuleDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.ProductModuleDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="module_code" property="moduleCode" jdbcType="VARCHAR"/>
+        <result column="module_name" property="moduleName" jdbcType="VARCHAR"/>
+        <result column="module_banner_url" property="moduleBannerUrl" jdbcType="VARCHAR"/>
+        <result column="module_type" property="moduleType" jdbcType="VARCHAR"/>
+        <result column="layout_type" property="layoutType" jdbcType="VARCHAR"/>
+        <result column="module_order" property="moduleOrder" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, module_code, module_name, module_banner_url, module_type, layout_type, module_order,
+        create_time, update_time, creator, updator, is_delete, version
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_product_module
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from finance_product_module
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="finance.core.dal.dataobject.ProductModuleDO">
+        insert into finance_product_module (id, module_code, module_name,
+        module_banner_url, module_type, layout_type,
+        module_order, create_time, update_time,
+        creator, updator, is_delete,
+        version)
+        values (#{id,jdbcType=BIGINT}, #{moduleCode,jdbcType=VARCHAR}, #{moduleName,jdbcType=VARCHAR},
+        #{moduleBannerUrl,jdbcType=VARCHAR}, #{moduleType,jdbcType=VARCHAR}, #{layoutType,jdbcType=VARCHAR},
+        #{moduleOrder,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{creator,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR},
+        #{version,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.ProductModuleDO">
+        insert into finance_product_module
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="moduleCode != null">
+                module_code,
+            </if>
+            <if test="moduleName != null">
+                module_name,
+            </if>
+            <if test="moduleBannerUrl != null">
+                module_banner_url,
+            </if>
+            <if test="moduleType != null">
+                module_type,
+            </if>
+            <if test="layoutType != null">
+                layout_type,
+            </if>
+            <if test="moduleOrder != null">
+                module_order,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="updator != null">
+                updator,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="moduleCode != null">
+                #{moduleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="moduleName != null">
+                #{moduleName,jdbcType=VARCHAR},
+            </if>
+            <if test="moduleBannerUrl != null">
+                #{moduleBannerUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="moduleType != null">
+                #{moduleType,jdbcType=VARCHAR},
+            </if>
+            <if test="layoutType != null">
+                #{layoutType,jdbcType=VARCHAR},
+            </if>
+            <if test="moduleOrder != null">
+                #{moduleOrder,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.ProductModuleDO">
+        update finance_product_module
+        <set>
+            <if test="moduleCode != null">
+                module_code = #{moduleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="moduleName != null">
+                module_name = #{moduleName,jdbcType=VARCHAR},
+            </if>
+            <if test="moduleBannerUrl != null">
+                module_banner_url = #{moduleBannerUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="moduleType != null">
+                module_type = #{moduleType,jdbcType=VARCHAR},
+            </if>
+            <if test="layoutType != null">
+                layout_type = #{layoutType,jdbcType=VARCHAR},
+            </if>
+            <if test="moduleOrder != null">
+                module_order = #{moduleOrder,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                updator = #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="finance.core.dal.dataobject.ProductModuleDO">
+        update finance_product_module
+        set module_code = #{moduleCode,jdbcType=VARCHAR},
+        module_name = #{moduleName,jdbcType=VARCHAR},
+        module_banner_url = #{moduleBannerUrl,jdbcType=VARCHAR},
+        module_type = #{moduleType,jdbcType=VARCHAR},
+        layout_type = #{layoutType,jdbcType=VARCHAR},
+        module_order = #{moduleOrder,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        creator = #{creator,jdbcType=VARCHAR},
+        updator = #{updator,jdbcType=VARCHAR},
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+        version = #{version,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <sql id="finance_product_module_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="moduleCode != null and moduleCode.trim().length() != 0">
+                AND (module_code like '%' || #{moduleCode} || '%')
+            </if>
+            <if test="moduleName != null and moduleName.trim().length() != 0">
+                AND (module_name like '%' || #{moduleName} || '%')
+            </if>
+            <if test="moduleBannerUrl != null and moduleBannerUrl.trim().length() != 0">
+                AND (module_banner_url like '%' || #{moduleBannerUrl} || '%')
+            </if>
+            <if test="moduleType != null and moduleType.trim().length() != 0">
+                AND (module_type like '%' || #{moduleType} || '%')
+            </if>
+            <if test="layoutType != null and layoutType.trim().length() != 0">
+                AND (layout_type like '%' || #{layoutType} || '%')
+            </if>
+            <if test="moduleOrder != null and moduleOrder.trim().length() != 0">
+                AND (module_order = #{moduleOrder})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete like '%' || #{isDelete} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_product_module_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="moduleCode != null and moduleCode.trim().length() != 0">
+                AND (module_code = #{moduleCode})
+            </if>
+            <if test="moduleName != null and moduleName.trim().length() != 0">
+                AND (module_name = #{moduleName})
+            </if>
+            <if test="moduleBannerUrl != null and moduleBannerUrl.trim().length() != 0">
+                AND (module_banner_url = #{moduleBannerUrl})
+            </if>
+            <if test="moduleType != null and moduleType.trim().length() != 0">
+                AND (module_type = #{moduleType})
+            </if>
+            <if test="layoutType != null and layoutType.trim().length() != 0">
+                AND (layout_type = #{layoutType})
+            </if>
+            <if test="moduleOrder != null and moduleOrder.trim().length() != 0">
+                AND (module_order = #{moduleOrder})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_product_module
+        <if test="fuzzy">
+            <include refid="finance_product_module_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_product_module_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_product_module
+        <if test="fuzzy">
+            <include refid="finance_product_module_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_product_module_query_condition"/>
+        </if>
+    </select>
+</mapper>

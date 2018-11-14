@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.mapper.FinanceUserRegisterChannelInfoDAO">
+    <resultMap id="BaseResultMap" type="finance.model.po.FinanceUserRegisterChannelInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="channel_code" property="channelCode" jdbcType="VARCHAR"/>
+        <result column="channel_detail" property="channelDetail" jdbcType="VARCHAR"/>
+        <result column="platform_code" property="platformCode" jdbcType="VARCHAR"/>
+        <result column="platform_detail" property="platformDetail" jdbcType="VARCHAR"/>
+        <result column="approach1" property="approach1" jdbcType="VARCHAR"/>
+        <result column="approach2" property="approach2" jdbcType="VARCHAR"/>
+        <result column="approach3" property="approach3" jdbcType="VARCHAR"/>
+        <result column="approach4" property="approach4" jdbcType="VARCHAR"/>
+        <result column="approach5" property="approach5" jdbcType="VARCHAR"/>
+        <result column="approach6" property="approach6" jdbcType="VARCHAR"/>
+        <result column="approach7" property="approach7" jdbcType="VARCHAR"/>
+        <result column="approach8" property="approach8" jdbcType="VARCHAR"/>
+        <result column="approach9" property="approach9" jdbcType="VARCHAR"/>
+        <result column="approach10" property="approach10" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, channel_code, channel_detail, platform_code, platform_detail, approach1,
+        approach2, approach3, approach4, approach5, approach6, approach7, approach8, approach9,
+        approach10, is_delete, creator, updator, version, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_user_register_channel_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <insert id="insertSelective" parameterType="finance.model.po.FinanceUserRegisterChannelInfo">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into finance_user_register_channel_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="channelCode != null">
+                channel_code,
+            </if>
+            <if test="channelDetail != null">
+                channel_detail,
+            </if>
+            <if test="platformCode != null">
+                platform_code,
+            </if>
+            <if test="platformDetail != null">
+                platform_detail,
+            </if>
+            <if test="approach1 != null">
+                approach1,
+            </if>
+            <if test="approach2 != null">
+                approach2,
+            </if>
+            <if test="approach3 != null">
+                approach3,
+            </if>
+            <if test="approach4 != null">
+                approach4,
+            </if>
+            <if test="approach5 != null">
+                approach5,
+            </if>
+            <if test="approach6 != null">
+                approach6,
+            </if>
+            <if test="approach7 != null">
+                approach7,
+            </if>
+            <if test="approach8 != null">
+                approach8,
+            </if>
+            <if test="approach9 != null">
+                approach9,
+            </if>
+            <if test="approach10 != null">
+                approach10,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="updator != null">
+                updator,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="channelCode != null">
+                #{channelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="channelDetail != null">
+                #{channelDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="platformCode != null">
+                #{platformCode,jdbcType=VARCHAR},
+            </if>
+            <if test="platformDetail != null">
+                #{platformDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="approach1 != null">
+                #{approach1,jdbcType=VARCHAR},
+            </if>
+            <if test="approach2 != null">
+                #{approach2,jdbcType=VARCHAR},
+            </if>
+            <if test="approach3 != null">
+                #{approach3,jdbcType=VARCHAR},
+            </if>
+            <if test="approach4 != null">
+                #{approach4,jdbcType=VARCHAR},
+            </if>
+            <if test="approach5 != null">
+                #{approach5,jdbcType=VARCHAR},
+            </if>
+            <if test="approach6 != null">
+                #{approach6,jdbcType=VARCHAR},
+            </if>
+            <if test="approach7 != null">
+                #{approach7,jdbcType=VARCHAR},
+            </if>
+            <if test="approach8 != null">
+                #{approach8,jdbcType=VARCHAR},
+            </if>
+            <if test="approach9 != null">
+                #{approach9,jdbcType=VARCHAR},
+            </if>
+            <if test="approach10 != null">
+                #{approach10,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.FinanceUserRegisterChannelInfo">
+        update finance_user_register_channel_info
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="channelCode != null">
+                channel_code = #{channelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="channelDetail != null">
+                channel_detail = #{channelDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="platformCode != null">
+                platform_code = #{platformCode,jdbcType=VARCHAR},
+            </if>
+            <if test="platformDetail != null">
+                platform_detail = #{platformDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="approach1 != null">
+                approach1 = #{approach1,jdbcType=VARCHAR},
+            </if>
+            <if test="approach2 != null">
+                approach2 = #{approach2,jdbcType=VARCHAR},
+            </if>
+            <if test="approach3 != null">
+                approach3 = #{approach3,jdbcType=VARCHAR},
+            </if>
+            <if test="approach4 != null">
+                approach4 = #{approach4,jdbcType=VARCHAR},
+            </if>
+            <if test="approach5 != null">
+                approach5 = #{approach5,jdbcType=VARCHAR},
+            </if>
+            <if test="approach6 != null">
+                approach6 = #{approach6,jdbcType=VARCHAR},
+            </if>
+            <if test="approach7 != null">
+                approach7 = #{approach7,jdbcType=VARCHAR},
+            </if>
+            <if test="approach8 != null">
+                approach8 = #{approach8,jdbcType=VARCHAR},
+            </if>
+            <if test="approach9 != null">
+                approach9 = #{approach9,jdbcType=VARCHAR},
+            </if>
+            <if test="approach10 != null">
+                approach10 = #{approach10,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                updator = #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

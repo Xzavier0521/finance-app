@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.mapper.FinanceProfitDAO">
+    <resultMap id="BaseResultMap" type="finance.model.po.FinanceProfit">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="detail_id" property="detailId" jdbcType="BIGINT"/>
+        <result column="prod_id" property="prodId" jdbcType="BIGINT"/>
+        <result column="prod_name" property="prodName" jdbcType="VARCHAR"/>
+        <result column="terminal_name" property="terminalName" jdbcType="VARCHAR"/>
+        <result column="terminal_id" property="terminalId" jdbcType="BIGINT"/>
+        <result column="terminal_phone" property="terminalPhone" jdbcType="VARCHAR"/>
+        <result column="terminal_money" property="terminalMoney" jdbcType="DECIMAL"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="parent_phone" property="parentPhone" jdbcType="VARCHAR"/>
+        <result column="parent_name" property="parentName" jdbcType="VARCHAR"/>
+        <result column="parent_money" property="parentMoney" jdbcType="DECIMAL"/>
+        <result column="grand_parent_id" property="grandParentId" jdbcType="BIGINT"/>
+        <result column="grand_parent_phone" property="grandParentPhone" jdbcType="VARCHAR"/>
+        <result column="grand_parent_name" property="grandParentName" jdbcType="VARCHAR"/>
+        <result column="grand_parent_money" property="grandParentMoney" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, detail_id, prod_id, prod_name, terminal_name, terminal_id, terminal_phone, terminal_money,
+        parent_id, parent_phone, parent_name, parent_money, grand_parent_id, grand_parent_phone,
+        grand_parent_name, grand_parent_money, `status`, create_time, update_time, version,
+        is_delete
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_profit
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from finance_profit
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="finance.model.po.FinanceProfit">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into finance_profit (detail_id, prod_id, prod_name,
+        terminal_name, terminal_id, terminal_phone,
+        terminal_money, parent_id, parent_phone,
+        parent_name, parent_money, grand_parent_id,
+        grand_parent_phone, grand_parent_name, grand_parent_money,
+        `status`, create_time, update_time,
+        version, is_delete)
+        values (#{detailId,jdbcType=BIGINT}, #{prodId,jdbcType=BIGINT}, #{prodName,jdbcType=VARCHAR},
+        #{terminalName,jdbcType=VARCHAR}, #{terminalId,jdbcType=BIGINT}, #{terminalPhone,jdbcType=VARCHAR},
+        #{terminalMoney,jdbcType=DECIMAL}, #{parentId,jdbcType=BIGINT}, #{parentPhone,jdbcType=VARCHAR},
+        #{parentName,jdbcType=VARCHAR}, #{parentMoney,jdbcType=DECIMAL}, #{grandParentId,jdbcType=BIGINT},
+        #{grandParentPhone,jdbcType=VARCHAR}, #{grandParentName,jdbcType=VARCHAR}, #{grandParentMoney,jdbcType=DECIMAL},
+        #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{version,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="finance.model.po.FinanceProfit">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into finance_profit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="detailId != null">
+                detail_id,
+            </if>
+            <if test="prodId != null">
+                prod_id,
+            </if>
+            <if test="prodName != null">
+                prod_name,
+            </if>
+            <if test="terminalName != null">
+                terminal_name,
+            </if>
+            <if test="terminalId != null">
+                terminal_id,
+            </if>
+            <if test="terminalPhone != null">
+                terminal_phone,
+            </if>
+            <if test="terminalMoney != null">
+                terminal_money,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="parentPhone != null">
+                parent_phone,
+            </if>
+            <if test="parentName != null">
+                parent_name,
+            </if>
+            <if test="parentMoney != null">
+                parent_money,
+            </if>
+            <if test="grandParentId != null">
+                grand_parent_id,
+            </if>
+            <if test="grandParentPhone != null">
+                grand_parent_phone,
+            </if>
+            <if test="grandParentName != null">
+                grand_parent_name,
+            </if>
+            <if test="grandParentMoney != null">
+                grand_parent_money,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="detailId != null">
+                #{detailId,jdbcType=BIGINT},
+            </if>
+            <if test="prodId != null">
+                #{prodId,jdbcType=BIGINT},
+            </if>
+            <if test="prodName != null">
+                #{prodName,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalName != null">
+                #{terminalName,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalId != null">
+                #{terminalId,jdbcType=BIGINT},
+            </if>
+            <if test="terminalPhone != null">
+                #{terminalPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalMoney != null">
+                #{terminalMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="parentPhone != null">
+                #{parentPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="parentName != null">
+                #{parentName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentMoney != null">
+                #{parentMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="grandParentId != null">
+                #{grandParentId,jdbcType=BIGINT},
+            </if>
+            <if test="grandParentPhone != null">
+                #{grandParentPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="grandParentName != null">
+                #{grandParentName,jdbcType=VARCHAR},
+            </if>
+            <if test="grandParentMoney != null">
+                #{grandParentMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.FinanceProfit">
+        update finance_profit
+        <set>
+            <if test="detailId != null">
+                detail_id = #{detailId,jdbcType=BIGINT},
+            </if>
+            <if test="prodId != null">
+                prod_id = #{prodId,jdbcType=BIGINT},
+            </if>
+            <if test="prodName != null">
+                prod_name = #{prodName,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalName != null">
+                terminal_name = #{terminalName,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalId != null">
+                terminal_id = #{terminalId,jdbcType=BIGINT},
+            </if>
+            <if test="terminalPhone != null">
+                terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalMoney != null">
+                terminal_money = #{terminalMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="parentPhone != null">
+                parent_phone = #{parentPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="parentName != null">
+                parent_name = #{parentName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentMoney != null">
+                parent_money = #{parentMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="grandParentId != null">
+                grand_parent_id = #{grandParentId,jdbcType=BIGINT},
+            </if>
+            <if test="grandParentPhone != null">
+                grand_parent_phone = #{grandParentPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="grandParentName != null">
+                grand_parent_name = #{grandParentName,jdbcType=VARCHAR},
+            </if>
+            <if test="grandParentMoney != null">
+                grand_parent_money = #{grandParentMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="finance.model.po.FinanceProfit">
+        update finance_profit
+        set detail_id = #{detailId,jdbcType=BIGINT},
+        prod_id = #{prodId,jdbcType=BIGINT},
+        prod_name = #{prodName,jdbcType=VARCHAR},
+        terminal_name = #{terminalName,jdbcType=VARCHAR},
+        terminal_id = #{terminalId,jdbcType=BIGINT},
+        terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+        terminal_money = #{terminalMoney,jdbcType=DECIMAL},
+        parent_id = #{parentId,jdbcType=BIGINT},
+        parent_phone = #{parentPhone,jdbcType=VARCHAR},
+        parent_name = #{parentName,jdbcType=VARCHAR},
+        parent_money = #{parentMoney,jdbcType=DECIMAL},
+        grand_parent_id = #{grandParentId,jdbcType=BIGINT},
+        grand_parent_phone = #{grandParentPhone,jdbcType=VARCHAR},
+        grand_parent_name = #{grandParentName,jdbcType=VARCHAR},
+        grand_parent_money = #{grandParentMoney,jdbcType=DECIMAL},
+        `status` = #{status,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        version = #{version,jdbcType=INTEGER},
+        is_delete = #{isDelete,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectProfitsByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_profit
+        where terminal_id = #{userId,jdbcType=BIGINT} or parent_id = #{userId,jdbcType=BIGINT} or grand_parent_id =
+        #{userId,jdbcType=BIGINT}
+        order by id desc
+        <include refid="base.limit"/>
+    </select>
+</mapper>

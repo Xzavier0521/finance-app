@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="finance.mapper.AgentConfigDAO">
+    <resultMap id="BaseResultMap" type="finance.model.po.AgentConfigDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="agent_id" jdbcType="BIGINT" property="agentId"/>
+        <result column="agent_level" jdbcType="INTEGER" property="agentLevel"/>
+        <result column="activity_code" jdbcType="VARCHAR" property="activityCode"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="creater" jdbcType="VARCHAR" property="creater"/>
+        <result column="updater" jdbcType="VARCHAR" property="updater"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, agent_id, agent_level, activity_code, create_time, update_time, is_delete, creater,
+        updater, version
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_agent_config
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <insert id="insertSelective" parameterType="finance.model.po.AgentConfigDO">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into finance_agent_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="agentId != null">
+                agent_id,
+            </if>
+            <if test="agentLevel != null">
+                agent_level,
+            </if>
+            <if test="activityCode != null">
+                activity_code,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="creater != null">
+                creater,
+            </if>
+            <if test="updater != null">
+                updater,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="agentId != null">
+                #{agentId,jdbcType=BIGINT},
+            </if>
+            <if test="agentLevel != null">
+                #{agentLevel,jdbcType=INTEGER},
+            </if>
+            <if test="activityCode != null">
+                #{activityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="creater != null">
+                #{creater,jdbcType=VARCHAR},
+            </if>
+            <if test="updater != null">
+                #{updater,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.AgentConfigDO">
+        update finance_agent_config
+        <set>
+            <if test="agentId != null">
+                agent_id = #{agentId,jdbcType=BIGINT},
+            </if>
+            <if test="agentLevel != null">
+                agent_level = #{agentLevel,jdbcType=INTEGER},
+            </if>
+            <if test="activityCode != null">
+                activity_code = #{activityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="creater != null">
+                creater = #{creater,jdbcType=VARCHAR},
+            </if>
+            <if test="updater != null">
+                updater = #{updater,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="count" resultType="int">
+        select count(1) from finance_agent_config
+        <include refid="queryCondition"/>
+    </select>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_agent_config
+        <include refid="queryCondition"/>
+        order by id desc
+        <include refid="base.limit"/>
+    </select>
+    <sql id="queryCondition">
+        <trim prefix="where" prefixOverrides="AND| OR">
+            <if test="agentId != null">
+                and agent_id = #{agentId,jdbcType=BIGINT}
+            </if>
+            <if test="agentLevel != null">
+                and agent_level = #{agentLevel,jdbcType=INTEGER}
+            </if>
+            <if test="activityCode != null">
+                and activity_code = #{activityCode,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="isDelete != null">
+                and is_delete = #{isDelete,jdbcType=INTEGER}
+            </if>
+            <if test="creater != null">
+                and creater = #{creater,jdbcType=VARCHAR}
+            </if>
+            <if test="updater != null">
+                and updater = #{updater,jdbcType=VARCHAR}
+            </if>
+            <if test="version != null">
+                and version = #{version,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </sql>
+</mapper>

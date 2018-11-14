@@ -1,0 +1,64 @@
+{
+  "menu": {
+    "button": [
+      {
+        "type": "view",
+        "name": "进入首页",
+        "url": "http://finance.zhishush.cn/finance-h5/msite/?am_id=jinrongjia2#/",
+        "sub_button": [ ]
+      },
+      {
+        "name": "热门活动",
+        "sub_button": [
+          {
+            "type": "view",
+            "name": "7分钱包邮",
+            "url": "https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=ebayapproach=wxgzh",
+            "sub_button": [ ]
+          },
+          {
+            "type": "view",
+            "name": "奖励25元",
+            "url": "https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=jdbtapproach=wxgzh",
+            "sub_button": [ ]
+          },
+          {
+            "type": "view",
+            "name": "奖励100元",
+            "url": "https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=pfxykapproach=wxgzh",
+            "sub_button": [ ]
+          }
+        ]
+      },
+      {
+        "name": "关于我们",
+        "sub_button": [
+          {
+            "type": "view",
+            "name": "人脉变现",
+            "url": "https://finance.zhishush.cn/finance-h5/msite/#/cooperation?approach=wxgzh",
+            "sub_button": [ ]
+          },
+          {
+            "type": "click",
+            "name": "金主客服",
+            "key": "JINRONGJIA_CUSTOMER_SERVICE",
+            "sub_button": [ ]
+          },
+          {
+            "type": "click",
+            "name": "APP下载",
+            "key": "JINRONGJIA_APP",
+            "sub_button": [ ]
+          },
+          {
+            "type": "click",
+            "name": "金榕家介绍",
+            "key": "JINRONGJIA_INTRODUCTION",
+            "sub_button": [ ]
+          }
+        ]
+      }
+    ]
+  }
+}
