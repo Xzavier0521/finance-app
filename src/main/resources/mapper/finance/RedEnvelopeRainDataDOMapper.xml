@@ -351,7 +351,7 @@
         finance_red_envelope_rain_data
         where activity_code=#{activityCode} and activity_day=#{activityDay}
         GROUP BY mobile_phone
-        ) a
+        ) a order by  total_num desc,total_amount desc
         <include refid="base.limit"/>
         ) b order by ranking
     </select>
