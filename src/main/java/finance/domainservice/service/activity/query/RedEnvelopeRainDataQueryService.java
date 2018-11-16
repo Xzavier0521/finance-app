@@ -5,7 +5,9 @@ import java.util.List;
 import finance.api.model.base.Page;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.domain.activity.RedEnvelopeRainData;
+import finance.domain.activity.UserRedEnvelopeRainInfo;
 import finance.domain.activity.UserRedEnvelopeRainSummaryData;
+import finance.domain.user.UserInfo;
 
 /**
  * <p>红包雨活动数据查询</p>
@@ -45,6 +47,18 @@ public interface RedEnvelopeRainDataQueryService {
      */
     String queryUserCurrentRanking(String activityCode, Long userId);
 
+    /**
+     * 排行榜查询
+     * @param activityCode 活动代码
+     * @param activityDay 活动日期
+     * @param pageSize 每页记录数
+     * @param pageNum 第几页
+     * @return List<RedEnvelopeRainData>
+     */
     List<RedEnvelopeRainData> queryRankingList(String activityCode, Integer activityDay,
                                                int pageSize, int pageNum);
+
+    UserRedEnvelopeRainInfo queryUserRedEnvelopeRainInfo(UserInfo userInfo, String activityCode,
+                                                         Integer activityDay);
+
 }

@@ -21,9 +21,12 @@ import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.util.DateUtils;
 import finance.domain.activity.RedEnvelopeRainConfig;
 import finance.domain.activity.RedEnvelopeRainData;
+import finance.domain.activity.UserRedEnvelopeRainInfo;
 import finance.domain.activity.UserRedEnvelopeRainSummaryData;
+import finance.domain.user.UserInfo;
 import finance.domainservice.repository.RedEnvelopeRainConfigRepository;
 import finance.domainservice.repository.RedEnvelopeRainDataRepository;
+import finance.domainservice.service.activity.query.RedEnvelopeRainConfigQueryService;
 import finance.domainservice.service.activity.query.RedEnvelopeRainDataQueryService;
 
 /**
@@ -37,9 +40,11 @@ import finance.domainservice.service.activity.query.RedEnvelopeRainDataQueryServ
 public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQueryService {
 
     @Resource
-    private RedEnvelopeRainDataRepository   redEnvelopeRainDataRepository;
+    private RedEnvelopeRainConfigQueryService redEnvelopeRainConfigQueryService;
     @Resource
-    private RedEnvelopeRainConfigRepository redEnvelopeRainConfigRepository;
+    private RedEnvelopeRainDataRepository     redEnvelopeRainDataRepository;
+    @Resource
+    private RedEnvelopeRainConfigRepository   redEnvelopeRainConfigRepository;
 
     @Override
     public UserRedEnvelopeRainSummaryData querySummaryData(Long userId, String activityCode,
@@ -89,6 +94,29 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
                                                       int pageSize, int pageNum) {
         return redEnvelopeRainDataRepository.queryRankingList(activityCode,
             DateUtils.getCurrentDay(LocalDate.now()), pageNum, pageNum);
+    }
+
+    @Override
+    public UserRedEnvelopeRainInfo queryUserRedEnvelopeRainInfo(UserInfo userInfo,
+                                                                String activityCode,
+                                                                Integer activityDay) {
+
+        UserRedEnvelopeRainInfo userRedEnvelopeRainInfo = new UserRedEnvelopeRainInfo();
+        userRedEnvelopeRainInfo.setUserId(userInfo.getId());
+        userRedEnvelopeRainInfo.setActivityCode(activityCode);
+        userRedEnvelopeRainInfo.setActivityDay(activityDay);
+        userRedEnvelopeRainInfo.setIsJoin(false);
+        RedEnvelopeRainTimeCodeEnum timeCode = redEnvelopeRainConfigQueryService
+            .queryTimeCode(activityCode, LocalDateTime.now());
+        if (Objects.isNull(timeCode)) {
+            return userRedEnvelopeRainInfo;
+        }
+        RedEnvelopeRainData redEnvelopeRainData = redEnvelopeRainDataRepository.query(activityCode,
+            activityDay, userInfo.getId(), timeCode);
+        if (Objects.nonNull(redEnvelopeRainData)){
+            userRedEnvelopeRainInfo.setIsJoin(true);
+        }
+        return userRedEnvelopeRainInfo;
     }
 
     private UserRedEnvelopeRainSummaryData buildData(String activityCode,

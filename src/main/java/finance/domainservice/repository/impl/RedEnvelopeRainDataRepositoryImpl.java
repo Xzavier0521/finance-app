@@ -113,6 +113,24 @@ public class RedEnvelopeRainDataRepositoryImpl implements RedEnvelopeRainDataRep
     }
 
     @Override
+    public RedEnvelopeRainData query(String activityCode, Integer activityDay, Long userId,
+                                     RedEnvelopeRainTimeCodeEnum timeCode) {
+
+        RedEnvelopeRainData redEnvelopeRainData = null;
+        Map<String, Object> parameters = Maps.newHashMap();
+        parameters.put("activityCode", activityCode);
+        parameters.put("activityDay", activityDay);
+        parameters.put("userId", userId);
+        parameters.put("timeCode", timeCode.getCode());
+        List<RedEnvelopeRainData> redEnvelopeRainDataList = RedEnvelopeRainDataConverter
+            .convert2List(redEnvelopeRainDataDAO.query(parameters));
+        if (CollectionUtils.isNotEmpty(redEnvelopeRainDataList)) {
+            redEnvelopeRainData = redEnvelopeRainDataList.get(0);
+        }
+        return redEnvelopeRainData;
+    }
+
+    @Override
     public List<RedEnvelopeRainData> queryRankingList(String activityCode, Integer activityDay,
                                                       int pageSize, int pageNum) {
         Map<String, Object> parameters = Maps.newHashMap();

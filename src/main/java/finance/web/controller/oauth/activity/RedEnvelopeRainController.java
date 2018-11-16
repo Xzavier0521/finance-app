@@ -25,11 +25,13 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.response.ValidateResponse;
 import finance.api.model.vo.activity.RedEnvelopeRainDataVO;
 import finance.api.model.vo.activity.UserCurrentRankingVO;
+import finance.api.model.vo.activity.UserRedEnvelopeRainInfoVO;
 import finance.api.model.vo.activity.UserRedEnvelopeRainSummaryDataVO;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.enums.ReturnCode;
 import finance.core.common.util.*;
 import finance.domain.activity.RedEnvelopeRainData;
+import finance.domain.activity.UserRedEnvelopeRainInfo;
 import finance.domain.activity.UserRedEnvelopeRainSummaryData;
 import finance.domain.user.UserInfo;
 import finance.domainservice.converter.UserInfoConverter;
@@ -177,6 +179,27 @@ public class RedEnvelopeRainController {
         }
         log.info("[结束查询排行榜],请求参数,activityCode:{},pageSize:{},pageNum:{},返回结果:{}", activityCode,
             pageSize, pageNum, response);
+        return response;
+    }
+
+    @GetMapping("getUserRedEnvelopeRainInfo")
+    public ResponseResult<UserRedEnvelopeRainInfoVO> queryUserRedEnvelopeRainInfo(@RequestParam("activityCode") String activityCode) {
+        log.info("[查询用户是否参加红包雨活动],请求参数,activityCode:{}", activityCode);
+        ResponseResult<UserRedEnvelopeRainInfoVO> response;
+        try {
+            UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
+            checkArgument(Objects.nonNull(userInfo), ReturnCode.USER_NOT_EXISTS);
+            UserRedEnvelopeRainInfo userRedEnvelopeRainInfo = redEnvelopeRainDataQueryService
+                .queryUserRedEnvelopeRainInfo(userInfo, activityCode,
+                    DateUtils.getCurrentDay(LocalDate.now()));
+            UserRedEnvelopeRainInfoVO userRedEnvelopeRainInfoVO = new UserRedEnvelopeRainInfoVO();
+            ConvertBeanUtil.copyBeanProperties(userRedEnvelopeRainInfo, userRedEnvelopeRainInfoVO);
+            response = ResponseResult.success(userRedEnvelopeRainInfoVO);
+        } catch (final Exception e) {
+            response = ResponseResultUtils.error(e.getMessage());
+            log.error("[查询用户是否参加红包雨活动],异常:{}", ExceptionUtils.getStackTrace(e));
+        }
+        log.info("[查询用户是否参加红包雨活动],请求参数,activityCode:{}", activityCode);
         return response;
     }
 }
