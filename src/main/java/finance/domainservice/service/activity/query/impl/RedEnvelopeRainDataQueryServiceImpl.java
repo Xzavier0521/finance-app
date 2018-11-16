@@ -94,7 +94,7 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
     public String queryUserCurrentRanking(String activityCode, UserInfo userInfo) {
         Integer activityDay = DateUtils.getCurrentDay(LocalDate.now());
         // 参加活动的手机号码列表
-        String key = MessageFormat.format("{}:{}", RED_ENVELOPE_RAIN_PHONE_NUMBERS, activityDay);
+        String key = MessageFormat.format("{0}:{1}", RED_ENVELOPE_RAIN_PHONE_NUMBERS, activityDay);
         boolean isJoin = redisTemplate.opsForSet().isMember(key, userInfo.getMobileNum());
         // 未参加红包雨活动
         if (!isJoin) {
