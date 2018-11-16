@@ -1,5 +1,7 @@
 package finance.domainservice.service.wechat.impl;
 
+import java.text.MessageFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
@@ -15,17 +17,17 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
+import finance.core.common.util.CommonUtils;
+import finance.core.common.util.DateUtils;
 import finance.domain.user.ThirdAccountInfo;
 import finance.domain.user.UserInfo;
 import finance.domain.weixin.WeiXinMessageTemplate;
+import finance.domainservice.service.wechat.WechatService;
 import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 import finance.ext.api.model.WeiXinTemplateData;
 import finance.ext.api.request.WeiXinTemplateMessageSendRequest;
 import finance.ext.api.response.WeiXinTemplateMessageSendResponse;
 import finance.ext.integration.weixin.WeiXinTemplateMessageClient;
-import finance.domainservice.service.wechat.WechatService;
-import finance.core.common.util.CommonUtils;
-import finance.core.common.util.DateUtils;
 
 /**
  * <p>微信消息模版</p>
@@ -108,6 +110,24 @@ public class WeiXinTemplateMessageServiceImpl implements WeiXinTemplateMessageSe
                     .value(parameters.get("release_time")).color("#0000ff").build());
                 data.put("remark",
                     WeiXinTemplateData.builder().value("查看详情，赶快提现吧").color("#0000ff").build());
+                break;
+            case SEND_COIN_NOTICE:
+                data.put("first",
+                    WeiXinTemplateData.builder().value(
+                        MessageFormat.format("您尾号{0}的账户最新的金币变动信息", parameters.get("mobilePhone")))
+                        .color("#0000ff").build());
+                data.put("keyword1",
+                    WeiXinTemplateData.builder().value(
+                        DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.LONG_WEB_FORMAT))
+                        .color("#0000ff").build());
+                data.put("keyword2",
+                    WeiXinTemplateData.builder().value("拼团奖励").color("#0000ff").build());
+                data.put("keyword3",
+                    WeiXinTemplateData.builder()
+                        .value(MessageFormat.format("{0}金币", parameters.get("coinNum")))
+                        .color("#0000ff").build());
+                data.put("remark", WeiXinTemplateData.builder().value("获得金币，可免费抓娃娃！若需帮助请联系客服。")
+                    .color("#0000ff").build());
                 break;
             default:
         }

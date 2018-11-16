@@ -26,6 +26,10 @@ public enum WeiXinMessageTemplateCodeEnum {
 
                                                                 "二级成员提醒"),
                                            /**
+                                            * 金币发放提醒
+                                            */
+                                           SEND_COIN_NOTICE("send_coin_notice", "金币发放提醒"),
+                                           /**
                                             * 佣金提醒
                                             */
                                            BROKERAGE_ARRIVAL_NOTICE("brokerage_arrival_notice",

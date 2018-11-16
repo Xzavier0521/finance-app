@@ -74,7 +74,7 @@ public class RedEnvelopeRainController {
             PreconditionUtils.checkArgument(Objects.nonNull(timeCode),
                 ReturnCode.RAIN_RED_ENVELOPE_UN_START);
             BasicResponse basicResponse = redEnvelopeRainDataService.localData(userInfo,
-                request.getActivityCode(), request.getTimeCode(), request.getTotalNum(),
+                request.getActivityCode(), timeCode, request.getTotalNum(),
                 request.getTotalAmount());
             checkArgument(basicResponse.isSuccess(), basicResponse.getReturnMessage());
             response = ResponseResult.success(null);
