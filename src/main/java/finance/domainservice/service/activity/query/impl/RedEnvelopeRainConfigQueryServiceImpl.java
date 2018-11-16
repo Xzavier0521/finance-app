@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ import finance.domainservice.service.activity.query.RedEnvelopeRainConfigQuerySe
  * @author lili
  * @version 1.0: RedEnvelopeRainConfigQueryServiceImpl.java, v0.1 2018/11/16 11:56 AM PM lili Exp $
  */
+@Slf4j
 @Service("redEnvelopeRainConfigQueryService")
 public class RedEnvelopeRainConfigQueryServiceImpl implements RedEnvelopeRainConfigQueryService {
 
@@ -33,7 +36,7 @@ public class RedEnvelopeRainConfigQueryServiceImpl implements RedEnvelopeRainCon
         Integer requestTime = Integer
             .valueOf(DateUtils.getFormatDateStr(localDateTime, DateUtils.HOUR_FORMAT));
         List<RedEnvelopeRainConfig> redEnvelopeRainConfigList = redEnvelopeRainConfigRepository
-            .queryByCode(activityCode,null);
+            .queryByCode(activityCode, null);
         if (CollectionUtils.isEmpty(redEnvelopeRainConfigList)) {
             return null;
         }

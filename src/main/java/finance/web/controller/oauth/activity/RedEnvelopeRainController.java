@@ -80,8 +80,10 @@ public class RedEnvelopeRainController {
             response = ResponseResult.success(null);
         } catch (final Exception e) {
 
-            if (e.getMessage().contains("红包雨活动未开始")) {
+            if (e.getMessage().contains(ReturnCode.RAIN_RED_ENVELOPE_UN_START.getDesc())) {
                 response = ResponseResultUtils.error(ReturnCode.RAIN_RED_ENVELOPE_UN_START);
+            } else if (e.getMessage().contains(ReturnCode.ACTIVITY_HAS_JOIN.getDesc())) {
+                response = ResponseResultUtils.error(ReturnCode.ACTIVITY_HAS_JOIN);
             } else {
                 response = ResponseResultUtils.error(e.getMessage());
             }
