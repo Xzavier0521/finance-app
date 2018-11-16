@@ -29,7 +29,10 @@ import finance.api.model.base.Page;
 import finance.core.common.constants.RedEnvelopConstant;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.util.DateUtils;
-import finance.domain.activity.*;
+import finance.domain.activity.RedEnvelopeRainConfig;
+import finance.domain.activity.RedEnvelopeRainData;
+import finance.domain.activity.UserRedEnvelopeRainInfo;
+import finance.domain.activity.UserRedEnvelopeRainSummaryData;
 import finance.domain.user.UserInfo;
 import finance.domainservice.repository.RedEnvelopeRainConfigRepository;
 import finance.domainservice.repository.RedEnvelopeRainDataRepository;
@@ -92,7 +95,15 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
 
     @Override
     public String queryUserCurrentRanking(String activityCode, UserInfo userInfo) {
+
         Integer activityDay = DateUtils.getCurrentDay(LocalDate.now());
+        RedEnvelopeRainConfig redEnvelopeRainConfig = redEnvelopeRainConfigRepository
+            .queryByCode(activityCode, RedEnvelopeRainTimeCodeEnum.FIRST);
+        Integer now = Integer
+            .valueOf(DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.HOUR_FORMAT));
+        if (now < Integer.valueOf(redEnvelopeRainConfig.getStartTime())) {
+            activityDay = DateUtils.getCurrentDay(LocalDate.now().plusDays(-1));
+        }
         // 参加活动的手机号码列表
         String key = MessageFormat.format("{0}:{1}", RED_ENVELOPE_RAIN_PHONE_NUMBERS, activityDay);
         boolean isJoin = redisTemplate.opsForSet().isMember(key, userInfo.getMobileNum());
