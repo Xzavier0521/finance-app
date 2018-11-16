@@ -2,6 +2,7 @@ package finance.domainservice.service.activity.impl;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -12,17 +13,25 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import com.google.common.collect.Maps;
+
 import finance.api.model.response.BasicResponse;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.enums.ReturnCode;
+import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
 import finance.core.common.util.DateUtils;
 import finance.core.common.util.ResponseUtils;
 import finance.core.dal.dao.FinanceCoinLogDAO;
 import finance.core.dal.dataobject.FinanceCoinLog;
 import finance.domain.activity.RedEnvelopeRainData;
+import finance.domain.user.ThirdAccountInfo;
 import finance.domain.user.UserInfo;
+import finance.domain.weixin.WeiXinMessageTemplate;
 import finance.domainservice.repository.RedEnvelopeRainDataRepository;
+import finance.domainservice.repository.ThirdAccountInfoRepository;
+import finance.domainservice.repository.WeiXinMessageTemplateRepository;
 import finance.domainservice.service.activity.RedEnvelopeRainDataService;
+import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 
 /**
  * <p>红包雨活动数据</p>
@@ -35,12 +44,17 @@ import finance.domainservice.service.activity.RedEnvelopeRainDataService;
 public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataService {
 
     @Resource
-    private RedEnvelopeRainDataRepository redEnvelopeRainDataRepository;
+    private RedEnvelopeRainDataRepository    redEnvelopeRainDataRepository;
     @Resource
-    private FinanceCoinLogDAO             financeCoinLogDAO;
-
+    private FinanceCoinLogDAO                financeCoinLogDAO;
     @Resource
-    private TransactionTemplate           transactionTemplate;
+    private ThirdAccountInfoRepository       thirdAccountInfoRepository;
+    @Resource
+    private TransactionTemplate              transactionTemplate;
+    @Resource
+    private WeiXinMessageTemplateRepository  weiXinMessageTemplateRepository;
+    @Resource
+    private WeiXinTemplateMessageSendService weiXinTemplateMessageSendService;
 
     /**
      * 保存红包雨活动数据
@@ -60,9 +74,17 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
                 .activityCode(activityCode).timeCode(timeCode).userId(userInfo.getId())
                 .mobilePhone(userInfo.getMobileNum()).totalNum(totalNum).totalAmount(totalAmount)
                 .activityDay(DateUtils.getCurrentDay(LocalDate.now())).build();
+            ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository
+                .queryByCondition(userInfo.getId());
             response = transactionTemplate.execute(status -> {
                 redEnvelopeRainDataRepository.save(redEnvelopeRainData);
                 recordCoinLog(userInfo.getId(), totalAmount.intValue(), "红包雨活动奖励");
+                WeiXinMessageTemplate weiXinMessageTemplate = weiXinMessageTemplateRepository
+                    .query(WeiXinMessageTemplateCodeEnum.SEND_COIN_NOTICE.getCode());
+                Map<String, String> parameters = Maps.newHashMap();
+                parameters.put("coinNum", String.valueOf(totalAmount.longValue()));
+                weiXinTemplateMessageSendService.send(userInfo, thirdAccountInfo,
+                    weiXinMessageTemplate, parameters);
                 return ResponseUtils.buildResp(ReturnCode.SUCCESS);
             });
         } catch (DuplicateKeyException e) {
