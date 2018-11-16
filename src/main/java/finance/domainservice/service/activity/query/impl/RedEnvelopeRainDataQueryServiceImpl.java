@@ -115,7 +115,7 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
             RED_ENVELOPE_RAIN_CODE, activityDay);
         ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
         Set<String> keys = zSetOperations.reverseRangeByScore(leaderBoardKey,
-            Long.valueOf(userInfo.getMobileNum()), Long.valueOf(userInfo.getMobileNum()));
+            Long.valueOf(userInfo.getMobileNum()) - 1, Long.valueOf(userInfo.getMobileNum()) + 1);
         if (CollectionUtils.isEmpty(keys)) {
             return "1000+";
         }
