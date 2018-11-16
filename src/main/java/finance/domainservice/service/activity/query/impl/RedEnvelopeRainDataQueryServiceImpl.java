@@ -161,7 +161,7 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
     }
 
     private String getWebFormatTime(String timeStr) {
-        return timeStr.substring(0, 1) + ":" + timeStr.substring(2, 3) + ":"
-               + timeStr.substring(4, 5);
+        return timeStr.substring(0, 2) + ":" + timeStr.substring(2, 4) + ":"
+               + timeStr.substring(4, 6);
     }
 }
