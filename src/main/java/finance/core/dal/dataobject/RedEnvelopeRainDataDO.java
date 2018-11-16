@@ -1,6 +1,7 @@
 package finance.core.dal.dataobject;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import lombok.Data;
@@ -47,7 +48,7 @@ public class RedEnvelopeRainDataDO implements Serializable {
     /**
      * 总金额/金币
      */
-    private Long              totalAmount;
+    private BigDecimal        totalAmount;
 
     /**
      * 活动日期

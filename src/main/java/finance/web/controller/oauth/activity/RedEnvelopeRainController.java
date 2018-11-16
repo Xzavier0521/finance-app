@@ -125,6 +125,7 @@ public class RedEnvelopeRainController {
             Page<RedEnvelopeRainData> dataPage = redEnvelopeRainDataQueryService.query4Page(
                 request.getPageSize(), request.getPageNum(), request.getActivityCode(),
                 request.getActivityDay(), request.getTimeCode());
+            log.info("dataPage:{}", dataPage);
             response = ResponseResult.success(RedEnvelopeRainDataBuilder.build(request, dataPage));
         } catch (final Exception e) {
             response = ResponseResultUtils.error(e.getMessage());
