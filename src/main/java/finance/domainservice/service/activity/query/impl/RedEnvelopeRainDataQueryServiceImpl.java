@@ -65,9 +65,6 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
     public Page<RedEnvelopeRainData> query4Page(Integer pageSize, Long pageNum, String activityCode,
                                                 Integer activityDay,
                                                 RedEnvelopeRainTimeCodeEnum timeCode) {
-        if (Objects.isNull(activityDay)) {
-            activityDay = DateUtils.getCurrentDay(LocalDate.now());
-        }
         return redEnvelopeRainDataRepository.query4Page(pageSize, pageNum, activityCode,
             activityDay, timeCode);
     }

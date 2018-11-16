@@ -38,6 +38,6 @@ public class RedEnvelopeRainDataQueryRequest extends BasicRequest {
     /**
      * 时间代码
      */
-    @NotNull(message = "timeCode不能为空")
+    // @NotNull(message = "timeCode不能为空")
     private RedEnvelopeRainTimeCodeEnum timeCode;
 }

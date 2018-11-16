@@ -79,7 +79,13 @@ public class RedEnvelopeRainController {
             checkArgument(basicResponse.isSuccess(), basicResponse.getReturnMessage());
             response = ResponseResult.success(null);
         } catch (final Exception e) {
-            response = ResponseResultUtils.error(e.getMessage());
+
+            if (e.getMessage().contains("红包雨活动未开始")) {
+                response = ResponseResultUtils.error(ReturnCode.RAIN_RED_ENVELOPE_UN_START);
+            } else {
+                response = ResponseResultUtils.error(e.getMessage());
+            }
+
             log.error("[红包雨活动数据更新],异常:{}", ExceptionUtils.getStackTrace(e));
         }
         log.info("[结束红包雨活动数据更新]，请求参数:{},返回结果:{}", request, response);
