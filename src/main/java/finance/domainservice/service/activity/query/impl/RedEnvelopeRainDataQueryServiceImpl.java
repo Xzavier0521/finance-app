@@ -114,11 +114,11 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
         String leaderBoardKey = MessageFormat.format("{0}:{1}:{2}:{3}",
             RedEnvelopConstant.LEADER_BOARD, RED_ENVELOPE_RAIN_CODE, activityDay,
             userInfo.getMobileNum());
-        Object leadBoard = redisTemplate.opsForValue().get(leaderBoardKey);
-        if (Objects.isNull(leadBoard)) {
+        Object ranking = redisTemplate.opsForHash().get(leaderBoardKey, "ranking");
+        if (Objects.isNull(ranking)) {
             return "1000+";
         }
-        return String.valueOf(redisTemplate.opsForHash().get(leaderBoardKey, "ranking"));
+        return String.valueOf(ranking);
 
     }
 
