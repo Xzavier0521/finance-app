@@ -1,8 +1,10 @@
 package finance.coin;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import finance.core.common.constants.RedEnvelopConstant;
 import lombok.extern.slf4j.Slf4j;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,6 +15,8 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.activity.CoinGameVO;
 import finance.api.model.vo.activity.RedEnvelopeRainDataVO;
 import finance.api.model.vo.activity.UserCurrentRankingVO;
+
+import static finance.core.common.constants.RedEnvelopConstant.RED_ENVELOPE_RAIN_CODE;
 
 /**
  * <p>注释</p>
@@ -60,4 +64,5 @@ public class RestObjectTest {
         String json2 = objectMapper.writeValueAsString(res);
         log.info(json2);
     }
+
 }
