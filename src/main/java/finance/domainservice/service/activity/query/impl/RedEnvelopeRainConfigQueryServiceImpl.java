@@ -36,7 +36,7 @@ public class RedEnvelopeRainConfigQueryServiceImpl implements RedEnvelopeRainCon
         Integer requestTime = Integer
             .valueOf(DateUtils.getFormatDateStr(localDateTime, DateUtils.HOUR_FORMAT));
         List<RedEnvelopeRainConfig> redEnvelopeRainConfigList = redEnvelopeRainConfigRepository
-            .queryByCode(activityCode, null);
+            .queryByCode(activityCode);
         if (CollectionUtils.isEmpty(redEnvelopeRainConfigList)) {
             return null;
         }

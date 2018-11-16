@@ -26,7 +26,7 @@ import com.cdp.product.security.decode.CdpDecryptUtil;
 import com.cdp.product.security.encode.CdpEncryptUtil;
 import com.cdp.product.security.sign.CdpSignUtil;
 
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import finance.core.common.util.LogUtil;
 import finance.domain.dto.DataPayAuthResDto;
 import finance.domain.dto.UserBankCardDto;

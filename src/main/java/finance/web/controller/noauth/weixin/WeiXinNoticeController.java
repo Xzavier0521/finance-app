@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Lists;
 
-import finance.core.common.constant.WeChatConstant;
+import finance.core.common.constants.WeChatConstant;
 import finance.core.common.enums.OperatorTypeEnum;
 import finance.core.common.util.CheckUtils;
 import finance.core.common.util.MessageUtils;

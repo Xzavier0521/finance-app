@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
-import finance.core.common.constant.RedEnvelopConstant;
+import finance.core.common.constants.RedEnvelopConstant;
 import finance.domainservice.service.activity.LeaderBoardDataSyncToCacheService;
 import finance.core.common.enums.LeaderBoardTypeEnum;
 

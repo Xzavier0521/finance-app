@@ -1,6 +1,6 @@
 package finance.domainservice.service.activity.impl;
 
-import static finance.core.common.constant.RedEnvelopConstant.ACTIVITY_CODE;
+import static finance.core.common.constants.RedEnvelopConstant.ACTIVITY_CODE;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -15,7 +15,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
-import finance.core.common.constant.RedEnvelopConstant;
+import finance.core.common.constants.RedEnvelopConstant;
 import finance.domain.activity.LeaderBoard;
 import finance.domainservice.repository.RedEnvelopeRepository;
 import finance.domainservice.service.activity.LeaderBoardSynchronizeService;

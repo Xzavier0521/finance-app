@@ -17,7 +17,7 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.ActivityListVO;
 import finance.api.model.vo.StepRewardsDetailVo;
 import finance.api.model.vo.StepRewardsJoinDetailVo;
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import finance.core.common.enums.ActivityType;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.GameType;

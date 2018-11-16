@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Sets;
 
 import finance.api.model.response.ValidateResponse;
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import finance.core.common.enums.LoginType;
 import finance.core.common.enums.ReturnCode;
 import finance.core.common.util.PreconditionUtils;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import finance.api.model.response.ResponseResult;
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.ThirdLoginAction;
 import finance.core.common.util.LogUtil;

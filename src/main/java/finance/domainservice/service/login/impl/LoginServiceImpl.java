@@ -24,7 +24,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import finance.api.model.response.ResponseResult;
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import finance.core.common.enums.*;
 import finance.core.common.util.NetUtils;
 import finance.core.common.util.PreconditionUtils;

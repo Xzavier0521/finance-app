@@ -30,9 +30,6 @@ public class RedEnvelopeRainDataConverter {
         RedEnvelopeRainData to = new RedEnvelopeRainData();
         ConvertBeanUtil.copyBeanProperties(from, to);
         to.setTimeCode(RedEnvelopeRainTimeCodeEnum.getByCode(from.getTimeCode()));
-        if (StringUtils.isNotBlank(from.getMobilePhone())) {
-            to.setMobilePhone(CommonUtils.mobileEncrypt(from.getMobilePhone()));
-        }
         return to;
     }
 

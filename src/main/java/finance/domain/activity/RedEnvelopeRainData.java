@@ -3,12 +3,14 @@ package finance.domain.activity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
+import finance.core.common.util.EntityUtils;
 
 /**
  * <p>红包雨活动数据</p>
@@ -94,4 +96,8 @@ public class RedEnvelopeRainData implements Serializable {
      * 版本号
      */
     private Long                        version;
+
+    public static RedEnvelopeRainData mapToObject(Map<String, Object> fieldMap) {
+        return EntityUtils.hashToObject(fieldMap, RedEnvelopeRainData.class);
+    }
 }

@@ -1,5 +1,7 @@
 package finance.ext.task;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +15,6 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 import finance.domainservice.service.wechat.WeChatDataSynchronizeService;
-
-import java.time.LocalDateTime;
 
 /**
  * <p>微信公众号用户数据同步到redis</p>
@@ -36,7 +36,7 @@ public class WeChatDataSynchronizeTask implements SchedulingConfigurer,
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         taskRegistrar.addTriggerTask(() -> {
             log.info("[开始从微信同步关注的用户数据]，当前时间：{}", LocalDateTime.now());
-           // weChatDataSynchronizeService.process();
+            weChatDataSynchronizeService.process();
             log.info("[结束从微信同步关注的用户数据]，当前时间：{}", LocalDateTime.now());
         }, triggerContext -> {
             // 定时任务触发，可修改定时任务的执行周期 this.corn
@@ -47,6 +47,6 @@ public class WeChatDataSynchronizeTask implements SchedulingConfigurer,
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-      //  weChatDataSynchronizeService.process();
+        weChatDataSynchronizeService.process();
     }
 }

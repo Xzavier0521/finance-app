@@ -5,7 +5,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import finance.api.model.response.ResponseResult;
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.util.StringUtils;

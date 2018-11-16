@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.redenvelope.LeaderBoardVO;
-import finance.core.common.constant.RedEnvelopConstant;
+import finance.core.common.constants.RedEnvelopConstant;
 import finance.core.common.enums.ActivityCodeEnum;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.LeaderBoardTypeEnum;

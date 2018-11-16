@@ -21,7 +21,7 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.FixedAmountInvitedInfoVO;
 import finance.api.model.vo.FixedAmountOpenedPacketInfo;
 import finance.api.model.vo.FixedAmountPageVO;
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import finance.core.common.enums.ActivityFinishStatus;
 import finance.core.common.enums.ActivityType;
 import finance.core.common.enums.CodeEnum;

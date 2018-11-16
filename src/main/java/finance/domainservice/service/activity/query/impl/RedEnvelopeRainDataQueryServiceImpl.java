@@ -1,28 +1,35 @@
 package finance.domainservice.service.activity.query.impl;
 
+import static finance.core.common.constants.RedEnvelopConstant.*;
+
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import finance.api.model.base.Page;
+import finance.core.common.constants.RedEnvelopConstant;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.util.DateUtils;
-import finance.domain.activity.RedEnvelopeRainConfig;
-import finance.domain.activity.RedEnvelopeRainData;
-import finance.domain.activity.UserRedEnvelopeRainInfo;
-import finance.domain.activity.UserRedEnvelopeRainSummaryData;
+import finance.domain.activity.*;
 import finance.domain.user.UserInfo;
 import finance.domainservice.repository.RedEnvelopeRainConfigRepository;
 import finance.domainservice.repository.RedEnvelopeRainDataRepository;
@@ -38,7 +45,8 @@ import finance.domainservice.service.activity.query.RedEnvelopeRainDataQueryServ
 @Slf4j
 @Service("redEnvelopeRainDataQueryService")
 public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQueryService {
-
+    @Resource
+    private RedisTemplate<String, String>     redisTemplate;
     @Resource
     private RedEnvelopeRainConfigQueryService redEnvelopeRainConfigQueryService;
     @Resource
@@ -83,25 +91,54 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
     }
 
     @Override
-    public String queryUserCurrentRanking(String activityCode, Long userId) {
-
-        RedEnvelopeRainData redEnvelopeRainData = redEnvelopeRainDataRepository.query(activityCode,
-            DateUtils.getCurrentDay(LocalDate.now()), userId);
+    public String queryUserCurrentRanking(String activityCode, UserInfo userInfo) {
+        Integer activityDay = DateUtils.getCurrentDay(LocalDate.now());
+        // 参加活动的手机号码列表
+        String key = MessageFormat.format("{}:{}", RED_ENVELOPE_RAIN_PHONE_NUMBERS, activityDay);
+        boolean isJoin = redisTemplate.opsForSet().isMember(key, userInfo.getMobileNum());
         // 未参加红包雨活动
-        if (Objects.isNull(redEnvelopeRainData)) {
+        if (!isJoin) {
             return "?";
         }
-        if (Objects.isNull(redEnvelopeRainData.getRanking())) {
+        String leaderBoardKey = MessageFormat.format("{0}:{1}:{2}", RedEnvelopConstant.LEADER_BOARD,
+            RED_ENVELOPE_RAIN_CODE, activityDay);
+        ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
+        Set<String> keys = zSetOperations.reverseRangeByScore(leaderBoardKey,
+            Long.valueOf(userInfo.getMobileNum()), Long.valueOf(userInfo.getMobileNum()));
+        if (CollectionUtils.isEmpty(keys)) {
             return "1000+";
         }
-        return String.valueOf(redEnvelopeRainData.getRanking());
+        return String.valueOf(keys.toArray()[0]);
     }
 
     @Override
     public List<RedEnvelopeRainData> queryRankingList(String activityCode, Integer activityDay,
                                                       int pageSize, int pageNum) {
-        return redEnvelopeRainDataRepository.queryRankingList(activityCode,
-            DateUtils.getCurrentDay(LocalDate.now()), pageSize, pageNum);
+        List<RedEnvelopeRainData> redEnvelopeRainDataList = Lists.newArrayList();
+        RedEnvelopeRainConfig redEnvelopeRainConfig = redEnvelopeRainConfigRepository
+            .queryByCode(activityCode, RedEnvelopeRainTimeCodeEnum.FIRST);
+        Integer now = Integer
+            .valueOf(DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.HOUR_FORMAT));
+        if (now < Integer.valueOf(redEnvelopeRainConfig.getStartTime())) {
+            activityDay = DateUtils.getCurrentDay(LocalDate.now().plusDays(-1));
+        }
+        String redEnvelopeRainKey = MessageFormat.format("{0}:{1}", RED_ENVELOPE_RAIN_LEADER_BOARD,
+            String.valueOf(activityDay));
+        ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
+        Set<String> leaderBoardKeys = zSetOperations.rangeByScore(redEnvelopeRainKey, 1,
+            pageSize * pageNum);
+        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+        for (String leadBoardKey : leaderBoardKeys) {
+            Map<String, Object> fieldMap = Maps.newHashMap();
+            LeaderBoard.fieldSet()
+                .forEach(field -> fieldMap.put(field, hashOperations.get(leadBoardKey, field)));
+            redEnvelopeRainDataList.add(RedEnvelopeRainData.mapToObject(fieldMap));
+        }
+        if (CollectionUtils.isEmpty(redEnvelopeRainDataList)) {
+            redEnvelopeRainDataList = redEnvelopeRainDataRepository.queryRankingList(activityCode,
+                activityDay, pageSize, pageNum);
+        }
+        return redEnvelopeRainDataList;
     }
 
     @Override
@@ -148,11 +185,11 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
     }
 
     private String getCurrentActivityDate(String activityCode) {
-        // 当前活动时间 1-进行中返回 活动的开始时间 2-已经结束，下个活动还未开始，返回下个活动的开始时间
+        // 当前活动时间 1-进行中 返回活动的开始时间 2-已经结束，下个活动还未开始，返回下个活动的开始时间
         Integer requestTime = Integer
             .valueOf(DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.HOUR_FORMAT));
         List<RedEnvelopeRainConfig> redEnvelopeRainConfigList = redEnvelopeRainConfigRepository
-            .queryByCode(activityCode, Lists.newArrayList());
+            .queryByCode(activityCode);
         String currentActivityDate = StringUtils.EMPTY;
         String currentDay = DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.WEB_FORMAT);
         String nextDay = DateUtils.getFormatDateStr(LocalDateTime.now().plusDays(1),

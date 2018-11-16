@@ -23,7 +23,9 @@ public enum LeaderBoardTypeEnum {
                                  /**
                                   *  二级排行榜
                                   */
-                                 SECOND_LEVEL("2", "second", "二级排行榜");
+                                 SECOND_LEVEL("2", "second",
+                                              "二级排行榜"), DAILY_LEADER_BOARD("daily", "日排行榜");
+
     private String ranking;
     /**
      *  编码

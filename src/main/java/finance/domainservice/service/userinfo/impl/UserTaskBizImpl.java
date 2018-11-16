@@ -24,7 +24,7 @@ import finance.api.model.vo.EverydayClockDateListVO;
 import finance.api.model.vo.EverydayClockVO;
 import finance.api.model.vo.GrowTaskVO;
 import finance.api.model.vo.NewRegisterListVO;
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import finance.core.common.enums.*;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.userinfo.UserTaskBiz;

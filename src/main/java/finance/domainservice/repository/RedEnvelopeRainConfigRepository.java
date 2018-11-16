@@ -2,6 +2,7 @@ package finance.domainservice.repository;
 
 import java.util.List;
 
+import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.domain.activity.RedEnvelopeRainConfig;
 
 /**
@@ -17,5 +18,13 @@ public interface RedEnvelopeRainConfigRepository {
      * @param activityCode 活动代码
      * @return   List<RedEnvelopeRainConfig>
      */
-    List<RedEnvelopeRainConfig> queryByCode(String activityCode, List<String> timeCodes);
+    List<RedEnvelopeRainConfig> queryByCode(String activityCode);
+
+    /**
+     * 查询红包雨活动时间配置
+     * @param activityCode RedEnvelopeRainConfig> queryByCode(String activityCode);
+     * @param timeCode 时间代码
+     * @return RedEnvelopeRainConfig
+     */
+    RedEnvelopeRainConfig queryByCode(String activityCode, RedEnvelopeRainTimeCodeEnum timeCode);
 }

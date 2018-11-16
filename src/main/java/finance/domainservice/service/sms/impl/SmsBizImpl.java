@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Sets;
 
 import finance.api.model.response.ResponseResult;
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.SmsUseType;
 import finance.domain.dto.SendSmsCodeDto;

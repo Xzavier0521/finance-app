@@ -340,6 +340,7 @@
         user_id=#{userId} and activity_code=#{activityCode}
     </select>
     <select id="queryRankingList" resultMap="BaseResultMap">
+        select * from (
         SELECT
         @rownum := @rownum + 1 AS ranking,
         mobile_phone,total_num,total_amount
@@ -351,8 +352,8 @@
         where activity_code=#{activityCode} and activity_day=#{activityDay}
         GROUP BY mobile_phone
         ) a
-        order by total_num desc,total_amount desc
         <include refid="base.limit"/>
+        ) b order by ranking
     </select>
     <select id="queryDailyRainData" resultMap="BaseResultMap">
         SELECT

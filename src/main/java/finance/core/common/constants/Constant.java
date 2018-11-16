@@ -1,4 +1,4 @@
-package finance.core.common.constant;
+package finance.core.common.constants;
 
 import java.math.BigDecimal;
 import java.util.HashMap;

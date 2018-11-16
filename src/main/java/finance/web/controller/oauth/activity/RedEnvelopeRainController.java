@@ -126,9 +126,9 @@ public class RedEnvelopeRainController {
         try {
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
             checkArgument(Objects.nonNull(userInfo), ReturnCode.USER_NOT_EXISTS);
-            Page<RedEnvelopeRainData> dataPage = redEnvelopeRainDataQueryService.queryDailyRainData4Page(
-                request.getPageSize(), request.getPageNum(), request.getActivityCode(),
-                request.getActivityDay());
+            Page<RedEnvelopeRainData> dataPage = redEnvelopeRainDataQueryService
+                .queryDailyRainData4Page(request.getPageSize(), request.getPageNum(),
+                    request.getActivityCode(), request.getActivityDay());
             log.info("dataPage:{}", dataPage);
             response = ResponseResult.success(RedEnvelopeRainDataBuilder.build(request, dataPage));
         } catch (final Exception e) {
@@ -147,7 +147,7 @@ public class RedEnvelopeRainController {
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
             checkArgument(Objects.nonNull(userInfo), ReturnCode.USER_NOT_EXISTS);
             String ranking = redEnvelopeRainDataQueryService.queryUserCurrentRanking(activityCode,
-                userInfo.getId());
+                userInfo);
             UserCurrentRankingVO userCurrentRankingVO = new UserCurrentRankingVO();
             userCurrentRankingVO.setRanking(ranking);
             userCurrentRankingVO.setUserId(userInfo.getId());

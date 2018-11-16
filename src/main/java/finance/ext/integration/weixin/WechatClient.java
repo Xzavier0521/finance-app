@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.alibaba.fastjson.JSON;
 
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import finance.core.common.util.LogUtil;
 import finance.domain.dto.WechatOpenInfoDto;
 import finance.domain.dto.WechatPubAccessTokenDto;

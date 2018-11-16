@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSON;
 
 import finance.api.model.response.ResponseResult;
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.util.LogUtil;
 import finance.domain.dto.DataPayAuthResDto;

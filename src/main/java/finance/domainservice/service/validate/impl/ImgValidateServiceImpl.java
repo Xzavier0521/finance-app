@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;

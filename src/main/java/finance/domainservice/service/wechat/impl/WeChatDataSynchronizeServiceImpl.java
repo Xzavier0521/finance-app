@@ -1,7 +1,7 @@
 package finance.domainservice.service.wechat.impl;
 
-import static finance.core.common.constant.WeChatConstant.MAX_PAGE_SIZE;
-import static finance.core.common.constant.WeChatConstant.WE_CHAT_FLOW_NUM;
+import static finance.core.common.constants.WeChatConstant.MAX_PAGE_SIZE;
+import static finance.core.common.constants.WeChatConstant.WE_CHAT_FLOW_NUM;
 import static finance.core.common.constants.QueryConstants.DEFAULT_MAX_PAGE_SIZE;
 
 import java.util.List;

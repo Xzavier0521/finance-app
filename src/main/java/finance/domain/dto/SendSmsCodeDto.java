@@ -2,7 +2,7 @@ package finance.domain.dto;
 
 import org.springframework.util.StringUtils;
 
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import finance.core.common.enums.SmsUseType;
 
 /**

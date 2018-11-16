@@ -1,7 +1,7 @@
 package finance.web.controller.noauth.redenvelopeactivity;
 
-import static finance.core.common.constant.RedEnvelopConstant.ACTIVITY_CODE;
-import static finance.core.common.constant.RedEnvelopConstant.LEADER_BOARD_NUM;
+import static finance.core.common.constants.RedEnvelopConstant.ACTIVITY_CODE;
+import static finance.core.common.constants.RedEnvelopConstant.LEADER_BOARD_NUM;
 
 import java.util.List;
 import java.util.Objects;

@@ -15,7 +15,7 @@ import org.dom4j.io.SAXReader;
 
 import com.thoughtworks.xstream.XStream;
 
-import finance.core.common.constant.WeChatConstant;
+import finance.core.common.constants.WeChatConstant;
 import finance.domain.weixin.Message;
 import finance.domain.weixin.TextMessage;
 

@@ -1,8 +1,12 @@
 package finance.domainservice.service.activity.impl;
 
+import static finance.core.common.constants.RedEnvelopConstant.RED_ENVELOPE_RAIN_PHONE_NUMBERS;
+
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
@@ -10,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -42,7 +47,8 @@ import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 @Slf4j
 @Service("redEnvelopeRainDataService")
 public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataService {
-
+    @Resource
+    private RedisTemplate<String, Object>    redisTemplate;
     @Resource
     private RedEnvelopeRainDataRepository    redEnvelopeRainDataRepository;
     @Resource
@@ -70,10 +76,11 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
                                    BigDecimal totalAmount) {
         BasicResponse response = new BasicResponse();
         try {
+            Integer activityDay = DateUtils.getCurrentDay(LocalDate.now());
             RedEnvelopeRainData redEnvelopeRainData = RedEnvelopeRainData.builder()
                 .activityCode(activityCode).timeCode(timeCode).userId(userInfo.getId())
                 .mobilePhone(userInfo.getMobileNum()).totalNum(totalNum).totalAmount(totalAmount)
-                .activityDay(DateUtils.getCurrentDay(LocalDate.now())).build();
+                .activityDay(activityDay).build();
             ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository
                 .queryByCondition(userInfo.getId());
             response = transactionTemplate.execute(status -> {
@@ -85,6 +92,12 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
                 parameters.put("coinNum", String.valueOf(totalAmount.longValue()));
                 weiXinTemplateMessageSendService.send(userInfo, thirdAccountInfo,
                     weiXinMessageTemplate, parameters);
+                // 参加活动的手机号码列表
+                String key = MessageFormat.format("{}:{}", RED_ENVELOPE_RAIN_PHONE_NUMBERS,
+                    activityDay);
+                redisTemplate.opsForSet().add(key, userInfo.getMobileNum());
+                // 有效时间1天
+                redisTemplate.expire(key, 1440, TimeUnit.MINUTES);
                 return ResponseUtils.buildResp(ReturnCode.SUCCESS);
             });
         } catch (DuplicateKeyException e) {

@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import finance.core.common.constant.WeChatConstant;
+import finance.core.common.constants.WeChatConstant;
 import finance.ext.api.model.WeiXinTemplateData;
 import finance.ext.api.request.WeiXinQueryTokenRequest;
 import finance.ext.api.request.WeiXinTemplateMessageSendRequest;

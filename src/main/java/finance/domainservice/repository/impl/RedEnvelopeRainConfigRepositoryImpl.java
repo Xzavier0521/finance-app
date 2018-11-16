@@ -2,10 +2,10 @@ package finance.domainservice.repository.impl;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Maps;
@@ -29,11 +29,32 @@ public class RedEnvelopeRainConfigRepositoryImpl implements RedEnvelopeRainConfi
     private RedEnvelopeRainConfigDAO redEnvelopeRainConfigDAO;
 
     @Override
-    public List<RedEnvelopeRainConfig> queryByCode(String activityCode,
-                                                   List<String> timeCodes) {
+    public List<RedEnvelopeRainConfig> queryByCode(String activityCode) {
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("activityCode", activityCode);
         return RedEnvelopeRainConfigConverter
             .convert2List(redEnvelopeRainConfigDAO.query(parameters));
+    }
+
+    /**
+     * 查询红包雨活动时间配置
+     *
+     * @param activityCode RedEnvelopeRainConfig> queryByCode(String activityCode);
+     * @param timeCode     时间代码
+     * @return RedEnvelopeRainConfig
+     */
+    @Override
+    public RedEnvelopeRainConfig queryByCode(String activityCode,
+                                             RedEnvelopeRainTimeCodeEnum timeCode) {
+        RedEnvelopeRainConfig redEnvelopeRainConfig = null;
+        Map<String, Object> parameters = Maps.newHashMap();
+        parameters.put("activityCode", activityCode);
+        parameters.put("timeCode", timeCode.getCode());
+        List<RedEnvelopeRainConfig> redEnvelopeRainConfigList = RedEnvelopeRainConfigConverter
+            .convert2List(redEnvelopeRainConfigDAO.query(parameters));
+        if (CollectionUtils.isEmpty(redEnvelopeRainConfigList)) {
+            redEnvelopeRainConfig = redEnvelopeRainConfigList.get(0);
+        }
+        return redEnvelopeRainConfig;
     }
 }

@@ -16,7 +16,7 @@ import com.google.common.base.Preconditions;
 
 import finance.api.model.response.ResponseResult;
 import finance.api.model.response.WeChatCreateQrResponse;
-import finance.core.common.constant.WeChatConstant;
+import finance.core.common.constants.WeChatConstant;
 import finance.core.common.enums.CodeEnum;
 import finance.domainservice.service.wechat.WeChatPubQrService;
 

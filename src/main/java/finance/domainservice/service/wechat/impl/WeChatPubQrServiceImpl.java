@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.base.Preconditions;
 
-import finance.core.common.constant.WeChatConstant;
+import finance.core.common.constants.WeChatConstant;
 import finance.domainservice.service.wechat.WeChatPubQrService;
 import finance.ext.api.response.WeiXinTempQrCreateResponse;
 import finance.ext.integration.weixin.WeiXinQrCodeClient;

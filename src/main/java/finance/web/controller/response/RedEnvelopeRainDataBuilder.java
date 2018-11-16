@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 
@@ -12,6 +13,7 @@ import finance.api.model.base.Page;
 import finance.api.model.request.RedEnvelopeRainDataQueryRequest;
 import finance.api.model.vo.activity.RedEnvelopeRainDataVO;
 import finance.api.model.vo.activity.UserCurrentRankingVO;
+import finance.core.common.util.CommonUtils;
 import finance.core.common.util.ConvertBeanUtil;
 import finance.domain.activity.RedEnvelopeRainData;
 
@@ -34,6 +36,10 @@ public class RedEnvelopeRainDataBuilder {
             for (RedEnvelopeRainData redEnvelopeRainData : dataPage.getDataList()) {
                 data = new RedEnvelopeRainDataVO();
                 ConvertBeanUtil.copyBeanProperties(redEnvelopeRainData, data);
+                if (StringUtils.isNotBlank(redEnvelopeRainData.getMobilePhone())) {
+                    data.setMobilePhone(
+                        CommonUtils.mobileEncrypt(redEnvelopeRainData.getMobilePhone()));
+                }
                 data.setTotalAmount(Objects.nonNull(redEnvelopeRainData.getTotalAmount())
                     ? redEnvelopeRainData.getTotalAmount().longValue()
                     : 0);
@@ -44,8 +50,7 @@ public class RedEnvelopeRainDataBuilder {
         return page;
     }
 
-    public static List<UserCurrentRankingVO> build(
-                                                   List<RedEnvelopeRainData> redEnvelopeRainDataList) {
+    public static List<UserCurrentRankingVO> build(List<RedEnvelopeRainData> redEnvelopeRainDataList) {
         List<UserCurrentRankingVO> userCurrentRankingVOS = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(redEnvelopeRainDataList)) {
             UserCurrentRankingVO userCurrentRankingVO;

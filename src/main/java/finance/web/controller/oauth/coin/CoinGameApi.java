@@ -25,7 +25,7 @@ import finance.api.model.vo.EarlyClockPageVO;
 import finance.api.model.vo.MyRecordVO;
 import finance.api.model.vo.PushRewardVO;
 import finance.api.model.vo.activity.CoinGameVO;
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.ReturnCode;
 import finance.core.common.util.PreconditionUtils;

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.common.collect.Maps;
 
 import finance.api.model.response.ResponseResult;
-import finance.core.common.constant.Constant;
+import finance.core.common.constants.Constant;
 import finance.core.common.enums.CodeEnum;
 import finance.domainservice.service.userinfo.ThirdBindBiz;
 import finance.domainservice.service.userinfo.UserInfoBiz;

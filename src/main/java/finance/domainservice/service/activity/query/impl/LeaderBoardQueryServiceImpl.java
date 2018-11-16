@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import finance.core.common.constant.RedEnvelopConstant;
+import finance.core.common.constants.RedEnvelopConstant;
 import finance.domain.activity.LeaderBoard;
 import finance.domain.user.UserInfo;
 import finance.domainservice.repository.RedEnvelopeRepository;
@@ -92,7 +92,6 @@ public class LeaderBoardQueryServiceImpl implements LeaderBoardQueryService {
         leaderBoard.setMobilePhone(CommonUtils.mobileEncrypt(userInfo.getMobileNum()));
         String leaderBoardKey = MessageFormat.format("{0}:{1}:{2}", leaderBoardType.getCode(),
             RedEnvelopConstant.LEADER_BOARD, RedEnvelopConstant.ACTIVITY_CODE);
-        log.info("排行榜key:{}", leaderBoardKey);
         HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
         // 邀请人数保存的hash key
         String inviteNumbersKey = MessageFormat.format("{0}:{1}:{2}:{3}",

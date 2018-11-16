@@ -1,4 +1,4 @@
-package finance.core.common.constant;
+package finance.core.common.constants;
 
 /**
  * <p>微信相关常量</p>
