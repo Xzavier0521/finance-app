@@ -10,7 +10,7 @@ import finance.core.dal.dataobject.FinanceUserFirstLoginLog;
  * @author lili
  * @version $Id: FinanceUserFirstLoginLogDAO.java, v0.1 2018/11/14 1:00 PM lili Exp $
  */
-@CacheConfig(cacheNames = "firstLoginLog")
+//@CacheConfig(cacheNames = "firstLoginLog")
 public interface FinanceUserFirstLoginLogDAO extends BaseDAO<FinanceUserFirstLoginLog, Long> {
     
     /**
@@ -21,6 +21,6 @@ public interface FinanceUserFirstLoginLogDAO extends BaseDAO<FinanceUserFirstLog
      * @author hewenbin
      * @version FinanceUserFirstLoginLogDAO.java, v1.0 2018年7月9日 下午9:03:56 hewenbin
      */
-	@Cacheable(key="'firstLoginLog_'.concat(#a0).concat(#a1)", unless= "#result == null")
+	//@Cacheable(key="'firstLoginLog_'.concat(#a0).concat(#a1)", unless= "#result == null")
     FinanceUserFirstLoginLog selectByUserId(@Param("userId")Long userId,  @Param("platformCode")String platformCode);
 }

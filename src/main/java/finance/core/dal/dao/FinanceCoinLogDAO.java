@@ -16,11 +16,11 @@ import finance.core.dal.dataobject.FinanceCoinLog;
  * @author lili
  * @version $Id: FinanceCoinLogDAO.java, v0.1 2018/11/14 2:53 PM lili Exp $
  */
-@CacheConfig(cacheNames = "coin")
+//@CacheConfig(cacheNames = "coin")
 public interface FinanceCoinLogDAO extends BaseDAO<FinanceCoinLog, Long> {
 
-    @Caching(evict = { @CacheEvict(key = "'coinNum_'.concat(#a0.userId)"),
-                       @CacheEvict(key = "'totalGetCoinNum_'.concat(#a0.userId)") })
+   /* @Caching(evict = { @CacheEvict(key = "'coinNum_'.concat(#a0.userId)"),
+                       @CacheEvict(key = "'totalGetCoinNum_'.concat(#a0.userId)") })*/
     int insertSelective(FinanceCoinLog record);
 
     /**
@@ -40,7 +40,7 @@ public interface FinanceCoinLogDAO extends BaseDAO<FinanceCoinLog, Long> {
       * @param: []
       * @return: java.lang.Integer
       */
-    @Cacheable(key = "'coinNum_'.concat(#a0)", unless = "#result == null")
+    //@Cacheable(key = "'coinNum_'.concat(#a0)", unless = "#result == null")
     Integer selectCoinNumByUserId(@Param("userId") Long userId);
 
     /**
@@ -72,7 +72,7 @@ public interface FinanceCoinLogDAO extends BaseDAO<FinanceCoinLog, Long> {
       * @param: [userId]
       * @return: java.lang.Integer
       */
-    @Cacheable(key = "'totalGetCoinNum_'.concat(#a0)", unless = "#result == null")
+    //@Cacheable(key = "'totalGetCoinNum_'.concat(#a0)", unless = "#result == null")
     Integer selectTotalGetCoinNumByUserId(@Param("userId") Long userId);
 
     /**

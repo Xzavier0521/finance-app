@@ -14,7 +14,7 @@ import finance.core.dal.dataobject.FinanceUserBankCardInfo;
  * @author lili
  * @version $Id: FinanceUserBankCardInfoDAO.java, v0.1 2018/11/14 12:59 PM lili Exp $
  */
-@CacheConfig(cacheNames = "bankCardInfo")
+//@CacheConfig(cacheNames = "bankCardInfo")
 public interface FinanceUserBankCardInfoDAO extends BaseDAO<FinanceUserBankCardInfo, Long> {
     /**
      * 根据userId更新银行卡信息.
@@ -23,7 +23,7 @@ public interface FinanceUserBankCardInfoDAO extends BaseDAO<FinanceUserBankCardI
      * @author hewenbin
      * @version FinanceUserBankCardInfoDAO.java, v1.0 2018年7月10日 下午7:51:54 hewenbin
      */
-    @CacheEvict(key = "'bankCardInfo_'.concat(#a0.userId)")
+   // @CacheEvict(key = "'bankCardInfo_'.concat(#a0.userId)")
     int updateByUserId(FinanceUserBankCardInfo record);
 
     /**
@@ -33,7 +33,7 @@ public interface FinanceUserBankCardInfoDAO extends BaseDAO<FinanceUserBankCardI
      * @author hewenbin
      * @version FinanceUserBankCardInfoDAO.java, v1.0 2018年7月10日 下午7:52:19 hewenbin
      */
-    @Cacheable(key = "'bankCardInfo_'.concat(#a0)", unless = "#result == null")
+   // @Cacheable(key = "'bankCardInfo_'.concat(#a0)", unless = "#result == null")
     FinanceUserBankCardInfo selectDefaultBankCard(Long userId);
 
     /**
