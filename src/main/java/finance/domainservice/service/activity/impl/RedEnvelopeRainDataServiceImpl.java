@@ -16,6 +16,8 @@ import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.enums.ReturnCode;
 import finance.core.common.util.DateUtils;
 import finance.core.common.util.ResponseUtils;
+import finance.core.dal.dao.FinanceCoinLogDAO;
+import finance.core.dal.dataobject.FinanceCoinLog;
 import finance.domain.activity.RedEnvelopeRainData;
 import finance.domain.user.UserInfo;
 import finance.domainservice.repository.RedEnvelopeRainDataRepository;
@@ -33,6 +35,8 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
 
     @Resource
     private RedEnvelopeRainDataRepository redEnvelopeRainDataRepository;
+    @Resource
+    private FinanceCoinLogDAO             financeCoinLogDAO;
 
     /**
      * 保存红包雨活动数据
@@ -53,6 +57,7 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
                 .mobilePhone(userInfo.getMobileNum()).totalNum(totalNum).totalAmount(totalAmount)
                 .activityDay(DateUtils.getCurrentDay(LocalDate.now())).build();
             redEnvelopeRainDataRepository.save(redEnvelopeRainData);
+            recordCoinLog(userInfo.getId(), totalAmount.intValue(), "红包雨活动奖励");
             ResponseUtils.buildResp(response, ReturnCode.SUCCESS);
         } catch (DuplicateKeyException e) {
             ResponseUtils.buildResp(response, ReturnCode.ACTIVITY_HAS_JOIN);
@@ -62,6 +67,19 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
             log.error("[保存红包雨活动数据]，异常:{}", ExceptionUtils.getStackTrace(ex));
         }
         return response;
+    }
 
+    /**
+     *  记录金币日志
+     * @param userId 用户id
+     * @param coinNum 金币数目
+     */
+    private void recordCoinLog(Long userId, Integer coinNum, String reason) {
+        FinanceCoinLog financeCoinLog = new FinanceCoinLog();
+        financeCoinLog.setUserId(userId);
+        financeCoinLog.setTaskId(userId);
+        financeCoinLog.setTaskName(reason);
+        financeCoinLog.setNum(coinNum);
+        financeCoinLogDAO.insertSelective(financeCoinLog);
     }
 }
