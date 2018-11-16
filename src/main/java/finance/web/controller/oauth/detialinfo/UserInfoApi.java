@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import finance.api.model.base.Page;
 import finance.api.model.base.XMap;
 import finance.api.model.response.ResponseResult;
-import finance.api.model.vo.UserProfitInfoDetailVo;
 import finance.api.model.vo.UserInfoDetailVo;
+import finance.api.model.vo.UserProfitInfoDetailVo;
 import finance.api.model.vo.userAccount.FinanceUserAccountVo;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.util.ArithUtil;
-import finance.domain.user.UserInfo;
+import finance.core.dal.dataobject.FinanceUserAccount;
+import finance.core.dal.dataobject.FinanceUserInfo;
 import finance.domain.dto.IdCardInfoDto;
+import finance.domain.user.UserInfo;
 import finance.domainservice.service.finance.tansAccount.TransAccBiz;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.user.query.UserInfoQueryService;
 import finance.domainservice.service.userinfo.UserInfoBiz;
-import finance.core.dal.dataobject.FinanceUserAccount;
-import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * 用户基本信息接口.
@@ -34,7 +34,7 @@ import finance.core.dal.dataobject.FinanceUserInfo;
  */
 @Slf4j
 @RestController
-@RequestMapping("user")
+@RequestMapping("userinfo")
 public class UserInfoApi {
 
     @Resource
