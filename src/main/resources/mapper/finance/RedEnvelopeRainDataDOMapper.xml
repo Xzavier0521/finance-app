@@ -229,7 +229,7 @@
             <if test="totalAmount != null and totalAmount.trim().length() != 0">
                 AND (total_amount = #{totalAmount})
             </if>
-            <if test="activityDay != null and activityDay.trim().length() != 0">
+            <if test="activityDay != null">
                 AND (activity_day = #{activityDay})
             </if>
             <if test="ranking != null and ranking.trim().length() != 0">
@@ -275,7 +275,7 @@
             <if test="totalAmount != null and totalAmount.trim().length() != 0">
                 AND (total_amount = #{totalAmount})
             </if>
-            <if test="activityDay != null and activityDay.trim().length() != 0">
+            <if test="activityDay != null">
                 AND (activity_day = #{activityDay})
             </if>
             <if test="ranking != null and ranking.trim().length() != 0">
