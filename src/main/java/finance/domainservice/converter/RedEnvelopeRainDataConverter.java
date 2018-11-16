@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
+import finance.core.common.util.CommonUtils;
 import finance.core.common.util.ConvertBeanUtil;
 import finance.core.dal.dataobject.RedEnvelopeRainDataDO;
 import finance.domain.activity.RedEnvelopeRainData;
@@ -28,6 +30,9 @@ public class RedEnvelopeRainDataConverter {
         RedEnvelopeRainData to = new RedEnvelopeRainData();
         ConvertBeanUtil.copyBeanProperties(from, to);
         to.setTimeCode(RedEnvelopeRainTimeCodeEnum.getByCode(from.getTimeCode()));
+        if (StringUtils.isNotBlank(from.getMobilePhone())) {
+            to.setMobilePhone(CommonUtils.mobileEncrypt(from.getMobilePhone()));
+        }
         return to;
     }
 
