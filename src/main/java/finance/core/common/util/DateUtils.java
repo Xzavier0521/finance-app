@@ -24,7 +24,7 @@ public class DateUtils {
     public final static String SHORT_FORMAT    = "yyyyMMdd";
     public final static String WEB_FORMAT      = "yyyy/MM/dd";
     public final static String LONG_WEB_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    public final static String LONG_APP_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public final static String LONG_APP_FORMAT = "yyyy/MM/dd HH:mm:ss";
     public final static String HOUR_FORMAT     = "HHmmss";
 
     public static Date getCurrentWorkDate(LocalDate localDate) {
