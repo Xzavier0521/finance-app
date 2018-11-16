@@ -52,7 +52,7 @@ public class RedEnvelopeRainConfigRepositoryImpl implements RedEnvelopeRainConfi
         parameters.put("timeCode", timeCode.getCode());
         List<RedEnvelopeRainConfig> redEnvelopeRainConfigList = RedEnvelopeRainConfigConverter
             .convert2List(redEnvelopeRainConfigDAO.query(parameters));
-        if (CollectionUtils.isEmpty(redEnvelopeRainConfigList)) {
+        if (CollectionUtils.isNotEmpty(redEnvelopeRainConfigList)) {
             redEnvelopeRainConfig = redEnvelopeRainConfigList.get(0);
         }
         return redEnvelopeRainConfig;
