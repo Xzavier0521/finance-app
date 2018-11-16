@@ -2,6 +2,7 @@ package finance.domainservice.repository.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.Resource;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Maps;
 
+import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.dal.dao.RedEnvelopeRainConfigDAO;
 import finance.domain.activity.RedEnvelopeRainConfig;
 import finance.domainservice.converter.RedEnvelopeRainConfigConverter;
@@ -27,9 +29,10 @@ public class RedEnvelopeRainConfigRepositoryImpl implements RedEnvelopeRainConfi
     private RedEnvelopeRainConfigDAO redEnvelopeRainConfigDAO;
 
     @Override
-    public List<RedEnvelopeRainConfig> queryByCode(String activityCode) {
+    public List<RedEnvelopeRainConfig> queryByCode(String activityCode,
+                                                   List<String> timeCodes) {
         Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("activityCode",activityCode);
+        parameters.put("activityCode", activityCode);
         return RedEnvelopeRainConfigConverter
             .convert2List(redEnvelopeRainConfigDAO.query(parameters));
     }

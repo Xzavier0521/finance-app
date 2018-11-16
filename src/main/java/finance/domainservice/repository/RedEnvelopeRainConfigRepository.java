@@ -17,5 +17,5 @@ public interface RedEnvelopeRainConfigRepository {
      * @param activityCode 活动代码
      * @return   List<RedEnvelopeRainConfig>
      */
-    List<RedEnvelopeRainConfig> queryByCode(String activityCode);
+    List<RedEnvelopeRainConfig> queryByCode(String activityCode, List<String> timeCodes);
 }
