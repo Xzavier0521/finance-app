@@ -1,5 +1,6 @@
 package finance.domainservice.service.activity.query.impl;
 
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,13 +10,16 @@ import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import finance.api.model.base.Page;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.util.DateUtils;
+import finance.domain.activity.RedEnvelopeRainConfig;
 import finance.domain.activity.RedEnvelopeRainData;
 import finance.domain.activity.UserRedEnvelopeRainSummaryData;
+import finance.domainservice.repository.RedEnvelopeRainConfigRepository;
 import finance.domainservice.repository.RedEnvelopeRainDataRepository;
 import finance.domainservice.service.activity.query.RedEnvelopeRainDataQueryService;
 
@@ -30,7 +34,9 @@ import finance.domainservice.service.activity.query.RedEnvelopeRainDataQueryServ
 public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQueryService {
 
     @Resource
-    private RedEnvelopeRainDataRepository redEnvelopeRainDataRepository;
+    private RedEnvelopeRainDataRepository   redEnvelopeRainDataRepository;
+    @Resource
+    private RedEnvelopeRainConfigRepository redEnvelopeRainConfigRepository;
 
     @Override
     public UserRedEnvelopeRainSummaryData querySummaryData(Long userId, String activityCode,
@@ -88,11 +94,29 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
                                                      RedEnvelopeRainData todayRedEnvelopeRainData,
                                                      RedEnvelopeRainData hisRedEnvelopeRainData) {
         // 当前活动时间 1-进行中返回 活动的开始时间 2-已经结束，下个活动还未开始，返回下个活动的开始时间
+        Integer requestTime = Integer
+            .valueOf(DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.HOUR_FORMAT));
+        List<RedEnvelopeRainConfig> redEnvelopeRainConfigList = redEnvelopeRainConfigRepository
+            .queryByCode(activityCode);
+        String currentActivityDate = StringUtils.EMPTY;
+        for (RedEnvelopeRainConfig redEnvelopeRainConfig : redEnvelopeRainConfigList) {
+            int startTime = Integer.valueOf(redEnvelopeRainConfig.getStartTime());
+            int endTime = Integer.valueOf(redEnvelopeRainConfig.getEndTime());
+            if (requestTime >= startTime && requestTime <= endTime) {
+                currentActivityDate = MessageFormat.format("{0} {1}",
+                    DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.WEB_FORMAT),
+                    redEnvelopeRainConfig.getStartTime());
+            }
+            RedEnvelopeRainTimeCodeEnum timeCode = RedEnvelopeRainTimeCodeEnum
+                .getByCode(redEnvelopeRainConfig.getTimeCode());
 
+
+        }
         return UserRedEnvelopeRainSummaryData.builder().userId(todayRedEnvelopeRainData.getUserId())
             .currentSystemDate(
                 DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.LONG_WEB_FORMAT))
-            .activityCode(activityCode).activityDay(todayRedEnvelopeRainData.getActivityDay())
+            .currentActivityDate(currentActivityDate).activityCode(activityCode)
+            .activityDay(todayRedEnvelopeRainData.getActivityDay())
             .todayNum(todayRedEnvelopeRainData.getTotalNum())
             .todayAmount(Objects.nonNull(todayRedEnvelopeRainData.getTotalAmount())
                 ? todayRedEnvelopeRainData.getTotalAmount().longValue()

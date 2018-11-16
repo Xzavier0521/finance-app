@@ -179,7 +179,7 @@
             <if test="activityCode != null and activityCode.trim().length() != 0">
                 AND (activity_code like '%' || #{activityCode} || '%')
             </if>
-            <if test="userId != null and userId.trim().length() != 0">
+            <if test="userId != null">
                 AND (user_id = #{userId})
             </if>
             <if test="gameCode != null and gameCode.trim().length() != 0">
@@ -216,7 +216,7 @@
             <if test="activityCode != null and activityCode.trim().length() != 0">
                 AND (activity_code = #{activityCode})
             </if>
-            <if test="userId != null and userId.trim().length() != 0">
+            <if test="userId != null">
                 AND (user_id = #{userId})
             </if>
             <if test="gameCode != null and gameCode.trim().length() != 0">
