@@ -132,6 +132,7 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
             Map<String, Object> fieldMap = Maps.newHashMap();
             LeaderBoard.fieldSet()
                 .forEach(field -> fieldMap.put(field, hashOperations.get(leadBoardKey, field)));
+            log.info("fieldMap:{}",fieldMap);
             redEnvelopeRainDataList.add(RedEnvelopeRainData.mapToObject(fieldMap));
         }
         log.info("redEnvelopeRainDataList:{}",redEnvelopeRainDataList);
