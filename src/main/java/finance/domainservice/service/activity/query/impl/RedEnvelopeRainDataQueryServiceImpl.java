@@ -111,7 +111,7 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
         if (!isJoin) {
             return "?";
         }
-        String leaderBoardKey = MessageFormat.format("{0}:{1}:{2}:{}",
+        String leaderBoardKey = MessageFormat.format("{0}:{1}:{2}:{3}",
             RedEnvelopConstant.LEADER_BOARD, RED_ENVELOPE_RAIN_CODE, activityDay,
             userInfo.getMobileNum());
         Object leadBoard = redisTemplate.opsForValue().get(leaderBoardKey);
