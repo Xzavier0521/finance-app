@@ -121,7 +121,11 @@ public class CoinGameApi {
             response = ActivityCoinGameQueryBuilder.build(activityCoinGameQueryService
                 .queryCoinGameList(userInfo, request.getActivityCode(), gameCodes));
         } catch (final Exception e) {
-            response = ResponseResultUtils.error(e.getMessage());
+            if ("金币数不足".equals(e.getMessage())) {
+                response = ResponseResultUtils.error(ReturnCode.COIN_NUM_NOT_ENOUGH);
+            } else {
+                response = ResponseResultUtils.error(e.getMessage());
+            }
             log.info("[查询用户是否支付金币玩游戏],异常:{}", ExceptionUtils.getStackTrace(e));
         }
         log.info("[查询用户是否支付金币玩游戏],请求参数:{},返回结果:{}", request, response);
