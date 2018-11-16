@@ -8,12 +8,12 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Repository;
 
 import finance.core.common.enums.ConcernStatusEnum;
-import finance.domain.InviteOpenInfo;
-import finance.domain.WeChatSubscribeInfo;
+import finance.domain.weixin.InviteOpenInfo;
+import finance.domain.weixin.WeChatSubscribeInfo;
 import finance.domainservice.converter.InviteOpenInfoConverter;
 import finance.domainservice.converter.WeChatSubscribeInfoConverter;
 import finance.domainservice.repository.InviteOpenInfoRepository;
-import finance.mapper.InviteOpenInfoDAO;
+import finance.core.dal.dao.InviteOpenInfoDAO;
 
 /**
  * <p>邀请码-open_info绑定</p>

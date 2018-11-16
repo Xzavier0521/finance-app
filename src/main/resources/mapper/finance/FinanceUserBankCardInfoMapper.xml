@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.mapper.FinanceUserBankCardInfoDAO">
-    <resultMap id="BaseResultMap" type="finance.model.po.FinanceUserBankCardInfo">
+<mapper namespace="finance.core.dal.dao.FinanceUserBankCardInfoDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.FinanceUserBankCardInfo">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
         <result column="bank_name" property="bankName" jdbcType="VARCHAR"/>
@@ -26,7 +26,7 @@
         from finance_user_bank_card_info
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <insert id="insertSelective" parameterType="finance.model.po.FinanceUserBankCardInfo">
+    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.FinanceUserBankCardInfo">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -108,7 +108,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.FinanceUserBankCardInfo">
+    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.FinanceUserBankCardInfo">
         update finance_user_bank_card_info
         <set>
             <if test="userId != null">
@@ -175,7 +175,7 @@
         and account_no = #{accountNo,jdbcType=VARCHAR}
     </select>
 
-    <update id="updateByUserId" parameterType="finance.model.po.FinanceUserBankCardInfo">
+    <update id="updateByUserId" parameterType="finance.core.dal.dataobject.FinanceUserBankCardInfo">
         update finance_user_bank_card_info
         <set>
             <if test="bankName != null">

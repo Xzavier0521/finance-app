@@ -8,8 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 
-import finance.domain.UserActivityWeChatPubInfo;
-import finance.domain.WeChatSubscribeInfo;
+import finance.domain.weixin.UserActivityWeChatPubInfo;
+import finance.domain.weixin.WeChatSubscribeInfo;
 import finance.domainservice.repository.InviteOpenInfoRepository;
 import finance.domainservice.service.query.UserActivityWeChatPubInfoQueryService;
 

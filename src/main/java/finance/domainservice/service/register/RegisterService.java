@@ -1,7 +1,7 @@
 package finance.domainservice.service.register;
 
 import finance.domain.dto.LoginParamDto;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * <p>用户注册服务接口</p>

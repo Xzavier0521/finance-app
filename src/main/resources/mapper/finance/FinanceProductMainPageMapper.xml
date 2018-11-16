@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.mapper.FinanceProductMainPageDAO">
-    <resultMap id="BaseResultMap" type="finance.model.po.FinanceProductMainPage">
+<mapper namespace="finance.core.dal.dao.FinanceProductMainPageDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.FinanceProductMainPage">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="product_name" property="productName" jdbcType="VARCHAR"/>
         <result column="category" property="category" jdbcType="INTEGER"/>
@@ -31,7 +31,7 @@
         from finance_product_main_page
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <insert id="insertSelective" parameterType="finance.model.po.FinanceProductMainPage">
+    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.FinanceProductMainPage">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -137,7 +137,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.FinanceProductMainPage">
+    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.FinanceProductMainPage">
         update finance_product_main_page
         <set>
             <if test="productName != null">

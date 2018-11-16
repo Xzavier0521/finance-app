@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import finance.api.model.base.Page;
 import finance.core.common.enums.OrderType;
 import finance.domainservice.service.finance.order.OrderBiz;
-import finance.mapper.FinanceOrderDAO;
-import finance.model.po.FinanceOrder;
+import finance.core.dal.dao.FinanceOrderDAO;
+import finance.core.dal.dataobject.FinanceOrder;
 
 /**
  * @author yaolei

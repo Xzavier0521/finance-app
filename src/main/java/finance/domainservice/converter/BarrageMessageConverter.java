@@ -1,8 +1,8 @@
 package finance.domainservice.converter;
 
 import com.google.common.collect.Lists;
-import finance.domain.BarrageMessage;
-import finance.model.po.FinanceBarrageMessage;
+import finance.domain.log.BarrageMessage;
+import finance.core.dal.dataobject.FinanceBarrageMessage;
 import finance.core.common.util.ConvertBeanUtil;
 import org.apache.commons.collections4.CollectionUtils;
 

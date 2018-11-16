@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dataobject.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,8 +28,7 @@ import finance.core.common.constant.Constant;
 import finance.core.common.enums.*;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.userinfo.UserTaskBiz;
-import finance.mapper.*;
-import finance.model.po.*;
+import finance.core.dal.dao.*;
 
 /**
  * @program: finance-server

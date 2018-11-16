@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import finance.api.model.response.ResponseResult;
 import finance.domainservice.service.questionandanswer.QuestionAndAnswerBiz;
-import finance.model.po.FinanceQuestionAndAnswer;
+import finance.core.dal.dataobject.FinanceQuestionAndAnswer;
 
 @RestController
 @RequestMapping("question")

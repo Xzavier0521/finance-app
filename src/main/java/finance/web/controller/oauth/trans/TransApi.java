@@ -18,7 +18,7 @@ import finance.domainservice.service.finance.order.OrderBiz;
 import finance.domainservice.service.finance.trans.TransBiz;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.sms.SmsBiz;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 @RestController
 @RequestMapping("/finance")

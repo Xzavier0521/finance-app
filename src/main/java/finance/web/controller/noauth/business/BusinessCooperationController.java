@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import finance.mapper.BusinessCooperationDAO;
+import finance.core.dal.dao.BusinessCooperationDAO;
 import finance.core.common.enums.CodeEnum;
-import finance.model.po.BusinessCooperationDO;
+import finance.core.dal.dataobject.BusinessCooperationDO;
 import finance.api.model.vo.BusinessCooperationVO;
 
 /**

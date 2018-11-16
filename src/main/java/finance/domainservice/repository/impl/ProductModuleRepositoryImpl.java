@@ -11,7 +11,7 @@ import com.google.common.collect.Maps;
 import finance.domain.product.ProductModule;
 import finance.domainservice.converter.ProductModuleConverter;
 import finance.domainservice.repository.ProductModuleRepository;
-import finance.mapper.ProductModuleDAO;
+import finance.core.dal.dao.ProductModuleDAO;
 
 /**
  * <p>产品模块</p>

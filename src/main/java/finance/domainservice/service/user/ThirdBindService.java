@@ -1,7 +1,7 @@
 package finance.domainservice.service.user;
 
 import finance.api.model.response.ResponseResult;
-import finance.model.po.FinanceThirdAccountInfo;
+import finance.core.dal.dataobject.FinanceThirdAccountInfo;
 
 /**
  * 第三方绑定服务.

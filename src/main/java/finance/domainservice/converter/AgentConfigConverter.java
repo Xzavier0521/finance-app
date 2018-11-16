@@ -8,8 +8,8 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.Lists;
 
-import finance.domain.AgentConfig;
-import finance.model.po.AgentConfigDO;
+import finance.domain.activity.AgentConfig;
+import finance.core.dal.dataobject.AgentConfigDO;
 import finance.core.common.util.ConvertBeanUtil;
 
 /**

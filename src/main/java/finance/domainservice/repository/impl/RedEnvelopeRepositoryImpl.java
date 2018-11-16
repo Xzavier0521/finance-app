@@ -17,13 +17,13 @@ import com.google.common.collect.Maps;
 import finance.api.model.base.Page;
 import finance.api.model.condition.RedEnvelopeDetailQueryCondition;
 import finance.core.common.enums.LeaderBoardTypeEnum;
-import finance.domain.LeaderBoard;
-import finance.domain.ParticipantInfo;
+import finance.domain.activity.LeaderBoard;
+import finance.domain.activity.ParticipantInfo;
 import finance.domainservice.converter.LeaderBoardConverter;
 import finance.domainservice.converter.ParticipantInfoConverter;
 import finance.domainservice.repository.RedEnvelopeRepository;
-import finance.mapper.RedEnvelopeDAO;
-import finance.model.po.ParticipantInfoDO;
+import finance.core.dal.dao.RedEnvelopeDAO;
+import finance.core.dal.dataobject.ParticipantInfoDO;
 
 /**
  * <p>排行榜</p>

@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 
 import finance.api.model.vo.FinanceUserInfoVo;
 import finance.domainservice.service.user.UserInfoService;
-import finance.mapper.FinanceIdCardInfoDAO;
-import finance.mapper.FinanceUserBankCardInfoDAO;
-import finance.mapper.FinanceUserInfoDAO;
-import finance.model.po.FinanceIdCardInfo;
-import finance.model.po.FinanceUserBankCardInfo;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dao.FinanceIdCardInfoDAO;
+import finance.core.dal.dao.FinanceUserBankCardInfoDAO;
+import finance.core.dal.dao.FinanceUserInfoDAO;
+import finance.core.dal.dataobject.FinanceIdCardInfo;
+import finance.core.dal.dataobject.FinanceUserBankCardInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * @author hewenbin

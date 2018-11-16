@@ -4,12 +4,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import finance.model.po.ActivityConfigDO;
+import finance.core.dal.dataobject.ActivityConfigDO;
 import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.Lists;
 
-import finance.domain.ActivityConfig;
+import finance.domain.activity.ActivityConfig;
 import finance.core.common.util.ConvertBeanUtil;
 
 /**

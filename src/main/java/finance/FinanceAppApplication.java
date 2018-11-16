@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableCaching
 @SpringBootApplication
 @EnableTransactionManagement
-@MapperScan("finance.mapper")
+@MapperScan("finance.core.dal.dao")
 @EnableScheduling
 @EnableAsync
 public class FinanceAppApplication {
@@ -27,6 +27,6 @@ public class FinanceAppApplication {
     public static void main(String[] args) {
         FinanceAppApplication.appContect = SpringApplication.run(FinanceAppApplication.class, args);
 
-        
+
     }
 }

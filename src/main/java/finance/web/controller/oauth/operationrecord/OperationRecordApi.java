@@ -14,7 +14,7 @@ import finance.api.model.request.OperationRecordSaveRequest;
 import finance.api.model.response.ResponseResult;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.util.ConvertBeanUtil;
-import finance.domain.OperationRecordSave;
+import finance.domain.log.OperationRecordSave;
 import finance.domainservice.service.operationrecord.OperationRecordBiz;
 
 /**

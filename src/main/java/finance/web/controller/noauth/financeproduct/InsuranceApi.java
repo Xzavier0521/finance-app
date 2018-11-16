@@ -16,7 +16,7 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.financeproduct.RebackCashRuleVO;
 import finance.core.common.enums.CodeEnum;
 import finance.domainservice.service.financeproduct.InsuranceProductBiz;
-import finance.model.po.FinanceProductMain;
+import finance.core.dal.dataobject.FinanceProductMain;
 
 /**
  * @program: finance-app

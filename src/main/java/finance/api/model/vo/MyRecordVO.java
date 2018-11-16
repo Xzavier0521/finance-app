@@ -1,61 +1,23 @@
 package finance.api.model.vo;
-import java.util.ArrayList;
+
+import java.io.Serializable;
 import java.util.List;
 
+import lombok.Data;
+
 /**
- * @program: finance-server
- *
- * @description: 我的战绩VO
- *
- * @author: MORUIHAI
- *
- * @create: 2018-08-22 11:50
- **/
-public class MyRecordVO {
-    private Integer totalOutCoin;
-    private Integer totalInCoin;
-    private Integer totalSign;
-    private List<MyCoinGameLogVO> records = new ArrayList();
+ * <p>我的战绩</p>
+ * @author lili
+ * @version $Id: MyRecordVO.java, v0.1 2018/11/15 10:12 AM lili Exp $
+ */
 
-    public Integer getTotalOutCoin() {
-        return totalOutCoin;
-    }
+@Data
+public class MyRecordVO implements Serializable {
 
-    public void setTotalOutCoin(Integer totalOutCoin) {
-        this.totalOutCoin = totalOutCoin;
-    }
+    private static final long     serialVersionUID = 4612388400322311820L;
+    private Integer               totalOutCoin;
+    private Integer               totalInCoin;
+    private Integer               totalSign;
+    private List<MyCoinGameLogVO> records;
 
-    public Integer getTotalInCoin() {
-        return totalInCoin;
-    }
-
-    public void setTotalInCoin(Integer totalInCoin) {
-        this.totalInCoin = totalInCoin;
-    }
-
-    public Integer getTotalSign() {
-        return totalSign;
-    }
-
-    public void setTotalSign(Integer totalSign) {
-        this.totalSign = totalSign;
-    }
-
-    public List<MyCoinGameLogVO> getRecords() {
-        return records;
-    }
-
-    public void setRecords(List<MyCoinGameLogVO> records) {
-        this.records = records;
-    }
-
-    @Override
-    public String toString() {
-        return "MyRecordVO{" +
-                "totalOutCoin=" + totalOutCoin +
-                ", totalInCoin=" + totalInCoin +
-                ", totalSign=" + totalSign +
-                ", records=" + records +
-                '}';
-    }
 }

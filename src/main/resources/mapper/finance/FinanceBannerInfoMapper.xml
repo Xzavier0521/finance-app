@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.mapper.FinanceBannerInfoDAO" >
-  <resultMap id="BaseResultMap" type="finance.model.po.FinanceBannerInfo" >
+<mapper namespace="finance.core.dal.dao.FinanceBannerInfoDAO" >
+  <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.FinanceBannerInfo" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="page_code" property="pageCode" jdbcType="INTEGER" />
     <result column="banner_type" property="bannerType" jdbcType="INTEGER" />
@@ -30,7 +30,7 @@
     delete from finance_banner_info
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="finance.model.po.FinanceBannerInfo" >
+  <insert id="insert" parameterType="finance.core.dal.dataobject.FinanceBannerInfo" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -45,7 +45,7 @@
       #{creator,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="finance.model.po.FinanceBannerInfo" >
+  <insert id="insertSelective" parameterType="finance.core.dal.dataobject.FinanceBannerInfo" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -127,7 +127,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.FinanceBannerInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.FinanceBannerInfo" >
     update finance_banner_info
     <set >
       <if test="pageCode != null" >

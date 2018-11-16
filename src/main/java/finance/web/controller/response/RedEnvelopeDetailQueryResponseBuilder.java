@@ -7,7 +7,7 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.Lists;
 
-import finance.domain.ParticipantInfo;
+import finance.domain.activity.ParticipantInfo;
 import finance.api.model.vo.redenvelope.ParticipantInfoVO;
 import finance.core.common.util.ConvertBeanUtil;
 

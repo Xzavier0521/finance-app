@@ -1,7 +1,5 @@
 package finance.core.common.util;
 
-import java.util.function.Predicate;
-
 import lombok.extern.slf4j.Slf4j;
 
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
@@ -47,12 +45,6 @@ public class PreconditionUtils {
 
     public static void checkArgument(boolean expression, @NullableDecl String errorMessage) {
         if (!expression) {
-            throw new BizException(errorMessage);
-        }
-    }
-
-    public static void checkArgument(Predicate p, Object o, @NullableDecl String errorMessage) {
-        if (!p.test(0)) {
             throw new BizException(errorMessage);
         }
     }

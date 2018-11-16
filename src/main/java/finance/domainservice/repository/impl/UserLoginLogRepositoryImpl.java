@@ -1,9 +1,9 @@
 package finance.domainservice.repository.impl;
 
-import finance.domain.UserLoginLog;
+import finance.domain.user.UserLoginLog;
 import finance.domainservice.converter.UserLoginLogConverter;
 import finance.domainservice.repository.UserLoginLogRepository;
-import finance.mapper.FinanceUserLoginLogDAO;
+import finance.core.dal.dao.FinanceUserLoginLogDAO;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;

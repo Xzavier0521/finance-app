@@ -2,7 +2,7 @@ package finance.domainservice.repository;
 
 import java.util.List;
 
-import finance.domain.ActivityConfig;
+import finance.domain.activity.ActivityConfig;
 
 /**
  * <p>活动推广配置</p>

@@ -12,7 +12,7 @@ import finance.api.model.base.XMap;
 import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.ExchangeGoodsVO;
 import finance.domainservice.service.gift.GiftBiz;
-import finance.model.po.FinanceGiftInfo;
+import finance.core.dal.dataobject.FinanceGiftInfo;
 
 /**
  * @program: finance-server

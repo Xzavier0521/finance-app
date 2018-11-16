@@ -2,8 +2,8 @@ package finance.domainservice.repository.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import finance.mapper.FinanceProductMainDAO;
-import finance.model.po.FinanceProductMain;
+import finance.core.dal.dao.FinanceProductMainDAO;
+import finance.core.dal.dataobject.FinanceProductMain;
 import finance.domainservice.repository.ProductMainRepository;
 import org.springframework.stereotype.Repository;
 

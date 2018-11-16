@@ -13,10 +13,10 @@ import finance.api.model.base.Page;
 import finance.api.model.vo.financeproduct.CreditCardProductDetailVO;
 import finance.api.model.vo.financeproduct.CreditCardProductListVO;
 import finance.domainservice.service.financeproduct.CreditCardProductBiz;
-import finance.mapper.FinanceCreditCardDetailDAO;
-import finance.mapper.FinanceProductMainDAO;
-import finance.model.po.FinanceCreditCardDetail;
-import finance.model.po.FinanceProductMain;
+import finance.core.dal.dao.FinanceCreditCardDetailDAO;
+import finance.core.dal.dao.FinanceProductMainDAO;
+import finance.core.dal.dataobject.FinanceCreditCardDetail;
+import finance.core.dal.dataobject.FinanceProductMain;
 
 /**
  * @program: finance-app

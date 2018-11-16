@@ -1,6 +1,6 @@
 package finance.domainservice.repository;
 
-import finance.domain.ThirdAccountInfo;
+import finance.domain.user.ThirdAccountInfo;
 
 /**
  * <p>注释</p>

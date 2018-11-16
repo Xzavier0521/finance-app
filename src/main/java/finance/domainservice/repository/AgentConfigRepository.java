@@ -2,14 +2,14 @@ package finance.domainservice.repository;
 
 import java.util.List;
 
-import finance.domain.AgentConfig;
+import finance.domain.activity.AgentConfig;
 import finance.api.model.condition.AgentConfigQueryCondition;
 
 /**
  * <p>注释</p>
  *
  * @author lili
- * @version $Id: AgentConfigRepository.java, v0.1 2018/10/11 11:04 AM lili Exp $
+ * @version 1.0: AgentConfigRepository.java, v0.1 2018/10/11 11:04 AM lili Exp $
  */
 public interface AgentConfigRepository {
 

@@ -1,6 +1,6 @@
 package finance.domainservice.service.jwt;
 
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * JWT服务接口.

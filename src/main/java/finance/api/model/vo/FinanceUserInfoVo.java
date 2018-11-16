@@ -1,6 +1,6 @@
 package finance.api.model.vo;
 
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * 用户信息展示实体类.

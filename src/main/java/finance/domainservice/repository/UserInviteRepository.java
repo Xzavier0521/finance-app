@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import finance.api.model.base.Page;
-import finance.domain.UserInviteInfo;
-import finance.model.po.FinanceUserInviteInfo;
+import finance.domain.user.UserInviteInfo;
+import finance.core.dal.dataobject.FinanceUserInviteInfo;
 
 /**
  *  <p>用户邀请信息</p>

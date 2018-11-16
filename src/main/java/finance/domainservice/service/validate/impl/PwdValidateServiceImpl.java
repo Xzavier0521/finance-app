@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import finance.core.common.enums.PwdType;
 import finance.domainservice.service.validate.PwdValidateService;
-import finance.mapper.FinanceUserPwdInfoDAO;
-import finance.model.po.FinanceUserPwdInfo;
+import finance.core.dal.dao.FinanceUserPwdInfoDAO;
+import finance.core.dal.dataobject.FinanceUserPwdInfo;
 
 /**
  * @author hewenbin

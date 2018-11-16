@@ -16,10 +16,10 @@ import finance.domain.dto.WechatOpenInfoDto;
 import finance.domainservice.service.login.impl.LoginServiceImpl;
 import finance.domainservice.service.user.ThirdBindService;
 import finance.ext.integration.weixin.WechatClient;
-import finance.mapper.FinanceThirdAccountActionLogDAO;
-import finance.mapper.FinanceThirdAccountInfoDAO;
-import finance.model.po.FinanceThirdAccountActionLog;
-import finance.model.po.FinanceThirdAccountInfo;
+import finance.core.dal.dao.FinanceThirdAccountActionLogDAO;
+import finance.core.dal.dao.FinanceThirdAccountInfoDAO;
+import finance.core.dal.dataobject.FinanceThirdAccountActionLog;
+import finance.core.dal.dataobject.FinanceThirdAccountInfo;
 
 /**
  * @author hewenbin

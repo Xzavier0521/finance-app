@@ -1,6 +1,6 @@
 package finance.domainservice.repository;
 
-import finance.domain.CoinLog;
+import finance.domain.coin.CoinLog;
 
 import java.util.List;
 

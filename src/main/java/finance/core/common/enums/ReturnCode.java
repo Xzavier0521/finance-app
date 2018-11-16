@@ -11,7 +11,6 @@ public enum ReturnCode {
 
                         /*
                          * 系统默认code，不允许修改，可以添加，需要和团队成员沟通好
-
                          */
     SUCCESS("0000000", "成功"),
     PARAM_EMPTY("0000001", "参数为空"),
@@ -19,7 +18,8 @@ public enum ReturnCode {
     DATA_EXIST("0000003", "数据已存在"),
     DATA_NOT_EXIST("0000004", "数据不存在"),
     DB_EXCEPTION("0000005", "数据库异常"),
-    REQUEST_REPEAT("0000005", "重复的请求"),
+    REQUEST_REPEAT("0000006", "重复的请求"),
+    ILLEGAL_ARGUMENT("0000007","参数不合法"),
     FAIL("0000010", "失败了"),
     PARAM_INVALID("0000011", "输入不合法"),
     PARAM_OVER_LIMIT("0000012", "参数超过限制"),
@@ -40,6 +40,7 @@ public enum ReturnCode {
     SMS_VALIDATE_INVALID("0103001", "验证码输入不合法"),
     SMS_IMG_VALIDATE_FAIL("0103002", "图片验证码不正确"),
     SMS_SEND_FAIL("0103003", "验证码发送失败，请重试"),
+    USER_NOT_EXISTS("0103004","用户不存在"),
 
     BANK_CARD_PARAM_INVALID("0103001", "请填写正确的银行卡号"),
     ACCOUNT_PWD_PARAM_INVALID("0104001", "密码输入不合法"),
@@ -80,10 +81,17 @@ public enum ReturnCode {
     INVALID_ACTIVITY_OPERATION("060102","非法操作"),
     ACTIVITY_FINISH("060103","活动已结束"),
     ACTIVITY_OFFLINE("060104","活动已下线"),
+    ACTIVITY_HAS_JOIN("060105","用户已经参加活动"),
     //业务CODE
     NEWS_PARAM_INVALID("0501001","资讯信息输入不合法"),
     STEP_RED_ENVELOPE_END("0601001","阶梯红包活动已结束"),
-    STEP_RED_ENVELOPE_EXIST("0601002","已参加阶梯红包活动");
+    STEP_RED_ENVELOPE_EXIST("0601002","已参加阶梯红包活动"),
+    RAIN_RED_ENVELOPE_UN_START("0601003","红包雨活动未开始"),
+    //
+    SYS_BUSY("888888","系统繁忙，请稍后重试"),
+    SYS_ERROR("999999","系统异常");
+
+
     private String code;
     private String desc;
 

@@ -1,6 +1,6 @@
 package finance.domainservice.service.query;
 
-import finance.domain.UserActivityWeChatPubInfo;
+import finance.domain.weixin.UserActivityWeChatPubInfo;
 
 /**
  * <p>注释</p>

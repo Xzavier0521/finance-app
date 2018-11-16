@@ -11,7 +11,7 @@ import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 import finance.domainservice.service.jwt.JwtService;
 
 /**

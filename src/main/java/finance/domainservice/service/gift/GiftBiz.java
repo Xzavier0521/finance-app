@@ -9,7 +9,7 @@ import finance.api.model.vo.ExchangeGoodsVO;
 import finance.domain.dto.CoinLockParamDto;
 import finance.domain.dto.CoinLockResponseDto;
 import finance.domain.dto.RedisLockDto;
-import finance.model.po.FinanceGiftInfo;
+import finance.core.dal.dataobject.FinanceGiftInfo;
 
 /**
  * @program: finance-server

@@ -1,10 +1,10 @@
 package finance.domainservice.repository.impl;
 
 import com.google.common.collect.Lists;
-import finance.domain.UserInfo;
+import finance.domain.user.UserInfo;
 import finance.domainservice.converter.UserInfoConverter;
-import finance.mapper.FinanceUserInfoDAO;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dao.FinanceUserInfoDAO;
+import finance.core.dal.dataobject.FinanceUserInfo;
 import finance.domainservice.repository.UserInfoRepository;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;

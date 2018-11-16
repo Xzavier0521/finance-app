@@ -17,18 +17,17 @@ import org.springframework.util.StringUtils;
 import com.google.common.collect.Maps;
 
 import finance.api.model.response.ResponseResult;
-import finance.core.common.constant.Constant;
 import finance.core.common.enums.CodeEnum;
-import finance.domain.InviteOpenInfo;
-import finance.domain.UserInfo;
+import finance.domain.weixin.InviteOpenInfo;
+import finance.domain.user.UserInfo;
 import finance.domain.dto.ThirdLoginParamDto;
 import finance.domainservice.repository.InviteOpenInfoRepository;
 import finance.domainservice.repository.UserInfoRepository;
 import finance.domainservice.service.user.ThirdBindService;
 import finance.domainservice.service.userinfo.ThirdBindBiz;
 import finance.domainservice.service.userinfo.UserInfoBiz;
-import finance.mapper.FinanceUserInviteInfoDAO;
-import finance.model.po.FinanceUserInviteInfo;
+import finance.core.dal.dao.FinanceUserInviteInfoDAO;
+import finance.core.dal.dataobject.FinanceUserInviteInfo;
 
 /**
  * <p>注释</p>

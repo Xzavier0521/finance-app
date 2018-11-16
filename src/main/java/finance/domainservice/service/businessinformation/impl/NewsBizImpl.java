@@ -14,8 +14,8 @@ import finance.api.model.vo.NewsDetailVO;
 import finance.core.common.enums.NewsTag1;
 import finance.core.common.enums.NewsTag2;
 import finance.domainservice.service.businessinformation.NewsBiz;
-import finance.mapper.FinanceNewsInfoDAO;
-import finance.model.po.FinanceNewsInfo;
+import finance.core.dal.dao.FinanceNewsInfoDAO;
+import finance.core.dal.dataobject.FinanceNewsInfo;
 
 /**
  * <p>注释</p>

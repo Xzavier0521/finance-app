@@ -5,7 +5,7 @@ import java.util.List;
 import finance.api.model.base.Page;
 import finance.api.model.vo.financeproduct.FinancingProductDetailVO;
 import finance.api.model.vo.financeproduct.FinancingProductListVO;
-import finance.model.po.FinanceProductMain;
+import finance.core.dal.dataobject.FinanceProductMain;
 
 /**
  * @program: finance-app

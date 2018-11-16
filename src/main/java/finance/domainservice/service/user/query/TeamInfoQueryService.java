@@ -1,7 +1,7 @@
 package finance.domainservice.service.user.query;
 
 
-import finance.domain.TeamInfoQueryResult;
+import finance.domain.team.TeamInfoQueryResult;
 import finance.core.common.enums.CustomerQueryTypeEnum;
 
 /**

@@ -22,9 +22,9 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.redenvelope.ParticipantInfoVO;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.LeaderBoardTypeEnum;
-import finance.domain.LeaderBoard;
-import finance.domainservice.service.activity.LeaderBoardQueryService;
-import finance.domainservice.service.activity.RedEnvelopeDetailQueryService;
+import finance.domain.activity.LeaderBoard;
+import finance.domainservice.service.activity.query.LeaderBoardQueryService;
+import finance.domainservice.service.activity.query.RedEnvelopeDetailQueryService;
 import finance.web.controller.response.LeaderBoardResponseBuilder;
 import finance.web.controller.response.RedEnvelopeDetailQueryResponseBuilder;
 

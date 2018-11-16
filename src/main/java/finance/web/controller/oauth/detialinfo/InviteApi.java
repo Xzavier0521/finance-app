@@ -17,16 +17,16 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.InviteOrdersVo;
 import finance.api.model.vo.userAccount.InviteInfoAndIncomeVo;
 import finance.core.common.enums.CodeEnum;
-import finance.domain.BarrageMessage;
-import finance.domain.InviteInfoAndIncome;
-import finance.domain.UserInfo;
-import finance.domain.UserInviteInfo;
+import finance.domain.log.BarrageMessage;
+import finance.domain.team.InviteInfoAndIncome;
+import finance.domain.user.UserInfo;
+import finance.domain.user.UserInviteInfo;
 import finance.domainservice.repository.BarrageMessageRepository;
 import finance.domainservice.service.invitefriends.WakeupFriendsService;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.user.query.UserInviteQueryService;
 import finance.domainservice.service.userinfo.UserInfoBiz;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 import finance.web.controller.oauth.detialinfo.builder.InviteInfoAndIncomeBuilder;
 
 /**

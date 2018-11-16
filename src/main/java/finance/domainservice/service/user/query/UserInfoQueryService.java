@@ -1,7 +1,7 @@
 package finance.domainservice.service.user.query;
 
 import finance.api.model.base.Page;
-import finance.domain.UserInfo;
+import finance.domain.user.UserInfo;
 
 /**
  * <p>用户信息查询</p>

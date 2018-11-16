@@ -13,7 +13,7 @@ import finance.core.common.enums.ThirdLoginChannel;
 import finance.domain.dto.ThirdLoginParamDto;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.userinfo.ThirdBindBiz;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * 第三方账号服务.

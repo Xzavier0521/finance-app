@@ -13,7 +13,7 @@ import finance.core.common.util.BankCardUtil;
 import finance.domain.dto.UserBankCardDto;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.userinfo.UserInfoBiz;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * 银行卡信息接口.

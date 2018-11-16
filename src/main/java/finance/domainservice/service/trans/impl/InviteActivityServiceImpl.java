@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dataobject.*;
 import org.apache.commons.collections.map.LinkedMap;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -34,8 +35,7 @@ import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.register.RegisterSendMessageService;
 import finance.domainservice.service.trans.AccountService;
 import finance.domainservice.service.trans.InviteActivityService;
-import finance.mapper.*;
-import finance.model.po.*;
+import finance.core.dal.dao.*;
 
 /**
  * 邀请红包活动实现类

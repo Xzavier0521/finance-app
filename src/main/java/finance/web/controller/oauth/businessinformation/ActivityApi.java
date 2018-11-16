@@ -20,13 +20,13 @@ import finance.api.model.vo.StepRewardsDetailVo;
 import finance.api.model.vo.redenvelope.ParticipantInfoVO;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.util.ConvertBeanUtil;
-import finance.domain.ParticipantInfo;
+import finance.domain.activity.ParticipantInfo;
 import finance.domain.dto.FixedAmountPageDto;
 import finance.domainservice.repository.RedEnvelopeRepository;
 import finance.domainservice.service.businessinformation.ActivityBiz;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.trans.InviteActivityService;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * @program: finance-server

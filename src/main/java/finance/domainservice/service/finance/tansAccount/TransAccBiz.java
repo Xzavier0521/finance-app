@@ -1,6 +1,6 @@
 package finance.domainservice.service.finance.tansAccount;
 
-import finance.model.po.FinanceUserAccount;
+import finance.core.dal.dataobject.FinanceUserAccount;
 
 /**
  * <p>注释</p>

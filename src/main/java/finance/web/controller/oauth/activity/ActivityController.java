@@ -19,14 +19,14 @@ import finance.core.common.enums.ActivityCodeEnum;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.LeaderBoardTypeEnum;
 import finance.core.common.util.ConvertBeanUtil;
-import finance.domain.ActivityConfig;
-import finance.domain.LeaderBoard;
-import finance.domain.UserInfo;
+import finance.domain.activity.ActivityConfig;
+import finance.domain.activity.LeaderBoard;
+import finance.domain.user.UserInfo;
 import finance.domainservice.converter.UserInfoConverter;
-import finance.domainservice.service.activity.ActivityConfigQueryService;
-import finance.domainservice.service.activity.LeaderBoardQueryService;
+import finance.domainservice.service.activity.query.ActivityConfigQueryService;
+import finance.domainservice.service.activity.query.LeaderBoardQueryService;
 import finance.domainservice.service.jwt.JwtService;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * <p>推广活动</p>

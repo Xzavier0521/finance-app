@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dataobject.*;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -22,9 +23,9 @@ import finance.core.common.enums.AuthStatus;
 import finance.core.common.enums.ReturnCode;
 import finance.core.common.util.CommonUtils;
 import finance.core.common.util.PreconditionUtils;
-import finance.domain.BarrageMessage;
-import finance.domain.InviteOpenInfo;
-import finance.domain.UserInfo;
+import finance.domain.log.BarrageMessage;
+import finance.domain.weixin.InviteOpenInfo;
+import finance.domain.user.UserInfo;
 import finance.domain.dto.LoginParamDto;
 import finance.domainservice.repository.BarrageMessageRepository;
 import finance.domainservice.repository.InviteOpenInfoRepository;
@@ -32,8 +33,7 @@ import finance.domainservice.repository.UserInfoRepository;
 import finance.domainservice.service.register.RegisterSendMessageService;
 import finance.domainservice.service.register.RegisterService;
 import finance.domainservice.service.trans.AccountService;
-import finance.mapper.*;
-import finance.model.po.*;
+import finance.core.dal.dao.*;
 
 /**
  * <p>用户注册</p>

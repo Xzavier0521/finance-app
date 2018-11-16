@@ -2,10 +2,10 @@ package finance.domainservice.repository.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import finance.domain.OperationRecord;
+import finance.domain.log.OperationRecord;
 import finance.domainservice.converter.OperationRecordConverter;
-import finance.mapper.FinanceOperationRecordDAO;
-import finance.model.po.FinanceOperationRecord;
+import finance.core.dal.dao.FinanceOperationRecordDAO;
+import finance.core.dal.dataobject.FinanceOperationRecord;
 import finance.domainservice.repository.OperationRecordRepository;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;

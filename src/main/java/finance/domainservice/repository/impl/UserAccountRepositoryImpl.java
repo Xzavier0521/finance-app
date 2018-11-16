@@ -2,8 +2,8 @@ package finance.domainservice.repository.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import finance.mapper.FinanceUserAccountDAO;
-import finance.model.po.FinanceUserAccount;
+import finance.core.dal.dao.FinanceUserAccountDAO;
+import finance.core.dal.dataobject.FinanceUserAccount;
 import finance.domainservice.repository.UserAccountRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;

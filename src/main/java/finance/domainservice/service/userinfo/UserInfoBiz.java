@@ -10,7 +10,7 @@ import finance.api.model.vo.UserInfoDetailVo;
 import finance.core.common.enums.PwdType;
 import finance.domain.dto.IdCardInfoDto;
 import finance.domain.dto.UserBankCardDto;
-import finance.model.po.FinanceUserBankCardInfo;
+import finance.core.dal.dataobject.FinanceUserBankCardInfo;
 
 /**
  * 用户信息接口.

@@ -14,11 +14,11 @@ import com.google.common.collect.Maps;
 
 import finance.api.model.base.Page;
 import finance.api.model.condition.BarrageMessageQueryCondition;
-import finance.domain.BarrageMessage;
+import finance.domain.log.BarrageMessage;
 import finance.domainservice.converter.BarrageMessageConverter;
 import finance.domainservice.repository.BarrageMessageRepository;
-import finance.mapper.FinanceBarrageMessageDAO;
-import finance.model.po.FinanceBarrageMessage;
+import finance.core.dal.dao.FinanceBarrageMessageDAO;
+import finance.core.dal.dataobject.FinanceBarrageMessage;
 
 /**
  * <p>弹幕消息：现阶段保存到数据库，后期可以考虑放入redis或者采用rabbitmq</p>

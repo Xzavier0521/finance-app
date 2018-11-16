@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 
 import org.springframework.util.StringUtils;
 
-import finance.model.po.FinanceCoinLog;
-import finance.model.po.FinanceUserBankCardInfo;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceCoinLog;
+import finance.core.dal.dataobject.FinanceUserBankCardInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * 用户申请提现参数接受类.

@@ -5,7 +5,7 @@ import finance.core.common.enums.ProductModuleTypeEnum;
 import finance.domain.product.ProductDetail;
 import finance.domainservice.converter.ProductDetailConverter;
 import finance.domainservice.repository.ProductDetailRepository;
-import finance.mapper.ProductDetailDAO;
+import finance.core.dal.dao.ProductDetailDAO;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;

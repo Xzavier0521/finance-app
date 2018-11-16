@@ -18,7 +18,7 @@ import finance.api.model.vo.financeproduct.CreditCardProductDetailVO;
 import finance.api.model.vo.financeproduct.CreditCardProductListVO;
 import finance.core.common.enums.CodeEnum;
 import finance.domainservice.service.financeproduct.CreditCardProductBiz;
-import finance.model.po.FinanceProductMain;
+import finance.core.dal.dataobject.FinanceProductMain;
 
 /**
  * @program: finance-app

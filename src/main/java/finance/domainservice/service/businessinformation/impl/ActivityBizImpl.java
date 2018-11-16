@@ -23,11 +23,11 @@ import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.GameType;
 import finance.core.common.util.LogUtil;
 import finance.domainservice.service.businessinformation.ActivityBiz;
-import finance.mapper.*;
-import finance.model.po.FinanceCoinGame;
-import finance.model.po.FinanceStepRewardsActivity;
-import finance.model.po.FinanceStepRewardsAmount;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dao.*;
+import finance.core.dal.dataobject.FinanceCoinGame;
+import finance.core.dal.dataobject.FinanceStepRewardsActivity;
+import finance.core.dal.dataobject.FinanceStepRewardsAmount;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 ;
 

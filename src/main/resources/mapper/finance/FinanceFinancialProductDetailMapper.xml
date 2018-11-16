@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.mapper.FinanceFinancialProductDetailDAO" >
-  <resultMap id="BaseResultMap" type="finance.model.po.FinanceFinancialProductDetail" >
+<mapper namespace="finance.core.dal.dao.FinanceFinancialProductDetailDAO" >
+  <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.FinanceFinancialProductDetail" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="product_id" property="productId" jdbcType="BIGINT" />
     <result column="mark" property="mark" jdbcType="VARCHAR" />
@@ -39,7 +39,7 @@
     delete from finance_financial_product_detail
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="finance.model.po.FinanceFinancialProductDetail" >
+  <insert id="insert" parameterType="finance.core.dal.dataobject.FinanceFinancialProductDetail" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -58,7 +58,7 @@
       #{isDelete,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR}, 
       #{version,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="finance.model.po.FinanceFinancialProductDetail" >
+  <insert id="insertSelective" parameterType="finance.core.dal.dataobject.FinanceFinancialProductDetail" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -188,7 +188,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.FinanceFinancialProductDetail" >
+  <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.FinanceFinancialProductDetail" >
     update finance_financial_product_detail
     <set >
       <if test="productId != null" >

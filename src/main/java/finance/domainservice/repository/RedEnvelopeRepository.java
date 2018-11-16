@@ -5,8 +5,8 @@ import java.util.List;
 import finance.api.model.base.Page;
 import finance.api.model.condition.RedEnvelopeDetailQueryCondition;
 import finance.core.common.enums.LeaderBoardTypeEnum;
-import finance.domain.LeaderBoard;
-import finance.domain.ParticipantInfo;
+import finance.domain.activity.LeaderBoard;
+import finance.domain.activity.ParticipantInfo;
 
 /**
  * <p>红包活动查询</p>

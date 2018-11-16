@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -20,9 +21,10 @@ import java.util.Set;
  */
 public class DateUtils {
 
-    public final static String SHORT_FORMAT = "yyyyMMdd";
-    public final static String WEB_FORMAT   = "yyyy/MM/dd";
-    public final  static  String LONG_WEB_FORMAT ="yyyy-MM-dd HH:mm:ss";
+    public final static String SHORT_FORMAT    = "yyyyMMdd";
+    public final static String WEB_FORMAT      = "yyyy/MM/dd";
+    public final static String LONG_WEB_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public final static String HOUR_FORMAT      = "HHmmss";
 
     public static Date getCurrentWorkDate(LocalDate localDate) {
         Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
@@ -67,6 +69,10 @@ public class DateUtils {
 
     public static Integer getCurrentDay(LocalDate localDate) {
         return Integer.valueOf(localDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+    }
+
+    public static String getFormatDateStr(LocalDateTime localDateTime, String format) {
+        return String.valueOf(localDateTime.format(DateTimeFormatter.ofPattern(format)));
     }
 
     public static String format(Date date, String format) {

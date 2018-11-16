@@ -6,7 +6,7 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.FixedAmountPageVO;
 import finance.domain.dto.FixedAmountPageDto;
 import finance.domain.dto.LoginParamDto;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
   * 邀请红包活动Service

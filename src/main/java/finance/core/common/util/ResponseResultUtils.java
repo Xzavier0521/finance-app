@@ -2,6 +2,7 @@ package finance.core.common.util;
 
 import finance.api.model.response.ResponseResult;
 import finance.core.common.enums.CodeEnum;
+import finance.core.common.enums.ReturnCode;
 
 /**
  * <p>注释</p>
@@ -25,11 +26,11 @@ public class ResponseResultUtils {
         return new ResponseResult<T>(errorCode, message, null);
     }
 
-    public static <T> ResponseResult<T> error(CodeEnum codeEnum) {
-        return new ResponseResult<T>(codeEnum.getCode(), codeEnum.getMsg(), null);
+    public static <T> ResponseResult<T> error(ReturnCode returnCode) {
+        return new ResponseResult<T>(returnCode.getCode(), returnCode.getDesc(), null);
     }
 
-    public static ResponseResult error(String errorMsg) {
-        return new ResponseResult(CodeEnum.systemError.getCode(), errorMsg);
+    public static <T> ResponseResult<T> error(String errorMsg) {
+        return new ResponseResult<T>(CodeEnum.systemError.getCode(), errorMsg);
     }
 }

@@ -12,8 +12,8 @@ import finance.api.model.vo.financeProfit.FinanceProfitVO;
 import finance.core.common.util.DateUtil;
 import finance.core.common.util.HideUtil;
 import finance.domainservice.service.finance.profit.ProfitBiz;
-import finance.mapper.FinanceProfitDAO;
-import finance.model.po.FinanceProfit;
+import finance.core.dal.dao.FinanceProfitDAO;
+import finance.core.dal.dataobject.FinanceProfit;
 
 /**
  * <p>注释</p>

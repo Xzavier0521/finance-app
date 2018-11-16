@@ -8,8 +8,8 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.Lists;
 
-import finance.domain.InviteOpenInfo;
-import finance.model.po.InviteOpenInfoDO;
+import finance.domain.weixin.InviteOpenInfo;
+import finance.core.dal.dataobject.InviteOpenInfoDO;
 import finance.core.common.util.ConvertBeanUtil;
 
 /**

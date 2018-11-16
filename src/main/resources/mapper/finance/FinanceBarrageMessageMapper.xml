@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.mapper.FinanceBarrageMessageDAO">
-    <resultMap id="BaseResultMap" type="finance.model.po.FinanceBarrageMessage">
+<mapper namespace="finance.core.dal.dao.FinanceBarrageMessageDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.FinanceBarrageMessage">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="message_code" property="messageCode" jdbcType="VARCHAR"/>
         <result column="message_desc" property="messageDesc" jdbcType="VARCHAR"/>
@@ -20,7 +20,7 @@
         from finance_barrage_message
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <insert id="insertSelective" parameterType="finance.model.po.FinanceBarrageMessage">
+    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.FinanceBarrageMessage">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -72,7 +72,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.FinanceBarrageMessage">
+    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.FinanceBarrageMessage">
         update finance_barrage_message
         <set>
             <if test="messageCode != null">

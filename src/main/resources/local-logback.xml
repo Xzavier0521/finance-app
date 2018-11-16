@@ -93,7 +93,7 @@
 
 
     <!-- 预定义如下几个logger -->
-    <logger name="finance.mapper" level="DEBUG" additivity="false">
+    <logger name="finance.dao" level="DEBUG" additivity="false">
     		<appender-ref ref="bizLog" />
         <appender-ref ref="frameworkLog" />
     </logger>

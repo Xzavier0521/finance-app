@@ -1,7 +1,7 @@
 package finance.service;
 
 import com.google.common.collect.Lists;
-import finance.domain.CoinLog;
+import finance.domain.coin.CoinLog;
 import finance.domainservice.repository.CoinLogRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

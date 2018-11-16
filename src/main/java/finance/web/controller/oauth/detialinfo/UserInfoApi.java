@@ -17,14 +17,14 @@ import finance.api.model.vo.UserInfoDetailVo;
 import finance.api.model.vo.userAccount.FinanceUserAccountVo;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.util.ArithUtil;
-import finance.domain.UserInfo;
+import finance.domain.user.UserInfo;
 import finance.domain.dto.IdCardInfoDto;
 import finance.domainservice.service.finance.tansAccount.TransAccBiz;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.user.query.UserInfoQueryService;
 import finance.domainservice.service.userinfo.UserInfoBiz;
-import finance.model.po.FinanceUserAccount;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserAccount;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * 用户基本信息接口.
@@ -34,7 +34,7 @@ import finance.model.po.FinanceUserInfo;
  */
 @Slf4j
 @RestController
-@RequestMapping("userinfo")
+@RequestMapping("user")
 public class UserInfoApi {
 
     @Resource
@@ -48,7 +48,7 @@ public class UserInfoApi {
 
     /**
      * <pre>
-     * @api {GET} /userinfo/myAccount 我的账户信息
+     * @api {GET} /user/myAccount 我的账户信息
      * @apiName myAccount
      * @apiGroup USERINFO
      * @apiVersion 0.1.0
@@ -91,7 +91,7 @@ public class UserInfoApi {
 
     /**
      * <pre>
-     * @api {GET} /userinfo/baseInfo 获取个人基本信息
+     * @api {GET} /user/baseInfo 获取个人基本信息
      * @apiName getBaseInfo
      * @apiGroup USERINFO
      * @apiVersion 0.1.0
@@ -146,7 +146,7 @@ public class UserInfoApi {
 
     /**
      * <pre>
-     * @api {GET} /userinfo/myProfitInfo 获取我的收益信息
+     * @api {GET} /user/myProfitInfo 获取我的收益信息
      * @apiName getMyProfitInfo
      * @apiGroup USERINFO
      * @apiVersion 0.1.0
@@ -191,7 +191,7 @@ public class UserInfoApi {
 
     /**
      * <pre>
-     * @api {GET} /userinfo/teamInfo 获取我的团队信息
+     * @api {GET} /user/teamInfo 获取我的团队信息
      * @apiName getTeamUserList
      * @apiGroup USERINFO
      * @apiVersion 0.1.0
@@ -317,7 +317,7 @@ public class UserInfoApi {
 
     /**
      * <pre>
-     * @api {POST} userinfo/saveIdCardInfo 保存身份证信息
+     * @api {POST} user/saveIdCardInfo 保存身份证信息
      * @apiName saveIdCardInfo
      * @apiGroup USERINFO
      * @apiVersion 0.1.0
@@ -366,7 +366,7 @@ public class UserInfoApi {
     }
 
     /**
-     * @api {GET} userinfo/getSleepUserList 查询休眠的好友列表
+     * @api {GET} user/getSleepUserList 查询休眠的好友列表
      * @apiName getSleepUserList
      * @apiGroup USERINFO
      * @apiVersion 0.1.0

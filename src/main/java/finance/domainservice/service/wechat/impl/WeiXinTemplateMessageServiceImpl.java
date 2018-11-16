@@ -15,8 +15,8 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
-import finance.domain.ThirdAccountInfo;
-import finance.domain.UserInfo;
+import finance.domain.user.ThirdAccountInfo;
+import finance.domain.user.UserInfo;
 import finance.domain.weixin.WeiXinMessageTemplate;
 import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 import finance.ext.api.model.WeiXinTemplateData;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.mapper.FinanceUserInfoDAO">
-    <resultMap id="BaseResultMap" type="finance.model.po.FinanceUserInfo">
+<mapper namespace="finance.core.dal.dao.FinanceUserInfoDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.FinanceUserInfo">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="mobile_num" property="mobileNum" jdbcType="VARCHAR"/>
         <result column="invite_code" property="inviteCode" jdbcType="VARCHAR"/>
@@ -23,7 +23,7 @@
         from finance_user_info
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <insert id="insertSelective" parameterType="finance.model.po.FinanceUserInfo">
+    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.FinanceUserInfo">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -87,7 +87,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.FinanceUserInfo">
+    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.FinanceUserInfo">
         update finance_user_info
         <set>
             <if test="mobileNum != null">

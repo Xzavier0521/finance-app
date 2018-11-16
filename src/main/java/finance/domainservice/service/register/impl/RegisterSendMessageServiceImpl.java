@@ -17,9 +17,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
-import finance.domain.ThirdAccountInfo;
-import finance.domain.UserInfo;
-import finance.domain.UserInviteInfo;
+import finance.domain.user.ThirdAccountInfo;
+import finance.domain.user.UserInfo;
+import finance.domain.user.UserInviteInfo;
 import finance.domain.weixin.WeiXinMessageTemplate;
 import finance.domainservice.repository.ThirdAccountInfoRepository;
 import finance.domainservice.repository.UserInfoRepository;

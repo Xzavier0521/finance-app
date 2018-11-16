@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="finance.mapper.WeiXinMessageTemplateDAO">
+<mapper namespace="finance.core.dal.dao.WeiXinMessageTemplateDAO">
     <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.WeiXinMessageTemplateDO">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="template_code" jdbcType="VARCHAR" property="templateCode"/>

@@ -13,7 +13,7 @@ import com.google.common.collect.Lists;
 
 import finance.api.model.response.ResponseResult;
 import finance.core.common.enums.CodeEnum;
-import finance.domain.UserInfo;
+import finance.domain.user.UserInfo;
 import finance.domain.dto.CoinLockParamDto;
 import finance.domain.dto.CoinLockResponseDto;
 import finance.domain.dto.RedisLockDto;
@@ -21,8 +21,8 @@ import finance.domainservice.repository.UserInfoRepository;
 import finance.domainservice.repository.UserInviteRepository;
 import finance.domainservice.service.AbstractCoinDealMulti;
 import finance.domainservice.service.invitefriends.WakeupFriendsService;
-import finance.mapper.FinanceCoinLogDAO;
-import finance.model.po.FinanceCoinLog;
+import finance.core.dal.dao.FinanceCoinLogDAO;
+import finance.core.dal.dataobject.FinanceCoinLog;
 
 /**
  * <p>唤醒好友</p>

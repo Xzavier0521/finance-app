@@ -31,8 +31,8 @@ import finance.core.common.util.LogUtil;
 import finance.domain.dto.DataPayAuthResDto;
 import finance.domain.dto.UserBankCardDto;
 import finance.domainservice.service.auth.impl.AuthServiceImpl;
-import finance.mapper.FinanceIdAuthInfoLogDAO;
-import finance.model.po.FinanceIdAuthInfoLog;
+import finance.core.dal.dao.FinanceIdAuthInfoLogDAO;
+import finance.core.dal.dataobject.FinanceIdAuthInfoLog;
 
 /**
   * 调用数据宝服务

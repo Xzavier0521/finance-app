@@ -15,11 +15,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import finance.api.model.base.Page;
-import finance.domain.UserInviteInfo;
+import finance.domain.user.UserInviteInfo;
 import finance.domainservice.converter.UserInviteInfoConverter;
 import finance.domainservice.repository.UserInviteRepository;
-import finance.mapper.FinanceUserInviteInfoDAO;
-import finance.model.po.FinanceUserInviteInfo;
+import finance.core.dal.dao.FinanceUserInviteInfoDAO;
+import finance.core.dal.dataobject.FinanceUserInviteInfo;
 
 /**
  * <p>用户邀请信息查询</p>

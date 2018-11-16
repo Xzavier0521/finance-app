@@ -3,7 +3,7 @@ package finance.domainservice.service.trans;
 import java.math.BigDecimal;
 
 import finance.api.model.response.ResponseResult;
-import finance.model.po.FinanceUserAccount;
+import finance.core.dal.dataobject.FinanceUserAccount;
 
 /**
  * 账号服务类.

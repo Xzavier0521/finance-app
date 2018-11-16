@@ -9,9 +9,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 
-import finance.domain.LeaderBoard;
+import finance.domain.activity.LeaderBoard;
 import finance.core.common.enums.LeaderBoardTypeEnum;
-import finance.model.po.LeaderBoardDO;
+import finance.core.dal.dataobject.LeaderBoardDO;
 import finance.core.common.util.CommonUtils;
 import finance.core.common.util.ConvertBeanUtil;
 

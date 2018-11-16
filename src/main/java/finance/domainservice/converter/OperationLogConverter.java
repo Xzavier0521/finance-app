@@ -1,8 +1,8 @@
 package finance.domainservice.converter;
 
 import com.google.common.collect.Lists;
-import finance.domain.OperationLog;
-import finance.model.po.FinanceOperationLog;
+import finance.domain.log.OperationLog;
+import finance.core.dal.dataobject.FinanceOperationLog;
 import finance.core.common.util.ConvertBeanUtil;
 import org.apache.commons.collections4.CollectionUtils;
 

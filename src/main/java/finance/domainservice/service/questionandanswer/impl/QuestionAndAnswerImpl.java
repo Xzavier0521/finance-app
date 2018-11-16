@@ -1,8 +1,8 @@
 package finance.domainservice.service.questionandanswer.impl;
 
 import finance.domainservice.service.questionandanswer.QuestionAndAnswerBiz;
-import finance.mapper.FinanceQuestionAndAnswerDAO;
-import finance.model.po.FinanceQuestionAndAnswer;
+import finance.core.dal.dao.FinanceQuestionAndAnswerDAO;
+import finance.core.dal.dataobject.FinanceQuestionAndAnswer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

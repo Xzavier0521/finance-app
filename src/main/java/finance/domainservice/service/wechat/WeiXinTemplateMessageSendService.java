@@ -2,8 +2,8 @@ package finance.domainservice.service.wechat;
 
 import java.util.Map;
 
-import finance.domain.ThirdAccountInfo;
-import finance.domain.UserInfo;
+import finance.domain.user.ThirdAccountInfo;
+import finance.domain.user.UserInfo;
 import finance.domain.weixin.WeiXinMessageTemplate;
 
 /**

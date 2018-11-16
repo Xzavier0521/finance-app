@@ -1,7 +1,7 @@
 package finance.domainservice.service.invitefriends;
 
 import finance.api.model.response.ResponseResult;
-import finance.domain.UserInfo;
+import finance.domain.user.UserInfo;
 
 /**
  * <p>唤醒好友</p>

@@ -8,6 +8,11 @@ import java.util.stream.Collectors;
 import javax.annotation.Resource;
 
 import finance.api.model.base.Page;
+import finance.domain.coin.CardInfo;
+import finance.domain.team.FirstLevelTeamUserInfo;
+import finance.domain.team.SecondLevelTeamUserInfo;
+import finance.domain.team.TeamInfoQueryResult;
+import finance.domain.user.UserInfo;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -17,12 +22,11 @@ import com.google.common.collect.Maps;
 
 import finance.core.common.enums.CustomerQueryTypeEnum;
 import finance.core.common.util.ConvertBeanUtil;
-import finance.domain.*;
 import finance.domainservice.repository.CardInfoRepository;
 import finance.domainservice.repository.UserInfoRepository;
 import finance.domainservice.repository.UserInviteRepository;
 import finance.domainservice.service.user.query.TeamInfoQueryService;
-import finance.model.po.FinanceUserInviteInfo;
+import finance.core.dal.dataobject.FinanceUserInviteInfo;
 
 /**
  * <p>注释</p>

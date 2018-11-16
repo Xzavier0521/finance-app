@@ -16,7 +16,7 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import finance.core.common.constant.RedEnvelopConstant;
-import finance.domain.LeaderBoard;
+import finance.domain.activity.LeaderBoard;
 import finance.domainservice.repository.RedEnvelopeRepository;
 import finance.domainservice.service.activity.LeaderBoardSynchronizeService;
 import finance.core.common.enums.LeaderBoardTypeEnum;

@@ -7,11 +7,11 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Repository;
 
 import finance.api.model.base.Page;
-import finance.domain.OperationLog;
+import finance.domain.log.OperationLog;
 import finance.domainservice.converter.OperationLogConverter;
 import finance.domainservice.repository.OperationLogRepository;
-import finance.mapper.FinanceOperationLogDAO;
-import finance.model.po.FinanceOperationLog;
+import finance.core.dal.dao.FinanceOperationLogDAO;
+import finance.core.dal.dataobject.FinanceOperationLog;
 
 /**
  * <p>用户操作日志</p>

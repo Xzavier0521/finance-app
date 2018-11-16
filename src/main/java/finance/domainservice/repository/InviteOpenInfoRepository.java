@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import finance.core.common.enums.ConcernStatusEnum;
-import finance.domain.InviteOpenInfo;
-import finance.domain.WeChatSubscribeInfo;
+import finance.domain.weixin.InviteOpenInfo;
+import finance.domain.weixin.WeChatSubscribeInfo;
 
 /**
  * <p>邀请码-open_info绑定</p>

@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import finance.api.model.vo.AnnouncementListVO;
 import finance.domainservice.service.businessinformation.AnnouncementInfo;
 import finance.domainservice.service.jwt.JwtService;
-import finance.mapper.FinanceAnnouncementInfoDAO;
-import finance.mapper.FinanceUserInfoDAO;
-import finance.mapper.FinanceUserInviteInfoDAO;
-import finance.model.po.FinanceAnnouncementInfo;
-import finance.model.po.FinanceUserInfo;
-import finance.model.po.FinanceUserInviteInfo;
+import finance.core.dal.dao.FinanceAnnouncementInfoDAO;
+import finance.core.dal.dao.FinanceUserInfoDAO;
+import finance.core.dal.dao.FinanceUserInviteInfoDAO;
+import finance.core.dal.dataobject.FinanceAnnouncementInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInviteInfo;
 
 /**
  * <p>后台-公告</p>

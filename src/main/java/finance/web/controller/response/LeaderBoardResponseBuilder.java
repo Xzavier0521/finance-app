@@ -7,7 +7,7 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.Lists;
 
-import finance.domain.LeaderBoard;
+import finance.domain.activity.LeaderBoard;
 import finance.api.model.response.LeaderBoardQueryResponse;
 import finance.api.model.vo.redenvelope.LeaderBoardVO;
 import finance.core.common.util.CommonUtils;

@@ -1,8 +1,8 @@
 package finance.domainservice.converter;
 
 import com.google.common.collect.Lists;
-import finance.domain.CardInfo;
-import finance.model.po.FinanceIdCardInfo;
+import finance.domain.coin.CardInfo;
+import finance.core.dal.dataobject.FinanceIdCardInfo;
 import finance.core.common.util.ConvertBeanUtil;
 import org.apache.commons.collections4.CollectionUtils;
 

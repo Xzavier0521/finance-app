@@ -9,16 +9,16 @@ import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Maps;
 
-import finance.domain.AgentConfig;
+import finance.api.model.condition.AgentConfigQueryCondition;
+import finance.core.dal.dao.AgentConfigDAO;
+import finance.domain.activity.AgentConfig;
 import finance.domainservice.converter.AgentConfigConverter;
 import finance.domainservice.repository.AgentConfigRepository;
-import finance.mapper.AgentConfigDAO;
-import finance.api.model.condition.AgentConfigQueryCondition;
 
 /**
- * <p>注释</p>
+ * <p></p>
  * @author lili
- * @version $Id: AgentConfigRepositoryImpl.java, v0.1 2018/10/11 11:04 AM lili Exp $
+ * @version 1.0: AgentConfigRepositoryImpl.java, v0.1 2018/10/11 11:04 AM lili Exp $
  */
 @Repository("agentConfigRepository")
 public class AgentConfigRepositoryImpl implements AgentConfigRepository {

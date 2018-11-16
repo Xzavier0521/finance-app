@@ -9,7 +9,7 @@ import com.google.common.collect.Lists;
 
 import finance.api.model.base.Page;
 import finance.api.model.vo.userAccount.InviteInfoAndIncomeVo;
-import finance.domain.InviteInfoAndIncome;
+import finance.domain.team.InviteInfoAndIncome;
 
 /**
  *  <p>注释</p>

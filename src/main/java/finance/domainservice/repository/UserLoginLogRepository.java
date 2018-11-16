@@ -1,6 +1,6 @@
 package finance.domainservice.repository;
 
-import finance.domain.UserLoginLog;
+import finance.domain.user.UserLoginLog;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package finance.domainservice.service.operationrecord;
 
-import finance.domain.OperationRecordSave;
+import finance.domain.log.OperationRecordSave;
 
 /**
  * <p>注释</p>

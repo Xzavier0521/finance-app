@@ -21,12 +21,12 @@ import com.google.common.collect.Lists;
 import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.BannerDetailVO;
 import finance.core.common.enums.ActivityCodeEnum;
-import finance.domain.ActivityConfig;
+import finance.domain.activity.ActivityConfig;
 import finance.domainservice.converter.UserInfoConverter;
-import finance.domainservice.service.activity.ActivityConfigQueryService;
+import finance.domainservice.service.activity.query.ActivityConfigQueryService;
 import finance.domainservice.service.banner.BannerBiz;
 import finance.domainservice.service.jwt.JwtService;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * @program: finance-server

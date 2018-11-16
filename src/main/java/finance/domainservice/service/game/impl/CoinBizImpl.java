@@ -22,7 +22,7 @@ import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.GameType;
 import finance.core.common.util.DateUtil;
 import finance.core.common.util.DateUtils;
-import finance.domain.ThirdAccountInfo;
+import finance.domain.user.ThirdAccountInfo;
 import finance.domain.dto.CoinLockParamDto;
 import finance.domain.dto.CoinLockResponseDto;
 import finance.domain.dto.RedisLockDto;
@@ -35,14 +35,14 @@ import finance.ext.api.model.WeiXinTemplateData;
 import finance.ext.api.request.WeiXinTemplateMessageSendRequest;
 import finance.ext.api.response.WeiXinTemplateMessageSendResponse;
 import finance.ext.integration.weixin.WeiXinTemplateMessageClient;
-import finance.mapper.FinanceCoinGameDAO;
-import finance.mapper.FinanceCoinGameLogDAO;
-import finance.mapper.FinanceCoinLogDAO;
-import finance.mapper.FinanceUserInfoDAO;
-import finance.model.po.FinanceCoinGame;
-import finance.model.po.FinanceCoinGameLog;
-import finance.model.po.FinanceCoinLog;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dao.FinanceCoinGameDAO;
+import finance.core.dal.dao.FinanceCoinGameLogDAO;
+import finance.core.dal.dao.FinanceCoinLogDAO;
+import finance.core.dal.dao.FinanceUserInfoDAO;
+import finance.core.dal.dataobject.FinanceCoinGame;
+import finance.core.dal.dataobject.FinanceCoinGameLog;
+import finance.core.dal.dataobject.FinanceCoinLog;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * @program: finance-server

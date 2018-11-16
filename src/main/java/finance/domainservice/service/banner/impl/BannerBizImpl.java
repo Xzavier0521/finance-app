@@ -8,8 +8,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import finance.domainservice.service.banner.BannerBiz;
-import finance.mapper.FinanceBannerInfoDAO;
-import finance.model.po.FinanceBannerInfo;
+import finance.core.dal.dao.FinanceBannerInfoDAO;
+import finance.core.dal.dataobject.FinanceBannerInfo;
 import finance.api.model.vo.BannerDetailVO;
 
 /**

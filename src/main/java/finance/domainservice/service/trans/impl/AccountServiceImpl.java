@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dataobject.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +19,7 @@ import finance.domain.dto.RedisLockDto;
 import finance.domain.dto.UserWithdrawDto;
 import finance.domainservice.service.AbstractCoinDealMulti;
 import finance.domainservice.service.trans.AccountService;
-import finance.mapper.*;
-import finance.model.po.*;
+import finance.core.dal.dao.*;
 
 /**
  * @author hewenbin

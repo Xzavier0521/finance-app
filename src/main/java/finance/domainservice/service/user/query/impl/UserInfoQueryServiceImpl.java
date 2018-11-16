@@ -16,13 +16,13 @@ import com.google.common.collect.Maps;
 
 import finance.api.model.base.Page;
 import finance.core.common.util.CommonUtils;
-import finance.domain.OperationLog;
-import finance.domain.UserInfo;
+import finance.domain.log.OperationLog;
+import finance.domain.user.UserInfo;
 import finance.domainservice.repository.OperationLogRepository;
 import finance.domainservice.repository.UserInfoRepository;
 import finance.domainservice.repository.UserInviteRepository;
 import finance.domainservice.service.user.query.UserInfoQueryService;
-import finance.model.po.FinanceUserInviteInfo;
+import finance.core.dal.dataobject.FinanceUserInviteInfo;
 
 /**
  * <p>用户信息查询</p>

@@ -20,8 +20,8 @@ import finance.domainservice.service.sms.SmsBiz;
 import finance.domainservice.service.sms.SmsService;
 import finance.domainservice.service.validate.ImgValidateService;
 import finance.domainservice.service.validate.SmsValidateService;
-import finance.mapper.FinanceSmsSendLogDAO;
-import finance.model.po.FinanceSmsSendLog;
+import finance.core.dal.dao.FinanceSmsSendLogDAO;
+import finance.core.dal.dataobject.FinanceSmsSendLog;
 
 /**
  * @author yaolei

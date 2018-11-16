@@ -19,12 +19,12 @@ import finance.domain.dto.RedisLockDto;
 import finance.domainservice.service.AbstractCoinDealMulti;
 import finance.domainservice.service.gift.GiftBiz;
 import finance.domainservice.service.jwt.JwtService;
-import finance.mapper.FinanceCoinLogDAO;
-import finance.mapper.FinanceGiftInfoDAO;
-import finance.mapper.FinanceUserGiftInfoDAO;
-import finance.model.po.FinanceCoinLog;
-import finance.model.po.FinanceGiftInfo;
-import finance.model.po.FinanceUserGiftInfo;
+import finance.core.dal.dao.FinanceCoinLogDAO;
+import finance.core.dal.dao.FinanceGiftInfoDAO;
+import finance.core.dal.dao.FinanceUserGiftInfoDAO;
+import finance.core.dal.dataobject.FinanceCoinLog;
+import finance.core.dal.dataobject.FinanceGiftInfo;
+import finance.core.dal.dataobject.FinanceUserGiftInfo;
 
 /**
  * @program: finance-server

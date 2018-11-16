@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import finance.api.model.base.Page;
 import finance.api.model.vo.financeproduct.RebackCashRuleVO;
 import finance.domainservice.service.financeproduct.InsuranceProductBiz;
-import finance.mapper.FinanceProductMainDAO;
-import finance.model.po.FinanceProductMain;
+import finance.core.dal.dao.FinanceProductMainDAO;
+import finance.core.dal.dataobject.FinanceProductMain;
 
 /**
  * <p>保险产品返现规则BIZ实现类</p>

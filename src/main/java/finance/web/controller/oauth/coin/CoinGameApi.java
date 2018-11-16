@@ -1,154 +1,72 @@
 package finance.web.controller.oauth.coin;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+import javax.annotation.Resource;
+
+import lombok.extern.slf4j.Slf4j;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import finance.api.model.base.Page;
 import finance.api.model.base.XMap;
+import finance.api.model.request.ActivityCoinGameQueryRequest;
+import finance.api.model.request.BasicRequest;
+import finance.api.model.request.PayCoinPlayGameRequest;
+import finance.api.model.response.BasicResponse;
+import finance.api.model.response.PayCoinPlayGameResponse;
 import finance.api.model.response.ResponseResult;
+import finance.api.model.response.ValidateResponse;
 import finance.api.model.vo.EarlyClockPageVO;
 import finance.api.model.vo.MyRecordVO;
 import finance.api.model.vo.PushRewardVO;
+import finance.api.model.vo.activity.CoinGameVO;
 import finance.core.common.constant.Constant;
 import finance.core.common.enums.CodeEnum;
+import finance.core.common.enums.ReturnCode;
+import finance.core.common.util.PreconditionUtils;
+import finance.core.common.util.ResponseResultUtils;
+import finance.core.common.util.ValidatorTools;
+import finance.core.dal.dataobject.FinanceCoinLog;
+import finance.domain.user.UserInfo;
+import finance.domainservice.converter.UserInfoConverter;
+import finance.domainservice.service.activity.ActivityCoinGameService;
+import finance.domainservice.service.activity.query.ActivityCoinGameQueryService;
 import finance.domainservice.service.game.CoinBiz;
-import finance.model.po.FinanceCoinLog;
+import finance.domainservice.service.jwt.JwtService;
+import finance.web.controller.response.ActivityCoinGameQueryBuilder;
 
 /**
- * 金币游戏服务.
- * @author hewenbin
- * @version v1.0 2018年8月15日 下午4:37:12 hewenbin
+ * <p>金币游戏服务</p>
+ * @author lili
+ * @version $Id: CoinGameApi.java, v0.1 2018/11/15 10:14 AM lili Exp $
  */
+@Slf4j
 @RequestMapping("coin/game")
 @RestController
 public class CoinGameApi {
-    @Autowired
-    private CoinBiz coinBizImpl;
+    @Resource
+    private CoinBiz                      coinBizImpl;
+    @Resource
+    private JwtService                   jwtService;
+    @Resource
+    private ActivityCoinGameQueryService activityCoinGameQueryService;
+    @Resource
+    private ActivityCoinGameService      activityCoinGameService;
 
-    /**
-     * <pre>
-     * @api {GET} coin/game 查询金币游戏详情
-     * @apiName queryCoinGameInfo 
-     * @apiGroup COIN
-     * @apiVersion 0.1.0
-     * @apiDescription 查询金币游戏详情
-     * @apiSuccess {Boolean} succeed 是否成功
-     * @apiSuccess {String} errorCode 结果码
-     * @apiSuccess {String} errorMessage 消息说明
-     * @apiSuccess {JSON} data 数据
-     * @apiSuccess {Int} totalJoinNum 总参加打卡人数（报名参加明天的打卡）
-     * @apiSuccess {Int} totalCoinNum 总金币数（报名参加明天打卡的金币）
-     * @apiSuccess {Int} signNum 今日打卡人数
-     * @apiSuccess {Int} noSignNum 昨天报名，但是今日未打卡人数
-     * @apiSuccess {String} earliestMobile 最早打卡人手机号
-     * @apiSuccess {String} earliestTime 最早打卡时间
-     * @apiSuccess {String} maxCoinMobile 手气最好的手机号
-     * @apiSuccess {Int} maxCoinNum 手气最好的金币数量
-     * @apiSuccess {String} longestMobile 连续打卡天数最长的手机号
-     * @apiSuccess {Int} longestNum 连续打卡最长天数
-     * @apiSuccess {Boolean} yesterdayJoinTask 是否昨日参加活动
-     * @apiSuccess {Boolean} todayJoinTask 是否今日参加活动
-     * @apiSuccess {Boolean} clockTask 是否打卡
-     * @apiSuccess {Int} yesterdayTotalJoinCoinNum 昨天报名总金币数
-     * @apiSuccess {Int} yesterdayTotalJoinPersonNum 昨天报名总人数
-     * @apiSuccess {Int} totalCanUserCoin 当前可用金额
-     * @apiSuccess {Int} earlyCardUseCoinNum 报名需要金币数
-     * @apiSuccessExample {JSON} Success-Response
-     *  HTTP/1.1 200 OK
-     *  {
-     *   "errorCode":"0000000",
-     *   "errorMessage":"成功",
-     *   "succeed",true,
-     *   "data":{
-     *   	"totalJoinNum":100,
-     *   	"totalCoinNum":10000,
-     *   	"signNum":30,
-     *   	"noSignNum":20,
-     *   	"earliestMobile":"131****1111",
-     *   	"earliestTime":"05:00:01",
-     *   	"maxCoinMobile":"132****1111",
-     *   	"maxCoinNum":30,
-     *   	"longestMobile":"135****1111",
-     *   	"longestNum":10,
-     *   	"yesterdayJoinTask":true,
-     *   	"todayJoinTask":true,
-      *   	"clockTask":false,
-     *      "yesterdayTotalJoinCoinNum": 100000000,
-     *      "totalCanUserCoin": 24453,
-     *      "earlyCardUseCoinNum": 100,
-     *      "yesterdayTotalJoinPersonNum": 100
-     *   }
-     *  }
-     * @apiError 0000000 成功
-     * @apiError 9999999 网络返回错误
-     * </pre>
-     * @author hewenbin
-     * @version CoinApi.java, v1.0 2018年8月15日 下午4:46:23 hewenbin
-     */
     @GetMapping
     public ResponseResult<EarlyClockPageVO> queryCoinGameInfo() {
-        ResponseResult<EarlyClockPageVO> res = coinBizImpl.getClockPageData();
-        return res;
+        return coinBizImpl.getClockPageData();
     }
 
-    /**
-     * <pre>
-     * @api {GET} coin/game/mine 查询我的金币游戏详细信息
-     * @apiName queryUserCoinGameInfo 
-     * @apiGroup COIN
-     * @apiVersion 0.1.0
-     * @apiDescription 我的战绩
-     * @apiParam {Long} pageNum 页数
-     * @apiParam {Long} pageSize 每页条数
-     * @apiSuccess {Boolean} succeed 是否成功
-     * @apiSuccess {String} errorCode 结果码
-     * @apiSuccess {String} errorMessage 消息说明
-     * @apiSuccess {JSON} data 数据
-     * @apiSuccess {Int} data.totalOutCoin 累计投入金币总数
-     * @apiSuccess {Int} data.totalInCoin 累计赚取金币总数
-     * @apiSuccess {Int} data.totalSign 累计打卡天数
-     * @apiSuccess {Array} data.records 投入、赚取记录
-     * @apiSuccess {String="参加打卡活动","打卡获取金币"} records.desc 金币说明
-     * @apiSuccess {String} records.datetime 金币记录时间
-     * @apiSuccess {Int} records.coinNum 金币数量
-     * @apiSuccess {String="in","out"} records.type 金币类型（投入：out、赚取：in）
-     * @apiSuccessExample {JSON} Success-Response
-     *  HTTP/1.1 200 OK
-     *   {
-     *       "errorCode": "0000000",
-     *       "errorMessage": "success",
-     *       "succeed": true,
-     *       "data": {
-     *           "totalInCoin": 10000,
-     *           "totalSign": 100,
-     *           "totalOutCoin": 100,
-     *           "records": [
-     *               {
-     *                   "datetime": "2017-09-09 07:00:00",
-     *                   "coinNum": 100,
-     *                   "type": "in",
-     *                   "desc": "参加打卡活动"
-     *               },
-     *               {
-     *                   "datetime": "2017-09-09 07:00:00",
-     *                   "coinNum": 100,
-     *                   "type": "out",
-     *                   "desc": "打卡获取金币"
-     *               }
-     *           ]
-     *       }
-     *   }
-     * @apiError 0000000 成功
-     * @apiError 9999999 网络返回错误
-     * </pre>
-     * @author hewenbin
-     * @version CoinApi.java, v1.0 2018年8月16日 上午9:02:21 hewenbin
-     */
     @GetMapping("mine")
     public ResponseResult<MyRecordVO> queryUserCoinGameInfo(@RequestParam("pageNum") Long pageNum,
                                                             @RequestParam("pageSize") Long pageSize) {
-        if (StringUtils.isEmpty(pageNum) || StringUtils.isEmpty(pageSize)) {
+        if (Objects.isNull(pageNum) || Objects.isNull(pageSize)) {
             return ResponseResult.error(CodeEnum.gameParamInvalid);
         }
         Page<FinanceCoinLog> financeCoinLogPage = new Page<>(pageSize.intValue(), pageNum);
@@ -156,34 +74,6 @@ public class CoinGameApi {
 
     }
 
-    /**
-     * <pre>
-     * @api {POST} coin/game 点击参加早起打卡活动和打卡
-     * @apiName earlyCoinGame
-     * @apiGroup COIN
-     * @apiVersion 0.1.0
-     * @apiDescription 参加早起打卡活动
-     * @apiParam {String='join','sign'} method 参加活动,join:参加活动,sign:打卡
-     * @apiSuccess {Boolean} succeed 是否成功
-     * @apiSuccess {String} errorCode 结果码
-     * @apiSuccess {String} errorMessage 消息说明
-     * @apiSuccessExample {JSON} Success-Response
-     *  HTTP/1.1 200 OK
-     *  {
-     *      "errorCode": "0000000",
-     *      "errorMessage": "success",
-     *      "data": true,
-     *      "succeed": true
-     *  }
-     * @apiError 0000000 成功
-     * @apiError 9999999 网络返回错误
-     * @apiError 0401002 金币数不足
-     * @apiError 0401003 非参加活动时间
-     * @apiError 0401005 参加失败，请稍后重试
-     * </pre>
-     * @author moruihai
-     * @version CoinApi.java, v1.0 2018年8月22日
-     */
     @PostMapping
     public ResponseResult<Boolean> earlyCoinGame(@RequestBody XMap paramMap) {
         String method = (String) paramMap.get("method");
@@ -198,6 +88,51 @@ public class CoinGameApi {
     @GetMapping("pushRewardMsg")
     public ResponseResult<PushRewardVO> pushRewardMsg() {
         return coinBizImpl.pushRewardMsg();
-
     }
+
+    @PostMapping("payCoinPlayGame")
+    public ResponseResult<PayCoinPlayGameResponse> payCoinPlayGame(@RequestBody PayCoinPlayGameRequest request) {
+        log.info("[开始支付金币玩游戏]，请求参数:{}", request);
+        ResponseResult<PayCoinPlayGameResponse> response;
+        try {
+            UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
+            commonValidate(request, userInfo);
+            BasicResponse basicResponse = activityCoinGameService.localData(userInfo,
+                request.getActivityCode(), request.getGameCode(), request.getCoinNum());
+            PreconditionUtils.checkArgument(basicResponse.isSuccess(),
+                basicResponse.getReturnMessage());
+            response = ResponseResult.success(null);
+        } catch (final Exception e) {
+            response = ResponseResultUtils.error(e.getMessage());
+            log.error("[支付金币玩游戏],异常:{}", ExceptionUtils.getStackTrace(e));
+        }
+        log.info("[结束支付金币玩游戏]，请求参数:{}", request, response);
+        return response;
+    }
+
+    @PostMapping("queryCoinGameList")
+    public ResponseResult<List<CoinGameVO>> queryCoinGameList(@RequestBody ActivityCoinGameQueryRequest request) {
+        log.info("[查询用户是否支付金币玩游戏],请求参数:{}", request);
+        ResponseResult<List<CoinGameVO>> response;
+        try {
+            UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
+            commonValidate(request, userInfo);
+            List<String> gameCodes = Arrays.asList(StringUtils.split(request.getGameCodes(), ","));
+            response = ActivityCoinGameQueryBuilder.build(activityCoinGameQueryService
+                .queryCoinGameList(userInfo, request.getActivityCode(), gameCodes));
+        } catch (final Exception e) {
+            response = ResponseResultUtils.error(e.getMessage());
+            log.info("[查询用户是否支付金币玩游戏],异常:{}", ExceptionUtils.getStackTrace(e));
+        }
+        log.info("[查询用户是否支付金币玩游戏],请求参数:{},返回结果:{}", request, response);
+        return response;
+    }
+
+    private void commonValidate(BasicRequest request, UserInfo userInfo) {
+        ValidateResponse validateResponse = ValidatorTools.validate(request);
+        PreconditionUtils.checkArgument(validateResponse.isStatus(),
+            validateResponse.getErrorMsg());
+        PreconditionUtils.checkArgument(Objects.nonNull(userInfo), ReturnCode.USER_NOT_EXISTS);
+    }
+
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import finance.api.model.base.Page;
 import finance.api.model.vo.financeproduct.RebackCashRuleVO;
-import finance.model.po.FinanceProductMain;
+import finance.core.dal.dataobject.FinanceProductMain;
 
 /**
  * @program: finance-app

@@ -2,13 +2,13 @@ package finance.domainservice.repository.impl;
 
 import javax.annotation.Resource;
 
-import finance.mapper.FinanceThirdAccountInfoDAO;
+import finance.core.dal.dao.FinanceThirdAccountInfoDAO;
 import org.springframework.stereotype.Repository;
 
-import finance.domain.ThirdAccountInfo;
+import finance.domain.user.ThirdAccountInfo;
 import finance.domainservice.converter.ThirdAccountInfoConverter;
 import finance.domainservice.repository.ThirdAccountInfoRepository;
-import finance.model.po.FinanceThirdAccountInfo;
+import finance.core.dal.dataobject.FinanceThirdAccountInfo;
 
 /**
  * <p>注释</p>

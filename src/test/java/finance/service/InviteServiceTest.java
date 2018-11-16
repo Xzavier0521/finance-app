@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import finance.api.model.base.Page;
-import finance.domain.InviteInfoAndIncome;
+import finance.domain.team.InviteInfoAndIncome;
 import finance.domainservice.service.user.query.UserInviteQueryService;
 
 @Slf4j

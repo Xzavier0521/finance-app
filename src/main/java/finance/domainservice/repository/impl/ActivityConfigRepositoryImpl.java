@@ -11,10 +11,10 @@ import org.springframework.stereotype.Repository;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import finance.domain.ActivityConfig;
+import finance.domain.activity.ActivityConfig;
 import finance.domainservice.converter.ActivityConfigConverter;
 import finance.domainservice.repository.ActivityConfigRepository;
-import finance.mapper.ActivityConfigDAO;
+import finance.core.dal.dao.ActivityConfigDAO;
 
 /**
  * <p>活动推广配置</p>

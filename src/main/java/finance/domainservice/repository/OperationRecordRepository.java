@@ -1,8 +1,7 @@
 package finance.domainservice.repository;
 
-import com.google.common.collect.Lists;
-import finance.domain.OperationRecord;
-import finance.model.po.FinanceOperationRecord;
+import finance.domain.log.OperationRecord;
+import finance.core.dal.dataobject.FinanceOperationRecord;
 
 import java.util.List;
 

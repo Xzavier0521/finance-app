@@ -1,6 +1,6 @@
 package finance.domainservice.repository;
 
-import finance.domain.CardInfo;
+import finance.domain.coin.CardInfo;
 import java.util.List;
 
 /**

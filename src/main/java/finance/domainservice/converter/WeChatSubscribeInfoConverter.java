@@ -8,8 +8,8 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.Lists;
 
-import finance.domain.WeChatSubscribeInfo;
-import finance.model.po.WeChatSubscribeInfoDO;
+import finance.domain.weixin.WeChatSubscribeInfo;
+import finance.core.dal.dataobject.WeChatSubscribeInfoDO;
 import finance.core.common.util.ConvertBeanUtil;
 
 /**

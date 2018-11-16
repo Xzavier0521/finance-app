@@ -9,8 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 
-import finance.domain.ParticipantInfo;
-import finance.model.po.ParticipantInfoDO;
+import finance.domain.activity.ParticipantInfo;
+import finance.core.dal.dataobject.ParticipantInfoDO;
 import finance.core.common.util.CommonUtils;
 import finance.core.common.util.ConvertBeanUtil;
 

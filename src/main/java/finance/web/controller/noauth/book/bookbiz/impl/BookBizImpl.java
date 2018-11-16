@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
-import finance.mapper.FinanceUserInfoDAO;
+import finance.core.dal.dao.FinanceUserInfoDAO;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import com.alibaba.fastjson.TypeReference;
 import finance.web.controller.noauth.book.bookbiz.BookBiz;
 import finance.web.controller.noauth.book.vo.BookCommentVO;
 import finance.api.model.base.XMap;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * @program: finance-server

@@ -1,6 +1,6 @@
 package finance.domainservice.repository;
 
-import finance.domain.UserInfo;
+import finance.domain.user.UserInfo;
 
 import java.util.List;
 

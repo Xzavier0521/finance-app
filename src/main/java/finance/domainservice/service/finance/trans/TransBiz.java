@@ -7,7 +7,7 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.financeProfit.FinanceProfitVO;
 import finance.api.model.vo.transRecord.FinanceOrderVo;
 import finance.domain.dto.UserWithdrawDto;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * @author yaolei

@@ -2,7 +2,7 @@ package finance.domainservice.service.questionandanswer;
 
 import java.util.List;
 
-import finance.model.po.FinanceQuestionAndAnswer;
+import finance.core.dal.dataobject.FinanceQuestionAndAnswer;
 
 public interface QuestionAndAnswerBiz {
 

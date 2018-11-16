@@ -8,8 +8,8 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.Lists;
 
-import finance.domain.ThirdAccountInfo;
-import finance.model.po.FinanceThirdAccountInfo;
+import finance.domain.user.ThirdAccountInfo;
+import finance.core.dal.dataobject.FinanceThirdAccountInfo;
 import finance.core.common.util.ConvertBeanUtil;
 /**
  * <p>注释</p>

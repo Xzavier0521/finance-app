@@ -5,8 +5,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import finance.domainservice.service.finance.tansAccount.TransAccBiz;
-import finance.mapper.FinanceUserAccountDAO;
-import finance.model.po.FinanceUserAccount;
+import finance.core.dal.dao.FinanceUserAccountDAO;
+import finance.core.dal.dataobject.FinanceUserAccount;
 
 /**
  * <p>注释</p>

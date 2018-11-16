@@ -1,9 +1,9 @@
 package finance.domainservice.repository.impl;
 
-import finance.domain.CardInfo;
+import finance.domain.coin.CardInfo;
 import finance.domainservice.converter.CardInfoConverter;
 import finance.domainservice.repository.CardInfoRepository;
-import finance.mapper.FinanceIdCardInfoDAO;
+import finance.core.dal.dao.FinanceIdCardInfoDAO;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;

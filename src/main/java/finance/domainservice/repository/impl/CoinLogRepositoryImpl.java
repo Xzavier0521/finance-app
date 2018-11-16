@@ -1,8 +1,8 @@
 package finance.domainservice.repository.impl;
 
-import finance.domain.CoinLog;
+import finance.domain.coin.CoinLog;
 import finance.domainservice.converter.CoinLogConverter;
-import finance.mapper.FinanceCoinLogDAO;
+import finance.core.dal.dao.FinanceCoinLogDAO;
 import finance.domainservice.repository.CoinLogRepository;
 import org.springframework.stereotype.Repository;
 

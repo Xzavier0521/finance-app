@@ -1,7 +1,7 @@
 package finance.domainservice.service.finance.order;
 
 import finance.api.model.base.Page;
-import finance.model.po.FinanceOrder;
+import finance.core.dal.dataobject.FinanceOrder;
 
 /**
  * <p>注释</p>

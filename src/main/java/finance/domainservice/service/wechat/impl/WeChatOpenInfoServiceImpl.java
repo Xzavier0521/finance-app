@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Maps;
 
 import finance.core.common.enums.ConcernStatusEnum;
-import finance.domain.InviteOpenInfo;
+import finance.domain.weixin.InviteOpenInfo;
 import finance.domainservice.repository.InviteOpenInfoRepository;
 import finance.domainservice.service.wechat.WeChatOpenInfoService;
 

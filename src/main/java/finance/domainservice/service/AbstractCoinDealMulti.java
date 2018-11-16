@@ -12,21 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 import finance.domain.dto.RedisLockDto;
 
 /**
- * @program: finance-server
+ * <p>注释</p>
  *
- * @description:
- *
- * @author: MORUIHAI
- *
- * @create: 2018-08-23 13:35
- **/
+ * @author lili
+ * @version $Id: AbstractCoinDealMulti.java, v0.1 2018/11/15 10:01 PM lili Exp $
+ */
 public abstract class AbstractCoinDealMulti {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractCoinDealMulti.class);
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Value("${user.coin.key.prefix}")
-    private String              userCoinKeyPrefix;
+    private String userCoinKeyPrefix;
 
     // 获取锁
     private Boolean getLock(String coinLockKey) {
@@ -45,12 +42,16 @@ public abstract class AbstractCoinDealMulti {
         return hasLock;
     }
 
-    //释放锁
+    /**
+     * 释放锁
+     */
     private void releaseLock(String coinLockKey) {
         stringRedisTemplate.delete(coinLockKey);
     }
 
-    //调用入口
+    /**
+     * 调用入口
+     */
     @Transactional(rollbackFor = Exception.class)
     public void handle(RedisLockDto redisLockDto) {
         String coinLockKey = userCoinKeyPrefix + redisLockDto.getLockId();

@@ -1,8 +1,8 @@
 package finance.domainservice.converter;
 
 import com.google.common.collect.Lists;
-import finance.domain.UserInviteInfo;
-import finance.model.po.FinanceUserInviteInfo;
+import finance.domain.user.UserInviteInfo;
+import finance.core.dal.dataobject.FinanceUserInviteInfo;
 import finance.core.common.util.ConvertBeanUtil;
 import org.apache.commons.collections4.CollectionUtils;
 

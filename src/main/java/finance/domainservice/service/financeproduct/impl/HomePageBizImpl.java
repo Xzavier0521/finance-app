@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import finance.api.model.base.Page;
 import finance.api.model.vo.productmainpage.ProductMainpageVO;
 import finance.domainservice.service.financeproduct.HomePageBiz;
-import finance.mapper.FinanceProductMainPageDAO;
+import finance.core.dal.dao.FinanceProductMainPageDAO;
 
 /**
  * @program: finance-app

@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dataobject.*;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -26,8 +27,8 @@ import finance.core.common.constant.Constant;
 import finance.core.common.constant.WeChatConstant;
 import finance.core.common.enums.*;
 import finance.core.common.util.DateUtil;
-import finance.domain.LevelCount;
-import finance.domain.TeamInfoQueryResult;
+import finance.domain.activity.LevelCount;
+import finance.domain.team.TeamInfoQueryResult;
 import finance.domain.dto.IdCardInfoDto;
 import finance.domain.dto.UserBankCardDto;
 import finance.domainservice.service.auth.AuthService;
@@ -36,8 +37,7 @@ import finance.domainservice.service.user.query.TeamInfoQueryService;
 import finance.domainservice.service.userinfo.UserInfoBiz;
 import finance.domainservice.service.validate.PwdValidateService;
 import finance.domainservice.service.validate.SmsValidateService;
-import finance.mapper.*;
-import finance.model.po.*;
+import finance.core.dal.dao.*;
 
 /**
  * 用户信息服务类.

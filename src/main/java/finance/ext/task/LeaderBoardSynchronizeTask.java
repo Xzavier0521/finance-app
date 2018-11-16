@@ -41,7 +41,7 @@ public class LeaderBoardSynchronizeTask implements SchedulingConfigurer,
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         taskRegistrar.addTriggerTask(() -> {
             log.info("[开始同步排行榜数据]，当前时间：{}", LocalDateTime.now());
-            leaderBoardSynchronizeService.process();
+           // leaderBoardSynchronizeService.process();
             log.info("[结束同步排行榜数据]，当前时间：{}", LocalDateTime.now());
         }, triggerContext -> {
             // 定时任务触发，可修改定时任务的执行周期 this.corn

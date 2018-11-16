@@ -1,6 +1,6 @@
 package finance.domainservice.service.wechat;
 
-import finance.domain.InviteOpenInfo;
+import finance.domain.weixin.InviteOpenInfo;
 
 import java.util.List;
 

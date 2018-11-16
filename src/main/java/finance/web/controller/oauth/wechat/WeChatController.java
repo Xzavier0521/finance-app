@@ -22,7 +22,7 @@ import finance.domainservice.repository.UserInviteRepository;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.query.UserActivityWeChatPubInfoQueryService;
 import finance.domainservice.service.wechat.WeChatPubQrService;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * <p>微信公众号接口</p>

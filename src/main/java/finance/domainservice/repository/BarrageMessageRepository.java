@@ -2,7 +2,7 @@ package finance.domainservice.repository;
 
 import finance.api.model.base.Page;
 import finance.api.model.condition.BarrageMessageQueryCondition;
-import finance.domain.BarrageMessage;
+import finance.domain.log.BarrageMessage;
 
 /**
  * <p>弹幕消息：现阶段保存到数据库，后期可以考虑放入redis或者采用rabbitmq</p>

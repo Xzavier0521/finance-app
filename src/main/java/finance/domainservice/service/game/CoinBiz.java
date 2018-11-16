@@ -9,7 +9,7 @@ import finance.api.model.vo.CoinRecordVO;
 import finance.api.model.vo.EarlyClockPageVO;
 import finance.api.model.vo.MyRecordVO;
 import finance.api.model.vo.PushRewardVO;
-import finance.model.po.FinanceCoinLog;
+import finance.core.dal.dataobject.FinanceCoinLog;
 
 /**
  * @program: finance-server

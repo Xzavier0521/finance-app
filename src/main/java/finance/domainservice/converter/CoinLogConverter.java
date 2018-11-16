@@ -1,8 +1,8 @@
 package finance.domainservice.converter;
 
 import com.google.common.collect.Lists;
-import finance.domain.CoinLog;
-import finance.model.po.FinanceCoinLog;
+import finance.domain.coin.CoinLog;
+import finance.core.dal.dataobject.FinanceCoinLog;
 import finance.core.common.util.ConvertBeanUtil;
 import org.apache.commons.collections4.CollectionUtils;
 

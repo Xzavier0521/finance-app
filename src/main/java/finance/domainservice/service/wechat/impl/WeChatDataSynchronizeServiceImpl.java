@@ -24,7 +24,7 @@ import com.google.common.collect.Maps;
 import finance.core.common.enums.ConcernStatusEnum;
 import finance.core.common.enums.OperatorTypeEnum;
 import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
-import finance.domain.ThirdAccountInfo;
+import finance.domain.user.ThirdAccountInfo;
 import finance.domain.weixin.WeiXinMessageTemplate;
 import finance.domainservice.repository.InviteOpenInfoRepository;
 import finance.domainservice.repository.WeiXinMessageTemplateRepository;

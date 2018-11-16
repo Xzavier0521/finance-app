@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.mapper.FinanceActivityFixedAmountDetailDAO">
-    <resultMap id="BaseResultMap" type="finance.model.po.FinanceActivityFixedAmountDetail">
+<mapper namespace="finance.core.dal.dao.FinanceActivityFixedAmountDetailDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.FinanceActivityFixedAmountDetail">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
         <result column="activity_id" property="activityId" jdbcType="BIGINT"/>
@@ -27,7 +27,7 @@
         delete from finance_activity_fixed_amount_detail
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="finance.model.po.FinanceActivityFixedAmountDetail">
+    <insert id="insert" parameterType="finance.core.dal.dataobject.FinanceActivityFixedAmountDetail">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -40,7 +40,7 @@
         #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}
         )
     </insert>
-    <insert id="insertSelective" parameterType="finance.model.po.FinanceActivityFixedAmountDetail">
+    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.FinanceActivityFixedAmountDetail">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -104,7 +104,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.FinanceActivityFixedAmountDetail">
+    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.FinanceActivityFixedAmountDetail">
         update finance_activity_fixed_amount_detail
         <set>
             <if test="userId != null">

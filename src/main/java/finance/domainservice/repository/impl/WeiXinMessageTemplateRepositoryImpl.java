@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Maps;
 
-import finance.mapper.WeiXinMessageTemplateDAO;
+import finance.core.dal.dao.WeiXinMessageTemplateDAO;
 import finance.core.dal.dataobject.WeiXinMessageTemplateDO;
 import finance.domain.weixin.WeiXinMessageTemplate;
 import finance.domainservice.converter.WeiXinMessageTemplateConverter;

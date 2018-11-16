@@ -1,9 +1,9 @@
 package finance.core.common.aspect;
 
 import finance.core.common.exception.JwtException;
-import finance.domain.OperationLog;
+import finance.domain.log.OperationLog;
 import finance.domainservice.repository.OperationLogRepository;
-import finance.model.po.FinanceUserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 import finance.domainservice.service.jwt.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;

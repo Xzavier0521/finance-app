@@ -17,14 +17,14 @@ import com.google.common.collect.Lists;
 
 import finance.api.model.base.Page;
 import finance.core.common.util.CommonUtils;
-import finance.domain.InviteInfoAndIncome;
-import finance.domain.UserInfo;
+import finance.domain.team.InviteInfoAndIncome;
+import finance.domain.user.UserInfo;
 import finance.domainservice.repository.*;
 import finance.domainservice.service.user.query.UserInviteQueryService;
-import finance.model.po.FinanceOperationRecord;
-import finance.model.po.FinanceProductMain;
-import finance.model.po.FinanceUserAccount;
-import finance.model.po.FinanceUserInviteInfo;
+import finance.core.dal.dataobject.FinanceOperationRecord;
+import finance.core.dal.dataobject.FinanceProductMain;
+import finance.core.dal.dataobject.FinanceUserAccount;
+import finance.core.dal.dataobject.FinanceUserInviteInfo;
 
 /**
  *  <p>用户邀请信息查询</p>

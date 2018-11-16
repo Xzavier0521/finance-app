@@ -1,6 +1,6 @@
 package finance.domainservice.repository;
 
-import finance.model.po.FinanceUserAccount;
+import finance.core.dal.dataobject.FinanceUserAccount;
 
 import java.util.List;
 

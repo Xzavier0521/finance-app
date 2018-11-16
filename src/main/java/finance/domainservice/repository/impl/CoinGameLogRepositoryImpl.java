@@ -1,9 +1,9 @@
 package finance.domainservice.repository.impl;
 
-import finance.domain.CoinGameLog;
+import finance.domain.coin.CoinGameLog;
 import finance.domainservice.converter.CoinGameLogConverter;
 import finance.domainservice.repository.CoinGameLogRepository;
-import finance.mapper.FinanceCoinGameDAO;
+import finance.core.dal.dao.FinanceCoinGameDAO;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;

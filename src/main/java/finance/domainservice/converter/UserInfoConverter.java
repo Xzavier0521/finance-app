@@ -8,8 +8,8 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.Lists;
 
-import finance.domain.UserInfo;
-import finance.model.po.FinanceUserInfo;
+import finance.domain.user.UserInfo;
+import finance.core.dal.dataobject.FinanceUserInfo;
 import finance.core.common.util.ConvertBeanUtil;
 import finance.core.common.util.DateUtils;
 

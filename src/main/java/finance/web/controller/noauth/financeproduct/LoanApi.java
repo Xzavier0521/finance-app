@@ -17,7 +17,7 @@ import finance.api.model.vo.financeproduct.LoanProductDetailVO;
 import finance.api.model.vo.financeproduct.LoanProductListVO;
 import finance.core.common.enums.CodeEnum;
 import finance.domainservice.service.financeproduct.LoanProductBiz;
-import finance.model.po.FinanceProductMain;
+import finance.core.dal.dataobject.FinanceProductMain;
 
 /**
  * @program: finance-app

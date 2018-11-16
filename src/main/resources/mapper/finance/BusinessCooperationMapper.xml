@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="finance.mapper.BusinessCooperationDAO">
-    <resultMap id="BaseResultMap" type="finance.model.po.BusinessCooperationDO">
+<mapper namespace="finance.core.dal.dao.BusinessCooperationDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.BusinessCooperationDO">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="real_name" jdbcType="VARCHAR" property="realName"/>
         <result column="mobile_phone" jdbcType="VARCHAR" property="mobilePhone"/>
@@ -27,7 +27,7 @@
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insert" parameterType="finance.model.po.BusinessCooperationDO">
+    <insert id="insert" parameterType="finance.core.dal.dataobject.BusinessCooperationDO">
         insert into finance_business_cooperation (id, real_name, mobile_phone,
         create_time, update_time, is_delete,
         creator, updator, version
@@ -37,7 +37,7 @@
         #{creator,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}
         )
     </insert>
-    <insert id="insertSelective" parameterType="finance.model.po.BusinessCooperationDO">
+    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.BusinessCooperationDO">
         insert into finance_business_cooperation
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -98,7 +98,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.model.po.BusinessCooperationDO">
+    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.BusinessCooperationDO">
         update finance_business_cooperation
         <set>
             <if test="realName != null">
@@ -128,7 +128,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="finance.model.po.BusinessCooperationDO">
+    <update id="updateByPrimaryKey" parameterType="finance.core.dal.dataobject.BusinessCooperationDO">
         update finance_business_cooperation
         set real_name = #{realName,jdbcType=VARCHAR},
         mobile_phone = #{mobilePhone,jdbcType=VARCHAR},

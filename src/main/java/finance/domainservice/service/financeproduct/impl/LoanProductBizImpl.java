@@ -13,10 +13,10 @@ import finance.api.model.base.Page;
 import finance.api.model.vo.financeproduct.LoanProductDetailVO;
 import finance.api.model.vo.financeproduct.LoanProductListVO;
 import finance.domainservice.service.financeproduct.LoanProductBiz;
-import finance.mapper.FinanceLoanDetailDAO;
-import finance.mapper.FinanceProductMainDAO;
-import finance.model.po.FinanceLoanDetail;
-import finance.model.po.FinanceProductMain;
+import finance.core.dal.dao.FinanceLoanDetailDAO;
+import finance.core.dal.dao.FinanceProductMainDAO;
+import finance.core.dal.dataobject.FinanceLoanDetail;
+import finance.core.dal.dataobject.FinanceProductMain;
 
 /**
  * <p>贷款产品Biz实现层</p>
