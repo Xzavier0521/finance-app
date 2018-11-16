@@ -156,7 +156,7 @@ public class RedEnvelopeRainController {
             response = ResponseResultUtils.error(e.getMessage());
             log.error("[查询红包雨活动-用户当前排名],异常:{}", ExceptionUtils.getStackTrace(e));
         }
-        log.info("[结束查询红包雨活动-用户当前排名]，请求参数,activityCode:{}，返回结果:{}", activityCode);
+        log.info("[结束查询红包雨活动-用户当前排名]，请求参数,activityCode:{}，返回结果:{}", activityCode,response);
         return response;
     }
 
