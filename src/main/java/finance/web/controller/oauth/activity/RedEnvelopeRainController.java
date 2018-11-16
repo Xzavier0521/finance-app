@@ -159,6 +159,8 @@ public class RedEnvelopeRainController {
     public ResponseResult<Page<UserCurrentRankingVO>> queryUserRankingList(@Param("activityCode") String activityCode,
                                                                            @Param("pageSize") int pageSize,
                                                                            @Param("pageNum") int pageNum) {
+        log.info("[开始查询排行榜],请求参数,activityCode:{},pageSize:{},pageNum:{}", activityCode, pageSize,
+            pageNum);
         ResponseResult<Page<UserCurrentRankingVO>> response;
         try {
             List<RedEnvelopeRainData> redEnvelopeRainDataList = redEnvelopeRainDataQueryService
@@ -170,6 +172,8 @@ public class RedEnvelopeRainController {
         } catch (final Exception e) {
             response = ResponseResultUtils.error(e.getMessage());
         }
+        log.info("[结束查询排行榜],请求参数,activityCode:{},pageSize:{},pageNum:{},返回结果:{}", activityCode,
+            pageSize, pageNum, response);
         return response;
     }
 }
