@@ -49,7 +49,7 @@ public class RedEnvelopeRainDataVO implements Serializable {
     /**
      * 总金额/金币
      */
-    private BigDecimal                  totalAmount;
+    private Long                  totalAmount;
 
     /**
      * 活动日期

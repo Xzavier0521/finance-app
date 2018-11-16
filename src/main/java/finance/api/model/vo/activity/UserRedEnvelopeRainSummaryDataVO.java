@@ -1,7 +1,6 @@
 package finance.api.model.vo.activity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,7 +41,7 @@ public class UserRedEnvelopeRainSummaryDataVO implements Serializable {
     /**
      * 今日总收入
      */
-    private BigDecimal        todayAmount;
+    private Long              todayAmount;
 
     /**
      * 总拆红包数量
@@ -51,7 +50,7 @@ public class UserRedEnvelopeRainSummaryDataVO implements Serializable {
     /**
      * 历史总收入
      */
-    private BigDecimal        historyAmount;
+    private Long              historyAmount;
     /**
      * 当前活动时间
      */

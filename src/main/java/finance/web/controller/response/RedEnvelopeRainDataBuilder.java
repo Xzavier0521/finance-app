@@ -1,6 +1,7 @@
 package finance.web.controller.response;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -32,6 +33,9 @@ public class RedEnvelopeRainDataBuilder {
             for (RedEnvelopeRainData redEnvelopeRainData : dataPage.getDataList()) {
                 data = new RedEnvelopeRainDataVO();
                 ConvertBeanUtil.copyBeanProperties(redEnvelopeRainData, data);
+                data.setTotalAmount(Objects.nonNull(redEnvelopeRainData.getTotalAmount())
+                    ? redEnvelopeRainData.getTotalAmount().longValue()
+                    : 0);
                 dataList.add(data);
             }
             page.setDataList(dataList);
