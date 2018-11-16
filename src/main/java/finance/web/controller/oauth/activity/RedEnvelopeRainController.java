@@ -111,7 +111,7 @@ public class RedEnvelopeRainController {
 
     @PostMapping("query4Page")
     public ResponseResult<Page<RedEnvelopeRainDataVO>> query4Page(@RequestBody RedEnvelopeRainDataQueryRequest request) {
-        log.info("[开始查询红包雨活动数据]");
+        log.info("[开始查询红包雨活动数据],请求参数:{}", request);
         ResponseResult<Page<RedEnvelopeRainDataVO>> response;
         try {
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
