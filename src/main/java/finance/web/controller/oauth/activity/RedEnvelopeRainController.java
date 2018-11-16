@@ -156,7 +156,8 @@ public class RedEnvelopeRainController {
         ResponseResult<Page<UserCurrentRankingVO>> response;
         try {
             List<RedEnvelopeRainData> redEnvelopeRainDataList = redEnvelopeRainDataQueryService
-                .queryRankingList(activityCode, 122, pageSize, pageNum);
+                .queryRankingList(activityCode, DateUtils.getCurrentDay(LocalDate.now()), pageSize,
+                    pageNum);
             Page<UserCurrentRankingVO> page = RedEnvelopeRainDataBuilder.build(pageSize, pageNum,
                 redEnvelopeRainDataList);
             response = ResponseResult.success(page);
