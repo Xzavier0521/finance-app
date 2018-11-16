@@ -94,8 +94,13 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
                 DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.LONG_WEB_FORMAT))
             .activityCode(activityCode).activityDay(todayRedEnvelopeRainData.getActivityDay())
             .todayNum(todayRedEnvelopeRainData.getTotalNum())
-            .todayAmount(todayRedEnvelopeRainData.getTotalAmount())
+            .todayAmount(Objects.nonNull(todayRedEnvelopeRainData.getTotalAmount())
+                ? todayRedEnvelopeRainData.getTotalAmount().longValue()
+                : 0L)
             .totalNum(hisRedEnvelopeRainData.getTotalNum())
-            .historyAmount(hisRedEnvelopeRainData.getTotalAmount()).build();
+            .historyAmount(Objects.nonNull(hisRedEnvelopeRainData.getTotalAmount())
+                ? hisRedEnvelopeRainData.getTotalAmount().longValue()
+                : 0)
+            .build();
     }
 }

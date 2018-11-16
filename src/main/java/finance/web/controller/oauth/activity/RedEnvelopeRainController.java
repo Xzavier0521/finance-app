@@ -129,7 +129,7 @@ public class RedEnvelopeRainController {
     }
 
     @GetMapping("getUserCurrentRanking")
-    public ResponseResult<UserCurrentRankingVO> queryUserCurrentRanking(@Param("activityCode") String activityCode) {
+    public ResponseResult<UserCurrentRankingVO> queryUserCurrentRanking(@RequestParam("activityCode") String activityCode) {
         log.info("[开始查询红包雨活动-用户当前排名]，请求参数,activityCode:{}", activityCode);
         ResponseResult<UserCurrentRankingVO> response;
         try {
