@@ -176,6 +176,7 @@ public class RedEnvelopeRainController {
             response = ResponseResult.success(page);
         } catch (final Exception e) {
             response = ResponseResultUtils.error(e.getMessage());
+            log.error("[查询排行榜],异常:{}",ExceptionUtils.getStackTrace(e));
         }
         log.info("[结束查询排行榜],请求参数,activityCode:{},pageSize:{},pageNum:{},返回结果:{}", activityCode,
             pageSize, pageNum, response);
