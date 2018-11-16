@@ -366,8 +366,9 @@
         <include refid="base.limit"/>
     </select>
     <select id="countDailyRainData" resultType="java.lang.Long">
+       select count(1) from (
         SELECT
-        count(mobile_phone)
+        mobile_phone
         from
         finance_red_envelope_rain_data
         where activity_code=#{activityCode}
@@ -375,5 +376,6 @@
             AND (activity_day = #{activityDay})
         </if>
         GROUP BY mobile_phone
+        ) a
     </select>
 </mapper>
