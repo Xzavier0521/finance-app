@@ -75,6 +75,14 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
     }
 
     @Override
+    public Page<RedEnvelopeRainData> queryDailyRainData4Page(Integer pageSize, Long pageNum,
+                                                             String activityCode,
+                                                             Integer activityDay) {
+        return redEnvelopeRainDataRepository.queryDailyRainData4Page(pageSize, pageNum,
+            activityCode, activityDay);
+    }
+
+    @Override
     public String queryUserCurrentRanking(String activityCode, Long userId) {
 
         RedEnvelopeRainData redEnvelopeRainData = redEnvelopeRainDataRepository.query(activityCode,

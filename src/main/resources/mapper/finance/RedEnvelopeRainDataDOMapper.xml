@@ -354,4 +354,26 @@
         order by total_num desc,total_amount desc
         <include refid="base.limit"/>
     </select>
+    <select id="queryDailyRainData" resultMap="BaseResultMap">
+        SELECT
+        mobile_phone,sum(total_num) as total_num,sum(total_amount) as total_amount from
+        finance_red_envelope_rain_data
+        where activity_code=#{activityCode}
+        <if test="activityDay != null">
+            AND (activity_day = #{activityDay})
+        </if>
+        GROUP BY mobile_phone
+        <include refid="base.limit"/>
+    </select>
+    <select id="countDailyRainData" resultType="java.lang.Long">
+        SELECT
+        count(mobile_phone)
+        from
+        finance_red_envelope_rain_data
+        where activity_code=#{activityCode}
+        <if test="activityDay != null">
+            AND (activity_day = #{activityDay})
+        </if>
+        GROUP BY mobile_phone
+    </select>
 </mapper>

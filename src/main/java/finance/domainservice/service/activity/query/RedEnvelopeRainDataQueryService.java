@@ -38,7 +38,8 @@ public interface RedEnvelopeRainDataQueryService {
      */
     Page<RedEnvelopeRainData> query4Page(Integer pageSize, Long pageNum, String activityCode,
                                          Integer activityDay, RedEnvelopeRainTimeCodeEnum timeCode);
-
+    Page<RedEnvelopeRainData> queryDailyRainData4Page(Integer pageSize, Long pageNum, String activityCode,
+                                         Integer activityDay);
     /**
      *  查询用户当前排行榜
      * @param activityCode  活动代码

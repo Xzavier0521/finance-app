@@ -126,9 +126,9 @@ public class RedEnvelopeRainController {
         try {
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
             checkArgument(Objects.nonNull(userInfo), ReturnCode.USER_NOT_EXISTS);
-            Page<RedEnvelopeRainData> dataPage = redEnvelopeRainDataQueryService.query4Page(
+            Page<RedEnvelopeRainData> dataPage = redEnvelopeRainDataQueryService.queryDailyRainData4Page(
                 request.getPageSize(), request.getPageNum(), request.getActivityCode(),
-                request.getActivityDay(), request.getTimeCode());
+                request.getActivityDay());
             log.info("dataPage:{}", dataPage);
             response = ResponseResult.success(RedEnvelopeRainDataBuilder.build(request, dataPage));
         } catch (final Exception e) {

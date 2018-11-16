@@ -3,6 +3,7 @@ package finance.core.dal.dao;
 import java.util.List;
 import java.util.Map;
 
+import finance.domain.activity.RedEnvelopeRainData;
 import org.apache.ibatis.annotations.Param;
 
 import finance.core.dal.dataobject.RedEnvelopeRainDataDO;
@@ -39,4 +40,8 @@ public interface RedEnvelopeRainDataDAO {
                                            @Param("activityCode") String activityCode);
 
     List<RedEnvelopeRainDataDO> queryRankingList(Map<String, Object> parameters);
+
+    List<RedEnvelopeRainDataDO> queryDailyRainData(Map<String,Object> parameters);
+
+    Long countDailyRainData(Map<String,Object> parameters);
 }

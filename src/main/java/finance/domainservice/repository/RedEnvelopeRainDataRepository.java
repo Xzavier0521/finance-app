@@ -55,6 +55,9 @@ public interface RedEnvelopeRainDataRepository {
     RedEnvelopeRainData query(String activityCode, Integer activityDay, Long userId,
                               RedEnvelopeRainTimeCodeEnum timeCodes);
 
+    Page<RedEnvelopeRainData> queryDailyRainData4Page(Integer pageSize, Long pageNum,
+                                                 String activityCode, Integer activityDay);
+
     /**
      *  排行榜查询
      * @param activityCode  活动代码

@@ -98,6 +98,23 @@ public class RedEnvelopeRainDataRepositoryImpl implements RedEnvelopeRainDataRep
     }
 
     @Override
+    public Page<RedEnvelopeRainData> queryDailyRainData4Page(Integer pageSize, Long pageNum,
+                                                        String activityCode, Integer activityDay) {
+        Page<RedEnvelopeRainData> page = new Page<>(pageSize, pageNum);
+        Map<String, Object> parameters = Maps.newHashMap();
+        parameters.put("activityCode", activityCode);
+        parameters.put("activityDay", activityDay);
+        long count = redEnvelopeRainDataDAO.countDailyRainData(parameters);
+        page.setTotalCount(count);
+        if (count > 0) {
+            parameters.put("page", page);
+            page.setDataList(RedEnvelopeRainDataConverter
+                .convert2List(redEnvelopeRainDataDAO.queryDailyRainData(parameters)));
+        }
+        return page;
+    }
+
+    @Override
     public RedEnvelopeRainData query(String activityCode, Integer activityDay, Long userId) {
         RedEnvelopeRainData redEnvelopeRainData = null;
         Map<String, Object> parameters = Maps.newHashMap();
