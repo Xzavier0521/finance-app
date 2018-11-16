@@ -130,12 +130,10 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
         HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
         for (String leadBoardKey : leaderBoardKeys) {
             Map<String, Object> fieldMap = Maps.newHashMap();
-            LeaderBoard.fieldSet()
+            RedEnvelopeRainData.fieldSet()
                 .forEach(field -> fieldMap.put(field, hashOperations.get(leadBoardKey, field)));
-            log.info("fieldMap:{}",fieldMap);
             redEnvelopeRainDataList.add(RedEnvelopeRainData.mapToObject(fieldMap));
         }
-        log.info("redEnvelopeRainDataList:{}",redEnvelopeRainDataList);
         if (CollectionUtils.isEmpty(redEnvelopeRainDataList)) {
             redEnvelopeRainDataList = redEnvelopeRainDataRepository.queryRankingList(activityCode,
                 activityDay, pageSize, pageNum);

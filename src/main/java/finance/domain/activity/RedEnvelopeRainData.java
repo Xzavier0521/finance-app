@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 
+import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -96,6 +98,11 @@ public class RedEnvelopeRainData implements Serializable {
      * 版本号
      */
     private Long                        version;
+
+    public static Set<String> fieldSet() {
+        return Sets.newHashSet("ranking", "activityCode", "userId", "mobilePhone",
+                "totalNum", "totalAmount", "activityDay");
+    }
 
     public static RedEnvelopeRainData mapToObject(Map<String, Object> fieldMap) {
         return EntityUtils.hashToObject(fieldMap, RedEnvelopeRainData.class);
