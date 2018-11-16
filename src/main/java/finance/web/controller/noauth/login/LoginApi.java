@@ -22,6 +22,7 @@ import finance.api.model.response.ValidateResponse;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.util.PreconditionUtils;
 import finance.core.common.util.ResponseResultUtils;
+import finance.core.common.util.ValidatorTools;
 import finance.domain.dto.LoginParamDto;
 import finance.domain.dto.ThirdLoginParamDto;
 import finance.domainservice.service.login.LoginService;
@@ -51,9 +52,7 @@ public class LoginApi {
         LoginParamDto paramDto = paramMap.toBean(LoginParamDto.class);
         try {
             if (!whitelist.contains(paramDto.getMobileNum())) {
-                ValidateResponse validateResponse = loginValidateService.validate(paramDto);
-                PreconditionUtils.checkArgument(validateResponse.isStatus(),
-                    validateResponse.getErrorMsg());
+                loginValidateService.validate(paramDto);
             }
             res = loginService.login(req, resp, paramDto);
         } catch (final Exception e) {

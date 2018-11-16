@@ -15,6 +15,8 @@ import finance.api.model.response.ValidateResponse;
 import finance.core.common.constant.Constant;
 import finance.core.common.enums.LoginType;
 import finance.core.common.enums.ReturnCode;
+import finance.core.common.util.PreconditionUtils;
+import finance.core.common.util.ValidatorTools;
 import finance.domain.dto.LoginParamDto;
 import finance.domainservice.service.validate.LoginValidateService;
 
@@ -29,14 +31,15 @@ import finance.domainservice.service.validate.LoginValidateService;
 public class LoginValidateServiceImpl implements LoginValidateService {
 
     @Override
-    public ValidateResponse validate(LoginParamDto paramDto) {
-        ValidateResponse validateResponse = ValidateResponse.builder().build();
+    public void validate(LoginParamDto paramDto) {
         checkArgument(Objects.nonNull(paramDto), ReturnCode.PARAM_EMPTY);
+        ValidateResponse validateResponse = ValidatorTools.validate(paramDto);
+        PreconditionUtils.checkArgument(validateResponse.isStatus(),
+            validateResponse.getErrorMsg());
         // 公共验证
         checkArgument(Constant.platform_code.containsKey(paramDto.getPlatformCode()), "平台编码不合法");
         Set<LoginType> loginTypeSet = Sets.newHashSet(LoginType.IMG_MOBILE, LoginType.WE_CHAT,
             LoginType.QQ);
         checkArgument(loginTypeSet.contains(LoginType.getByCode(paramDto.getType())), "登录类型不合法");
-        return validateResponse;
     }
 }

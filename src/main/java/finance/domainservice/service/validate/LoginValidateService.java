@@ -14,7 +14,6 @@ public interface LoginValidateService {
     /**
      *  用户登陆参数验证
      * @param paramDto 登陆参数
-     * @return ValidateResponse
      */
-    ValidateResponse validate(LoginParamDto paramDto);
+    void validate(LoginParamDto paramDto);
 }
