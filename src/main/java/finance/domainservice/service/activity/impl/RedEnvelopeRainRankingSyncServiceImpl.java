@@ -42,7 +42,7 @@ public class RedEnvelopeRainRankingSyncServiceImpl implements RedEnvelopeRainRan
     @Override
     public void process() {
 
-        Integer activityDay = DateUtils.getCurrentDay(LocalDate.now().plusDays(-1));
+        Integer activityDay = DateUtils.getCurrentDay(LocalDate.now());
         log.info("[开始同步{}日红包雨活动数据排行榜", activityDay);
         List<RedEnvelopeRainData> redEnvelopeRainDataList = redEnvelopeRainDataRepository
             .queryRankingList(RED_ENVELOPE_RAIN_CODE, activityDay, 0, 1000);

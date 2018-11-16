@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 public class RedEnvelopeRainTask implements SchedulingConfigurer,
                                  ApplicationListener<ApplicationReadyEvent> {
 
-    @Value("${leaderBoard.job.syncData}")
+    @Value("${redEnvelopeRain.job.syncData}")
     private String                            cron;
 
     @Resource
