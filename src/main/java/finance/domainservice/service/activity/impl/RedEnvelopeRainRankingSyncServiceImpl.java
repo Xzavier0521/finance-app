@@ -42,7 +42,7 @@ public class RedEnvelopeRainRankingSyncServiceImpl implements RedEnvelopeRainRan
     @Override
     public void process() {
 
-        Integer activityDay = DateUtils.getCurrentDay(LocalDate.now());
+        Integer activityDay = DateUtils.getCurrentDay(LocalDate.now().plusDays(-1));
         log.info("[开始同步{}日红包雨活动数据排行榜", activityDay);
         List<RedEnvelopeRainData> redEnvelopeRainDataList = redEnvelopeRainDataRepository
             .queryRankingList(RED_ENVELOPE_RAIN_CODE, activityDay, 0, 1000);
@@ -64,16 +64,13 @@ public class RedEnvelopeRainRankingSyncServiceImpl implements RedEnvelopeRainRan
             key = MessageFormat.format("{0}:{1}", leaderBoardKey,
                 redEnvelopeRainData.getMobilePhone());
             // 排行榜 value:排名,score:手机号码 用户查询用户当前排名
-            redisTemplate.delete(leaderBoardKey);
             zSetOperations.add(leaderBoardKey, redEnvelopeRainData.getRanking(),
                 Long.valueOf(redEnvelopeRainData.getMobilePhone()));
             redisTemplate.expire(leaderBoardKey, 2880, TimeUnit.MINUTES);
             // 排行榜的集合  value:排行榜的明细的key score:排名
-            redisTemplate.delete(redEnvelopeRainKey);
             zSetOperations.add(redEnvelopeRainKey, key, redEnvelopeRainData.getRanking());
             redisTemplate.expire(redEnvelopeRainKey, 2880, TimeUnit.MINUTES);
             // 排行榜的明细
-            redisTemplate.delete(key);
             hashOperations.put(key, "ranking", redEnvelopeRainData.getRanking());
             hashOperations.put(key, "mobilePhone", redEnvelopeRainData.getMobilePhone());
             hashOperations.put(key, "totalNum", redEnvelopeRainData.getTotalNum());
