@@ -58,6 +58,7 @@ public class LoginApi {
             res = loginService.login(req, resp, paramDto);
         } catch (final Exception e) {
             res = ResponseResultUtils.error(e.getMessage());
+            log.error("[用户登陆],异常:{}", ExceptionUtils.getStackTrace(e));
         }
         log.info("[结束用户登陆],请求参数:{},返回结果:{}", paramDto, res);
         return res;
