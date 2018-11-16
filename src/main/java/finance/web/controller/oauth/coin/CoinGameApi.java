@@ -103,7 +103,11 @@ public class CoinGameApi {
                 basicResponse.getReturnMessage());
             response = ResponseResult.success(null);
         } catch (final Exception e) {
-            response = ResponseResultUtils.error(e.getMessage());
+            if (e.getMessage().contains("金币数不足")) {
+                response = ResponseResultUtils.error(ReturnCode.COIN_NUM_NOT_ENOUGH);
+            } else {
+                response = ResponseResultUtils.error(e.getMessage());
+            }
             log.error("[支付金币玩游戏],异常:{}", ExceptionUtils.getStackTrace(e));
         }
         log.info("[结束支付金币玩游戏]，请求参数:{}", request, response);
@@ -112,23 +116,19 @@ public class CoinGameApi {
 
     @PostMapping("queryCoinGameList")
     public ResponseResult<List<CoinGameVO>> queryCoinGameList(@RequestBody ActivityCoinGameQueryRequest request) {
-        log.info("[查询用户是否支付金币玩游戏],请求参数:{}", request);
+        log.info("[开始查询用户是否支付金币玩游戏],请求参数:{}", request);
         ResponseResult<List<CoinGameVO>> response;
         try {
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
             commonValidate(request, userInfo);
             List<String> gameCodes = Arrays.asList(StringUtils.split(request.getGameCodes(), ","));
             response = ActivityCoinGameQueryBuilder.build(activityCoinGameQueryService
-                .queryCoinGameList(userInfo, request.getActivityCode(), gameCodes));
+                .queryCoinGameList(userInfo, request.getActivityCode(), gameCodes), gameCodes);
         } catch (final Exception e) {
-            if ("金币数不足".equals(e.getMessage())) {
-                response = ResponseResultUtils.error(ReturnCode.COIN_NUM_NOT_ENOUGH);
-            } else {
-                response = ResponseResultUtils.error(e.getMessage());
-            }
+            response = ResponseResultUtils.error(e.getMessage());
             log.info("[查询用户是否支付金币玩游戏],异常:{}", ExceptionUtils.getStackTrace(e));
         }
-        log.info("[查询用户是否支付金币玩游戏],请求参数:{},返回结果:{}", request, response);
+        log.info("[结束查询用户是否支付金币玩游戏],请求参数:{},返回结果:{}", request, response);
         return response;
     }
 
