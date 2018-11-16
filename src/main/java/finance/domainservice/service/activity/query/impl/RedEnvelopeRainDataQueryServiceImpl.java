@@ -134,6 +134,7 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
                 .forEach(field -> fieldMap.put(field, hashOperations.get(leadBoardKey, field)));
             redEnvelopeRainDataList.add(RedEnvelopeRainData.mapToObject(fieldMap));
         }
+        log.info("redEnvelopeRainDataList:{}",redEnvelopeRainDataList);
         if (CollectionUtils.isEmpty(redEnvelopeRainDataList)) {
             redEnvelopeRainDataList = redEnvelopeRainDataRepository.queryRankingList(activityCode,
                 activityDay, pageSize, pageNum);
