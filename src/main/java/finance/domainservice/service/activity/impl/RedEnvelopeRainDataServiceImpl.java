@@ -93,7 +93,7 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
                 weiXinTemplateMessageSendService.send(userInfo, thirdAccountInfo,
                     weiXinMessageTemplate, parameters);
                 // 参加活动的手机号码列表
-                String key = MessageFormat.format("{}:{}", RED_ENVELOPE_RAIN_PHONE_NUMBERS,
+                String key = MessageFormat.format("{0}:{1}", RED_ENVELOPE_RAIN_PHONE_NUMBERS,
                     activityDay);
                 redisTemplate.opsForSet().add(key, userInfo.getMobileNum());
                 // 有效时间1天
