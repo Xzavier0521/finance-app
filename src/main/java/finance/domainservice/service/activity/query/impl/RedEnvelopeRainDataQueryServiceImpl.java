@@ -97,7 +97,7 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
 
         return UserRedEnvelopeRainSummaryData.builder().userId(todayRedEnvelopeRainData.getUserId())
             .currentSystemDate(
-                DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.LONG_WEB_FORMAT))
+                DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.LONG_APP_FORMAT))
             .currentActivityDate(getCurrentActivityDate(activityCode)).activityCode(activityCode)
             .activityDay(todayRedEnvelopeRainData.getActivityDay())
             .todayNum(todayRedEnvelopeRainData.getTotalNum())
