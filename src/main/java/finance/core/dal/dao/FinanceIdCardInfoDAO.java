@@ -14,17 +14,15 @@ import finance.core.dal.dataobject.FinanceIdCardInfo;
  * @author lili
  * @version $Id: FinanceIdCardInfoDAO.java, v0.1 2018/11/14 12:47 PM lili Exp $
  */
-@CacheConfig(cacheNames = "idCardInfo")
+//@CacheConfig(cacheNames = "idCardInfo")
 public interface FinanceIdCardInfoDAO extends BaseDAO<FinanceIdCardInfo, Long> {
 
     int insertSelective(FinanceIdCardInfo record);
 
-    @Cacheable(key = "'idCardInfo_byId_'.concat(#a0)", unless = "#result == null")
+    //@Cacheable(key = "'idCardInfo_byId_'.concat(#a0)", unless = "#result == null")
     FinanceIdCardInfo selectByPrimaryKey(Long id);
 
     /** 更新时userId必传*/
-    @Caching(evict = { @CacheEvict(key = "'idCardInfo_byId_'.concat(#a0.userId)"),
-                       @CacheEvict(key = "'idCardInfo_byUserId_'.concat(#a0.userId)") })
     int updateByPrimaryKeySelective(FinanceIdCardInfo record);
 
     /**
@@ -36,7 +34,7 @@ public interface FinanceIdCardInfoDAO extends BaseDAO<FinanceIdCardInfo, Long> {
      * @author panzhongkang
      * @date 2018/8/21 18:35
      */
-    @Cacheable(key = "'idCardInfo_byUserId_'.concat(#a0)", unless = "#result == null")
+   // @Cacheable(key = "'idCardInfo_byUserId_'.concat(#a0)", unless = "#result == null")
     FinanceIdCardInfo selectByUserId(@Param("userId") Long userId);
 
     /**
