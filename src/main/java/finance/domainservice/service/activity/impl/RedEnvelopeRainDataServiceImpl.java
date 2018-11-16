@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import finance.api.model.response.BasicResponse;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
@@ -38,6 +39,9 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
     @Resource
     private FinanceCoinLogDAO             financeCoinLogDAO;
 
+    @Resource
+    private TransactionTemplate           transactionTemplate;
+
     /**
      * 保存红包雨活动数据
      *
@@ -56,9 +60,11 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
                 .activityCode(activityCode).timeCode(timeCode).userId(userInfo.getId())
                 .mobilePhone(userInfo.getMobileNum()).totalNum(totalNum).totalAmount(totalAmount)
                 .activityDay(DateUtils.getCurrentDay(LocalDate.now())).build();
-            redEnvelopeRainDataRepository.save(redEnvelopeRainData);
-            recordCoinLog(userInfo.getId(), totalAmount.intValue(), "红包雨活动奖励");
-            ResponseUtils.buildResp(response, ReturnCode.SUCCESS);
+            response = transactionTemplate.execute(status -> {
+                redEnvelopeRainDataRepository.save(redEnvelopeRainData);
+                recordCoinLog(userInfo.getId(), totalAmount.intValue(), "红包雨活动奖励");
+                return ResponseUtils.buildResp(ReturnCode.SUCCESS);
+            });
         } catch (DuplicateKeyException e) {
             ResponseUtils.buildResp(response, ReturnCode.ACTIVITY_HAS_JOIN);
             log.error("用户:{}已经参加红包雨活动", userInfo.getMobileNum());
