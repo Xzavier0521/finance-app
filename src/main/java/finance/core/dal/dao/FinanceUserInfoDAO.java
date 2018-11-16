@@ -13,13 +13,13 @@ import finance.core.dal.dataobject.FinanceUserInfo;
  * @author lili
  * @version $Id: FinanceUserInfoDAO.java, v0.1 2018/11/14 1:01 PM lili Exp $
  */
-@CacheConfig(cacheNames = "userInfo")
+//@CacheConfig(cacheNames = "userInfo")
 public interface FinanceUserInfoDAO extends BaseDAO<FinanceUserInfo, Long> {
 
-    @Cacheable(key = "'useInfo_byId_'.concat(#a0)")
+   // @Cacheable(key = "'useInfo_byId_'.concat(#a0)")
     FinanceUserInfo selectByPrimaryKey(Long id);
 
-    @CachePut(key = "'useInfo_byId_'.concat(#a0.id)")
+   // @CachePut(key = "'useInfo_byId_'.concat(#a0.id)")
     int updateByPrimaryKeySelective(FinanceUserInfo record);
 
     /**
@@ -29,7 +29,7 @@ public interface FinanceUserInfoDAO extends BaseDAO<FinanceUserInfo, Long> {
      * @author hewenbin
      * @version FinanceUserInfoDAO.java, v1.0 2018年7月9日 下午8:30:33 hewenbin
      */
-    @Cacheable(key = "'useInfo_byMobile_'.concat(#a0)", unless = "#result == null")
+   // @Cacheable(key = "'useInfo_byMobile_'.concat(#a0)", unless = "#result == null")
     FinanceUserInfo selectByMobile(String mobileNum);
 
     /**
@@ -39,7 +39,7 @@ public interface FinanceUserInfoDAO extends BaseDAO<FinanceUserInfo, Long> {
      * @author hewenbin
      * @version FinanceUserInfoDAO.java, v1.0 2018年7月12日 上午9:52:07 hewenbin
      */
-    @Cacheable(key = "'useInfo_byInvite_'.concat(#a0)", unless = "#result == null")
+  //  @Cacheable(key = "'useInfo_byInvite_'.concat(#a0)", unless = "#result == null")
     FinanceUserInfo selectByInviteCode(String inviteCode);
 
     List<FinanceUserInfo> selectByPrimaryKeys(@Param("ids") List<Long> ids);
