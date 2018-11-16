@@ -93,7 +93,7 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
     public List<RedEnvelopeRainData> queryRankingList(String activityCode, Integer activityDay,
                                                       int pageSize, int pageNum) {
         return redEnvelopeRainDataRepository.queryRankingList(activityCode,
-            DateUtils.getCurrentDay(LocalDate.now()), pageNum, pageNum);
+            DateUtils.getCurrentDay(LocalDate.now()), pageSize, pageNum);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
         }
         RedEnvelopeRainData redEnvelopeRainData = redEnvelopeRainDataRepository.query(activityCode,
             activityDay, userInfo.getId(), timeCode);
-        if (Objects.nonNull(redEnvelopeRainData)){
+        if (Objects.nonNull(redEnvelopeRainData)) {
             userRedEnvelopeRainInfo.setIsJoin(true);
         }
         return userRedEnvelopeRainInfo;

@@ -34,7 +34,7 @@ public class LeaderBoardSynchronizeTask implements SchedulingConfigurer,
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        leaderBoardSynchronizeService.process();
+        //leaderBoardSynchronizeService.process();
     }
 
     @Override
