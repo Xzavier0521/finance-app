@@ -42,7 +42,7 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
         // 用户历史红包雨活动数据
         RedEnvelopeRainData hisRedEnvelopeRainData = redEnvelopeRainDataRepository
             .queryHistoryData(userId, activityCode);
-        return buildData(todayRedEnvelopeRainData, hisRedEnvelopeRainData);
+        return buildData(activityCode, todayRedEnvelopeRainData, hisRedEnvelopeRainData);
     }
 
     /**
@@ -79,18 +79,20 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
     }
 
     @Override
-    public List<RedEnvelopeRainData> queryRankingList(String activityCode, Integer activityDay, int pageSize, int pageNum) {
+    public List<RedEnvelopeRainData> queryRankingList(String activityCode, Integer activityDay,
+                                                      int pageSize, int pageNum) {
         return null;
     }
 
-    private UserRedEnvelopeRainSummaryData buildData(RedEnvelopeRainData todayRedEnvelopeRainData,
+    private UserRedEnvelopeRainSummaryData buildData(String activityCode,
+                                                     RedEnvelopeRainData todayRedEnvelopeRainData,
                                                      RedEnvelopeRainData hisRedEnvelopeRainData) {
         // 当前活动时间 1-进行中返回 活动的开始时间 2-已经结束，下个活动还未开始，返回下个活动的开始时间
 
         return UserRedEnvelopeRainSummaryData.builder().userId(todayRedEnvelopeRainData.getUserId())
             .currentSystemDate(
                 DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.LONG_WEB_FORMAT))
-            .activityDay(todayRedEnvelopeRainData.getActivityDay())
+            .activityCode(activityCode).activityDay(todayRedEnvelopeRainData.getActivityDay())
             .todayNum(todayRedEnvelopeRainData.getTotalNum())
             .todayAmount(todayRedEnvelopeRainData.getTotalAmount())
             .totalNum(hisRedEnvelopeRainData.getTotalNum())

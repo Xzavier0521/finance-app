@@ -330,14 +330,14 @@
         total_num,IFNULL(sum(total_amount),0) as total_amount
         from
         finance_red_envelope_rain_data where
-        user_id=#{userId} and activity_day=#{activityDay}
+        user_id=#{userId} and activity_day=#{activityDay} and activity_code=#{activityCode}
     </select>
     <select id="queryHistoryData" resultMap="BaseResultMap">
         SELECT #{userId} as user_id,IFNULL(sum(total_num),0) as
         total_num,IFNULL(sum(total_amount),0) as total_amount
         from
         finance_red_envelope_rain_data where
-        user_id=#{userId}
+        user_id=#{userId} and activity_code=#{activityCode}
     </select>
     <select id="queryRankingList" resultMap="BaseResultMap">
         SELECT

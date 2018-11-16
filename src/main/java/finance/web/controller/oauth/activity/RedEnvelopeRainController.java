@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
@@ -86,10 +87,11 @@ public class RedEnvelopeRainController {
     }
 
     @GetMapping("getSummaryData")
-    public ResponseResult<UserRedEnvelopeRainSummaryDataVO> querySummaryData(@Param("activityCode") String activityCode) {
-        log.info("[开始查询红包雨活动汇总数据]");
+    public ResponseResult<UserRedEnvelopeRainSummaryDataVO> querySummaryData(@RequestParam("activityCode") String activityCode) {
+        log.info("[开始查询红包雨活动汇总数据],请求参数:{}", activityCode);
         ResponseResult<UserRedEnvelopeRainSummaryDataVO> response;
         try {
+            PreconditionUtils.checkArgument(StringUtils.isNotBlank(activityCode), "活动代码不能为空");
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
             checkArgument(Objects.nonNull(userInfo), ReturnCode.USER_NOT_EXISTS);
             UserRedEnvelopeRainSummaryData userRedEnvelopeRainDetail = redEnvelopeRainDataQueryService
@@ -103,7 +105,7 @@ public class RedEnvelopeRainController {
             response = ResponseResultUtils.error(e.getMessage());
             log.error("[查询红包雨活动汇总数据],异常:{}", ExceptionUtils.getStackTrace(e));
         }
-        log.info("[结束查询红包雨活动汇总数据]，返回结果:{}", response);
+        log.info("[结束查询红包雨活动汇总数据]，请求参数:{},返回结果:{}", activityCode, response);
         return response;
     }
 

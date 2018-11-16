@@ -26,7 +26,10 @@ public class UserRedEnvelopeRainSummaryData implements Serializable {
      * 用户id
      */
     private Long              userId;
-
+    /**
+     * 活动代码
+     */
+    private String            activityCode;
     /**
      * 活动日期
      */
