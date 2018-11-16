@@ -57,7 +57,8 @@ public class RedEnvelopeRainDataBuilder {
             for (RedEnvelopeRainData redEnvelopeRainData : redEnvelopeRainDataList) {
                 userCurrentRankingVO = new UserCurrentRankingVO();
                 userCurrentRankingVO.setRanking(String.valueOf(redEnvelopeRainData.getRanking()));
-                userCurrentRankingVO.setMobilePhone(redEnvelopeRainData.getMobilePhone());
+                userCurrentRankingVO.setMobilePhone(
+                    CommonUtils.mobileEncrypt(redEnvelopeRainData.getMobilePhone()));
                 userCurrentRankingVO.setTotalNum(redEnvelopeRainData.getTotalNum());
                 userCurrentRankingVO
                     .setTotalAmount(redEnvelopeRainData.getTotalAmount().longValue());
