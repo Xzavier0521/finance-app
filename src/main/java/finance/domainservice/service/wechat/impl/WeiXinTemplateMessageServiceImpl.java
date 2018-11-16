@@ -114,7 +114,7 @@ public class WeiXinTemplateMessageServiceImpl implements WeiXinTemplateMessageSe
             case SEND_COIN_NOTICE:
                 data.put("first",
                     WeiXinTemplateData.builder().value(MessageFormat.format("您尾号{0}的账户最新的金币变动信息",
-                        userInfo.getMobileNum().substring(8, 12))).color("#0000ff").build());
+                        userInfo.getMobileNum().substring(8, 11))).color("#0000ff").build());
                 data.put("keyword1",
                     WeiXinTemplateData.builder().value(
                         DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.LONG_WEB_FORMAT))
