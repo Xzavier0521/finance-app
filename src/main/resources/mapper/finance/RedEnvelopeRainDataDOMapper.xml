@@ -341,9 +341,12 @@
     </select>
     <select id="queryRankingList" resultMap="BaseResultMap">
         SELECT
+        @rownum := @rownum + 1 AS ranking,
         mobile_phone,total_num,total_amount
         from (
-        select mobile_phone,sum(total_num) as total_num,sum(total_amount) as total_amount from
+        select
+        ( SELECT @rownum := 0 ) r,
+        mobile_phone,sum(total_num) as total_num,sum(total_amount) as total_amount from
         finance_red_envelope_rain_data
         where activity_code=#{activityCode} and activity_day=#{activityDay}
         GROUP BY mobile_phone

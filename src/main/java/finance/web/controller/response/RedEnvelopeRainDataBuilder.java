@@ -47,6 +47,7 @@ public class RedEnvelopeRainDataBuilder {
                                                    List<RedEnvelopeRainData> redEnvelopeRainDataList) {
         Page<UserCurrentRankingVO> page = new Page<>(pageSize, (long) pageNum);
         if (CollectionUtils.isNotEmpty(redEnvelopeRainDataList)) {
+            page.setTotalCount((long) redEnvelopeRainDataList.size());
             List<UserCurrentRankingVO> userCurrentRankingVOS = Lists
                 .newArrayListWithCapacity(redEnvelopeRainDataList.size());
             UserCurrentRankingVO userCurrentRankingVO;
