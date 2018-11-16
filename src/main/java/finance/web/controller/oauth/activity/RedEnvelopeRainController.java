@@ -157,18 +157,18 @@ public class RedEnvelopeRainController {
     }
 
     @GetMapping("getUserRankingList")
-    public ResponseResult<Page<UserCurrentRankingVO>> queryUserRankingList(@Param("activityCode") String activityCode,
+    public ResponseResult<List<UserCurrentRankingVO>> queryUserRankingList(@Param("activityCode") String activityCode,
                                                                            @Param("pageSize") int pageSize,
                                                                            @Param("pageNum") int pageNum) {
         log.info("[开始查询排行榜],请求参数,activityCode:{},pageSize:{},pageNum:{}", activityCode, pageSize,
             pageNum);
-        ResponseResult<Page<UserCurrentRankingVO>> response;
+        ResponseResult<List<UserCurrentRankingVO>> response;
         try {
             List<RedEnvelopeRainData> redEnvelopeRainDataList = redEnvelopeRainDataQueryService
                 .queryRankingList(activityCode, DateUtils.getCurrentDay(LocalDate.now()), pageSize,
                     pageNum);
-            Page<UserCurrentRankingVO> page = RedEnvelopeRainDataBuilder.build(pageSize, pageNum,
-                redEnvelopeRainDataList);
+            List<UserCurrentRankingVO> page = RedEnvelopeRainDataBuilder
+                .build(redEnvelopeRainDataList);
             response = ResponseResult.success(page);
         } catch (final Exception e) {
             response = ResponseResultUtils.error(e.getMessage());

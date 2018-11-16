@@ -1,5 +1,6 @@
 package finance.web.controller.response;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,13 +44,10 @@ public class RedEnvelopeRainDataBuilder {
         return page;
     }
 
-    public static Page<UserCurrentRankingVO> build(int pageSize, int pageNum,
+    public static List<UserCurrentRankingVO> build(
                                                    List<RedEnvelopeRainData> redEnvelopeRainDataList) {
-        Page<UserCurrentRankingVO> page = new Page<>(pageSize, (long) pageNum);
+        List<UserCurrentRankingVO> userCurrentRankingVOS = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(redEnvelopeRainDataList)) {
-            page.setTotalCount((long) redEnvelopeRainDataList.size());
-            List<UserCurrentRankingVO> userCurrentRankingVOS = Lists
-                .newArrayListWithCapacity(redEnvelopeRainDataList.size());
             UserCurrentRankingVO userCurrentRankingVO;
             for (RedEnvelopeRainData redEnvelopeRainData : redEnvelopeRainDataList) {
                 userCurrentRankingVO = new UserCurrentRankingVO();
@@ -60,9 +58,8 @@ public class RedEnvelopeRainDataBuilder {
                     .setTotalAmount(redEnvelopeRainData.getTotalAmount().longValue());
                 userCurrentRankingVOS.add(userCurrentRankingVO);
             }
-            page.setDataList(userCurrentRankingVOS);
         }
-        return page;
+        return userCurrentRankingVOS;
     }
 
 }
