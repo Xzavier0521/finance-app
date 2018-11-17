@@ -70,13 +70,13 @@ public enum ReturnCode {
     // 金币
     GAME_PARAM_INVALID("0401001","输入不合法"),
     COIN_NUM_NOT_ENOUGH("0401002","金币数不足"),
-    COIN_NUM_TOO_LARGE("0401002","金币数不合法"),
     JOIN_TIME_INVALID("0401003","非参加活动时间"),
     SIGN_TIME_INVALID("0401004","非打卡时间"),
     JOIN_FAIL("0401005","网络异常，请稍后重试"),
     TODAY_ALREADY_SIGN("0401005","今日已签到"),
     GIFT_NOT_EXIST("0401006","礼品不存在"),
     INVALID_OPERATION("0401007","非法操作"),
+    COIN_NUM_TOO_LARGE("0401008","金币数不合法"),
     //
     UNFINISHED_FIXED_AMOUNT_ACTIVITY("060101","还存未完成的固定金额活动"),
     INVALID_ACTIVITY_OPERATION("060102","非法操作"),
