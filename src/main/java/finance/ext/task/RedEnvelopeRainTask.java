@@ -14,7 +14,6 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.config.Task;
 import org.springframework.scheduling.support.CronTrigger;
-import org.springframework.stereotype.Component;
 
 import finance.domainservice.service.activity.RedEnvelopeRainRankingSyncService;
 import org.springframework.stereotype.Service;

@@ -38,7 +38,7 @@ public class ActivityCoinGameRepositoryImpl implements ActivityCoinGameRepositor
      */
     @Override
     public int save(ActivityCoinGame activityCoinGame) {
-        return activityCoinGameDAO.insert(ActivityCoinGameConverter.convert(activityCoinGame));
+        return activityCoinGameDAO.insertSelective(ActivityCoinGameConverter.convert(activityCoinGame));
     }
 
     /**
