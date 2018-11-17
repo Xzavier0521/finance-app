@@ -29,6 +29,7 @@ import finance.api.model.vo.activity.UserRedEnvelopeRainInfoVO;
 import finance.api.model.vo.activity.UserRedEnvelopeRainSummaryDataVO;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.enums.ReturnCode;
+import finance.core.common.exception.BizException;
 import finance.core.common.util.*;
 import finance.domain.activity.RedEnvelopeRainData;
 import finance.domain.activity.UserRedEnvelopeRainInfo;
@@ -68,6 +69,8 @@ public class RedEnvelopeRainController {
         try {
             ValidateResponse validateResponse = ValidatorTools.validate(request);
             checkArgument(validateResponse.isStatus(), validateResponse.getErrorMsg());
+            checkArgument(request.getTotalAmount().longValue() <= 1000,
+                ReturnCode.COIN_NUM__TOO_LARGE);
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
             checkArgument(Objects.nonNull(userInfo), ReturnCode.USER_NOT_EXISTS);
             // 根据服务器时间获取编码
@@ -80,16 +83,23 @@ public class RedEnvelopeRainController {
                 request.getTotalAmount());
             checkArgument(basicResponse.isSuccess(), basicResponse.getReturnMessage());
             response = ResponseResult.success(null);
-        } catch (final Exception e) {
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
 
-            if (e.getMessage().contains(ReturnCode.RAIN_RED_ENVELOPE_UN_START.getDesc())) {
+        } catch (final Exception e) {
+           /* if (e.getMessage().contains(ReturnCode.RAIN_RED_ENVELOPE_UN_START.getDesc())) {
                 response = ResponseResultUtils.error(ReturnCode.RAIN_RED_ENVELOPE_UN_START);
             } else if (e.getMessage().contains(ReturnCode.ACTIVITY_HAS_JOIN.getDesc())) {
                 response = ResponseResultUtils.error(ReturnCode.ACTIVITY_HAS_JOIN);
             } else {
                 response = ResponseResultUtils.error(e.getMessage());
-            }
-
+            }*/
+            response = ResponseResultUtils.error(e.getMessage());
             log.error("[红包雨活动数据更新],异常:{}", ExceptionUtils.getStackTrace(e));
         }
         log.info("[结束红包雨活动数据更新]，请求参数:{},返回结果:{}", request, response);
@@ -156,7 +166,7 @@ public class RedEnvelopeRainController {
             response = ResponseResultUtils.error(e.getMessage());
             log.error("[查询红包雨活动-用户当前排名],异常:{}", ExceptionUtils.getStackTrace(e));
         }
-        log.info("[结束查询红包雨活动-用户当前排名]，请求参数,activityCode:{}，返回结果:{}", activityCode,response);
+        log.info("[结束查询红包雨活动-用户当前排名]，请求参数,activityCode:{}，返回结果:{}", activityCode, response);
         return response;
     }
 
@@ -176,7 +186,7 @@ public class RedEnvelopeRainController {
             response = ResponseResult.success(page);
         } catch (final Exception e) {
             response = ResponseResultUtils.error(e.getMessage());
-            log.error("[查询排行榜],异常:{}",ExceptionUtils.getStackTrace(e));
+            log.error("[查询排行榜],异常:{}", ExceptionUtils.getStackTrace(e));
         }
         log.info("[结束查询排行榜],请求参数,activityCode:{},pageSize:{},pageNum:{},返回结果:{}", activityCode,
             pageSize, pageNum, response);

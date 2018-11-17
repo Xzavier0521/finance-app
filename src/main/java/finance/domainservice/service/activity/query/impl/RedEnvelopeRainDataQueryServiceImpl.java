@@ -139,11 +139,13 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
         Set<String> leaderBoardKeys = zSetOperations.rangeByScore(redEnvelopeRainKey, 1,
             pageSize * pageNum);
         HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
-        for (String leadBoardKey : leaderBoardKeys) {
-            Map<String, Object> fieldMap = Maps.newHashMap();
-            RedEnvelopeRainData.fieldSet()
-                .forEach(field -> fieldMap.put(field, hashOperations.get(leadBoardKey, field)));
-            redEnvelopeRainDataList.add(RedEnvelopeRainData.mapToObject(fieldMap));
+        if (CollectionUtils.isNotEmpty(leaderBoardKeys)) {
+            for (String leadBoardKey : leaderBoardKeys) {
+                Map<String, Object> fieldMap = Maps.newHashMap();
+                RedEnvelopeRainData.fieldSet()
+                    .forEach(field -> fieldMap.put(field, hashOperations.get(leadBoardKey, field)));
+                redEnvelopeRainDataList.add(RedEnvelopeRainData.mapToObject(fieldMap));
+            }
         }
         if (CollectionUtils.isEmpty(redEnvelopeRainDataList)) {
             redEnvelopeRainDataList = redEnvelopeRainDataRepository.queryRankingList(activityCode,
@@ -183,6 +185,7 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
             .currentSystemDate(
                 DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.LONG_APP_FORMAT))
             .currentActivityDate(getCurrentActivityDate(activityCode)).activityCode(activityCode)
+            .nextActivityDate(getNextActivityDate(activityCode))
             .activityDay(todayRedEnvelopeRainData.getActivityDay())
             .todayNum(todayRedEnvelopeRainData.getTotalNum())
             .todayAmount(Objects.nonNull(todayRedEnvelopeRainData.getTotalAmount())
@@ -195,8 +198,14 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
             .build();
     }
 
+    /**
+     * 当前活动的时间
+     * 1-进行中 返回活动的开始时间 2-已经结束，下个活动还未开始，返回下个活动的开始时间
+     * @param activityCode 活动代码
+     * @return String
+     */
     private String getCurrentActivityDate(String activityCode) {
-        // 当前活动时间 1-进行中 返回活动的开始时间 2-已经结束，下个活动还未开始，返回下个活动的开始时间
+
         Integer requestTime = Integer
             .valueOf(DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.HOUR_FORMAT));
         List<RedEnvelopeRainConfig> redEnvelopeRainConfigList = redEnvelopeRainConfigRepository
@@ -230,6 +239,49 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
                 getWebFormatTime(first.getStartTime()));
         }
         return currentActivityDate;
+    }
+
+    /**
+     * 下次活动的时间
+     * @param activityCode 活动代码
+     * @return String
+     */
+    private String getNextActivityDate(String activityCode) {
+        Integer requestTime = Integer
+            .valueOf(DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.HOUR_FORMAT));
+        String nextActivityDate = StringUtils.EMPTY;
+        String currentDay = DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.WEB_FORMAT);
+        String nextDay = DateUtils.getFormatDateStr(LocalDateTime.now().plusDays(1),
+            DateUtils.WEB_FORMAT);
+        //
+        List<RedEnvelopeRainConfig> redEnvelopeRainConfigList = redEnvelopeRainConfigRepository
+            .queryByCode(activityCode);
+        RedEnvelopeRainConfig first = getConfig(redEnvelopeRainConfigList,
+            RedEnvelopeRainTimeCodeEnum.FIRST);
+        RedEnvelopeRainConfig second = getConfig(redEnvelopeRainConfigList,
+            RedEnvelopeRainTimeCodeEnum.SECOND);
+        RedEnvelopeRainConfig third = getConfig(redEnvelopeRainConfigList,
+            RedEnvelopeRainTimeCodeEnum.THIRD);
+        //
+        if (requestTime < Integer.valueOf(first.getStartTime())) {
+            nextActivityDate = MessageFormat.format("{0} {1}", currentDay,
+                getWebFormatTime(first.getStartTime()));
+        }
+        if (requestTime >= Integer.valueOf(first.getStartTime())
+            && requestTime < Integer.valueOf(second.getStartTime())) {
+            nextActivityDate = MessageFormat.format("{0} {1}", currentDay,
+                getWebFormatTime(second.getStartTime()));
+        }
+        if (requestTime >= Integer.valueOf(second.getStartTime())
+            && requestTime < Integer.valueOf(third.getStartTime())) {
+            nextActivityDate = MessageFormat.format("{0} {1}", currentDay,
+                getWebFormatTime(third.getStartTime()));
+        }
+        if (requestTime >= Integer.valueOf(third.getStartTime())) {
+            nextActivityDate = MessageFormat.format("{0} {1}", nextDay,
+                getWebFormatTime(first.getStartTime()));
+        }
+        return nextActivityDate;
     }
 
     private RedEnvelopeRainConfig getConfig(List<RedEnvelopeRainConfig> redEnvelopeRainConfigList,

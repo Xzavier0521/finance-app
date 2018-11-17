@@ -57,6 +57,10 @@ public class UserRedEnvelopeRainSummaryData implements Serializable {
      */
     private String            currentActivityDate;
     /**
+     * 下一场活动时间
+     */
+    private String            nextActivityDate;
+    /**
      * 系统当前时间
      */
     private String            currentSystemDate;

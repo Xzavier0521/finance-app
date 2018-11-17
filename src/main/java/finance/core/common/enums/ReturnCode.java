@@ -70,6 +70,7 @@ public enum ReturnCode {
     // 金币
     GAME_PARAM_INVALID("0401001","输入不合法"),
     COIN_NUM_NOT_ENOUGH("0401002","金币数不足"),
+    COIN_NUM__TOO_LARGE("0401002","金币数不合法"),
     JOIN_TIME_INVALID("0401003","非参加活动时间"),
     SIGN_TIME_INVALID("0401004","非打卡时间"),
     JOIN_FAIL("0401005","网络异常，请稍后重试"),
