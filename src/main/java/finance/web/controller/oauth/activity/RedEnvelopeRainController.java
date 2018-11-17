@@ -70,7 +70,7 @@ public class RedEnvelopeRainController {
             ValidateResponse validateResponse = ValidatorTools.validate(request);
             checkArgument(validateResponse.isStatus(), validateResponse.getErrorMsg());
             checkArgument(request.getTotalAmount().longValue() <= 1000,
-                ReturnCode.COIN_NUM__TOO_LARGE);
+                ReturnCode.COIN_NUM_TOO_LARGE);
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
             checkArgument(Objects.nonNull(userInfo), ReturnCode.USER_NOT_EXISTS);
             // 根据服务器时间获取编码
@@ -92,13 +92,6 @@ public class RedEnvelopeRainController {
             }
 
         } catch (final Exception e) {
-           /* if (e.getMessage().contains(ReturnCode.RAIN_RED_ENVELOPE_UN_START.getDesc())) {
-                response = ResponseResultUtils.error(ReturnCode.RAIN_RED_ENVELOPE_UN_START);
-            } else if (e.getMessage().contains(ReturnCode.ACTIVITY_HAS_JOIN.getDesc())) {
-                response = ResponseResultUtils.error(ReturnCode.ACTIVITY_HAS_JOIN);
-            } else {
-                response = ResponseResultUtils.error(e.getMessage());
-            }*/
             response = ResponseResultUtils.error(e.getMessage());
             log.error("[红包雨活动数据更新],异常:{}", ExceptionUtils.getStackTrace(e));
         }
@@ -121,6 +114,14 @@ public class RedEnvelopeRainController {
             ConvertBeanUtil.copyBeanProperties(userRedEnvelopeRainDetail,
                 userRedEnvelopeRainDetailVO);
             response = ResponseResult.success(userRedEnvelopeRainDetailVO);
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+
         } catch (final Exception e) {
             response = ResponseResultUtils.error(e.getMessage());
             log.error("[查询红包雨活动汇总数据],异常:{}", ExceptionUtils.getStackTrace(e));
@@ -162,6 +163,14 @@ public class RedEnvelopeRainController {
             userCurrentRankingVO.setRanking(ranking);
             userCurrentRankingVO.setUserId(userInfo.getId());
             response = ResponseResult.success(userCurrentRankingVO);
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+
         } catch (final Exception e) {
             response = ResponseResultUtils.error(e.getMessage());
             log.error("[查询红包雨活动-用户当前排名],异常:{}", ExceptionUtils.getStackTrace(e));
@@ -184,6 +193,14 @@ public class RedEnvelopeRainController {
             List<UserCurrentRankingVO> page = RedEnvelopeRainDataBuilder
                 .build(redEnvelopeRainDataList);
             response = ResponseResult.success(page);
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+
         } catch (final Exception e) {
             response = ResponseResultUtils.error(e.getMessage());
             log.error("[查询排行榜],异常:{}", ExceptionUtils.getStackTrace(e));
@@ -206,6 +223,14 @@ public class RedEnvelopeRainController {
             UserRedEnvelopeRainInfoVO userRedEnvelopeRainInfoVO = new UserRedEnvelopeRainInfoVO();
             ConvertBeanUtil.copyBeanProperties(userRedEnvelopeRainInfo, userRedEnvelopeRainInfoVO);
             response = ResponseResult.success(userRedEnvelopeRainInfoVO);
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+
         } catch (final Exception e) {
             response = ResponseResultUtils.error(e.getMessage());
             log.error("[查询用户是否参加红包雨活动],异常:{}", ExceptionUtils.getStackTrace(e));

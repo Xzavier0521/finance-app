@@ -15,7 +15,6 @@ public interface JwtService {
 	 * @param userInfo 存在
 	 * @return jwt字符串
 	 * @author hewenbin
-	 * @version JwtService.java, v1.0 2018年7月9日 下午2:28:10 hewenbin
 	 */
 	String saveJwt(FinanceUserInfo userInfo);
 	
@@ -25,7 +24,6 @@ public interface JwtService {
 	 * @param jwtKey
 	 * @return 是否刷新成功
 	 * @author hewenbin
-	 * @version JwtService.java, v1.0 2018年7月9日 下午3:09:01 hewenbin
 	 */
 	Boolean refreshJwt(String jwtKey);
 	
@@ -34,7 +32,6 @@ public interface JwtService {
 	 * @param jwtKey
 	 * @return
 	 * @author hewenbin
-	 * @version JwtService.java, v1.0 2018年7月9日 下午3:20:22 hewenbin
 	 */
 	Boolean hasJwt(String jwtKey);
 	
@@ -42,7 +39,6 @@ public interface JwtService {
 	 * 获取当前请求线程的用户信息.
 	 * @return
 	 * @author hewenbin
-	 * @version JwtService.java, v1.0 2018年7月9日 下午3:53:16 hewenbin
 	 */
 	FinanceUserInfo getUserInfo();
 
@@ -50,7 +46,6 @@ public interface JwtService {
 	 * 移除内存中的缓存值.
 	 * <pre>注意：业务不允许调用</pre>
 	 * @author hewenbin
-	 * @version JwtService.java v1.0 2018年9月12日 下午4:59:26 hewenbin
 	 */
 	void removeUserInfo();
 }
