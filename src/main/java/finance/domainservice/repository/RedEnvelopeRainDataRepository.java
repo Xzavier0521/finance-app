@@ -50,13 +50,36 @@ public interface RedEnvelopeRainDataRepository {
     Page<RedEnvelopeRainData> query4Page(Integer pageSize, Long pageNum, String activityCode,
                                          Integer activityDay, RedEnvelopeRainTimeCodeEnum timeCode);
 
+    /**
+     * 查询
+     * @param activityCode 活动代码
+     * @param activityDay  活动日期
+     * @param userId  用户id
+     * @return RedEnvelopeRainData
+     */
     RedEnvelopeRainData query(String activityCode, Integer activityDay, Long userId);
 
+    /**
+     * 查询
+     * @param activityCode 活动代码
+     * @param activityDay  活动日期
+     * @param userId  用户id
+     * @param timeCodes 时间代码
+     * @return Page<RedEnvelopeRainData>
+     */
     RedEnvelopeRainData query(String activityCode, Integer activityDay, Long userId,
                               RedEnvelopeRainTimeCodeEnum timeCodes);
 
+    /**
+     * 分页查询
+     * @param pageSize  每页记录数
+     * @param pageNum 第几页
+     * @param activityCode 活动代码
+     * @param activityDay 活动日期
+     * @return Page<RedEnvelopeRainData>
+     */
     Page<RedEnvelopeRainData> queryDailyRainData4Page(Integer pageSize, Long pageNum,
-                                                 String activityCode, Integer activityDay);
+                                                      String activityCode, Integer activityDay);
 
     /**
      *  排行榜查询

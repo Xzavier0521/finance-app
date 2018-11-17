@@ -10,9 +10,8 @@ public enum WeChatPubGlobalReturnCodeEnum {
                                     /**
                                      * 成功
                                      */
-                                    SUCCESS("0", "ok"),
-    SYSTEM_BUSY("0-系统繁忙", "0"),
-    REQUEST_SUCCESSFUL("-1-请求成功", "-1"),
+    REQUEST_SUCCESSFUL("请求成功", "0"),
+    SYSTEM_BUSY("系统繁忙", "-1"),
     APP_SECRET_ERROR("40001-AppSecret错误", "40001"),
     INVALID_CERTIFICATE_TYPE("40002-不合法的凭证类型", "40002"),
     ILLEGAL_OPENID("40003-不合法的 OpenID ,请开发者确认 OpenID （该用户）是否已关注公众号,或是否是其他公众号的 OpenID", "40003"),
@@ -169,7 +168,7 @@ public enum WeChatPubGlobalReturnCodeEnum {
     private String code;
     private String desc;
 
-    WeChatPubGlobalReturnCodeEnum(String code, String desc) {
+    WeChatPubGlobalReturnCodeEnum(String desc,String code) {
         this.code = code;
         this.desc = desc;
     }

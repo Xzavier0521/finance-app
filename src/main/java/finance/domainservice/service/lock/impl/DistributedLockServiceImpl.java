@@ -13,9 +13,8 @@ import finance.api.model.response.BasicResponse;
 import finance.core.common.enums.ReturnCode;
 import finance.core.common.util.PreconditionUtils;
 import finance.core.common.util.ResponseUtils;
-import finance.core.dal.dao.FinanceCoinLogDAO;
-import finance.core.dal.dataobject.FinanceCoinLog;
 import finance.domain.coin.PayCoinCondition;
+import finance.domainservice.repository.CoinLogRepository;
 import finance.domainservice.service.lock.DistributedLockService;
 
 /**
@@ -27,7 +26,7 @@ import finance.domainservice.service.lock.DistributedLockService;
 @Service("distributedLockService")
 public class DistributedLockServiceImpl implements DistributedLockService {
     @Resource
-    private FinanceCoinLogDAO   financeCoinLogDAO;
+    private CoinLogRepository   coinLogRepository;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
     @Resource
@@ -72,7 +71,7 @@ public class DistributedLockServiceImpl implements DistributedLockService {
                 // 校验用户金币数目
                 validateCoinNum(payCoinCondition.getUserId(), payCoinCondition.getCoinNum());
                 // 记录金币日志
-                recordCoinLog(payCoinCondition.getUserId(), payCoinCondition.getCoinNum(),
+                coinLogRepository.save(payCoinCondition.getUserId(), payCoinCondition.getCoinNum(),
                     payCoinCondition.getPayReason());
                 //业务逻辑执行
                 payCoinCondition.getFunctions()
@@ -91,22 +90,9 @@ public class DistributedLockServiceImpl implements DistributedLockService {
      * @param coinNum 金币数目
      */
     private void validateCoinNum(Long userId, Integer coinNum) {
-        Integer totalCoin = financeCoinLogDAO.selectCoinNumByUserId(userId);
+        Integer totalCoin = coinLogRepository.selectCoinNumByUserId(userId);
         PreconditionUtils.checkArgument(Objects.nonNull(totalCoin), ReturnCode.COIN_NUM_NOT_ENOUGH);
         PreconditionUtils.checkArgument(totalCoin >= coinNum, ReturnCode.COIN_NUM_NOT_ENOUGH);
     }
 
-    /**
-     *  记录金币日志
-     * @param userId 用户id
-     * @param coinNum 金币数目
-     */
-    private void recordCoinLog(Long userId, Integer coinNum, String reason) {
-        FinanceCoinLog financeCoinLog = new FinanceCoinLog();
-        financeCoinLog.setUserId(userId);
-        financeCoinLog.setTaskId(userId);
-        financeCoinLog.setTaskName(reason);
-        financeCoinLog.setNum(-coinNum);
-        financeCoinLogDAO.insertSelective(financeCoinLog);
-    }
 }

@@ -162,4 +162,96 @@
         fuii.user_id = #{userId}
         AND fioi.id IS NOT NULL and fioi.activity_code=#{signActivityCode}
     </select>
+    <sql id="finance_user_info_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="mobileNum != null and mobileNum.trim().length() != 0">
+                AND (mobile_num like '%' || #{mobileNum} || '%')
+            </if>
+            <if test="inviteCode != null and inviteCode.trim().length() != 0">
+                AND (invite_code like '%' || #{inviteCode} || '%')
+            </if>
+            <if test="activityCode != null and activityCode.trim().length() != 0">
+                AND (activity_code like '%' || #{activityCode} || '%')
+            </if>
+            <if test="status != null and status.trim().length() != 0">
+                AND (status like '%' || #{status} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_user_info_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="mobileNum != null and mobileNum.trim().length() != 0">
+                AND (mobile_num = #{mobileNum})
+            </if>
+            <if test="inviteCode != null and inviteCode.trim().length() != 0">
+                AND (invite_code = #{inviteCode})
+            </if>
+            <if test="activityCode != null and activityCode.trim().length() != 0">
+                AND (activity_code = #{activityCode})
+            </if>
+            <if test="status != null and status.trim().length() != 0">
+                AND (status = #{status})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_user_info
+        <if test="fuzzy">
+            <include refid="finance_user_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_user_info_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_user_info
+        <if test="fuzzy">
+            <include refid="finance_user_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_user_info_query_condition"/>
+        </if>
+    </select>
 </mapper>

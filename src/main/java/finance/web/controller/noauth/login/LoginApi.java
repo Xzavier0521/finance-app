@@ -1,32 +1,25 @@
 package finance.web.controller.noauth.login;
 
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.google.common.collect.Sets;
+import finance.api.model.base.XMap;
+import finance.api.model.response.ResponseResult;
+import finance.core.common.enums.CodeEnum;
+import finance.core.common.util.ResponseResultUtils;
+import finance.domain.dto.LoginParamDto;
+import finance.domain.dto.ThirdLoginParamDto;
+import finance.domainservice.service.login.LoginService;
+import finance.domainservice.service.validate.LoginValidateService;
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Sets;
-
-import finance.api.model.base.XMap;
-import finance.api.model.response.ResponseResult;
-import finance.api.model.response.ValidateResponse;
-import finance.core.common.enums.CodeEnum;
-import finance.core.common.util.PreconditionUtils;
-import finance.core.common.util.ResponseResultUtils;
-import finance.core.common.util.ValidatorTools;
-import finance.domain.dto.LoginParamDto;
-import finance.domain.dto.ThirdLoginParamDto;
-import finance.domainservice.service.login.LoginService;
-import finance.domainservice.service.validate.LoginValidateService;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>登录服务接口</p>

@@ -6,12 +6,14 @@ import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,12 +28,11 @@ import finance.core.common.enums.ReturnCode;
 import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
 import finance.core.common.util.DateUtils;
 import finance.core.common.util.ResponseUtils;
-import finance.core.dal.dao.FinanceCoinLogDAO;
-import finance.core.dal.dataobject.FinanceCoinLog;
 import finance.domain.activity.RedEnvelopeRainData;
 import finance.domain.user.ThirdAccountInfo;
 import finance.domain.user.UserInfo;
 import finance.domain.weixin.WeiXinMessageTemplate;
+import finance.domainservice.repository.CoinLogRepository;
 import finance.domainservice.repository.RedEnvelopeRainDataRepository;
 import finance.domainservice.repository.ThirdAccountInfoRepository;
 import finance.domainservice.repository.WeiXinMessageTemplateRepository;
@@ -52,7 +53,7 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
     @Resource
     private RedEnvelopeRainDataRepository    redEnvelopeRainDataRepository;
     @Resource
-    private FinanceCoinLogDAO                financeCoinLogDAO;
+    private CoinLogRepository                coinLogRepository;
     @Resource
     private ThirdAccountInfoRepository       thirdAccountInfoRepository;
     @Resource
@@ -85,13 +86,19 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
                 .queryByCondition(userInfo.getId());
             response = transactionTemplate.execute(status -> {
                 redEnvelopeRainDataRepository.save(redEnvelopeRainData);
-                recordCoinLog(userInfo.getId(), totalAmount.intValue(), "红包雨活动奖励");
-                WeiXinMessageTemplate weiXinMessageTemplate = weiXinMessageTemplateRepository
-                    .query(WeiXinMessageTemplateCodeEnum.SEND_COIN_NOTICE.getCode());
-                Map<String, String> parameters = Maps.newHashMap();
-                parameters.put("coinNum", String.valueOf(totalAmount.longValue()));
-                weiXinTemplateMessageSendService.send(userInfo, thirdAccountInfo,
-                    weiXinMessageTemplate, parameters);
+                coinLogRepository.save(userInfo.getId(), totalAmount.intValue(), "红包雨活动奖励");
+                if (Objects.nonNull(thirdAccountInfo)
+                    && StringUtils.isNotBlank(thirdAccountInfo.getOpenId())) {
+                    // 发送微信模版消息
+                    WeiXinMessageTemplate weiXinMessageTemplate = weiXinMessageTemplateRepository
+                        .query(WeiXinMessageTemplateCodeEnum.SEND_COIN_NOTICE.getCode());
+                    Map<String, String> parameters = Maps.newHashMap();
+                    parameters.put("coinNum", String.valueOf(totalAmount.longValue()));
+                    weiXinTemplateMessageSendService.send(userInfo, thirdAccountInfo,
+                        weiXinMessageTemplate, parameters);
+                } else {
+                    log.info("用户{}，未获取到open_id不发送微信模版消息", userInfo.getMobileNum());
+                }
                 // 参加活动的手机号码列表
                 String key = MessageFormat.format("{0}:{1}", RED_ENVELOPE_RAIN_PHONE_NUMBERS,
                     activityDay);
@@ -110,17 +117,4 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
         return response;
     }
 
-    /**
-     *  记录金币日志
-     * @param userId 用户id
-     * @param coinNum 金币数目
-     */
-    private void recordCoinLog(Long userId, Integer coinNum, String reason) {
-        FinanceCoinLog financeCoinLog = new FinanceCoinLog();
-        financeCoinLog.setUserId(userId);
-        financeCoinLog.setTaskId(userId);
-        financeCoinLog.setTaskName(reason);
-        financeCoinLog.setNum(coinNum);
-        financeCoinLogDAO.insertSelective(financeCoinLog);
-    }
 }

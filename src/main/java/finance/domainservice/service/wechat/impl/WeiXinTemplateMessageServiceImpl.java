@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import finance.core.common.enums.WeChatPubGlobalReturnCodeEnum;
 import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
 import finance.core.common.util.CommonUtils;
 import finance.core.common.util.DateUtils;
@@ -63,7 +64,8 @@ public class WeiXinTemplateMessageServiceImpl implements WeiXinTemplateMessageSe
             weiXinMessageTemplate, parameters);
         WeiXinTemplateMessageSendResponse response = weiXinTemplateMessageClient
             .sendMessage(request);
-        if ("0".equals(response.getErrcode())) {
+        if (WeChatPubGlobalReturnCodeEnum.REQUEST_SUCCESSFUL == WeChatPubGlobalReturnCodeEnum
+            .getByCode(response.getErrcode())) {
             log.info("open_id:{},微信模版消息发送成功", request.getTouser());
         } else {
             log.error("open_id:{},微信模版消息发送失败:{}", request.getTouser(), response.getErrmsg());

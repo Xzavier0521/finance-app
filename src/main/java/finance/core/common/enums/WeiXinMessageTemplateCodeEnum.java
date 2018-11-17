@@ -3,10 +3,10 @@ package finance.core.common.enums;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * <p>注释</p>
+ * <p>微信模版消息类型</p>
  *
  * @author lili
- * @version $Id: WeiXinMessageTemplateCodeEnum.java, v0.1 2018/10/24 11:13 AM lili Exp $
+ * @version 1.0: WeiXinMessageTemplateCodeEnum.java, v0.1 2018/10/24 11:13 AM lili Exp $
  */
 public enum WeiXinMessageTemplateCodeEnum {
 

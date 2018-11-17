@@ -5,25 +5,31 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
-import finance.core.common.constants.Constant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import finance.api.model.vo.ImgValidateVo;
-import finance.domainservice.service.validate.ImgValidateService;
+import finance.core.common.constants.Constant;
 import finance.core.common.util.ImgValidateCodeUtil;
 import finance.core.common.util.ImgValidateCodeUtil.ImgValidate;
+import finance.domainservice.service.validate.ImgValidateService;
 
+/**
+ * <p>注释</p>
+ *
+ * @author lili
+ * @version $Id: ImgValidateServiceImpl.java, v0.1 2018/11/17 1:45 PM lili Exp $
+ */
 @Service
 public class ImgValidateServiceImpl implements ImgValidateService {
     @Value("${imgcode.cache.minute}")
-    private Long                cacheTimeoutHours;
+    private Long cacheTimeoutHours;
 
     @Value("${imgcode.cache.key.prefix}")
-    private String              cacheKeyPrefix;
+    private String cacheKeyPrefix;
     @Value("${imgcode.test.switch}")
-    private String              testSwitch;
+    private String testSwitch;
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
@@ -37,7 +43,7 @@ public class ImgValidateServiceImpl implements ImgValidateService {
         codeVo.setImgCodeId(imgCodeId);
         codeVo.setImgCodeBase64("data:image/png;base64," + imgCode.getBase64Str());
         stringRedisTemplate.opsForValue().set(cacheKeyPrefix + imgCodeId, imgCodeValue,
-            cacheTimeoutHours, TimeUnit.MINUTES);
+                cacheTimeoutHours, TimeUnit.MINUTES);
         return codeVo;
     }
 

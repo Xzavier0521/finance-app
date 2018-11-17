@@ -1,11 +1,18 @@
 package finance.coin;
 
-import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import finance.core.common.constants.RedEnvelopConstant;
+import javax.annotation.Resource;
+
 import lombok.extern.slf4j.Slf4j;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,8 +22,7 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.activity.CoinGameVO;
 import finance.api.model.vo.activity.RedEnvelopeRainDataVO;
 import finance.api.model.vo.activity.UserCurrentRankingVO;
-
-import static finance.core.common.constants.RedEnvelopConstant.RED_ENVELOPE_RAIN_CODE;
+import finance.domainservice.service.activity.RedEnvelopeRainRankingRewardService;
 
 /**
  * <p>注释</p>
@@ -25,10 +31,17 @@ import static finance.core.common.constants.RedEnvelopConstant.RED_ENVELOPE_RAIN
  * @version 1.0: RestObjectTest.java, v0.1 2018/11/16 10:01 AM PM lili Exp $
  */
 @Slf4j
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@EnableTransactionManagement
 public class RestObjectTest {
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static ObjectMapper                 objectMapper = new ObjectMapper();
 
-    public static void main(String[] args) throws JsonProcessingException {
+    @Resource
+    private RedEnvelopeRainRankingRewardService redEnvelopeRainRankingRewardService;
+
+    @Test
+    public void testJson() throws JsonProcessingException {
 
         List<CoinGameVO> coinGameVOList = new ArrayList<>();
 
@@ -63,6 +76,12 @@ public class RestObjectTest {
             .success(userCurrentRankingVOPage);
         String json2 = objectMapper.writeValueAsString(res);
         log.info(json2);
+    }
+
+    @Test
+    public void testReward() {
+
+        redEnvelopeRainRankingRewardService.process(LocalDate.now().plusDays(-1), "1001");
     }
 
 }

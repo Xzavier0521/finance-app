@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +25,7 @@ import finance.domainservice.repository.RedEnvelopeRainDataRepository;
  * @author lili
  * @version 1.0: RedEnvelopeRainDataRepositoryImpl.java, v0.1 2018/11/14 10:07 PM PM lili Exp $
  */
+@Slf4j
 @Repository("redEnvelopeRainDataRepositoryImpl")
 public class RedEnvelopeRainDataRepositoryImpl implements RedEnvelopeRainDataRepository {
 
@@ -99,7 +101,8 @@ public class RedEnvelopeRainDataRepositoryImpl implements RedEnvelopeRainDataRep
 
     @Override
     public Page<RedEnvelopeRainData> queryDailyRainData4Page(Integer pageSize, Long pageNum,
-                                                        String activityCode, Integer activityDay) {
+                                                             String activityCode,
+                                                             Integer activityDay) {
         Page<RedEnvelopeRainData> page = new Page<>(pageSize, pageNum);
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("activityCode", activityCode);

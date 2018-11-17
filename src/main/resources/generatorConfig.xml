@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties resource="generator.properties"/>
+    <classPathEntry location="${classPath}"/>
+    <context id="oracle" targetRuntime="MyBatis3">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <plugin type="com.weihui.tool.mybatis.plugin.ColumnRemarkPlugin"/>
+        <plugin type="com.weihui.tool.mybatis.plugin.MapperPackageRenamePlugin">
+            <property name="searchString" value="DOMapper$"/>
+            <property name="replaceString" value="DAO"/>
+        </plugin>
+        <!--使用分页模糊查询 -->
+        <plugin type="com.weihui.tool.mybatis.plugin.FuzzyPageableQueryPlugin">
+            <property name="isFuzzy" value="true"/>
+            <property name="orderByColumns" value="ID desc"/>
+        </plugin>
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+        <jdbcConnection driverClass="${driverClass}" connectionURL="${connectionURL}" userId="${userName}"
+                        password="${password}">
+            <property name="remarkable" value="true"/>
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- generate Model -->
+        <javaModelGenerator targetPackage="${modelPackage}" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- generate xml -->
+        <sqlMapGenerator targetPackage="${sqlMapperPackage}" targetProject="./">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- generate Client -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${daoMapperPackage}" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <table schema="" tableName="finance_user_info" domainObjectName="UserInfoDO"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"
+               enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true">
+        </table>
+    </context>
+</generatorConfiguration>

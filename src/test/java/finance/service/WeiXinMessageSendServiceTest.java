@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import finance.domainservice.service.register.RegisterSendMessageService;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * <p>注释</p>
  * @author lili
@@ -28,7 +31,8 @@ public class WeiXinMessageSendServiceTest {
 
     @Test
     public void test() {
-        registerSendMessageService.sendMessage(1172L);
+        // registerSendMessageService.sendMessage(1172L);
+        log.info("{}",  LocalDate.now().plusDays(-1).format(DateTimeFormatter.ISO_DATE));
     }
 
 }

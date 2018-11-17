@@ -1,8 +1,8 @@
 package finance.domainservice.repository;
 
-import finance.domain.user.UserInfo;
-
 import java.util.List;
+
+import finance.domain.user.UserInfo;
 
 /**
  *  <p>用户基本信息</p>
@@ -24,4 +24,11 @@ public interface UserInfoRepository {
      * @return UserInfo
      */
     UserInfo queryByCondition(String inviteCode);
+
+    /**
+     *  根据手机号码查询用户信息
+     * @param mobileNum 手机号码
+     * @return UserInfo
+     */
+    UserInfo queryByMobileNum(String mobileNum);
 }

@@ -1,13 +1,16 @@
 package finance.domainservice.repository.impl;
 
-import finance.domain.coin.CoinLog;
-import finance.domainservice.converter.CoinLogConverter;
-import finance.core.dal.dao.FinanceCoinLogDAO;
-import finance.domainservice.repository.CoinLogRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
 import javax.annotation.Resource;
-import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import finance.core.dal.dao.FinanceCoinLogDAO;
+import finance.core.dal.dataobject.FinanceCoinLog;
+import finance.domain.coin.CoinLog;
+import finance.domainservice.converter.CoinLogConverter;
+import finance.domainservice.repository.CoinLogRepository;
 
 /**
  * <p>注释</p>
@@ -18,9 +21,8 @@ import java.util.List;
 @Repository("coinLogRepository")
 public class CoinLogRepositoryImpl implements CoinLogRepository {
 
-
     @Resource
-    private FinanceCoinLogDAO financeCoinLogMapper;
+    private FinanceCoinLogDAO financeCoinLogDAO;
 
     /**
      * 查询用户的最新日志
@@ -30,6 +32,21 @@ public class CoinLogRepositoryImpl implements CoinLogRepository {
      */
     @Override
     public List<CoinLog> queryLatestLog(List<Long> userIds) {
-        return CoinLogConverter.convert2List(financeCoinLogMapper.queryLatestLog(userIds));
+        return CoinLogConverter.convert2List(financeCoinLogDAO.queryLatestLog(userIds));
+    }
+
+    @Override
+    public int save(Long userId, Integer coinNum, String reason) {
+        FinanceCoinLog financeCoinLog = new FinanceCoinLog();
+        financeCoinLog.setUserId(userId);
+        financeCoinLog.setTaskId(userId);
+        financeCoinLog.setTaskName(reason);
+        financeCoinLog.setNum(coinNum);
+        return financeCoinLogDAO.insertSelective(financeCoinLog);
+    }
+
+    @Override
+    public Integer selectCoinNumByUserId(Long userId) {
+        return financeCoinLogDAO.selectCoinNumByUserId(userId);
     }
 }

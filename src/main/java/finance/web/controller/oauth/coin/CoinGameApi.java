@@ -103,14 +103,14 @@ public class CoinGameApi {
                 basicResponse.getReturnMessage());
             response = ResponseResult.success(null);
         } catch (final Exception e) {
-            if (e.getMessage().contains("金币数不足")) {
+            if (e.getMessage().contains(ReturnCode.COIN_NUM_NOT_ENOUGH.getDesc())) {
                 response = ResponseResultUtils.error(ReturnCode.COIN_NUM_NOT_ENOUGH);
             } else {
                 response = ResponseResultUtils.error(e.getMessage());
             }
             log.error("[支付金币玩游戏],异常:{}", ExceptionUtils.getStackTrace(e));
         }
-        log.info("[结束支付金币玩游戏]，请求参数:{}", request, response);
+        log.info("[结束支付金币玩游戏]，请求参数:{},返回结果:{}", request, response);
         return response;
     }
 

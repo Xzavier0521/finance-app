@@ -1,8 +1,8 @@
 package finance.domainservice.repository;
 
-import finance.domain.coin.CoinLog;
-
 import java.util.List;
+
+import finance.domain.coin.CoinLog;
 
 /**
  * <p>注释</p>
@@ -19,5 +19,8 @@ public interface CoinLogRepository {
      */
     List<CoinLog> queryLatestLog(List<Long> userIds);
 
+    int save(Long userId, Integer coinNum, String reason);
+
+    Integer selectCoinNumByUserId(Long userId);
 
 }
