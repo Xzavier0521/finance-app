@@ -96,7 +96,7 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
                         .userId(userInfo.getId())
                         .mobilePhone(userInfo.getMobileNum())
                         .activityCode(activityCode)
-                        .activityDay(activityCode)
+                        .activityDay(String.valueOf(activityDay))
                         .totalNum(totalNum)
                         .totalAmount(totalAmount.longValue())
                         .rewardType(RewardTypeEnum.RED_ENVELOPE_RAIN)
