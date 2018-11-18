@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import finance.core.common.enums.RewardTypeEnum;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
@@ -29,13 +30,11 @@ import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
 import finance.core.common.util.DateUtils;
 import finance.core.common.util.ResponseUtils;
 import finance.domain.activity.RedEnvelopeRainData;
+import finance.domain.activity.RedEnvelopeRainReward;
 import finance.domain.user.ThirdAccountInfo;
 import finance.domain.user.UserInfo;
 import finance.domain.weixin.WeiXinMessageTemplate;
-import finance.domainservice.repository.CoinLogRepository;
-import finance.domainservice.repository.RedEnvelopeRainDataRepository;
-import finance.domainservice.repository.ThirdAccountInfoRepository;
-import finance.domainservice.repository.WeiXinMessageTemplateRepository;
+import finance.domainservice.repository.*;
 import finance.domainservice.service.activity.RedEnvelopeRainDataService;
 import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 
@@ -50,6 +49,8 @@ import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataService {
     @Resource
     private RedisTemplate<String, Object>    redisTemplate;
+    @Resource
+    private RedEnvelopeRainRewardRepository  redEnvelopeRainRewardRepository;
     @Resource
     private RedEnvelopeRainDataRepository    redEnvelopeRainDataRepository;
     @Resource
@@ -84,12 +85,26 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
                 .activityDay(activityDay).build();
             ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository
                 .queryByCondition(userInfo.getId());
+            // 启用事务处理
             response = transactionTemplate.execute(status -> {
+                // 记录红包雨数据
                 redEnvelopeRainDataRepository.save(redEnvelopeRainData);
+                // 发放金币奖励
                 coinLogRepository.save(userInfo.getId(), totalAmount.intValue(), "红包雨活动奖励");
+                // 记录金币奖励日志
+                redEnvelopeRainRewardRepository.save(RedEnvelopeRainReward.builder()
+                        .userId(userInfo.getId())
+                        .mobilePhone(userInfo.getMobileNum())
+                        .activityCode(activityCode)
+                        .activityDay(activityCode)
+                        .totalNum(totalNum)
+                        .totalAmount(totalAmount.longValue())
+                        .rewardType(RewardTypeEnum.RED_ENVELOPE_RAIN)
+                        .build());
+                // 发送微信模版消息
                 if (Objects.nonNull(thirdAccountInfo)
                     && StringUtils.isNotBlank(thirdAccountInfo.getOpenId())) {
-                    // 发送微信模版消息
+                    // 查询微信消息模版
                     WeiXinMessageTemplate weiXinMessageTemplate = weiXinMessageTemplateRepository
                         .query(WeiXinMessageTemplateCodeEnum.SEND_COIN_NOTICE.getCode());
                     Map<String, String> parameters = Maps.newHashMap();

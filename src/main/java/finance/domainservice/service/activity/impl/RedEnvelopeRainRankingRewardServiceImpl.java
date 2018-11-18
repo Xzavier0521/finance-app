@@ -12,12 +12,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.google.common.collect.Maps;
 
+import finance.core.common.enums.RewardTypeEnum;
 import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
 import finance.core.common.util.DateUtils;
 import finance.domain.activity.RedEnvelopeRainData;
+import finance.domain.activity.RedEnvelopeRainReward;
 import finance.domain.user.ThirdAccountInfo;
 import finance.domain.user.UserInfo;
 import finance.domain.weixin.WeiXinMessageTemplate;
@@ -35,8 +38,13 @@ import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 @Service("redEnvelopeRainRankingRewardService")
 public class RedEnvelopeRainRankingRewardServiceImpl implements
                                                      RedEnvelopeRainRankingRewardService {
+
+    @Resource
+    private TransactionTemplate              transactionTemplate;
     @Resource
     private CoinLogRepository                coinLogRepository;
+    @Resource
+    private RedEnvelopeRainRewardRepository  redEnvelopeRainRewardRepository;
     @Resource
     private RedEnvelopeRainDataRepository    redEnvelopeRainDataRepository;
     @Resource
@@ -61,16 +69,24 @@ public class RedEnvelopeRainRankingRewardServiceImpl implements
             log.info("[开始处理用户{}排行榜奖励]", redEnvelopeRainData.getMobilePhone());
             userInfo = userInfoRepository.queryByMobileNum(redEnvelopeRainData.getMobilePhone());
             if (Objects.nonNull(userInfo)) {
-                // 增加金币
-                coinLogRepository.save(userInfo.getId(),
-                    redEnvelopeRainData.getTotalAmount().intValue(), "红包雨活动排行榜奖励");
+                String activityDay = String.valueOf(DateUtils.getCurrentDay(localDate));
+                // 记录发放日志
+                RedEnvelopeRainReward redEnvelopeRainReward = redEnvelopeRainRewardRepository
+                    .queryByCondition(activityCode, activityDay, userInfo.getId(),
+                        RewardTypeEnum.RED_ENVELOPE_RAIN_RANKING);
+                if (Objects.nonNull(redEnvelopeRainReward)) {
+                    log.info("用户:{},红包雨排行榜奖励已经发放！", userInfo.getMobileNum());
+                    continue;
+                }
+                localData(activityCode, activityDay, userInfo, redEnvelopeRainData);
                 // 金币提醒
                 // 查询用户openInfo
                 ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository
                     .queryByCondition(userInfo.getId());
-                // 查询微信消息模版
+                // 发送微信模版消息
                 if (Objects.nonNull(thirdAccountInfo)
                     && StringUtils.isNotBlank(thirdAccountInfo.getOpenId())) {
+                    // 查询微信消息模版
                     WeiXinMessageTemplate weiXinMessageTemplate = weiXinMessageTemplateRepository
                         .query(WeiXinMessageTemplateCodeEnum.SEND_COIN_NOTICE.getCode());
                     // 组装模版消息发送参数
@@ -87,5 +103,22 @@ public class RedEnvelopeRainRankingRewardServiceImpl implements
             }
             log.info("[结束处理用户{}排行榜奖励]", redEnvelopeRainData.getMobilePhone());
         }
+    }
+
+    private void localData(String activityCode, String activityDay, UserInfo userInfo,
+                           RedEnvelopeRainData redEnvelopeRainData) {
+        transactionTemplate.execute(status -> {
+            // 增加金币
+            coinLogRepository.save(userInfo.getId(),
+                redEnvelopeRainData.getTotalAmount().intValue(), "红包雨活动排行榜奖励");
+            // 记录金币奖励日志
+            redEnvelopeRainRewardRepository
+                .save(RedEnvelopeRainReward.builder().userId(userInfo.getId())
+                    .mobilePhone(userInfo.getMobileNum()).activityCode(activityCode)
+                    .activityDay(activityDay).totalNum(redEnvelopeRainData.getTotalNum())
+                    .totalAmount(redEnvelopeRainData.getTotalAmount().longValue())
+                    .rewardType(RewardTypeEnum.RED_ENVELOPE_RAIN).build());
+            return true;
+        });
     }
 }

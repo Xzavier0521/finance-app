@@ -26,7 +26,7 @@ import finance.domainservice.repository.RedEnvelopeRainDataRepository;
  * @version 1.0: RedEnvelopeRainDataRepositoryImpl.java, v0.1 2018/11/14 10:07 PM PM lili Exp $
  */
 @Slf4j
-@Repository("redEnvelopeRainDataRepositoryImpl")
+@Repository("redEnvelopeRainDataRepository")
 public class RedEnvelopeRainDataRepositoryImpl implements RedEnvelopeRainDataRepository {
 
     @Resource

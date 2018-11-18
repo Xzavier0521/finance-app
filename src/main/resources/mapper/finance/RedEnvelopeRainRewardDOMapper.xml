@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.RedEnvelopeRainRewardDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.RedEnvelopeRainRewardDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="activity_code" property="activityCode" jdbcType="VARCHAR"/>
+        <result column="activity_day" property="activityDay" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="mobile_phone" property="mobilePhone" jdbcType="VARCHAR"/>
+        <result column="reward_type" property="rewardType" jdbcType="VARCHAR"/>
+        <result column="total_num" property="totalNum" jdbcType="BIGINT"/>
+        <result column="total_amount" property="totalAmount" jdbcType="BIGINT"/>
+        <result column="ranking" property="ranking" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, activity_code, activity_day, user_id, mobile_phone, reward_type, total_num, total_amount,
+        ranking, create_time, update_time, creator, updator, is_delete, version
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_red_envelope_rain_reward
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from finance_red_envelope_rain_reward
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="finance.core.dal.dataobject.RedEnvelopeRainRewardDO">
+        insert into finance_red_envelope_rain_reward (id, activity_code, activity_day,
+        user_id, mobile_phone, reward_type,
+        total_num, total_amount, ranking,
+        create_time, update_time, creator,
+        updator, is_delete, version
+        )
+        values (#{id,jdbcType=BIGINT}, #{activityCode,jdbcType=VARCHAR}, #{activityDay,jdbcType=VARCHAR},
+        #{userId,jdbcType=BIGINT}, #{mobilePhone,jdbcType=VARCHAR}, #{rewardType,jdbcType=VARCHAR},
+        #{totalNum,jdbcType=INTEGER}, #{totalAmount,jdbcType=INTEGER}, #{ranking,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR},
+        #{updator,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.RedEnvelopeRainRewardDO">
+        insert into finance_red_envelope_rain_reward
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="activityCode != null">
+                activity_code,
+            </if>
+            <if test="activityDay != null">
+                activity_day,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="mobilePhone != null">
+                mobile_phone,
+            </if>
+            <if test="rewardType != null">
+                reward_type,
+            </if>
+            <if test="totalNum != null">
+                total_num,
+            </if>
+            <if test="totalAmount != null">
+                total_amount,
+            </if>
+            <if test="ranking != null">
+                ranking,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="updator != null">
+                updator,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="activityCode != null">
+                #{activityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="activityDay != null">
+                #{activityDay,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="mobilePhone != null">
+                #{mobilePhone,jdbcType=VARCHAR},
+            </if>
+            <if test="rewardType != null">
+                #{rewardType,jdbcType=VARCHAR},
+            </if>
+            <if test="totalNum != null">
+                #{totalNum,jdbcType=INTEGER},
+            </if>
+            <if test="totalAmount != null">
+                #{totalAmount,jdbcType=INTEGER},
+            </if>
+            <if test="ranking != null">
+                #{ranking,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.RedEnvelopeRainRewardDO">
+        update finance_red_envelope_rain_reward
+        <set>
+            <if test="activityCode != null">
+                activity_code = #{activityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="activityDay != null">
+                activity_day = #{activityDay,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="mobilePhone != null">
+                mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+            </if>
+            <if test="rewardType != null">
+                reward_type = #{rewardType,jdbcType=VARCHAR},
+            </if>
+            <if test="totalNum != null">
+                total_num = #{totalNum,jdbcType=INTEGER},
+            </if>
+            <if test="totalAmount != null">
+                total_amount = #{totalAmount,jdbcType=INTEGER},
+            </if>
+            <if test="ranking != null">
+                ranking = #{ranking,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                updator = #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="finance.core.dal.dataobject.RedEnvelopeRainRewardDO">
+        update finance_red_envelope_rain_reward
+        set activity_code = #{activityCode,jdbcType=VARCHAR},
+        activity_day = #{activityDay,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=BIGINT},
+        mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+        reward_type = #{rewardType,jdbcType=VARCHAR},
+        total_num = #{totalNum,jdbcType=INTEGER},
+        total_amount = #{totalAmount,jdbcType=INTEGER},
+        ranking = #{ranking,jdbcType=BIGINT},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        creator = #{creator,jdbcType=VARCHAR},
+        updator = #{updator,jdbcType=VARCHAR},
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+        version = #{version,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <sql id="finance_red_envelope_rain_reward_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="activityCode != null and activityCode.trim().length() != 0">
+                AND (activity_code like '%' || #{activityCode} || '%')
+            </if>
+            <if test="activityDay != null and activityDay.trim().length() != 0">
+                AND (activity_day like '%' || #{activityDay} || '%')
+            </if>
+            <if test="userId != null and userId.trim().length() != 0">
+                AND (user_id = #{userId})
+            </if>
+            <if test="mobilePhone != null and mobilePhone.trim().length() != 0">
+                AND (mobile_phone like '%' || #{mobilePhone} || '%')
+            </if>
+            <if test="rewardType != null and rewardType.trim().length() != 0">
+                AND (reward_type like '%' || #{rewardType} || '%')
+            </if>
+            <if test="totalNum != null and totalNum.trim().length() != 0">
+                AND (total_num = #{totalNum})
+            </if>
+            <if test="totalAmount != null and totalAmount.trim().length() != 0">
+                AND (total_amount = #{totalAmount})
+            </if>
+            <if test="ranking != null and ranking.trim().length() != 0">
+                AND (ranking = #{ranking})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete like '%' || #{isDelete} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_red_envelope_rain_reward_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="activityCode != null and activityCode.trim().length() != 0">
+                AND (activity_code = #{activityCode})
+            </if>
+            <if test="activityDay != null and activityDay.trim().length() != 0">
+                AND (activity_day = #{activityDay})
+            </if>
+            <if test="userId != null and userId.trim().length() != 0">
+                AND (user_id = #{userId})
+            </if>
+            <if test="mobilePhone != null and mobilePhone.trim().length() != 0">
+                AND (mobile_phone = #{mobilePhone})
+            </if>
+            <if test="rewardType != null and rewardType.trim().length() != 0">
+                AND (reward_type = #{rewardType})
+            </if>
+            <if test="totalNum != null and totalNum.trim().length() != 0">
+                AND (total_num = #{totalNum})
+            </if>
+            <if test="totalAmount != null and totalAmount.trim().length() != 0">
+                AND (total_amount = #{totalAmount})
+            </if>
+            <if test="ranking != null and ranking.trim().length() != 0">
+                AND (ranking = #{ranking})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_red_envelope_rain_reward
+        <if test="fuzzy">
+            <include refid="finance_red_envelope_rain_reward_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_red_envelope_rain_reward_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_red_envelope_rain_reward
+        <if test="fuzzy">
+            <include refid="finance_red_envelope_rain_reward_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_red_envelope_rain_reward_query_condition"/>
+        </if>
+    </select>
+</mapper>
