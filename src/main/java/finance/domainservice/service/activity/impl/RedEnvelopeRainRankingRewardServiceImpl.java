@@ -125,7 +125,7 @@ public class RedEnvelopeRainRankingRewardServiceImpl implements
                 .activityCode(activityCode).timeCode(timeCode).activityDay(activityDay)
                 .totalNum(redEnvelopeRainData.getTotalNum())
                 .totalAmount(redEnvelopeRainData.getTotalAmount().longValue())
-                .rewardType(RewardTypeEnum.RED_ENVELOPE_RAIN).build());
+                .rewardType(RewardTypeEnum.RED_ENVELOPE_RAIN_RANKING).build());
             return true;
         });
     }
