@@ -46,7 +46,6 @@ public class RedEnvelopeRainRankingThirdRewardTask implements SchedulingConfigur
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
 
         taskRegistrar.addTriggerTask(() -> {
-
             RedEnvelopeRainTimeCodeEnum timeCode = RedEnvelopeRainTimeCodeEnum.THIRD;
             log.info("[开始处理{}日{}红包雨活动-排行榜奖励]，当前时间：{}", LocalDateTime.now(), timeCode.getDesc());
             redEnvelopeRainRankingRewardService.process(LocalDate.now(),

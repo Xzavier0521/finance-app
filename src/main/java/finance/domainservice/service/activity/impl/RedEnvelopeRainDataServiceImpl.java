@@ -95,7 +95,7 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
                 redEnvelopeRainRewardRepository.save(RedEnvelopeRainReward.builder()
                     .userId(userInfo.getId()).mobilePhone(userInfo.getMobileNum())
                     .activityCode(activityCode).activityDay(String.valueOf(activityDay))
-                    .totalNum(totalNum).totalAmount(totalAmount.longValue())
+                    .totalNum(totalNum).totalAmount(totalAmount.longValue()).timeCode(timeCode)
                     .rewardType(RewardTypeEnum.RED_ENVELOPE_RAIN).build());
                 // 发送微信模版消息
                 if (Objects.nonNull(thirdAccountInfo)

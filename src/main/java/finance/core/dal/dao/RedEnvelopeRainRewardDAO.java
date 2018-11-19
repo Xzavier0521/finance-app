@@ -6,12 +6,12 @@ import java.util.Map;
 import finance.core.dal.dataobject.RedEnvelopeRainRewardDO;
 
 /**
- * <p>红包雨活动金币奖励日志</p>
+ * <p>注释</p>
+ *
  * @author lili
- * @version $Id: RedEnvelopeRainRewardDAO.java, v0.1 2018/11/18 3:01 PM lili Exp $
+ * @version $Id: RedEnvelopeRainRewardDAO.java, v0.1 2018/11/19 6:25 PM lili Exp $
  */
 public interface RedEnvelopeRainRewardDAO {
-
     int deleteByPrimaryKey(Long id);
 
     int insert(RedEnvelopeRainRewardDO record);

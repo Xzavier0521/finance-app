@@ -42,8 +42,8 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="${daoMapperPackage}" targetProject="./src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table schema="" tableName="finance_user_apply_credit_card_detail"
-               domainObjectName="UserApplyCreditCardDetailDO"
+        <table schema="" tableName="finance_red_envelope_rain_reward"
+               domainObjectName="RedEnvelopeRainRewardDO"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"
                enableDeleteByPrimaryKey="true"

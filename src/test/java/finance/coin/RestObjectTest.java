@@ -1,5 +1,6 @@
 package finance.coin;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.activity.CoinGameVO;
 import finance.api.model.vo.activity.RedEnvelopeRainDataVO;
 import finance.api.model.vo.activity.UserCurrentRankingVO;
+import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.domainservice.service.activity.RedEnvelopeRainRankingRewardService;
 import finance.domainservice.service.activity.RedEnvelopeRainRankingSyncService;
 
@@ -84,9 +86,9 @@ public class RestObjectTest {
     @Test
     public void testReward() {
 
-        //   redEnvelopeRainRankingRewardService.process(LocalDate.now().plusDays(-1), "1001");
-
-        redEnvelopeRainRankingSyncService.process();
+        redEnvelopeRainRankingRewardService.process(LocalDate.now(), "1001",
+            RedEnvelopeRainTimeCodeEnum.FIRST);
+       // redEnvelopeRainRankingSyncService.process();
     }
 
 }

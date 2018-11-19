@@ -40,6 +40,9 @@ public class RedEnvelopeRainRewardConverter {
         if (Objects.nonNull(from.getRewardType())) {
             to.setRewardType(from.getRewardType().getCode());
         }
+        if (Objects.nonNull(from.getTimeCode())) {
+            to.setTimeCode(from.getTimeCode().getCode());
+        }
         return to;
     }
 

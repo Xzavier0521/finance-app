@@ -1,13 +1,9 @@
 package finance.ext.task;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import javax.annotation.Resource;
-
+import finance.core.common.constants.RedEnvelopConstant;
+import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
+import finance.domainservice.service.activity.RedEnvelopeRainRankingRewardService;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
@@ -16,9 +12,9 @@ import org.springframework.scheduling.config.Task;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
-import finance.core.common.constants.RedEnvelopConstant;
-import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
-import finance.domainservice.service.activity.RedEnvelopeRainRankingRewardService;
+import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * <p>注释</p>
