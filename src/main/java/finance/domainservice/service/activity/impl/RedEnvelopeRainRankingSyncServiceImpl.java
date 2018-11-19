@@ -50,7 +50,7 @@ public class RedEnvelopeRainRankingSyncServiceImpl implements RedEnvelopeRainRan
         Integer activityDay = DateUtils.getCurrentDay(LocalDate.now());
         RedEnvelopeRainTimeCodeEnum timeCode = redEnvelopeRainDataQueryService
             .getRankingTimeCode(RED_ENVELOPE_RAIN_CODE, LocalDateTime.now());
-        log.info("[开始同步{}日{}红包雨活动数据排行榜", activityDay,timeCode.getDesc());
+        log.info("[开始同步{}日{}红包雨活动数据排行榜", activityDay, timeCode.getDesc());
         List<RedEnvelopeRainData> redEnvelopeRainDataList = redEnvelopeRainDataRepository
             .queryRankingList(RED_ENVELOPE_RAIN_CODE, activityDay, timeCode, 0, 1000);
         if (CollectionUtils.isEmpty(redEnvelopeRainDataList)) {
@@ -61,10 +61,11 @@ public class RedEnvelopeRainRankingSyncServiceImpl implements RedEnvelopeRainRan
         ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
         // 日排行榜
         // leader_board:1001:20181117
-        String leaderBoardKey = MessageFormat.format("{0}:{1}:{2}", RedEnvelopConstant.LEADER_BOARD,
-            RED_ENVELOPE_RAIN_CODE, String.valueOf(activityDay));
-        String redEnvelopeRainKey = MessageFormat.format("{0}:{1}", RED_ENVELOPE_RAIN_LEADER_BOARD,
-            String.valueOf(activityDay));
+        String leaderBoardKey = MessageFormat.format("{0}:{1}:{2}:{3}",
+            RedEnvelopConstant.LEADER_BOARD, RED_ENVELOPE_RAIN_CODE, String.valueOf(activityDay),
+            timeCode.getCode());
+        String redEnvelopeRainKey = MessageFormat.format("{0}:{1}:{2}",
+            RED_ENVELOPE_RAIN_LEADER_BOARD, String.valueOf(activityDay), timeCode.getCode());
         String key;
         for (RedEnvelopeRainData redEnvelopeRainData : redEnvelopeRainDataList) {
             // key: ranking-排名 score：user_id
@@ -84,6 +85,6 @@ public class RedEnvelopeRainRankingSyncServiceImpl implements RedEnvelopeRainRan
             hashOperations.put(key, "totalAmount", redEnvelopeRainData.getTotalAmount());
             redisTemplate.expire(key, 2880, TimeUnit.MINUTES);
         }
-        log.info("[结束同步{}日{}红包雨活动数据排行榜", activityDay,timeCode.getDesc());
+        log.info("[结束同步{}日{}红包雨活动数据排行榜", activityDay, timeCode.getDesc());
     }
 }

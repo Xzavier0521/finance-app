@@ -116,7 +116,7 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
         }
         String leaderBoardKey = MessageFormat.format("{0}:{1}:{2}:{3}",
             RedEnvelopConstant.LEADER_BOARD, RED_ENVELOPE_RAIN_CODE, String.valueOf(activityDay),
-            userInfo.getMobileNum());
+            timeCode.getCode(), userInfo.getMobileNum());
         Object ranking = redisTemplate.opsForHash().get(leaderBoardKey, "ranking");
         if (Objects.isNull(ranking)) {
             return "1000+";
@@ -136,8 +136,10 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
         if (now < Integer.valueOf(redEnvelopeRainConfig.getStartTime())) {
             activityDay = DateUtils.getCurrentDay(LocalDate.now().plusDays(-1));
         }
-        String redEnvelopeRainKey = MessageFormat.format("{0}:{1}", RED_ENVELOPE_RAIN_LEADER_BOARD,
-            String.valueOf(activityDay));
+        RedEnvelopeRainTimeCodeEnum timeCode = getRankingTimeCode(activityCode,
+            LocalDateTime.now());
+        String redEnvelopeRainKey = MessageFormat.format("{0}:{1}:{2}",
+            RED_ENVELOPE_RAIN_LEADER_BOARD, String.valueOf(activityDay), timeCode.getCode());
         ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
         Set<String> leaderBoardKeys = zSetOperations.rangeByScore(redEnvelopeRainKey, 1,
             pageSize * pageNum);
@@ -150,8 +152,6 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
                 redEnvelopeRainDataList.add(RedEnvelopeRainData.mapToObject(fieldMap));
             }
         }
-        RedEnvelopeRainTimeCodeEnum timeCode = getRankingTimeCode(activityCode,
-            LocalDateTime.now());
         if (CollectionUtils.isEmpty(redEnvelopeRainDataList)) {
             redEnvelopeRainDataList = redEnvelopeRainDataRepository.queryRankingList(activityCode,
                 activityDay, timeCode, pageSize, pageNum);
