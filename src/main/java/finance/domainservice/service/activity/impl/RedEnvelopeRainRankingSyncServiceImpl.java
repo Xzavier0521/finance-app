@@ -84,6 +84,6 @@ public class RedEnvelopeRainRankingSyncServiceImpl implements RedEnvelopeRainRan
             hashOperations.put(key, "totalAmount", redEnvelopeRainData.getTotalAmount());
             redisTemplate.expire(key, 2880, TimeUnit.MINUTES);
         }
-        log.info("[结束同步{}日红包雨活动数据排行榜", activityDay);
+        log.info("[结束同步{}日{}红包雨活动数据排行榜", activityDay,timeCode.getDesc());
     }
 }

@@ -69,7 +69,8 @@ public class RedEnvelopeRainController {
         try {
             ValidateResponse validateResponse = ValidatorTools.validate(request);
             checkArgument(validateResponse.isStatus(), validateResponse.getErrorMsg());
-            checkArgument(request.getTotalAmount().longValue() <= 1000,
+            checkArgument(request.getTotalAmount().longValue() <= 1000
+                          & request.getTotalAmount().longValue() > 0,
                 ReturnCode.COIN_NUM_TOO_LARGE);
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
             checkArgument(Objects.nonNull(userInfo), ReturnCode.USER_NOT_EXISTS);
