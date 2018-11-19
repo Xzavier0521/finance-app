@@ -16,6 +16,7 @@ import org.springframework.scheduling.config.Task;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
+import finance.core.common.constants.RedEnvelopConstant;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.domainservice.service.activity.RedEnvelopeRainRankingRewardService;
 
@@ -48,13 +49,10 @@ public class RedEnvelopeRainRankingFirstRewardTask implements SchedulingConfigur
         taskRegistrar.addTriggerTask(() -> {
 
             RedEnvelopeRainTimeCodeEnum timeCode = RedEnvelopeRainTimeCodeEnum.FIRST;
-            log.info("[开始处理{}日红包雨活动-排行榜奖励]，当前时间：{}",
-                LocalDate.now().plusDays(-1).format(DateTimeFormatter.ISO_DATE),
-                LocalDateTime.now());
-            redEnvelopeRainRankingRewardService.process(LocalDate.now(), "1001", timeCode);
-            log.info("[结束处理}日红包雨活动-排行榜奖励]，当前时间：{}",
-                LocalDate.now().plusDays(-1).format(DateTimeFormatter.ISO_DATE),
-                LocalDateTime.now());
+            log.info("[开始处理{}日{}红包雨活动-排行榜奖励]，当前时间：{}", LocalDateTime.now(), timeCode.getDesc());
+            redEnvelopeRainRankingRewardService.process(LocalDate.now(),
+                RedEnvelopConstant.RED_ENVELOPE_RAIN_CODE, timeCode);
+            log.info("[结束处理}日{}红包雨活动-排行榜奖励]，当前时间：{}", LocalDateTime.now(), timeCode.getDesc());
         }, triggerContext -> {
             // 定时任务触发，可修改定时任务的执行周期 this.corn
             CronTrigger trigger = new CronTrigger(cron);

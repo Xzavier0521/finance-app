@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.UserApplyCreditCardDetailDAO" >
+  <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.UserApplyCreditCardDetailDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="mobile_num" property="mobileNum" jdbcType="VARCHAR" />
+    <result column="id_num" property="idNum" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="product_type" property="productType" jdbcType="BIGINT" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="system_version" property="systemVersion" jdbcType="VARCHAR" />
+    <result column="soft_version" property="softVersion" jdbcType="VARCHAR" />
+    <result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, user_name, mobile_num, id_num, product_id, product_type, ip, system_version, 
+    soft_version, channel_id, status, message, create_time, update_time, creator, updator, 
+    is_delete, version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from finance_user_apply_credit_card_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from finance_user_apply_credit_card_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="finance.core.dal.dataobject.UserApplyCreditCardDetailDO" >
+    insert into finance_user_apply_credit_card_detail (id, user_id, user_name, 
+      mobile_num, id_num, product_id, 
+      product_type, ip, system_version, 
+      soft_version, channel_id, status, 
+      message, create_time, update_time, 
+      creator, updator, is_delete, 
+      version)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
+      #{mobileNum,jdbcType=VARCHAR}, #{idNum,jdbcType=VARCHAR}, #{productId,jdbcType=BIGINT}, 
+      #{productType,jdbcType=BIGINT}, #{ip,jdbcType=VARCHAR}, #{systemVersion,jdbcType=VARCHAR}, 
+      #{softVersion,jdbcType=VARCHAR}, #{channelId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{message,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR}, 
+      #{version,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="finance.core.dal.dataobject.UserApplyCreditCardDetailDO" >
+    insert into finance_user_apply_credit_card_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="mobileNum != null" >
+        mobile_num,
+      </if>
+      <if test="idNum != null" >
+        id_num,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="productType != null" >
+        product_type,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="systemVersion != null" >
+        system_version,
+      </if>
+      <if test="softVersion != null" >
+        soft_version,
+      </if>
+      <if test="channelId != null" >
+        channel_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="updator != null" >
+        updator,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNum != null" >
+        #{mobileNum,jdbcType=VARCHAR},
+      </if>
+      <if test="idNum != null" >
+        #{idNum,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productType != null" >
+        #{productType,jdbcType=BIGINT},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="systemVersion != null" >
+        #{systemVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="softVersion != null" >
+        #{softVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null" >
+        #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updator != null" >
+        #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.UserApplyCreditCardDetailDO" >
+    update finance_user_apply_credit_card_detail
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNum != null" >
+        mobile_num = #{mobileNum,jdbcType=VARCHAR},
+      </if>
+      <if test="idNum != null" >
+        id_num = #{idNum,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productType != null" >
+        product_type = #{productType,jdbcType=BIGINT},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="systemVersion != null" >
+        system_version = #{systemVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="softVersion != null" >
+        soft_version = #{softVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null" >
+        channel_id = #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updator != null" >
+        updator = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="finance.core.dal.dataobject.UserApplyCreditCardDetailDO" >
+    update finance_user_apply_credit_card_detail
+    set user_id = #{userId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      mobile_num = #{mobileNum,jdbcType=VARCHAR},
+      id_num = #{idNum,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=BIGINT},
+      product_type = #{productType,jdbcType=BIGINT},
+      ip = #{ip,jdbcType=VARCHAR},
+      system_version = #{systemVersion,jdbcType=VARCHAR},
+      soft_version = #{softVersion,jdbcType=VARCHAR},
+      channel_id = #{channelId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      updator = #{updator,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="finance_user_apply_credit_card_detail_query_fuzzy_condition" >
+    <trim prefix="WHERE" prefixOverrides="AND |OR " >
+      <if test="userId != null and userId.trim().length() != 0" >
+        AND (user_id = #{userId})
+      </if>
+      <if test="userName != null and userName.trim().length() != 0" >
+         AND (user_name like '%' || #{userName} || '%') 
+      </if>
+      <if test="mobileNum != null and mobileNum.trim().length() != 0" >
+         AND (mobile_num like '%' || #{mobileNum} || '%') 
+      </if>
+      <if test="idNum != null and idNum.trim().length() != 0" >
+         AND (id_num like '%' || #{idNum} || '%') 
+      </if>
+      <if test="productId != null and productId.trim().length() != 0" >
+        AND (product_id = #{productId})
+      </if>
+      <if test="productType != null and productType.trim().length() != 0" >
+        AND (product_type = #{productType})
+      </if>
+      <if test="ip != null and ip.trim().length() != 0" >
+         AND (ip like '%' || #{ip} || '%') 
+      </if>
+      <if test="systemVersion != null and systemVersion.trim().length() != 0" >
+         AND (system_version like '%' || #{systemVersion} || '%') 
+      </if>
+      <if test="softVersion != null and softVersion.trim().length() != 0" >
+         AND (soft_version like '%' || #{softVersion} || '%') 
+      </if>
+      <if test="channelId != null and channelId.trim().length() != 0" >
+         AND (channel_id like '%' || #{channelId} || '%') 
+      </if>
+      <if test="status != null and status.trim().length() != 0" >
+         AND (status like '%' || #{status} || '%') 
+      </if>
+      <if test="message != null and message.trim().length() != 0" >
+         AND (message like '%' || #{message} || '%') 
+      </if>
+      <if test="createTime != null and createTime.trim().length() != 0" >
+        AND (create_time = #{createTime})
+      </if>
+      <if test="updateTime != null and updateTime.trim().length() != 0" >
+        AND (update_time = #{updateTime})
+      </if>
+      <if test="creator != null and creator.trim().length() != 0" >
+         AND (creator like '%' || #{creator} || '%') 
+      </if>
+      <if test="updator != null and updator.trim().length() != 0" >
+         AND (updator like '%' || #{updator} || '%') 
+      </if>
+      <if test="isDelete != null and isDelete.trim().length() != 0" >
+         AND (is_delete like '%' || #{isDelete} || '%') 
+      </if>
+      <if test="version != null and version.trim().length() != 0" >
+        AND (version = #{version})
+      </if>
+    </trim>
+  </sql>
+  <sql id="finance_user_apply_credit_card_detail_query_condition" >
+    <trim prefix="WHERE" prefixOverrides="AND |OR " >
+      <if test="userId != null and userId.trim().length() != 0" >
+        AND (user_id = #{userId})
+      </if>
+      <if test="userName != null and userName.trim().length() != 0" >
+        AND (user_name = #{userName})
+      </if>
+      <if test="mobileNum != null and mobileNum.trim().length() != 0" >
+        AND (mobile_num = #{mobileNum})
+      </if>
+      <if test="idNum != null and idNum.trim().length() != 0" >
+        AND (id_num = #{idNum})
+      </if>
+      <if test="productId != null and productId.trim().length() != 0" >
+        AND (product_id = #{productId})
+      </if>
+      <if test="productType != null and productType.trim().length() != 0" >
+        AND (product_type = #{productType})
+      </if>
+      <if test="ip != null and ip.trim().length() != 0" >
+        AND (ip = #{ip})
+      </if>
+      <if test="systemVersion != null and systemVersion.trim().length() != 0" >
+        AND (system_version = #{systemVersion})
+      </if>
+      <if test="softVersion != null and softVersion.trim().length() != 0" >
+        AND (soft_version = #{softVersion})
+      </if>
+      <if test="channelId != null and channelId.trim().length() != 0" >
+        AND (channel_id = #{channelId})
+      </if>
+      <if test="status != null and status.trim().length() != 0" >
+        AND (status = #{status})
+      </if>
+      <if test="message != null and message.trim().length() != 0" >
+        AND (message = #{message})
+      </if>
+      <if test="createTime != null and createTime.trim().length() != 0" >
+        AND (create_time = #{createTime})
+      </if>
+      <if test="updateTime != null and updateTime.trim().length() != 0" >
+        AND (update_time = #{updateTime})
+      </if>
+      <if test="creator != null and creator.trim().length() != 0" >
+        AND (creator = #{creator})
+      </if>
+      <if test="updator != null and updator.trim().length() != 0" >
+        AND (updator = #{updator})
+      </if>
+      <if test="isDelete != null and isDelete.trim().length() != 0" >
+        AND (is_delete = #{isDelete})
+      </if>
+      <if test="version != null and version.trim().length() != 0" >
+        AND (version = #{version})
+      </if>
+    </trim>
+  </sql>
+  <select id="query" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+     from finance_user_apply_credit_card_detail 
+    <if test="fuzzy" >
+      <include refid="finance_user_apply_credit_card_detail_query_fuzzy_condition" />
+    </if>
+    <if test="!fuzzy" >
+      <include refid="finance_user_apply_credit_card_detail_query_condition" />
+    </if>
+    <if test="order" >
+      order by ID desc
+    </if>
+    <include refid="base.limit" />
+  </select>
+  <select id="count" resultType="int" >
+    select count(*) from finance_user_apply_credit_card_detail 
+    <if test="fuzzy" >
+      <include refid="finance_user_apply_credit_card_detail_query_fuzzy_condition" />
+    </if>
+    <if test="!fuzzy" >
+      <include refid="finance_user_apply_credit_card_detail_query_condition" />
+    </if>
+  </select>
+</mapper>
