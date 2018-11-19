@@ -2,7 +2,6 @@ package finance.ext.task;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.annotation.Resource;
 
@@ -24,13 +23,13 @@ import finance.domainservice.service.activity.RedEnvelopeRainRankingRewardServic
  * <p>注释</p>
  *
  * @author lili
- * @version 1.0: RedEnvelopeRainRankingSecondRewardTask.java, v0.1 2018/11/19 5:36 PM PM lili Exp $
+ * @version 1.0: RedEnvelopeRainRankingThirdRewardTask.java, v0.1 2018/11/19 5:42 PM PM lili Exp $
  */
 @Slf4j
 @Service
-public class RedEnvelopeRainRankingSecondRewardTask implements SchedulingConfigurer {
+public class RedEnvelopeRainRankingThirdRewardTask implements SchedulingConfigurer {
 
-    @Value("${redEnvelopeRain.job.secondReward}")
+    @Value("${redEnvelopeRain.job.thirdReward}")
     private String                              cron;
 
     @Resource
@@ -48,7 +47,7 @@ public class RedEnvelopeRainRankingSecondRewardTask implements SchedulingConfigu
 
         taskRegistrar.addTriggerTask(() -> {
 
-            RedEnvelopeRainTimeCodeEnum timeCode = RedEnvelopeRainTimeCodeEnum.SECOND;
+            RedEnvelopeRainTimeCodeEnum timeCode = RedEnvelopeRainTimeCodeEnum.THIRD;
             log.info("[开始处理{}日{}红包雨活动-排行榜奖励]，当前时间：{}", LocalDateTime.now(), timeCode.getDesc());
             redEnvelopeRainRankingRewardService.process(LocalDate.now(),
                 RedEnvelopConstant.RED_ENVELOPE_RAIN_CODE, timeCode);
