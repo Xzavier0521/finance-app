@@ -71,7 +71,7 @@ public class DistributedLockServiceImpl implements DistributedLockService {
                 // 校验用户金币数目
                 validateCoinNum(payCoinCondition.getUserId(), payCoinCondition.getCoinNum());
                 // 记录金币日志
-                coinLogRepository.save(payCoinCondition.getUserId(), payCoinCondition.getCoinNum(),
+                coinLogRepository.save(payCoinCondition.getUserId(), -payCoinCondition.getCoinNum(),
                     payCoinCondition.getPayReason());
                 //业务逻辑执行
                 payCoinCondition.getFunctions()
