@@ -111,7 +111,7 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
                     log.info("用户{}，未获取到open_id不发送微信模版消息", userInfo.getMobileNum());
                 }
                 // 参加活动的手机号码列表
-                String key = MessageFormat.format("{0}:{1}:{}", RED_ENVELOPE_RAIN_PHONE_NUMBERS,
+                String key = MessageFormat.format("{0}:{1}:{2}", RED_ENVELOPE_RAIN_PHONE_NUMBERS,
                     String.valueOf(activityDay), timeCode.getCode());
                 redisTemplate.opsForSet().add(key, userInfo.getMobileNum());
                 // 有效时间1天

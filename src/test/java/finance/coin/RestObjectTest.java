@@ -1,6 +1,5 @@
 package finance.coin;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +22,7 @@ import finance.api.model.vo.activity.CoinGameVO;
 import finance.api.model.vo.activity.RedEnvelopeRainDataVO;
 import finance.api.model.vo.activity.UserCurrentRankingVO;
 import finance.domainservice.service.activity.RedEnvelopeRainRankingRewardService;
+import finance.domainservice.service.activity.RedEnvelopeRainRankingSyncService;
 
 /**
  * <p>注释</p>
@@ -39,6 +39,9 @@ public class RestObjectTest {
 
     @Resource
     private RedEnvelopeRainRankingRewardService redEnvelopeRainRankingRewardService;
+
+    @Resource
+    private RedEnvelopeRainRankingSyncService   redEnvelopeRainRankingSyncService;
 
     @Test
     public void testJson() throws JsonProcessingException {
@@ -81,7 +84,9 @@ public class RestObjectTest {
     @Test
     public void testReward() {
 
-        redEnvelopeRainRankingRewardService.process(LocalDate.now().plusDays(-1), "1001");
+        //   redEnvelopeRainRankingRewardService.process(LocalDate.now().plusDays(-1), "1001");
+
+        redEnvelopeRainRankingSyncService.process();
     }
 
 }
