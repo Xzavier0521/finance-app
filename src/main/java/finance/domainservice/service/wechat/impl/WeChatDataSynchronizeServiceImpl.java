@@ -1,8 +1,8 @@
 package finance.domainservice.service.wechat.impl;
 
+import static finance.core.common.constants.QueryConstants.DEFAULT_MAX_PAGE_SIZE;
 import static finance.core.common.constants.WeChatConstant.MAX_PAGE_SIZE;
 import static finance.core.common.constants.WeChatConstant.WE_CHAT_FLOW_NUM;
-import static finance.core.common.constants.QueryConstants.DEFAULT_MAX_PAGE_SIZE;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,11 +30,11 @@ import finance.domain.weixin.WeiXinMessageTemplate;
 import finance.domainservice.repository.InviteOpenInfoRepository;
 import finance.domainservice.repository.WeiXinMessageTemplateRepository;
 import finance.domainservice.service.wechat.WeChatDataSynchronizeService;
+import finance.domainservice.service.wechat.WechatService;
 import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 import finance.ext.api.model.WeiXinUserInfoDetail;
 import finance.ext.api.response.UserInfoQueryResponse;
 import finance.ext.integration.weixin.WeiXinUserInfoQueryClient;
-import finance.domainservice.service.wechat.WechatService;
 
 /**
  * <p>微信公众号用户数据同步到redis</p>
@@ -83,8 +84,12 @@ public class WeChatDataSynchronizeServiceImpl implements WeChatDataSynchronizeSe
             while (StringUtils.isNotBlank(response.getNext_openid())) {
                 response = weiXinUserInfoQueryClient.queryUserList(accessToken,
                     response.getNext_openid());
-                openIds = response.getData().getOpenid()
-                    .toArray(new String[response.getData().getOpenid().size()]);
+                if (Objects.nonNull(response) && Objects.nonNull(response.getData())) {
+                    if (CollectionUtils.isNotEmpty(response.getData().getOpenid())) {
+                        openIds = response.getData().getOpenid()
+                            .toArray(new String[response.getData().getOpenid().size()]);
+                    }
+                }
                 processSubscribeInfo(Lists.newArrayList(openIds));
                 setOperations.add(WE_CHAT_FLOW_NUM, openIds);
             }
