@@ -16,6 +16,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.google.common.collect.Maps;
 
+import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.enums.RewardTypeEnum;
 import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
 import finance.core.common.util.DateUtils;
@@ -59,7 +60,8 @@ public class RedEnvelopeRainRankingRewardServiceImpl implements
     @Override
     public void process(LocalDate localDate, String activityCode) {
         List<RedEnvelopeRainData> redEnvelopeRainDataList = redEnvelopeRainDataRepository
-            .queryRankingList(activityCode, DateUtils.getCurrentDay(localDate), 20, 1);
+            .queryRankingList(activityCode, DateUtils.getCurrentDay(localDate),
+                RedEnvelopeRainTimeCodeEnum.FIRST, 20, 1);
         if (CollectionUtils.isEmpty(redEnvelopeRainDataList)) {
             return;
         }

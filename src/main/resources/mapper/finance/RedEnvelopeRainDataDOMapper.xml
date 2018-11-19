@@ -350,6 +350,9 @@
         mobile_phone,sum(total_num) as total_num,sum(total_amount) as total_amount from
         finance_red_envelope_rain_data
         where activity_code=#{activityCode} and activity_day=#{activityDay}
+        <if test="timeCode != null and timeCode.trim().length() != 0">
+            AND (time_code = #{timeCode})
+        </if>
         GROUP BY mobile_phone
         ) a order by  total_num desc,total_amount desc
         <include refid="base.limit"/>

@@ -85,10 +85,12 @@ public interface RedEnvelopeRainDataRepository {
      *  排行榜查询
      * @param activityCode  活动代码
      * @param activityDay 活动日期
+     * @param timeCode  时间编码
      * @param pageSize 每页记录数
      * @param pageNum 第几页
      * @return List<RedEnvelopeRainData>
      */
     List<RedEnvelopeRainData> queryRankingList(String activityCode, Integer activityDay,
-                                               int pageSize, int pageNum);
+                                               RedEnvelopeRainTimeCodeEnum timeCode, int pageSize,
+                                               int pageNum);
 }

@@ -1,5 +1,6 @@
 package finance.domainservice.service.activity.query;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import finance.api.model.base.Page;
@@ -78,5 +79,13 @@ public interface RedEnvelopeRainDataQueryService {
      */
     UserRedEnvelopeRainInfo queryUserRedEnvelopeRainInfo(UserInfo userInfo, String activityCode,
                                                          Integer activityDay);
+
+    /**
+     *  查询排行榜-时间代码
+     * @param activityCode 活动代码
+     * @param time 时间
+     * @return  RedEnvelopeRainTimeCodeEnum
+     */
+    RedEnvelopeRainTimeCodeEnum getRankingTimeCode(String activityCode, LocalDateTime time);
 
 }

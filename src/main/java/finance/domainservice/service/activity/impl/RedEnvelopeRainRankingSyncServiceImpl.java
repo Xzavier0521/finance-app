@@ -5,6 +5,7 @@ import static finance.core.common.constants.RedEnvelopConstant.RED_ENVELOPE_RAIN
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -19,10 +20,12 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import finance.core.common.constants.RedEnvelopConstant;
+import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.util.DateUtils;
 import finance.domain.activity.RedEnvelopeRainData;
 import finance.domainservice.repository.RedEnvelopeRainDataRepository;
 import finance.domainservice.service.activity.RedEnvelopeRainRankingSyncService;
+import finance.domainservice.service.activity.query.RedEnvelopeRainDataQueryService;
 
 /**
  * <p>红包雨活动-排行榜同步</p>
@@ -35,17 +38,21 @@ import finance.domainservice.service.activity.RedEnvelopeRainRankingSyncService;
 public class RedEnvelopeRainRankingSyncServiceImpl implements RedEnvelopeRainRankingSyncService {
 
     @Resource
-    private RedEnvelopeRainDataRepository redEnvelopeRainDataRepository;
+    private RedEnvelopeRainDataQueryService redEnvelopeRainDataQueryService;
     @Resource
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedEnvelopeRainDataRepository   redEnvelopeRainDataRepository;
+    @Resource
+    private RedisTemplate<String, Object>   redisTemplate;
 
     @Override
     public void process() {
 
         Integer activityDay = DateUtils.getCurrentDay(LocalDate.now());
-        log.info("[开始同步{}日红包雨活动数据排行榜", activityDay);
+        RedEnvelopeRainTimeCodeEnum timeCode = redEnvelopeRainDataQueryService
+            .getRankingTimeCode(RED_ENVELOPE_RAIN_CODE, LocalDateTime.now());
+        log.info("[开始同步{}日{}红包雨活动数据排行榜", activityDay,timeCode.getDesc());
         List<RedEnvelopeRainData> redEnvelopeRainDataList = redEnvelopeRainDataRepository
-            .queryRankingList(RED_ENVELOPE_RAIN_CODE, activityDay, 0, 1000);
+            .queryRankingList(RED_ENVELOPE_RAIN_CODE, activityDay, timeCode, 0, 1000);
         if (CollectionUtils.isEmpty(redEnvelopeRainDataList)) {
             log.info("日期:{},排行榜数据为空", activityDay);
             return;

@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
-import finance.core.common.enums.RewardTypeEnum;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +25,7 @@ import com.google.common.collect.Maps;
 import finance.api.model.response.BasicResponse;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.enums.ReturnCode;
+import finance.core.common.enums.RewardTypeEnum;
 import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
 import finance.core.common.util.DateUtils;
 import finance.core.common.util.ResponseUtils;
@@ -93,14 +93,10 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
                 coinLogRepository.save(userInfo.getId(), totalAmount.intValue(), "红包雨活动奖励");
                 // 记录金币奖励日志
                 redEnvelopeRainRewardRepository.save(RedEnvelopeRainReward.builder()
-                        .userId(userInfo.getId())
-                        .mobilePhone(userInfo.getMobileNum())
-                        .activityCode(activityCode)
-                        .activityDay(String.valueOf(activityDay))
-                        .totalNum(totalNum)
-                        .totalAmount(totalAmount.longValue())
-                        .rewardType(RewardTypeEnum.RED_ENVELOPE_RAIN)
-                        .build());
+                    .userId(userInfo.getId()).mobilePhone(userInfo.getMobileNum())
+                    .activityCode(activityCode).activityDay(String.valueOf(activityDay))
+                    .totalNum(totalNum).totalAmount(totalAmount.longValue())
+                    .rewardType(RewardTypeEnum.RED_ENVELOPE_RAIN).build());
                 // 发送微信模版消息
                 if (Objects.nonNull(thirdAccountInfo)
                     && StringUtils.isNotBlank(thirdAccountInfo.getOpenId())) {
@@ -115,8 +111,8 @@ public class RedEnvelopeRainDataServiceImpl implements RedEnvelopeRainDataServic
                     log.info("用户{}，未获取到open_id不发送微信模版消息", userInfo.getMobileNum());
                 }
                 // 参加活动的手机号码列表
-                String key = MessageFormat.format("{0}:{1}", RED_ENVELOPE_RAIN_PHONE_NUMBERS,
-                    activityDay);
+                String key = MessageFormat.format("{0}:{1}:{}", RED_ENVELOPE_RAIN_PHONE_NUMBERS,
+                    String.valueOf(activityDay), timeCode.getCode());
                 redisTemplate.opsForSet().add(key, userInfo.getMobileNum());
                 // 有效时间1天
                 redisTemplate.expire(key, 1440, TimeUnit.MINUTES);

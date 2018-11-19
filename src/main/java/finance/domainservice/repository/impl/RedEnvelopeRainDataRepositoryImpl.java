@@ -7,6 +7,7 @@ import java.util.Objects;
 import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
@@ -152,10 +153,14 @@ public class RedEnvelopeRainDataRepositoryImpl implements RedEnvelopeRainDataRep
 
     @Override
     public List<RedEnvelopeRainData> queryRankingList(String activityCode, Integer activityDay,
+                                                      RedEnvelopeRainTimeCodeEnum timeCode,
                                                       int pageSize, int pageNum) {
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("activityCode", activityCode);
         parameters.put("activityDay", activityDay);
+        if (Objects.nonNull(timeCode)) {
+            parameters.put("timeCode", timeCode.getCode());
+        }
         Page<RedEnvelopeRainData> page = new Page<>(pageSize, (long) pageNum);
         parameters.put("page", page);
         return RedEnvelopeRainDataConverter

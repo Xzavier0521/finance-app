@@ -105,7 +105,10 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
             activityDay = DateUtils.getCurrentDay(LocalDate.now().plusDays(-1));
         }
         // 参加活动的手机号码列表
-        String key = MessageFormat.format("{0}:{1}", RED_ENVELOPE_RAIN_PHONE_NUMBERS, activityDay);
+        RedEnvelopeRainTimeCodeEnum timeCode = getRankingTimeCode(activityCode,
+            LocalDateTime.now());
+        String key = MessageFormat.format("{0}:{1}:{2}", RED_ENVELOPE_RAIN_PHONE_NUMBERS,
+            String.valueOf(activityDay), timeCode.getCode());
         boolean isJoin = redisTemplate.opsForSet().isMember(key, userInfo.getMobileNum());
         // 未参加红包雨活动
         if (!isJoin) {
@@ -147,9 +150,11 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
                 redEnvelopeRainDataList.add(RedEnvelopeRainData.mapToObject(fieldMap));
             }
         }
+        RedEnvelopeRainTimeCodeEnum timeCode = getRankingTimeCode(activityCode,
+            LocalDateTime.now());
         if (CollectionUtils.isEmpty(redEnvelopeRainDataList)) {
             redEnvelopeRainDataList = redEnvelopeRainDataRepository.queryRankingList(activityCode,
-                activityDay, pageSize, pageNum);
+                activityDay, timeCode, pageSize, pageNum);
         }
         return redEnvelopeRainDataList;
     }
@@ -196,6 +201,38 @@ public class RedEnvelopeRainDataQueryServiceImpl implements RedEnvelopeRainDataQ
                 ? hisRedEnvelopeRainData.getTotalAmount().longValue()
                 : 0)
             .build();
+    }
+
+    @Override
+    public RedEnvelopeRainTimeCodeEnum getRankingTimeCode(String activityCode, LocalDateTime time) {
+        RedEnvelopeRainTimeCodeEnum timeCodeEnum = null;
+        Integer requestTime = Integer
+            .valueOf(DateUtils.getFormatDateStr(time, DateUtils.HOUR_FORMAT));
+        List<RedEnvelopeRainConfig> redEnvelopeRainConfigList = redEnvelopeRainConfigRepository
+            .queryByCode(activityCode);
+        RedEnvelopeRainConfig first = getConfig(redEnvelopeRainConfigList,
+            RedEnvelopeRainTimeCodeEnum.FIRST);
+        //
+        if (requestTime < Integer.valueOf(first.getEndTime())) {
+            timeCodeEnum = RedEnvelopeRainTimeCodeEnum.THIRD;
+        }
+        RedEnvelopeRainConfig second = getConfig(redEnvelopeRainConfigList,
+            RedEnvelopeRainTimeCodeEnum.SECOND);
+        if (requestTime >= Integer.valueOf(first.getStartTime())
+            && requestTime < Integer.valueOf(second.getStartTime())) {
+            timeCodeEnum = RedEnvelopeRainTimeCodeEnum.FIRST;
+        }
+        RedEnvelopeRainConfig third = getConfig(redEnvelopeRainConfigList,
+            RedEnvelopeRainTimeCodeEnum.THIRD);
+        if (requestTime >= Integer.valueOf(second.getStartTime())
+            && requestTime < Integer.valueOf(third.getStartTime())) {
+            timeCodeEnum = RedEnvelopeRainTimeCodeEnum.SECOND;
+        }
+        if (requestTime >= Integer.valueOf(third.getStartTime())) {
+            timeCodeEnum = RedEnvelopeRainTimeCodeEnum.THIRD;
+        }
+
+        return timeCodeEnum;
     }
 
     /**
