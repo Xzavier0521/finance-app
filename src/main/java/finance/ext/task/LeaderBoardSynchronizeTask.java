@@ -1,3 +1,4 @@
+/*
 package finance.ext.task;
 
 import java.time.LocalDateTime;
@@ -15,11 +16,13 @@ import org.springframework.scheduling.support.CronTrigger;
 
 import finance.domainservice.service.activity.LeaderBoardSynchronizeService;
 
+*/
 /**
  * <p>排行榜定时任务</p>
  * @author lili
  * @version $Id: LeaderBoardSynchronizeTask.java, v0.1 2018/10/25 5:13 PM lili Exp $
- */
+ *//*
+
 @Slf4j
 //@Service
 public class LeaderBoardSynchronizeTask implements SchedulingConfigurer,
@@ -49,3 +52,4 @@ public class LeaderBoardSynchronizeTask implements SchedulingConfigurer,
         });
     }
 }
+*/

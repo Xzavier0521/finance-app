@@ -1,3 +1,4 @@
+/*
 package finance.ext.task;
 
 import java.time.LocalDateTime;
@@ -16,11 +17,13 @@ import org.springframework.stereotype.Service;
 
 import finance.domainservice.service.wechat.WeChatDataSynchronizeService;
 
+*/
 /**
  * <p>微信公众号用户数据同步到redis</p>
  * @author lili
  * @version $Id: WeChatDataSynchronizeTask.java, v0.1 2018/10/23 5:45 PM lili Exp $
- */
+ *//*
+
 @Slf4j
 @Service
 public class WeChatDataSynchronizeTask implements SchedulingConfigurer,
@@ -50,3 +53,4 @@ public class WeChatDataSynchronizeTask implements SchedulingConfigurer,
         weChatDataSynchronizeService.process();
     }
 }
+*/

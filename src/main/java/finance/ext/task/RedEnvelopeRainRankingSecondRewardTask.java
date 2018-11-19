@@ -1,9 +1,13 @@
+/*
 package finance.ext.task;
 
-import finance.core.common.constants.RedEnvelopConstant;
-import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
-import finance.domainservice.service.activity.RedEnvelopeRainRankingRewardService;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import javax.annotation.Resource;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
@@ -12,16 +16,18 @@ import org.springframework.scheduling.config.Task;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import finance.core.common.constants.RedEnvelopConstant;
+import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
+import finance.domainservice.service.activity.RedEnvelopeRainRankingRewardService;
 
+*/
 /**
  * <p>注释</p>
  *
  * @author lili
  * @version 1.0: RedEnvelopeRainRankingSecondRewardTask.java, v0.1 2018/11/19 5:36 PM PM lili Exp $
- */
+ *//*
+
 @Slf4j
 @Service
 public class RedEnvelopeRainRankingSecondRewardTask implements SchedulingConfigurer {
@@ -32,13 +38,15 @@ public class RedEnvelopeRainRankingSecondRewardTask implements SchedulingConfigu
     @Resource
     private RedEnvelopeRainRankingRewardService redEnvelopeRainRankingRewardService;
 
-    /**
+    */
+/**
      * Callback allowing a {@link TaskScheduler
      * TaskScheduler} and specific {@link Task Task}
      * instances to be registered against the given the {@link ScheduledTaskRegistrar}
      *
      * @param taskRegistrar the registrar to be configured.
-     */
+     *//*
+
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
 
@@ -56,3 +64,4 @@ public class RedEnvelopeRainRankingSecondRewardTask implements SchedulingConfigu
         });
     }
 }
+*/
