@@ -47,6 +47,6 @@ public class WeChatDataSynchronizeTask implements SchedulingConfigurer,
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        weChatDataSynchronizeService.process();
+       // weChatDataSynchronizeService.process();
     }
 }
