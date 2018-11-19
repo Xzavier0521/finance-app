@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.enums.RewardTypeEnum;
 
 /**
@@ -21,79 +22,85 @@ import finance.core.common.enums.RewardTypeEnum;
 @NoArgsConstructor
 public class RedEnvelopeRainReward implements Serializable {
 
-    private static final long serialVersionUID = 1499663053059074511L;
+    private static final long           serialVersionUID = 1499663053059074511L;
     /**
      * 主键
      */
-    private Long              id;
+    private Long                        id;
 
     /**
      * 活动代码
      */
-    private String            activityCode;
+    private String                      activityCode;
 
     /**
      * 活动日期
      */
-    private String            activityDay;
+    private String                      activityDay;
+
+    /**
+     * 时间代码
+     */
+
+    private RedEnvelopeRainTimeCodeEnum timeCode;
 
     /**
      * 用户id
      */
-    private Long              userId;
+    private Long                        userId;
 
     /**
      * 用户手机号码
      */
-    private String            mobilePhone;
+    private String                      mobilePhone;
 
     /**
      * 奖励类别 红包雨-RED_ENVELOPE_RAIN,红包雨排行榜-RED_ENVELOPE_RAIN_RANKING
      */
-    private RewardTypeEnum    rewardType;
+    private RewardTypeEnum              rewardType;
 
     /**
      * 红包个数
      */
-    private Long           totalNum;
+    private Long                        totalNum;
 
     /**
      * 金币个数
      */
-    private Long           totalAmount;
+    private Long                        totalAmount;
 
     /**
      * 排行榜排名，类型为排行榜奖励才有值
      */
-    private Long              ranking;
+    private Long                        ranking;
 
     /**
      * 创建时间
      */
-    private Date              createTime;
+    private Date                        createTime;
 
     /**
      * 更新时间
      */
-    private Date              updateTime;
+    private Date                        updateTime;
 
     /**
      * 创建者
      */
-    private String            creator;
+    private String                      creator;
 
     /**
      * 更新者
      */
-    private String            updator;
+    private String                      updator;
 
     /**
      * 是否删除 0-否，1-是
      */
-    private String            isDelete;
+    private String                      isDelete;
 
     /**
      * 版本号
      */
-    private Integer           version;
+    private Integer                     version;
 }

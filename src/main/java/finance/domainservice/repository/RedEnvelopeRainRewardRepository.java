@@ -1,5 +1,6 @@
 package finance.domainservice.repository;
 
+import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.enums.RewardTypeEnum;
 import finance.domain.activity.RedEnvelopeRainReward;
 
@@ -22,10 +23,12 @@ public interface RedEnvelopeRainRewardRepository {
      * 查询
      * @param activityCode 活动代码
      * @param activityDay 活动日期
+     * @param timeCode  时间代码
      * @param userId 用户id
      * @param rewardType 奖励类型
      * @return  RewardTypeEnum
      */
-    RedEnvelopeRainReward queryByCondition(String activityCode, String activityDay, Long userId,
+    RedEnvelopeRainReward queryByCondition(String activityCode, String activityDay,
+                                           RedEnvelopeRainTimeCodeEnum timeCode, Long userId,
                                            RewardTypeEnum rewardType);
 }

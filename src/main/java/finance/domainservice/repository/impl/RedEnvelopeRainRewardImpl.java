@@ -2,6 +2,7 @@ package finance.domainservice.repository.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.Resource;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Maps;
 
+import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.core.common.enums.RewardTypeEnum;
 import finance.core.dal.dao.RedEnvelopeRainRewardDAO;
 import finance.domain.activity.RedEnvelopeRainReward;
@@ -36,13 +38,17 @@ public class RedEnvelopeRainRewardImpl implements RedEnvelopeRainRewardRepositor
 
     @Override
     public RedEnvelopeRainReward queryByCondition(String activityCode, String activityDay,
-                                                  Long userId, RewardTypeEnum rewardType) {
+                                                  RedEnvelopeRainTimeCodeEnum timeCode, Long userId,
+                                                  RewardTypeEnum rewardType) {
         RedEnvelopeRainReward redEnvelopeRainReward = null;
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("activityCode", activityCode);
         parameters.put("activityDay", activityDay);
         parameters.put("userId", userId);
         parameters.put("rewardType", rewardType.getCode());
+        if (Objects.nonNull(timeCode)) {
+            parameters.put("timeCode", timeCode.getCode());
+        }
         List<RedEnvelopeRainReward> redEnvelopeRainRewards = RedEnvelopeRainRewardConverter
             .convert2List(redEnvelopeRainRewardDAO.query(parameters));
         if (CollectionUtils.isNotEmpty(redEnvelopeRainRewards)) {

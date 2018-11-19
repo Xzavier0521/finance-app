@@ -47,6 +47,8 @@ public class RedEnvelopeRainRankingRewardServiceImpl implements
     @Resource
     private RedEnvelopeRainRewardRepository  redEnvelopeRainRewardRepository;
     @Resource
+    private RedEnvelopeRainConfigRepository  redEnvelopeRainConfigRepository;
+    @Resource
     private RedEnvelopeRainDataRepository    redEnvelopeRainDataRepository;
     @Resource
     private ThirdAccountInfoRepository       thirdAccountInfoRepository;
@@ -58,10 +60,13 @@ public class RedEnvelopeRainRankingRewardServiceImpl implements
     private WeiXinTemplateMessageSendService weiXinTemplateMessageSendService;
 
     @Override
-    public void process(LocalDate localDate, String activityCode) {
+    public void process(LocalDate localDate, String activityCode,
+                        RedEnvelopeRainTimeCodeEnum timeCode) {
+
+        redEnvelopeRainConfigRepository.queryByCode(activityCode, timeCode);
+
         List<RedEnvelopeRainData> redEnvelopeRainDataList = redEnvelopeRainDataRepository
-            .queryRankingList(activityCode, DateUtils.getCurrentDay(localDate),
-                RedEnvelopeRainTimeCodeEnum.FIRST, 20, 1);
+            .queryRankingList(activityCode, DateUtils.getCurrentDay(localDate), timeCode, 20, 1);
         if (CollectionUtils.isEmpty(redEnvelopeRainDataList)) {
             return;
         }
@@ -74,13 +79,13 @@ public class RedEnvelopeRainRankingRewardServiceImpl implements
                 String activityDay = String.valueOf(DateUtils.getCurrentDay(localDate));
                 // 记录发放日志
                 RedEnvelopeRainReward redEnvelopeRainReward = redEnvelopeRainRewardRepository
-                    .queryByCondition(activityCode, activityDay, userInfo.getId(),
+                    .queryByCondition(activityCode, activityDay, timeCode, userInfo.getId(),
                         RewardTypeEnum.RED_ENVELOPE_RAIN_RANKING);
                 if (Objects.nonNull(redEnvelopeRainReward)) {
                     log.info("用户:{},红包雨排行榜奖励已经发放！", userInfo.getMobileNum());
                     continue;
                 }
-                localData(activityCode, activityDay, userInfo, redEnvelopeRainData);
+                localData(activityCode, activityDay, timeCode, userInfo, redEnvelopeRainData);
                 // 金币提醒
                 // 查询用户openInfo
                 ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository
@@ -107,19 +112,20 @@ public class RedEnvelopeRainRankingRewardServiceImpl implements
         }
     }
 
-    private void localData(String activityCode, String activityDay, UserInfo userInfo,
+    private void localData(String activityCode, String activityDay,
+                           RedEnvelopeRainTimeCodeEnum timeCode, UserInfo userInfo,
                            RedEnvelopeRainData redEnvelopeRainData) {
         transactionTemplate.execute(status -> {
             // 增加金币
             coinLogRepository.save(userInfo.getId(),
                 redEnvelopeRainData.getTotalAmount().intValue(), "红包雨活动排行榜奖励");
             // 记录金币奖励日志
-            redEnvelopeRainRewardRepository
-                .save(RedEnvelopeRainReward.builder().userId(userInfo.getId())
-                    .mobilePhone(userInfo.getMobileNum()).activityCode(activityCode)
-                    .activityDay(activityDay).totalNum(redEnvelopeRainData.getTotalNum())
-                    .totalAmount(redEnvelopeRainData.getTotalAmount().longValue())
-                    .rewardType(RewardTypeEnum.RED_ENVELOPE_RAIN).build());
+            redEnvelopeRainRewardRepository.save(RedEnvelopeRainReward.builder()
+                .userId(userInfo.getId()).mobilePhone(userInfo.getMobileNum())
+                .activityCode(activityCode).timeCode(timeCode).activityDay(activityDay)
+                .totalNum(redEnvelopeRainData.getTotalNum())
+                .totalAmount(redEnvelopeRainData.getTotalAmount().longValue())
+                .rewardType(RewardTypeEnum.RED_ENVELOPE_RAIN).build());
             return true;
         });
     }

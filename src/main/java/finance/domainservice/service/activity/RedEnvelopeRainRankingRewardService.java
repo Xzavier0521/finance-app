@@ -2,6 +2,8 @@ package finance.domainservice.service.activity;
 
 import java.time.LocalDate;
 
+import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
+
 /**
  * <p>红包雨活动-排行榜奖励</p>
  *
@@ -15,5 +17,5 @@ public interface RedEnvelopeRainRankingRewardService {
      * @param localDate 日期
      * @param activityCode  活动代码
      */
-    void process(LocalDate localDate, String activityCode);
+    void process(LocalDate localDate, String activityCode, RedEnvelopeRainTimeCodeEnum timeCod);
 }
