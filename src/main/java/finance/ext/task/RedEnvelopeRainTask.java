@@ -1,4 +1,3 @@
-/*
 package finance.ext.task;
 
 import java.time.LocalDateTime;
@@ -19,14 +18,12 @@ import org.springframework.stereotype.Service;
 
 import finance.domainservice.service.activity.RedEnvelopeRainRankingSyncService;
 
-*/
 /**
  * <p>红包雨活动定时任务</p>
  *
  * @author lili
  * @version 1.0: RedEnvelopeRainTask.java, v0.1 2018/11/17 2:10 AM PM lili Exp $
- *//*
-
+ */
 @Slf4j
 @Service
 public class RedEnvelopeRainTask implements SchedulingConfigurer,
@@ -38,27 +35,23 @@ public class RedEnvelopeRainTask implements SchedulingConfigurer,
     @Resource
     private RedEnvelopeRainRankingSyncService redEnvelopeRainRankingSyncService;
 
-    */
-/**
+    /**
      * Handle an application event.
      *
      * @param event the event to respond to
-     *//*
-
+     */
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         redEnvelopeRainRankingSyncService.process();
     }
 
-    */
-/**
+    /**
      * Callback allowing a {@link TaskScheduler
      * TaskScheduler} and specific {@link Task Task}
      * instances to be registered against the given the {@link ScheduledTaskRegistrar}
      *
      * @param taskRegistrar the registrar to be configured.
-     *//*
-
+     */
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         taskRegistrar.addTriggerTask(() -> {
@@ -72,4 +65,3 @@ public class RedEnvelopeRainTask implements SchedulingConfigurer,
         });
     }
 }
-*/

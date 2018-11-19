@@ -1,4 +1,3 @@
-/*
 package finance.ext.task;
 
 import java.time.LocalDate;
@@ -20,14 +19,12 @@ import finance.core.common.constants.RedEnvelopConstant;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.domainservice.service.activity.RedEnvelopeRainRankingRewardService;
 
-*/
 /**
  * <p>注释</p>
  *
  * @author lili
  * @version 1.0: RedEnvelopeRainRankingSecondRewardTask.java, v0.1 2018/11/19 5:36 PM PM lili Exp $
- *//*
-
+ */
 @Slf4j
 @Service
 public class RedEnvelopeRainRankingSecondRewardTask implements SchedulingConfigurer {
@@ -38,15 +35,13 @@ public class RedEnvelopeRainRankingSecondRewardTask implements SchedulingConfigu
     @Resource
     private RedEnvelopeRainRankingRewardService redEnvelopeRainRankingRewardService;
 
-    */
-/**
+    /**
      * Callback allowing a {@link TaskScheduler
      * TaskScheduler} and specific {@link Task Task}
      * instances to be registered against the given the {@link ScheduledTaskRegistrar}
      *
      * @param taskRegistrar the registrar to be configured.
-     *//*
-
+     */
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
 
@@ -64,4 +59,3 @@ public class RedEnvelopeRainRankingSecondRewardTask implements SchedulingConfigu
         });
     }
 }
-*/
