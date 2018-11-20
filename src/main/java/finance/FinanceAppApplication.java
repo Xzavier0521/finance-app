@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @MapperScan("finance.core.dal.dao")
 @EnableScheduling
-@EnableAsync
+//@EnableAsync
 public class FinanceAppApplication {
 
     public static ConfigurableApplicationContext appContect;
