@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import finance.core.common.constants.WeChatConstant;
+import finance.domainservice.service.activity.RedEnvelopeRainNoticeService;
+import finance.domainservice.service.wechat.WechatService;
 import finance.ext.api.model.WeiXinTemplateData;
 import finance.ext.api.request.WeiXinQueryTokenRequest;
 import finance.ext.api.request.WeiXinTemplateMessageSendRequest;
@@ -26,7 +28,6 @@ import finance.ext.integration.weixin.WeiXinQrCodeClient;
 import finance.ext.integration.weixin.WeiXinQueryTokenClient;
 import finance.ext.integration.weixin.WeiXinTemplateMessageClient;
 import finance.ext.integration.weixin.WeiXinUserInfoQueryClient;
-import finance.domainservice.service.wechat.WechatService;
 
 /**
  * <p>注释</p>
@@ -40,19 +41,22 @@ import finance.domainservice.service.wechat.WechatService;
 public class WeiXinTest {
 
     @Resource
-    private WeiXinTemplateMessageClient weiXinTemplateMessageClient;
+    private WeiXinTemplateMessageClient  weiXinTemplateMessageClient;
 
     @Resource
-    private WeiXinQueryTokenClient      weiXinQueryTokenClient;
+    private WeiXinQueryTokenClient       weiXinQueryTokenClient;
 
     @Resource
-    private WeiXinUserInfoQueryClient   weiXinUserInfoQueryClient;
+    private WeiXinUserInfoQueryClient    weiXinUserInfoQueryClient;
 
     @Resource
-    private WeiXinQrCodeClient          weiXinQrCodeClient;
+    private WeiXinQrCodeClient           weiXinQrCodeClient;
 
     @Resource
-    private WechatService               wechatService;
+    private WechatService                wechatService;
+
+    @Resource
+    private RedEnvelopeRainNoticeService redEnvelopeRainNoticeService;
 
     @Test
     public void testSend() {
@@ -115,5 +119,10 @@ public class WeiXinTest {
         WeiXinLongUrlToShortResponse longUrlToShortResponse = weiXinQrCodeClient
             .longUrl2Short(token, StringUtils.replace(WeChatConstant.QR_GET_URL,
                 WeChatConstant.WEB_CHAT_TICKET, response.getTicket()));
+    }
+
+    @Test
+    public void testSendMessage() {
+        redEnvelopeRainNoticeService.process();
     }
 }
