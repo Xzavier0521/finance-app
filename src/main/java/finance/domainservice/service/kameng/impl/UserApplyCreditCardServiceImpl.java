@@ -9,7 +9,7 @@ import finance.core.dal.dataobject.UserApplyCreditCardDetailDO;
 import finance.domain.user.UserInfo;
 import finance.domainservice.service.kameng.UserApplyCreditCardService;
 import lombok.extern.slf4j.Slf4j;
-//import nl.bitwalker.useragentutils.UserAgent;
+import nl.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
