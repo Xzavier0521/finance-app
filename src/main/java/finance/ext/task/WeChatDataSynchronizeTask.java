@@ -7,8 +7,6 @@ import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
@@ -23,8 +21,7 @@ import finance.domainservice.service.wechat.WeChatDataSynchronizeService;
  */
 @Slf4j
 @Service
-public class WeChatDataSynchronizeTask implements SchedulingConfigurer,
-                                       ApplicationListener<ApplicationReadyEvent> {
+public class WeChatDataSynchronizeTask implements SchedulingConfigurer {
 
     @Value("${weChat.job.syncData}")
     private String                       cron;
@@ -43,10 +40,5 @@ public class WeChatDataSynchronizeTask implements SchedulingConfigurer,
             CronTrigger trigger = new CronTrigger(cron);
             return trigger.nextExecutionTime(triggerContext);
         });
-    }
-
-    @Override
-    public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-       // weChatDataSynchronizeService.process();
     }
 }
