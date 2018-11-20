@@ -248,9 +248,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>nl.bitwalker</groupId>
+            <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
-            <version>1.2.4</version>
+            <version>1.21</version>
         </dependency>
     </dependencies>
     <build>
