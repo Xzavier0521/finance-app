@@ -47,8 +47,6 @@ public class RedEnvelopeRainRankingRewardServiceImpl implements
     @Resource
     private RedEnvelopeRainRewardRepository  redEnvelopeRainRewardRepository;
     @Resource
-    private RedEnvelopeRainConfigRepository  redEnvelopeRainConfigRepository;
-    @Resource
     private RedEnvelopeRainDataRepository    redEnvelopeRainDataRepository;
     @Resource
     private ThirdAccountInfoRepository       thirdAccountInfoRepository;
