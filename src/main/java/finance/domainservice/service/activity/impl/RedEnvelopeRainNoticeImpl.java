@@ -81,11 +81,14 @@ public class RedEnvelopeRainNoticeImpl implements RedEnvelopeRainNoticeService {
         WeiXinMessageTemplate weiXinMessageTemplate = weiXinMessageTemplateRepository
             .query(WeiXinMessageTemplateCodeEnum.RED_ENVELOPE_RAIN_NOTICE.getCode());
         ThirdAccountInfo thirdAccountInfo;
+        int count = 1;
         for (String openId : openIds) {
             thirdAccountInfo = new ThirdAccountInfo();
             thirdAccountInfo.setOpenId(openId);
             weiXinTemplateMessageSendService.send(null, thirdAccountInfo, weiXinMessageTemplate,
                 Maps.newHashMap());
+            log.info("发送第{}条", count);
+            count++;
             try {
                 Thread.sleep(100);
                 log.info("休眠0.1s");

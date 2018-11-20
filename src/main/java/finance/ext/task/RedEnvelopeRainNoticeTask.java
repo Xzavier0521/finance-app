@@ -1,5 +1,9 @@
 package finance.ext.task;
 
+import java.time.LocalDateTime;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadPoolExecutor;
+
 import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +18,6 @@ import org.springframework.stereotype.Service;
 
 import finance.domainservice.service.activity.RedEnvelopeRainNoticeService;
 
-import java.time.LocalDateTime;
-
 /**
  * <p>红包雨活动微信模版消息通知</p>
  *
@@ -29,6 +31,8 @@ public class RedEnvelopeRainNoticeTask implements SchedulingConfigurer {
     @Resource
     private RedEnvelopeRainNoticeService redEnvelopeRainNoticeService;
 
+    @Resource
+    private ThreadPoolExecutor           threadPoolExecutor;
     @Value("${redEnvelopeRain.job.notice}")
     private String                       cron;
 
@@ -43,7 +47,10 @@ public class RedEnvelopeRainNoticeTask implements SchedulingConfigurer {
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         taskRegistrar.addTriggerTask(() -> {
             log.info("[开始同步红包雨活动-消息推送]，当前时间：{}", LocalDateTime.now());
-            redEnvelopeRainNoticeService.process();
+            CompletableFuture.supplyAsync(() -> {
+                redEnvelopeRainNoticeService.process();
+                return true;
+            }, threadPoolExecutor);
             log.info("[结束同步红包雨活动-消息推送]，当前时间：{}", LocalDateTime.now());
         }, triggerContext -> {
             // 定时任务触发，可修改定时任务的执行周期 this.corn
