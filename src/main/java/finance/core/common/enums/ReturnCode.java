@@ -67,6 +67,7 @@ public enum ReturnCode {
     LOAN_PARAM_NULL("0303001","输入不合法"),
     FINANCE_HOME_PARAM_INVALID("0305001","输入不合法"),
     REGISTER_HOME_PARAM_INVALID("0306001","输入不合法"),
+    CREDIT_CARD_ID_NOT_EXIST("0302002","信用卡产品不存在或者未配置"),
     // 金币
     GAME_PARAM_INVALID("0401001","输入不合法"),
     COIN_NUM_NOT_ENOUGH("0401002","金币数不足"),

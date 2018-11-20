@@ -99,6 +99,7 @@ public class CreditCardProductBizImpl implements CreditCardProductBiz {
 
         creditCardProductDetailVO.setProductDesc(financeProductMain.getProductDesc());
         creditCardProductDetailVO.setPromotionUrl(financeProductMain.getPromotionUrl());
+        creditCardProductDetailVO.setAmountType(String.valueOf(financeProductMain.getAmountType()));
 
         return creditCardProductDetailVO;
     }
