@@ -7,8 +7,6 @@ import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
@@ -23,8 +21,7 @@ import finance.domainservice.service.wechat.WeChatDataSynchronizeService;
  */
 @Slf4j
 @Service
-public class WeChatDataSynchronizeTask implements SchedulingConfigurer,
-                                       ApplicationListener<ApplicationReadyEvent> {
+public class WeChatDataSynchronizeTask implements SchedulingConfigurer {
 
     @Value("${weChat.job.syncData}")
     private String                       cron;
@@ -34,19 +31,14 @@ public class WeChatDataSynchronizeTask implements SchedulingConfigurer,
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-        taskRegistrar.addTriggerTask(() -> {
+       /* taskRegistrar.addTriggerTask(() -> {
             log.info("[开始从微信同步关注的用户数据]，当前时间：{}", LocalDateTime.now());
-            weChatDataSynchronizeService.process();
+           weChatDataSynchronizeService.process();
             log.info("[结束从微信同步关注的用户数据]，当前时间：{}", LocalDateTime.now());
         }, triggerContext -> {
             // 定时任务触发，可修改定时任务的执行周期 this.corn
             CronTrigger trigger = new CronTrigger(cron);
             return trigger.nextExecutionTime(triggerContext);
-        });
-    }
-
-    @Override
-    public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        weChatDataSynchronizeService.process();
+        });*/
     }
 }

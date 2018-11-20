@@ -82,15 +82,11 @@ public class MessageUtils {
         StringBuffer b = new StringBuffer();
         b.append("小主你来了,先坐吧,容嬷嬷先给你倒杯茶！\uD83C\uDF39\n");
         b.append("\n");
-        b.append("活动一：金榕家劲爆福利\n");
-        b.append(
-            "<a href='https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=pfxyk&am_id=jinrongjia2'>成功推广一人奖励130元\uD83C\uDF81</a>\n");
-        b.append("\n");
-        b.append("活动二：金榕家办卡奖励\n");
+        b.append("活动一：金榕家办卡奖励\n");
         b.append(
             "<a href='https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=jtxyk&am_id=jinrongjia2'>首次核卡成功奖励100元\uD83C\uDF81</a>\n");
         b.append("\n");
-        b.append("活动三：金榕家产品激活奖励\n");
+        b.append("活动二：金榕家产品激活奖励\n");
         b.append(
             "<a href='https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=jdbt&am_id=jinrongjia2'>激活奖励25元\uD83C\uDF81</a>\n");
         return b.toString();

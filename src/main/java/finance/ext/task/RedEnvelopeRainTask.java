@@ -14,9 +14,9 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.config.Task;
 import org.springframework.scheduling.support.CronTrigger;
+import org.springframework.stereotype.Service;
 
 import finance.domainservice.service.activity.RedEnvelopeRainRankingSyncService;
-import org.springframework.stereotype.Service;
 
 /**
  * <p>红包雨活动定时任务</p>
@@ -42,7 +42,7 @@ public class RedEnvelopeRainTask implements SchedulingConfigurer,
      */
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-       redEnvelopeRainRankingSyncService.process();
+        redEnvelopeRainRankingSyncService.process();
     }
 
     /**

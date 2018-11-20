@@ -47,8 +47,6 @@ public class RedEnvelopeRainRankingRewardServiceImpl implements
     @Resource
     private RedEnvelopeRainRewardRepository  redEnvelopeRainRewardRepository;
     @Resource
-    private RedEnvelopeRainConfigRepository  redEnvelopeRainConfigRepository;
-    @Resource
     private RedEnvelopeRainDataRepository    redEnvelopeRainDataRepository;
     @Resource
     private ThirdAccountInfoRepository       thirdAccountInfoRepository;
@@ -62,9 +60,6 @@ public class RedEnvelopeRainRankingRewardServiceImpl implements
     @Override
     public void process(LocalDate localDate, String activityCode,
                         RedEnvelopeRainTimeCodeEnum timeCode) {
-
-        redEnvelopeRainConfigRepository.queryByCode(activityCode, timeCode);
-
         List<RedEnvelopeRainData> redEnvelopeRainDataList = redEnvelopeRainDataRepository
             .queryRankingList(activityCode, DateUtils.getCurrentDay(localDate), timeCode, 20, 1);
         if (CollectionUtils.isEmpty(redEnvelopeRainDataList)) {
@@ -125,7 +120,7 @@ public class RedEnvelopeRainRankingRewardServiceImpl implements
                 .activityCode(activityCode).timeCode(timeCode).activityDay(activityDay)
                 .totalNum(redEnvelopeRainData.getTotalNum())
                 .totalAmount(redEnvelopeRainData.getTotalAmount().longValue())
-                .rewardType(RewardTypeEnum.RED_ENVELOPE_RAIN).build());
+                .rewardType(RewardTypeEnum.RED_ENVELOPE_RAIN_RANKING).build());
             return true;
         });
     }

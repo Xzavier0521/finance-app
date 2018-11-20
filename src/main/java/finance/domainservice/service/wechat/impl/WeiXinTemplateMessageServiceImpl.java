@@ -122,7 +122,7 @@ public class WeiXinTemplateMessageServiceImpl implements WeiXinTemplateMessageSe
                         DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.LONG_WEB_FORMAT))
                         .color("#0000ff").build());
                 data.put("keyword2",
-                    WeiXinTemplateData.builder().value("拼团奖励").color("#0000ff").build());
+                    WeiXinTemplateData.builder().value("拼手速红包雨").color("#0000ff").build());
                 data.put("keyword3",
                     WeiXinTemplateData.builder()
                         .value(MessageFormat.format("{0}金币", parameters.get("coinNum")))
