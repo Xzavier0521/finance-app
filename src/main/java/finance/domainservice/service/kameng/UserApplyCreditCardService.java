@@ -2,7 +2,6 @@ package finance.domainservice.service.kameng;
 
 import finance.core.dal.dataobject.UserApplyCreditCardDetailDO;
 import finance.domain.user.UserInfo;
-import nl.bitwalker.useragentutils.UserAgent;
 
 /**
  * <p>注释</p >
@@ -13,11 +12,13 @@ import nl.bitwalker.useragentutils.UserAgent;
 public interface UserApplyCreditCardService {
     /**
      * 获取用户实名信息
-     *
-     * @param userId
+     * @param userInfo
+     * @param header
+     * @param ip
+     * @param productId
      * @return
      */
-    UserApplyCreditCardDetailDO selectUserRealNameInfo(UserInfo userInfo, UserAgent userAgent,
+    UserApplyCreditCardDetailDO selectUserRealNameInfo(UserInfo userInfo, String header,
                                                        String ip, Long productId);
 
     int insertData(UserApplyCreditCardDetailDO userApplyCreditCardDetailDO);

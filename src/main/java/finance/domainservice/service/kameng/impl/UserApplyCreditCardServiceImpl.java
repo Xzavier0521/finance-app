@@ -9,7 +9,6 @@ import finance.core.dal.dataobject.UserApplyCreditCardDetailDO;
 import finance.domain.user.UserInfo;
 import finance.domainservice.service.kameng.UserApplyCreditCardService;
 import lombok.extern.slf4j.Slf4j;
-import nl.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -35,22 +34,22 @@ public class UserApplyCreditCardServiceImpl implements UserApplyCreditCardServic
 
     @Override
     public UserApplyCreditCardDetailDO selectUserRealNameInfo(UserInfo userInfo,
-                                                              UserAgent userAgent, String ip,
+                                                              String header, String ip,
                                                               Long productId) {
         FinanceIdCardInfo idCardInfo = idCardInfoDAO.selectByUserId(userInfo.getId());
         FinanceCreditCardDetail creditCardDetail = creditCardDetailDAO
             .selectProductDetailByProductId(productId);
-        log.info("[用户申请办理信用卡请求头信息:{},实名信息:{},信用卡产品信息:{}]", userAgent, idCardInfo, creditCardDetail);
+        log.info("[用户申请办理信用卡请求头信息:{},实名信息:{},信用卡产品信息:{}]", header, idCardInfo, creditCardDetail);
         UserApplyCreditCardDetailDO userApplyCreditCardDetailDO = new UserApplyCreditCardDetailDO();
         if (null != idCardInfo && null != creditCardDetail) {
             userApplyCreditCardDetailDO.setUserName(idCardInfo.getRealName());
             userApplyCreditCardDetailDO.setIdNum(idCardInfo.getIdNum());
             userApplyCreditCardDetailDO.setChannelId(kaMengChannelId);
-            userApplyCreditCardDetailDO.setProductId(creditCardDetail.getProductId());
+            userApplyCreditCardDetailDO.setProductId(creditCardDetail.getOtherChannelProductId());
             userApplyCreditCardDetailDO.setProductType((long) 1);
             userApplyCreditCardDetailDO.setIp(ip);
-            userApplyCreditCardDetailDO.setSystemVersion(userAgent.getOperatingSystem().getName());
-            userApplyCreditCardDetailDO.setSoftVersion(userAgent.getBrowser().getName());
+            userApplyCreditCardDetailDO.setSystemVersion(header);
+            userApplyCreditCardDetailDO.setSoftVersion("WeChat");
         }
         userApplyCreditCardDetailDO.setUserId(userInfo.getId());
         userApplyCreditCardDetailDO.setMobileNum(userInfo.getMobileNum());

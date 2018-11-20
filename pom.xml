@@ -247,11 +247,11 @@
             <artifactId>spring-restdocs-mockmvc</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>nl.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
             <version>1.2.4</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
     <build>
         <pluginManagement>

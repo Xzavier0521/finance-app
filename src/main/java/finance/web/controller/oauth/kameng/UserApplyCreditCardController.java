@@ -17,7 +17,6 @@ import finance.domainservice.service.kameng.UserApplyCreditCardService;
 import finance.ext.api.response.KaMengUserApplyCreditCardResponse;
 import finance.ext.integration.kameng.UserApplyCreditCardDetailClient;
 import lombok.extern.slf4j.Slf4j;
-import nl.bitwalker.useragentutils.UserAgent;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,12 +58,15 @@ public class UserApplyCreditCardController {
             checkArgument(validateResponse.isStatus(), validateResponse.getErrorMsg());
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
             checkArgument(Objects.nonNull(userInfo), ReturnCode.USER_NOT_EXISTS);
+            /*UserInfo userInfo = new UserInfo();
+            userInfo.setId((long) 1);
+            userInfo.setMobileNum("13167010967");*/
             String ip = NetUtils.getIpAdrress(httpServletRequest);
             String header = httpServletRequest.getHeader("User-Agent");
-            UserAgent userAgent = UserAgent.parseUserAgentString(header);
+//            UserAgent userAgent = UserAgent.parseUserAgentString(header);
             //获取用户实名信息
             UserApplyCreditCardDetailDO userApplyCreditCardDetailDO = userApplyCreditCardService
-                .selectUserRealNameInfo(userInfo, userAgent, ip, request.getProductId());
+                .selectUserRealNameInfo(userInfo, header, ip, request.getProductId());
             if (StringUtils.isBlank(userApplyCreditCardDetailDO.getUserName())
                 || StringUtils.isBlank(userApplyCreditCardDetailDO.getIdNum())) {
                 response = ResponseResultUtils.error(ReturnCode.ID_INFO_NOT_SAVE);
@@ -74,13 +76,17 @@ public class UserApplyCreditCardController {
             //调用卡盟申请信用卡接口
             KaMengUserApplyCreditCardResponse kaMengResponse = userApplyCreditCardDetailClient
                 .applyCreditCard(userApplyCreditCardDetailDO);
-            userApplyCreditCardDetailDO.setStatus(kaMengResponse.getStatus());
+            UserApplyCreditCardResponse userApplyCreditCardResponse = new UserApplyCreditCardResponse();
+            if (null != kaMengResponse) {
+                userApplyCreditCardDetailDO.setStatus(kaMengResponse.getStatus());
+                userApplyCreditCardResponse.setApplyStatus(kaMengResponse.getStatus());
+                userApplyCreditCardResponse.setMessage(kaMengResponse.getMessage());
+                response = ResponseResult.success(userApplyCreditCardResponse);
+            } else {
+                response = ResponseResultUtils.error(ReturnCode.KAMENG_CREDIT_CARD_ISNULL);
+            }
             //保存用户申请信息
             userApplyCreditCardService.insertData(userApplyCreditCardDetailDO);
-            UserApplyCreditCardResponse userApplyCreditCardResponse = new UserApplyCreditCardResponse();
-            userApplyCreditCardResponse.setApplyStatus(kaMengResponse.getStatus());
-            userApplyCreditCardResponse.setMessage(kaMengResponse.getMessage());
-            response = ResponseResult.success(userApplyCreditCardResponse);
         } catch (BizException bizEx) {
             ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
             if (Objects.nonNull(code)) {

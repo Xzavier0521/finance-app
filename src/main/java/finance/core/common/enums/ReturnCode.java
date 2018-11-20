@@ -89,7 +89,8 @@ public enum ReturnCode {
     STEP_RED_ENVELOPE_END("0601001","阶梯红包活动已结束"),
     STEP_RED_ENVELOPE_EXIST("0601002","已参加阶梯红包活动"),
     RAIN_RED_ENVELOPE_UN_START("0601003","红包雨活动未开始"),
-    //
+    //第三方渠道
+    KAMENG_CREDIT_CARD_ISNULL("0901001","卡盟渠道返回信息为空"),
     SYS_BUSY("888888","系统繁忙，请稍后重试"),
     SYS_ERROR("999999","系统异常");
 
