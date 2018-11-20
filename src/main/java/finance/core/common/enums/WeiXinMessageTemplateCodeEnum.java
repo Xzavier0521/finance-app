@@ -30,6 +30,11 @@ public enum WeiXinMessageTemplateCodeEnum {
                                             */
                                            SEND_COIN_NOTICE("send_coin_notice", "金币发放提醒"),
                                            /**
+                                            * 红包雨活动提醒
+                                            */
+                                           RED_ENVELOPE_RAIN_NOTICE("red_envelope_rain_notice",
+                                                                    "红包雨活动提醒"),
+                                           /**
                                             * 佣金提醒
                                             */
                                            BROKERAGE_ARRIVAL_NOTICE("brokerage_arrival_notice",

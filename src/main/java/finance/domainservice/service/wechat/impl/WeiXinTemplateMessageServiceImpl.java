@@ -130,6 +130,9 @@ public class WeiXinTemplateMessageServiceImpl implements WeiXinTemplateMessageSe
                 data.put("remark", WeiXinTemplateData.builder().value("获得金币，可免费抓娃娃！若需帮助请联系客服。")
                     .color("#0000ff").build());
                 break;
+            case RED_ENVELOPE_RAIN_NOTICE:
+                buildRedEnvelopeRainData(data, parameters);
+                break;
             default:
         }
         Set<WeiXinMessageTemplateCodeEnum> templateCodeEnumSet = Sets.newHashSet(
@@ -152,5 +155,20 @@ public class WeiXinTemplateMessageServiceImpl implements WeiXinTemplateMessageSe
         request.setData(data);
         request.setAccessToken(wechatService.getWechatPubAccessToken());
         return request;
+    }
+
+    private void buildRedEnvelopeRainData(Map<String, WeiXinTemplateData> data,
+                                          Map<String, String> parameters) {
+        data.put("first",
+            WeiXinTemplateData.builder().value("榕麽麽给小主你新留言了，赶快看看吧").color("#0000ff").build());
+        data.put("keyword1", WeiXinTemplateData.builder().value("榕麽麽").color("#0000ff").build());
+        data.put("keyword12",
+            WeiXinTemplateData.builder().value("拼手速，抢红包活动马上开始了").color("#0000ff").build());
+        data.put("keyword3",
+            WeiXinTemplateData.builder()
+                .value(DateUtils.format(new Date(), DateUtils.LONG_WEB_FORMAT)).color("#0000ff")
+                .build());
+        data.put("remark", WeiXinTemplateData.builder()
+            .value("拼手速，抢红包，抢的越多奖励越多，红包个数上排行榜，会有双倍奖励哦！点击赶快参加吧！").color("#0000ff").build());
     }
 }
