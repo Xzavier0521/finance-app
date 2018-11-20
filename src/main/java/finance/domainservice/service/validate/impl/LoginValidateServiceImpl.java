@@ -39,7 +39,7 @@ public class LoginValidateServiceImpl implements LoginValidateService {
         // 公共验证
         checkArgument(Constant.platform_code.containsKey(paramDto.getPlatformCode()), "平台编码不合法");
         Set<LoginType> loginTypeSet = Sets.newHashSet(LoginType.IMG_MOBILE, LoginType.WE_CHAT,
-            LoginType.QQ);
+            LoginType.MOBILE, LoginType.QQ);
         checkArgument(loginTypeSet.contains(LoginType.getByCode(paramDto.getType())), "登录类型不合法");
     }
 }

@@ -62,9 +62,6 @@ public class RedEnvelopeRainRankingRewardServiceImpl implements
     @Override
     public void process(LocalDate localDate, String activityCode,
                         RedEnvelopeRainTimeCodeEnum timeCode) {
-
-        redEnvelopeRainConfigRepository.queryByCode(activityCode, timeCode);
-
         List<RedEnvelopeRainData> redEnvelopeRainDataList = redEnvelopeRainDataRepository
             .queryRankingList(activityCode, DateUtils.getCurrentDay(localDate), timeCode, 20, 1);
         if (CollectionUtils.isEmpty(redEnvelopeRainDataList)) {
