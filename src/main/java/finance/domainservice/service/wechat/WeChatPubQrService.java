@@ -1,5 +1,7 @@
 package finance.domainservice.service.wechat;
 
+import finance.domain.weixin.WeCharQrInfo;
+
 /**
  * <p>微信公众号二维码</p>
  *
@@ -14,6 +16,6 @@ public interface WeChatPubQrService {
      * @param  inviteCode 邀请码
      * @return String
      */
-    String createTempQr(String activityCode, String inviteCode);
+    WeCharQrInfo createTempQr(String activityCode, String inviteCode);
 
 }

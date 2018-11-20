@@ -18,6 +18,7 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.response.WeChatCreateQrResponse;
 import finance.core.common.constants.WeChatConstant;
 import finance.core.common.enums.CodeEnum;
+import finance.domain.weixin.WeCharQrInfo;
 import finance.domainservice.service.wechat.WeChatPubQrService;
 
 /**
@@ -46,10 +47,12 @@ public class WeChatApiController {
             if (StringUtils.isBlank(inviteCode)) {
                 inviteCode = defaultInviteCode;
             }
-            String url = weChatPubQrService.createTempQr(activityCode, inviteCode);
+            WeCharQrInfo weCharQrInfo = weChatPubQrService.createTempQr(activityCode, inviteCode);
+            String url = weCharQrInfo.getUrl();
             if (StringUtils.isNotBlank(url)) {
-                response = ResponseResult.success(WeChatCreateQrResponse.builder().url(url)
-                    .expireSeconds(WeChatConstant.QR_EXPIRE_SECONDS).build());
+                response = ResponseResult.success(
+                    WeChatCreateQrResponse.builder().url(url).ticket(weCharQrInfo.getTicket())
+                        .expireSeconds(WeChatConstant.QR_EXPIRE_SECONDS).build());
             } else {
                 response = ResponseResult.error(CodeEnum.systemError);
             }

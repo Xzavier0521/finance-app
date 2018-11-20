@@ -18,11 +18,12 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.response.UserActivityWeChatPubInfoQueryResponse;
 import finance.api.model.response.WeChatCreateQrResponse;
 import finance.core.common.enums.CodeEnum;
+import finance.core.dal.dataobject.FinanceUserInfo;
+import finance.domain.weixin.WeCharQrInfo;
 import finance.domainservice.repository.UserInviteRepository;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.query.UserActivityWeChatPubInfoQueryService;
 import finance.domainservice.service.wechat.WeChatPubQrService;
-import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * <p>微信公众号接口</p>
@@ -73,10 +74,12 @@ public class WeChatController {
             Preconditions.checkArgument(Objects.nonNull(userInfo));
             Preconditions.checkArgument(StringUtils.isNotBlank(activityCode));
             Preconditions.checkArgument(StringUtils.isNotBlank(userInfo.getInviteCode()));
-            String url = weChatPubQrService.createTempQr(activityCode, userInfo.getInviteCode());
+            WeCharQrInfo weCharQrInfo = weChatPubQrService.createTempQr(activityCode,
+                userInfo.getInviteCode());
+            String url = weCharQrInfo.getUrl();
             if (StringUtils.isNotBlank(url)) {
-                response = ResponseResult
-                    .success(WeChatCreateQrResponse.builder().url(url).build());
+                response = ResponseResult.success(WeChatCreateQrResponse.builder().url(url)
+                    .ticket(weCharQrInfo.getTicket()).build());
             } else {
                 response = ResponseResult.error(CodeEnum.systemError);
             }

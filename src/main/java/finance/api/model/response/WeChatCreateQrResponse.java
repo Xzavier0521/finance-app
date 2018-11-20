@@ -18,9 +18,13 @@ public class WeChatCreateQrResponse implements Serializable {
      *  生成的二维码url
      */
     private String            url;
+    /**
+     * 获取的二维码ticket，凭借此ticket可以在有效时间内换取二维码。
+     */
+    private String            ticket;
 
     /**
      * 有效时间，最大30天
      */
-     private Long              expireSeconds;
+    private Long              expireSeconds;
 }
