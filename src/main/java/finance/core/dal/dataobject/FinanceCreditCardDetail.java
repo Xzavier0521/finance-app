@@ -38,5 +38,6 @@ public class FinanceCreditCardDetail implements Serializable {
     private String            maxAmount;
 
     private String            auditLength;
+    private Long              otherChannelProductId;
 
 }
