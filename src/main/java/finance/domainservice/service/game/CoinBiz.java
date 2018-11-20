@@ -5,10 +5,7 @@ import java.util.Map;
 
 import finance.api.model.base.Page;
 import finance.api.model.response.ResponseResult;
-import finance.api.model.vo.CoinRecordVO;
-import finance.api.model.vo.EarlyClockPageVO;
-import finance.api.model.vo.MyRecordVO;
-import finance.api.model.vo.PushRewardVO;
+import finance.api.model.vo.*;
 import finance.core.dal.dataobject.FinanceCoinLog;
 
 /**
@@ -53,7 +50,7 @@ public interface CoinBiz {
       * @param: []
       * @return: finance.model.finance.ResponseResult<java.util.Map<java.lang.String,java.lang.Object>>
       */
-    ResponseResult<Boolean> signEarlyCoinGame();
+    ResponseResult<SignCoinVO> signEarlyCoinGame();
 
     /**
       *功能描述:查询个人金币详情

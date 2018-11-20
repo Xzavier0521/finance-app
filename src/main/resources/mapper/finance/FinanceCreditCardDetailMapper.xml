@@ -15,10 +15,11 @@
         <result column="version" property="version" jdbcType="INTEGER"/>
         <result column="max_amount" property="maxAmount" jdbcType="VARCHAR"/>
         <result column="audit_length" property="auditLength" jdbcType="VARCHAR"/>
+        <result column="other_channel_product_id" property="otherChannelProductId" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
         id, product_id, pass_rate, reback_cash_desc, detail_page_url, create_time, update_time,
-        is_delete, creator, updator, version, max_amount, audit_length
+        is_delete, creator, updator, version, max_amount, audit_length, other_channel_product_id
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select

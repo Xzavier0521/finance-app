@@ -28,16 +28,17 @@ public class CreditCardProductDetailVO {
     private String maxAmount;
     private String auditLength;
     private String passRate;      //通过率
+    private String amountType;    //金额类型，1:金额值，2:百分比
 
     @Override
     public String toString() {
         return "CreditCardProductDetailVO{" + "id=" + id + ", productName='" + productName + '\''
-               + ", detailPageUrl='" + detailPageUrl + '\'' + ", terminalBonus=" + terminalBonus
-               + ", directBonus=" + directBonus + ", indirectBonus=" + indirectBonus
-               + ", cashbackDate='" + cashbackDate + '\'' + ", redirectUrl='" + redirectUrl + '\''
-               + ", productDesc='" + productDesc + '\'' + ", promotionUrl='" + promotionUrl + '\''
-               + ", maxAmount='" + maxAmount + '\'' + ", auditLength='" + auditLength + '\''
-               + ", passRate='" + passRate + '\'' + '}';
+               + ", detailPageUrl='" + detailPageUrl + '\'' + ", terminalBonus='" + terminalBonus
+               + '\'' + ", directBonus='" + directBonus + '\'' + ", indirectBonus='" + indirectBonus
+               + '\'' + ", cashbackDate='" + cashbackDate + '\'' + ", redirectUrl='" + redirectUrl
+               + '\'' + ", productDesc='" + productDesc + '\'' + ", promotionUrl='" + promotionUrl
+               + '\'' + ", maxAmount='" + maxAmount + '\'' + ", auditLength='" + auditLength + '\''
+               + ", passRate='" + passRate + '\'' + ", amountType='" + amountType + '\'' + '}';
     }
 
     public String getPassRate() {
@@ -162,4 +163,11 @@ public class CreditCardProductDetailVO {
         this.redirectUrl = redirectUrl;
     }
 
+    public String getAmountType() {
+        return amountType;
+    }
+
+    public void setAmountType(String amountType) {
+        this.amountType = amountType;
+    }
 }

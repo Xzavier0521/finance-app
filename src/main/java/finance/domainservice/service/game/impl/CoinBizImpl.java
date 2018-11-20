@@ -5,9 +5,14 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,6 +83,8 @@ public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
     private WechatService               wechatService;
     @Resource
     private WeiXinTemplateMessageClient weiXinTemplateMessageClient;
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public ResponseResult<EarlyClockPageVO> getClockPageData() {
@@ -274,7 +281,7 @@ public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResponseResult<Boolean> signEarlyCoinGame() {
+    public ResponseResult<SignCoinVO> signEarlyCoinGame() {
         /**1.jwt 获取用户user_id **/
         Long userId = jwtService.getUserInfo().getId();
         //防刷
@@ -299,9 +306,25 @@ public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
                 return ResponseResult.error(CodeEnum.signTimeInvalid);
             }
         }
+        //从缓存获取参加打卡的总人数和总金币数
+        Integer joinCoinNum = (Integer) redisTemplate.opsForValue()
+            .get("coin_game_log:joinCoinClockIn");
+        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+        String randomCoin = (String) hashOperations.get("coin_game_log:signCoinClockIn", "randomCoin");
+        Map<String,Integer> randomCoinMap = (Map<String, Integer>) JSON.parse(randomCoin);
+        Integer coin = 0;
+        SignCoinVO signCoinVO = new SignCoinVO();
+        if (null != randomCoinMap) {
+            coin = randomCoinMap.get(String.valueOf(joinCoinNum));
+            signCoinVO.setSignCoin(coin);
+        }
+        if (null != joinCoinNum) {
+            joinCoinNum -= 1;
+        }
         /**3.更新数据 **/
         FinanceCoinGameLog financeCoinGameLog = new FinanceCoinGameLog();
         financeCoinGameLog.setUserId(userId);
+        financeCoinGameLog.setInNum(coin);
         //3.1 根据userid和时间查询昨天打卡活动信息
         FinanceCoinGameLog yesterdayGameLog = financeCoinGameLogMapper
             .selectByUserIdAndYesterdayDate(userId);
@@ -313,9 +336,19 @@ public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
         financeCoinGameLog.setSignTime(new Date());
         financeCoinGameLog.setStatus(new Integer(1));
         financeCoinGameLogMapper.updateByUserIdAndDateSelective(financeCoinGameLog);
+        FinanceCoinGame financeCoinGame = financeCoinGameMapper.selectByTaskType(Constant.EARLY_SIGN,GameType.activity.getCode());
+        FinanceCoinLog financeCoinLog = new FinanceCoinLog();
+        financeCoinLog.setUserId(financeCoinGameLog.getUserId());
+        financeCoinLog.setTaskId(financeCoinGame.getId());
+        financeCoinLog.setTaskName(financeCoinGame.getTaskName());
+        financeCoinLog.setNum(coin);
+        financeCoinLogMapper.insertSelective(financeCoinLog);
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<Object>(Object.class));
+        redisTemplate.opsForValue().set("coin_game_log:joinCoinClockIn",  joinCoinNum);
         //查询是否是被邀请的第一次打卡,如果成立，需要给邀请人分配奖励
         InviteUserCoinReward(userId);
-        return ResponseResult.success(true);
+        return ResponseResult.success(signCoinVO);
     }
 
     @Override

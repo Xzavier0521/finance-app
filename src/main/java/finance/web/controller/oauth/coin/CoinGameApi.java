@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 
+import finance.api.model.vo.SignCoinVO;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
@@ -74,7 +75,7 @@ public class CoinGameApi {
 
     }
 
-    @PostMapping
+    /*@PostMapping
     public ResponseResult<Boolean> earlyCoinGame(@RequestBody XMap paramMap) {
         String method = (String) paramMap.get("method");
         if (Constant.JOIN.equals(method)) {
@@ -83,6 +84,16 @@ public class CoinGameApi {
             return coinBizImpl.signEarlyCoinGame();
         }
 
+    }*/
+
+    @GetMapping("joinCoinGame")
+    public ResponseResult<Boolean> joinCoinGame() {
+        return coinBizImpl.joinEarlyCoinGame();
+    }
+
+    @GetMapping("signCoinGame")
+    public ResponseResult<SignCoinVO> earlyCoinGame() {
+        return coinBizImpl.signEarlyCoinGame();
     }
 
     @GetMapping("pushRewardMsg")
