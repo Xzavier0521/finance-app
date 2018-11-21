@@ -1,5 +1,6 @@
 package finance.domainservice.service.activity.impl;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Resource;
@@ -9,15 +10,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
 import finance.domain.user.ThirdAccountInfo;
 import finance.domain.user.UserInfo;
 import finance.domain.user.UserInviteInfo;
 import finance.domain.weixin.WeiXinMessageTemplate;
-import finance.domainservice.repository.CoinLogRepository;
-import finance.domainservice.repository.ThirdAccountInfoRepository;
-import finance.domainservice.repository.UserInviteRepository;
-import finance.domainservice.repository.WeiXinMessageTemplateRepository;
+import finance.domainservice.repository.*;
 import finance.domainservice.service.activity.RedEnvelopeRainRegisterRewardService;
 import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 
@@ -32,11 +33,16 @@ import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 public class RedEnvelopeRainRegisterRewardServiceImpl implements
                                                       RedEnvelopeRainRegisterRewardService {
 
+    private static final Integer             coinNum = 500;
+
     @Value("${red.envelope.rain.switch}")
     private String                           redEnvelopRainSwitch;
 
     @Resource
     private CoinLogRepository                coinLogRepository;
+
+    @Resource
+    private UserInfoRepository               userInfoRepository;
 
     @Resource
     private UserInviteRepository             userInviteRepository;
@@ -63,7 +69,7 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
             log.info("用户:{}无邀请关系，不发放金币奖励!", userInfo.getMobileNum());
             return;
         }
-        coinLogRepository.save(userInviteInfo.getParentUserId(), 500, "红包雨活动邀请好友注册奖励");
+        coinLogRepository.save(userInviteInfo.getParentUserId(), coinNum, "红包雨活动邀请好友注册奖励");
         WeiXinMessageTemplate weiXinMessageTemplate = weiXinMessageTemplateRepository
             .query(WeiXinMessageTemplateCodeEnum.RED_ENVELOPE_RAIN_NOTICE.getCode());
         if (Objects.isNull(weiXinMessageTemplate)) {
@@ -71,5 +77,11 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
         }
         ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository
             .queryByCondition(userInviteInfo.getParentUserId());
+        UserInfo parentUserInfo = userInfoRepository
+            .queryByCondition(Lists.newArrayList(userInviteInfo.getParentUserId())).get(0);
+        Map<String, String> parameters = Maps.newHashMap();
+        parameters.put("coinNum", String.valueOf(coinNum));
+        weiXinTemplateMessageSendService.send(parentUserInfo, thirdAccountInfo,
+            weiXinMessageTemplate, parameters);
     }
 }

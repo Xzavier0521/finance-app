@@ -130,6 +130,23 @@ public class WeiXinTemplateMessageServiceImpl implements WeiXinTemplateMessageSe
                 data.put("remark", WeiXinTemplateData.builder().value("获得金币，可免费抓娃娃！若需帮助请联系客服。")
                     .color("#0000ff").build());
                 break;
+            case RED_ENVELOPE_RAIN_INVITE_REWARD_NOTICE:
+                data.put("first",
+                    WeiXinTemplateData.builder().value(MessageFormat.format("您尾号{0}的账户最新的金币变动信息",
+                        userInfo.getMobileNum().substring(7, 11))).color("#0000ff").build());
+                data.put("keyword1",
+                    WeiXinTemplateData.builder().value(
+                        DateUtils.getFormatDateStr(LocalDateTime.now(), DateUtils.LONG_WEB_FORMAT))
+                        .color("#0000ff").build());
+                data.put("keyword2",
+                    WeiXinTemplateData.builder().value("邀请好友参加，红包雨活动").color("#0000ff").build());
+                data.put("keyword3",
+                    WeiXinTemplateData.builder()
+                        .value(MessageFormat.format("{0}金币", parameters.get("coinNum")))
+                        .color("#0000ff").build());
+                data.put("remark", WeiXinTemplateData.builder().value("获得金币，可免费抓娃娃！若需帮助请联系客服。")
+                    .color("#0000ff").build());
+                break;
             case RED_ENVELOPE_RAIN_NOTICE:
                 buildRedEnvelopeRainData(data, parameters);
                 break;
