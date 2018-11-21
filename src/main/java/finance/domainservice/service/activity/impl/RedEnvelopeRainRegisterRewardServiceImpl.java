@@ -35,9 +35,6 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
     @Value("${red.envelope.rain.switch}")
     private String                           redEnvelopRainSwitch;
 
-    @Value("${red.envelope.rain.rewardCoinNum")
-    private String                           rewardCoinNum;
-
     @Resource
     private CoinLogRepository                coinLogRepository;
 
@@ -66,8 +63,7 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
             log.info("用户:{}无邀请关系，不发放金币奖励!", userInfo.getMobileNum());
             return;
         }
-        coinLogRepository.save(userInviteInfo.getParentUserId(), Integer.valueOf(rewardCoinNum),
-            "红包雨活动邀请好友注册奖励");
+        coinLogRepository.save(userInviteInfo.getParentUserId(), 500, "红包雨活动邀请好友注册奖励");
         WeiXinMessageTemplate weiXinMessageTemplate = weiXinMessageTemplateRepository
             .query(WeiXinMessageTemplateCodeEnum.RED_ENVELOPE_RAIN_NOTICE.getCode());
         if (Objects.isNull(weiXinMessageTemplate)) {
