@@ -2,6 +2,8 @@ package finance.web.controller.noauth.weixin;
 
 import javax.annotation.Resource;
 
+import finance.core.common.util.HttpClientUtil;
+import finance.domainservice.service.aliyunOss.StoreClient;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +22,10 @@ import finance.core.common.constants.WeChatConstant;
 import finance.core.common.enums.CodeEnum;
 import finance.domain.weixin.WeCharQrInfo;
 import finance.domainservice.service.wechat.WeChatPubQrService;
+
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * <p>注释</p>
@@ -52,7 +58,7 @@ public class WeChatApiController {
             if (StringUtils.isNotBlank(url)) {
                 response = ResponseResult.success(
                     WeChatCreateQrResponse.builder().url(url).ticket(weCharQrInfo.getTicket())
-                        .expireSeconds(WeChatConstant.QR_EXPIRE_SECONDS).build());
+                        .expireSeconds(WeChatConstant.QR_EXPIRE_SECONDS).qrUrl(weCharQrInfo.getQrUrl()).build());
             } else {
                 response = ResponseResult.error(CodeEnum.systemError);
             }

@@ -23,7 +23,8 @@ public class WeCharQrInfo implements Serializable {
      */
     private String            ticket;
     /**
-     * 阿里云图品地址
+     * 阿里云图片地址
      */
     private String qrUrl;
+
 }
