@@ -35,6 +35,11 @@ public enum WeiXinMessageTemplateCodeEnum {
                                            RED_ENVELOPE_RAIN_NOTICE("red_envelope_rain_notice",
                                                                     "红包雨活动提醒"),
                                            /**
+                                            * 红包雨活动邀请好友注册金币奖励提醒
+                                            */
+                                           RED_ENVELOPE_RAIN_INVITE_REWARD_NOTICE("red_envelope_rain_invite_reward_notice",
+                                                                                  "红包雨活动邀请好友注册金币奖励提醒"),
+                                           /**
                                             * 佣金提醒
                                             */
                                            BROKERAGE_ARRIVAL_NOTICE("brokerage_arrival_notice",

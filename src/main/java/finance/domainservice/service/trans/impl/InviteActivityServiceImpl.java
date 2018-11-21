@@ -5,7 +5,6 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
-import finance.core.dal.dataobject.*;
 import org.apache.commons.collections.map.LinkedMap;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -26,6 +25,8 @@ import finance.core.common.enums.ActivityFinishStatus;
 import finance.core.common.enums.ActivityType;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.util.LogUtil;
+import finance.core.dal.dao.*;
+import finance.core.dal.dataobject.*;
 import finance.domain.dto.FixedAmountPageDto;
 import finance.domain.dto.LoginParamDto;
 import finance.domainservice.repository.UserInviteRepository;
@@ -35,7 +36,6 @@ import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.register.RegisterSendMessageService;
 import finance.domainservice.service.trans.AccountService;
 import finance.domainservice.service.trans.InviteActivityService;
-import finance.core.dal.dao.*;
 
 /**
  * 邀请红包活动实现类
@@ -139,8 +139,6 @@ public class InviteActivityServiceImpl implements InviteActivityService {
             logger.info("grandInviteInfo:{}", grandInviteInfo);
             FinanceUserInfo grandUserInfo = userInfoMapper
                 .selectByPrimaryKey(grandInviteInfo.getParentUserId());
-            logger.info("grandUserInfo:{}", grandUserInfo);
-            logger.info("用户{}，新增二级用户,奖励0.2元", grandUserInfo.getMobileNum());
             accountService.charge("新增二级用户奖励", grandUserInfo.getId(), secondInviteAmount,
                 grandUserInfo.getMobileNum());
             // 佣金提醒

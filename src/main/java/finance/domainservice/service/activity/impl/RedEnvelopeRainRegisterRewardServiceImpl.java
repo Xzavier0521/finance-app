@@ -9,10 +9,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
+import finance.domain.user.ThirdAccountInfo;
 import finance.domain.user.UserInfo;
 import finance.domain.user.UserInviteInfo;
+import finance.domain.weixin.WeiXinMessageTemplate;
 import finance.domainservice.repository.CoinLogRepository;
+import finance.domainservice.repository.ThirdAccountInfoRepository;
 import finance.domainservice.repository.UserInviteRepository;
+import finance.domainservice.repository.WeiXinMessageTemplateRepository;
 import finance.domainservice.service.activity.RedEnvelopeRainRegisterRewardService;
 import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 
@@ -42,8 +47,15 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
     @Resource
     private WeiXinTemplateMessageSendService weiXinTemplateMessageSendService;
 
+    @Resource
+    private WeiXinMessageTemplateRepository  weiXinMessageTemplateRepository;
+
+    @Resource
+    private ThirdAccountInfoRepository       thirdAccountInfoRepository;
+
     @Override
     public void process(UserInfo userInfo) {
+        log.info("红包雨活动邀请用户注册奖励");
         if (!"1".equals(redEnvelopRainSwitch)) {
             log.info("红包雨活动已经结束");
             return;
@@ -56,6 +68,12 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
         }
         coinLogRepository.save(userInviteInfo.getParentUserId(), Integer.valueOf(rewardCoinNum),
             "红包雨活动邀请好友注册奖励");
-
+        WeiXinMessageTemplate weiXinMessageTemplate = weiXinMessageTemplateRepository
+            .query(WeiXinMessageTemplateCodeEnum.RED_ENVELOPE_RAIN_NOTICE.getCode());
+        if (Objects.isNull(weiXinMessageTemplate)) {
+            log.info("微信消息模版不存在，不发送模版消息！");
+        }
+        ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository
+            .queryByCondition(userInviteInfo.getParentUserId());
     }
 }
