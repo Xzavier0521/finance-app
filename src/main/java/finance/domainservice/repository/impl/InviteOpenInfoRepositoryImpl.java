@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +25,7 @@ import finance.domainservice.repository.InviteOpenInfoRepository;
  * @author lili
  * @version $Id: InviteOpenInfoRepositoryImpl.java, v0.1 2018/10/31 11:10 PM lili Exp $
  */
+@Slf4j
 @Repository("inviteOpenInfoRepository")
 public class InviteOpenInfoRepositoryImpl implements InviteOpenInfoRepository {
     @Resource
@@ -79,7 +82,7 @@ public class InviteOpenInfoRepositoryImpl implements InviteOpenInfoRepository {
         param.put("openId", openId);
         List<InviteOpenInfo> inviteOpenInfoList = InviteOpenInfoConverter
             .convert2List(inviteOpenInfoDAO.query(param));
-        if (CollectionUtils.isEmpty(inviteOpenInfoList)) {
+        if (CollectionUtils.isNotEmpty(inviteOpenInfoList)) {
             inviteOpenInfo = inviteOpenInfoList.get(0);
         }
         return inviteOpenInfo;
