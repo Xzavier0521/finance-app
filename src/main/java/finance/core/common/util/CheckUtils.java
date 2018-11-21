@@ -3,23 +3,19 @@ package finance.core.common.util;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
+import finance.core.common.constants.WeChatConstant;
+
 /**
  * <p>注释</p>
  * @author lili
  * @version $Id: CheckUtils.java, v0.1 2018/10/28 1:52 PM lili Exp $
  */
 public class CheckUtils {
-
-    /**
-     * 开发者自行定义Token
-     */
-    public static final String token = "jinrongjia_webChatPub_token";
-
     public static boolean checkSignature(String signature, String timestamp, String nonce) {
 
         //1.定义数组存放tooken，timestamp,nonce
 
-        String[] arr = { token, timestamp, nonce };
+        String[] arr = { WeChatConstant.NOTICE_TOKEN, timestamp, nonce };
 
         //2.对数组进行排序
 

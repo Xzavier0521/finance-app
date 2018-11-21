@@ -77,7 +77,7 @@ public interface WeChatConstant {
      */
     String WE_CHAT_FLOW_NUM            = "weChatPub:flowNumbers";
 
-    String NOTICE_TOKEN                = "jinrongjia_weChat_pub_token";
+    String NOTICE_TOKEN                = "jinrongjia_webChatPub_token";
     /**
      * 进入首页
      */

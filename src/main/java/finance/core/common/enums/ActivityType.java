@@ -20,8 +20,11 @@ public enum ActivityType {
                           /**
                            * 固定红包
                            */
-                          fixed_red_envelope("2", "固定红包");
-
+                          fixed_red_envelope("2", "固定红包"),
+                          /**
+                           * 红包雨
+                           */
+                          red_envelope_rain("3", "红包雨");
     private String code;
     private String msg;
 
