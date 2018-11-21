@@ -19,7 +19,10 @@ import finance.domain.user.ThirdAccountInfo;
 import finance.domain.user.UserInfo;
 import finance.domain.user.UserInviteInfo;
 import finance.domain.weixin.WeiXinMessageTemplate;
-import finance.domainservice.repository.*;
+import finance.domainservice.repository.CoinLogRepository;
+import finance.domainservice.repository.UserInfoRepository;
+import finance.domainservice.repository.UserInviteRepository;
+import finance.domainservice.repository.WeiXinMessageTemplateRepository;
 import finance.domainservice.service.activity.RedEnvelopeRainRegisterRewardService;
 import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 
@@ -54,9 +57,6 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
     @Resource
     private WeiXinMessageTemplateRepository  weiXinMessageTemplateRepository;
 
-    @Resource
-    private ThirdAccountInfoRepository       thirdAccountInfoRepository;
-
     @Override
     public void process(UserInfo userInfo, LoginParamDto paramDto) {
         log.info("红包雨活动邀请用户注册奖励");
@@ -72,7 +72,7 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
         }
         coinLogRepository.save(userInviteInfo.getParentUserId(), coinNum, "红包雨活动邀请好友注册奖励");
         WeiXinMessageTemplate weiXinMessageTemplate = weiXinMessageTemplateRepository
-            .query(WeiXinMessageTemplateCodeEnum.RED_ENVELOPE_RAIN_NOTICE.getCode());
+            .query(WeiXinMessageTemplateCodeEnum.RED_ENVELOPE_RAIN_INVITE_REWARD_NOTICE.getCode());
         if (Objects.isNull(weiXinMessageTemplate)) {
             log.info("微信消息模版不存在，不发送模版消息！");
         }
