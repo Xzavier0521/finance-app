@@ -22,5 +22,9 @@ public class WeCharQrInfo implements Serializable {
      * 获取的二维码ticket，凭借此ticket可以在有效时间内换取二维码。
      */
     private String            ticket;
+    /**
+     * 阿里云图片地址
+     */
+    private String qrUrl;
 
 }

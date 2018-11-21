@@ -79,7 +79,7 @@ public class WeChatController {
             String url = weCharQrInfo.getUrl();
             if (StringUtils.isNotBlank(url)) {
                 response = ResponseResult.success(WeChatCreateQrResponse.builder().url(url)
-                    .ticket(weCharQrInfo.getTicket()).build());
+                    .ticket(weCharQrInfo.getTicket()).qrUrl(weCharQrInfo.getQrUrl()).build());
             } else {
                 response = ResponseResult.error(CodeEnum.systemError);
             }

@@ -1,10 +1,13 @@
 package finance.domainservice.service.wechat.impl;
 
+import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Objects;
 
 import javax.annotation.Resource;
 
+import finance.core.common.util.HttpClientUtil;
+import finance.domainservice.service.aliyunOss.StoreClient;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +32,8 @@ public class WeChatPubQrServiceImpl implements WeChatPubQrService {
     private WechatService      wechatService;
     @Resource
     private WeiXinQrCodeClient weiXinQrCodeClient;
+    @Resource
+    private StoreClient storeClient;
 
     @Override
     public WeCharQrInfo createTempQr(String activityCode, String inviteCode) {
@@ -42,6 +47,11 @@ public class WeChatPubQrServiceImpl implements WeChatPubQrService {
         weCharQrInfo.setUrl(StringUtils.replace(WeChatConstant.QR_GET_URL,
             WeChatConstant.WEB_CHAT_TICKET, response.getTicket()));
         weCharQrInfo.setTicket(response.getTicket());
+        InputStream inputStream = HttpClientUtil.getImageStream(weCharQrInfo.getUrl());
+        String picName = weCharQrInfo.getTicket() + "wechatQR.jpg";
+        storeClient.init();
+        String qrUrl = storeClient.putObject(picName, inputStream);
+        weCharQrInfo.setQrUrl(qrUrl);
         return weCharQrInfo;
     }
 }

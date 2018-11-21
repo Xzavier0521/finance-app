@@ -41,8 +41,6 @@ public class WeChatApiController {
     private String             defaultInviteCode;
     @Resource
     private WeChatPubQrService weChatPubQrService;
-    @Resource
-    private StoreClient storeClient;
 
     @GetMapping("createTempQr")
     public ResponseResult<WeChatCreateQrResponse> createTempQr(@Param("activityCode") String activityCode,
@@ -57,16 +55,10 @@ public class WeChatApiController {
             }
             WeCharQrInfo weCharQrInfo = weChatPubQrService.createTempQr(activityCode, inviteCode);
             String url = weCharQrInfo.getUrl();
-            InputStream inputStream = HttpClientUtil.getImageStream(url);
-            log.info("[下载二维码],返回结果:{}", inputStream);
-            String picName = weCharQrInfo.getTicket() + "wechatQR.jpg";
-            storeClient.init();
-            String qrUrl = storeClient.putObject(picName, inputStream);
-            log.info("[上传二维码到阿里云],图片地址:{}", qrUrl);
             if (StringUtils.isNotBlank(url)) {
                 response = ResponseResult.success(
                     WeChatCreateQrResponse.builder().url(url).ticket(weCharQrInfo.getTicket())
-                        .expireSeconds(WeChatConstant.QR_EXPIRE_SECONDS).qrUrl(qrUrl).build());
+                        .expireSeconds(WeChatConstant.QR_EXPIRE_SECONDS).qrUrl(weCharQrInfo.getQrUrl()).build());
             } else {
                 response = ResponseResult.error(CodeEnum.systemError);
             }
