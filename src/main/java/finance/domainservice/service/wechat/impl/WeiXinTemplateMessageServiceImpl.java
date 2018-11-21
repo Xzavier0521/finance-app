@@ -162,7 +162,7 @@ public class WeiXinTemplateMessageServiceImpl implements WeiXinTemplateMessageSe
         data.put("first",
             WeiXinTemplateData.builder().value("榕麽麽给小主你新留言了，赶快看看吧").color("#0000ff").build());
         data.put("keyword1", WeiXinTemplateData.builder().value("榕麽麽").color("#0000ff").build());
-        data.put("keyword12",
+        data.put("keyword2",
             WeiXinTemplateData.builder().value("拼手速，抢红包活动马上开始了").color("#0000ff").build());
         data.put("keyword3",
             WeiXinTemplateData.builder()
