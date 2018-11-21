@@ -176,7 +176,7 @@
     </update>
     <sql id="finance_third_account_info_query_fuzzy_condition">
         <trim prefix="WHERE" prefixOverrides="AND |OR ">
-            <if test="userId != null and userId.trim().length() != 0">
+            <if test="userId != null">
                 AND (user_id = #{userId})
             </if>
             <if test="channel != null and channel.trim().length() != 0">
@@ -213,7 +213,7 @@
     </sql>
     <sql id="finance_third_account_info_query_condition">
         <trim prefix="WHERE" prefixOverrides="AND |OR ">
-            <if test="userId != null and userId.trim().length() != 0">
+            <if test="userId != null">
                 AND (user_id = #{userId})
             </if>
             <if test="channel != null and channel.trim().length() != 0">
