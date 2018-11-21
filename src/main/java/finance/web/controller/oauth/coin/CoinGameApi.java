@@ -1,20 +1,6 @@
 package finance.web.controller.oauth.coin;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.Resource;
-
-import finance.api.model.vo.SignCoinVO;
-import lombok.extern.slf4j.Slf4j;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.web.bind.annotation.*;
-
 import finance.api.model.base.Page;
-import finance.api.model.base.XMap;
 import finance.api.model.request.ActivityCoinGameQueryRequest;
 import finance.api.model.request.BasicRequest;
 import finance.api.model.request.PayCoinPlayGameRequest;
@@ -25,8 +11,8 @@ import finance.api.model.response.ValidateResponse;
 import finance.api.model.vo.EarlyClockPageVO;
 import finance.api.model.vo.MyRecordVO;
 import finance.api.model.vo.PushRewardVO;
+import finance.api.model.vo.SignCoinVO;
 import finance.api.model.vo.activity.CoinGameVO;
-import finance.core.common.constants.Constant;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.ReturnCode;
 import finance.core.common.util.PreconditionUtils;
@@ -40,6 +26,15 @@ import finance.domainservice.service.activity.query.ActivityCoinGameQueryService
 import finance.domainservice.service.game.CoinBiz;
 import finance.domainservice.service.jwt.JwtService;
 import finance.web.controller.response.ActivityCoinGameQueryBuilder;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>金币游戏服务</p>

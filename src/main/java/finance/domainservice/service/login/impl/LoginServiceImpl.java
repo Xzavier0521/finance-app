@@ -29,17 +29,6 @@ import finance.core.common.enums.*;
 import finance.core.common.util.NetUtils;
 import finance.core.common.util.PreconditionUtils;
 import finance.core.common.util.ResponseResultUtils;
-import finance.domain.weixin.InviteOpenInfo;
-import finance.domain.dto.LoginParamDto;
-import finance.domain.dto.ThirdLoginParamDto;
-import finance.domainservice.repository.InviteOpenInfoRepository;
-import finance.domainservice.service.jwt.JwtService;
-import finance.domainservice.service.login.LoginService;
-import finance.domainservice.service.register.RegisterService;
-import finance.domainservice.service.trans.InviteActivityService;
-import finance.domainservice.service.user.ThirdBindService;
-import finance.domainservice.service.validate.ImgValidateService;
-import finance.domainservice.service.validate.SmsValidateService;
 import finance.core.dal.dao.FinanceThirdAccountInfoDAO;
 import finance.core.dal.dao.FinanceUserFirstLoginLogDAO;
 import finance.core.dal.dao.FinanceUserInfoDAO;
@@ -48,6 +37,17 @@ import finance.core.dal.dataobject.FinanceThirdAccountInfo;
 import finance.core.dal.dataobject.FinanceUserFirstLoginLog;
 import finance.core.dal.dataobject.FinanceUserInfo;
 import finance.core.dal.dataobject.FinanceUserLoginLog;
+import finance.domain.dto.LoginParamDto;
+import finance.domain.dto.ThirdLoginParamDto;
+import finance.domain.weixin.InviteOpenInfo;
+import finance.domainservice.repository.InviteOpenInfoRepository;
+import finance.domainservice.service.jwt.JwtService;
+import finance.domainservice.service.login.LoginService;
+import finance.domainservice.service.register.RegisterService;
+import finance.domainservice.service.trans.InviteActivityService;
+import finance.domainservice.service.user.ThirdBindService;
+import finance.domainservice.service.validate.ImgValidateService;
+import finance.domainservice.service.validate.SmsValidateService;
 
 /**
  * <p>登录逻辑</p>
@@ -296,6 +296,9 @@ public class LoginServiceImpl implements LoginService {
         String activityType = paramDto.getActivityType();
         String weChatPubName = paramDto.getWechatPubName();
         if (StringUtils.isBlank(loginType)) {
+            return;
+        }
+        if (StringUtils.isBlank(paramDto.getActivityType())) {
             return;
         }
         Set<ActivityType> activityTypeSet = Sets.newHashSet(ActivityType.fixed_red_envelope,
