@@ -40,12 +40,10 @@ import finance.core.dal.dataobject.FinanceUserInfo;
 import finance.core.dal.dataobject.FinanceUserLoginLog;
 import finance.domain.dto.LoginParamDto;
 import finance.domain.dto.ThirdLoginParamDto;
-import finance.domain.user.ThirdAccountInfo;
 import finance.domain.user.UserInfo;
 import finance.domain.weixin.InviteOpenInfo;
 import finance.domainservice.converter.UserInfoConverter;
 import finance.domainservice.repository.InviteOpenInfoRepository;
-import finance.domainservice.repository.ThirdAccountInfoRepository;
 import finance.domainservice.service.activity.RedEnvelopeRainRegisterRewardService;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.login.LoginService;
@@ -95,9 +93,6 @@ public class LoginServiceImpl implements LoginService {
 
     @Resource
     private InviteOpenInfoRepository             inviteOpenInfoRepository;
-
-    @Resource
-    private ThirdAccountInfoRepository           thirdAccountInfoRepository;
     @Resource
     private RedEnvelopeRainRegisterRewardService redEnvelopeRainRegisterRewardService;
 
@@ -138,8 +133,8 @@ public class LoginServiceImpl implements LoginService {
             if (isRegister) {
                 //  红包雨活动奖励
                 UserInfo user = UserInfoConverter.convert(userInfo);
-                String activityCode = getActivityCode(user);
-                log.info("用户:[},活动代码:{}", user.getMobileNum(), activityCode);
+                String activityCode = getActivityCode(user, paramDto);
+                log.info("用户:{},活动代码:{}", user.getMobileNum(), activityCode);
                 if (RedEnvelopConstant.RED_ENVELOPE_RAIN_CODE.equals(activityCode)) {
                     redEnvelopeRainRegisterRewardService.process(user);
                 }
@@ -175,17 +170,14 @@ public class LoginServiceImpl implements LoginService {
         return response;
     }
 
-    private String getActivityCode(UserInfo userInfo) {
+    private String getActivityCode(UserInfo userInfo, LoginParamDto paramDto) {
         String activityCode = StringUtils.EMPTY;
         if (Objects.isNull(userInfo)) {
             return activityCode;
         }
-        ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository
-            .queryByCondition(userInfo.getId());
-        if (Objects.nonNull(thirdAccountInfo)
-            && StringUtils.isNotBlank(thirdAccountInfo.getOpenId())) {
+        if (StringUtils.isNotBlank(paramDto.getOpenId())) {
             InviteOpenInfo inviteOpenInfo = inviteOpenInfoRepository
-                .queryInviteOpenInfo(thirdAccountInfo.getOpenId());
+                .queryInviteOpenInfo(paramDto.getOpenId());
             if (Objects.nonNull(inviteOpenInfo)) {
                 activityCode = inviteOpenInfo.getActivityCode();
             }
