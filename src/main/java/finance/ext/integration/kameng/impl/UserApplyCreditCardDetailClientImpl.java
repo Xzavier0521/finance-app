@@ -1,6 +1,7 @@
 package finance.ext.integration.kameng.impl;
 
 import finance.core.common.enums.ReturnCode;
+import finance.core.common.util.MapUtil;
 import finance.core.dal.dataobject.UserApplyCreditCardDetailDO;
 import finance.ext.api.request.KaMengUserApplyCreditCardRequest;
 import finance.ext.api.response.KaMengUserApplyCreditCardResponse;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>注释</p >
@@ -55,7 +58,8 @@ public class UserApplyCreditCardDetailClientImpl implements UserApplyCreditCardD
         request.setSoftVersion(userApplyCreditCardDetailDO.getSoftVersion());
         log.info("[开始申请办理信用卡],请求参数:{}", request);
         try {
-            response = create().applyCreditCard(request).execute().body();
+            Map<String, Object> map = MapUtil.transBean2Map(request);
+            response = create().applyCreditCard(map).execute().body();
             log.info("[申请办理信用卡],返回结果{}", response);
         } catch (final Exception e) {
             response = new KaMengUserApplyCreditCardResponse();
