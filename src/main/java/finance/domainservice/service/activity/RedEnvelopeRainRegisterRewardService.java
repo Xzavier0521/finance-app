@@ -1,5 +1,6 @@
 package finance.domainservice.service.activity;
 
+import finance.domain.dto.LoginParamDto;
 import finance.domain.user.UserInfo;
 
 /**
@@ -13,5 +14,5 @@ public interface RedEnvelopeRainRegisterRewardService {
      * 处理金币奖励
      * @param userInfo 用户信息
      */
-    void process(UserInfo userInfo);
+    void process(UserInfo userInfo, LoginParamDto paramDto);
 }

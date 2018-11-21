@@ -14,6 +14,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
+import finance.domain.dto.LoginParamDto;
 import finance.domain.user.ThirdAccountInfo;
 import finance.domain.user.UserInfo;
 import finance.domain.user.UserInviteInfo;
@@ -57,7 +58,7 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
     private ThirdAccountInfoRepository       thirdAccountInfoRepository;
 
     @Override
-    public void process(UserInfo userInfo) {
+    public void process(UserInfo userInfo, LoginParamDto paramDto) {
         log.info("红包雨活动邀请用户注册奖励");
         if (!"1".equals(redEnvelopRainSwitch)) {
             log.info("红包雨活动已经结束");
@@ -75,8 +76,8 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
         if (Objects.isNull(weiXinMessageTemplate)) {
             log.info("微信消息模版不存在，不发送模版消息！");
         }
-        ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository
-            .queryByCondition(userInviteInfo.getParentUserId());
+        ThirdAccountInfo thirdAccountInfo = new ThirdAccountInfo();
+        thirdAccountInfo.setOpenId(paramDto.getOpenId());
         UserInfo parentUserInfo = userInfoRepository
             .queryByCondition(Lists.newArrayList(userInviteInfo.getParentUserId())).get(0);
         Map<String, String> parameters = Maps.newHashMap();

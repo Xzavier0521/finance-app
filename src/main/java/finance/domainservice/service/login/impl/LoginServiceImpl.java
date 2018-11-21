@@ -136,7 +136,7 @@ public class LoginServiceImpl implements LoginService {
                 String activityCode = getActivityCode(user, paramDto);
                 log.info("用户:{},活动代码:{}", user.getMobileNum(), activityCode);
                 if (RedEnvelopConstant.RED_ENVELOPE_RAIN_CODE.equals(activityCode)) {
-                    redEnvelopeRainRegisterRewardService.process(user);
+                    redEnvelopeRainRegisterRewardService.process(user,paramDto);
                 }
             }
             if (isRegister && ActivityType.step_red_envelope == ActivityType
