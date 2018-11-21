@@ -27,4 +27,8 @@ public class WeChatCreateQrResponse implements Serializable {
      * 有效时间，最大30天
      */
     private Long              expireSeconds;
+    /**
+     * 阿里云图片地址
+     */
+    private String qrUrl;
 }

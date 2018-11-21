@@ -2,6 +2,8 @@ package finance.web.controller.noauth.weixin;
 
 import javax.annotation.Resource;
 
+import finance.core.common.util.HttpClientUtil;
+import finance.domainservice.service.aliyunOss.StoreClient;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +23,10 @@ import finance.core.common.enums.CodeEnum;
 import finance.domain.weixin.WeCharQrInfo;
 import finance.domainservice.service.wechat.WeChatPubQrService;
 
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * <p>注释</p>
  * @author lili
@@ -35,6 +41,8 @@ public class WeChatApiController {
     private String             defaultInviteCode;
     @Resource
     private WeChatPubQrService weChatPubQrService;
+    @Resource
+    private StoreClient storeClient;
 
     @GetMapping("createTempQr")
     public ResponseResult<WeChatCreateQrResponse> createTempQr(@Param("activityCode") String activityCode,
@@ -49,10 +57,16 @@ public class WeChatApiController {
             }
             WeCharQrInfo weCharQrInfo = weChatPubQrService.createTempQr(activityCode, inviteCode);
             String url = weCharQrInfo.getUrl();
+            InputStream inputStream = HttpClientUtil.getImageStream(url);
+            log.info("[下载二维码],返回结果:{}", inputStream);
+            String picName = weCharQrInfo.getTicket() + "wechatQR.jpg";
+            storeClient.init();
+            String qrUrl = storeClient.putObject(picName, inputStream);
+            log.info("[上传二维码到阿里云],图片地址:{}", qrUrl);
             if (StringUtils.isNotBlank(url)) {
                 response = ResponseResult.success(
                     WeChatCreateQrResponse.builder().url(url).ticket(weCharQrInfo.getTicket())
-                        .expireSeconds(WeChatConstant.QR_EXPIRE_SECONDS).build());
+                        .expireSeconds(WeChatConstant.QR_EXPIRE_SECONDS).qrUrl(qrUrl).build());
             } else {
                 response = ResponseResult.error(CodeEnum.systemError);
             }
