@@ -82,6 +82,7 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
             .queryByCondition(Lists.newArrayList(userInviteInfo.getParentUserId())).get(0);
         if (Objects.isNull(thirdAccountInfo)) {
             log.info("用户:{}无open_info不发送模版消息!", parentUserInfo.getMobileNum());
+            return;
         }
         Map<String, String> parameters = Maps.newHashMap();
         parameters.put("coinNum", String.valueOf(coinNum));
