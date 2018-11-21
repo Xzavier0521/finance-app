@@ -4,7 +4,11 @@ import finance.ext.api.request.KaMengUserApplyCreditCardRequest;
 import finance.ext.api.response.KaMengUserApplyCreditCardResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.QueryMap;
+
+import java.util.Map;
 
 /**
  * <p>注释</p >
@@ -14,6 +18,6 @@ import retrofit2.http.POST;
  */
 public interface UserApplyCreditCardDetailService {
 
-    @POST("qckjgzhManager/DownUser/Add.do")
-    Call<KaMengUserApplyCreditCardResponse> applyCreditCard(@Body KaMengUserApplyCreditCardRequest request);
+    @GET("qckjgzhManager/DownUser/Add.do")
+    Call<KaMengUserApplyCreditCardResponse> applyCreditCard(@QueryMap Map<String, Object> map);
 }
