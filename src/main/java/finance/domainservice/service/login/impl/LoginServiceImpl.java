@@ -135,6 +135,14 @@ public class LoginServiceImpl implements LoginService {
             String jwt = this.saveJwt(userInfo);
             Map<String, Object> resData = new HashMap<>(4, 4);
             // 红包活动类型
+            if (isRegister) {
+                //  红包雨活动奖励
+                UserInfo user = UserInfoConverter.convert(userInfo);
+                String activityCode = getActivityCode(user);
+                if (RedEnvelopConstant.RED_ENVELOPE_RAIN_CODE.equals(activityCode)) {
+                    redEnvelopeRainRegisterRewardService.process(user);
+                }
+            }
             if (isRegister && ActivityType.step_red_envelope == ActivityType
                 .getByCode(paramDto.getActivityType())) {
                 // 红包活动奖励
@@ -145,12 +153,6 @@ public class LoginServiceImpl implements LoginService {
                         resData.put("fixedAmountActivity", resMap);
                     }
                     resData.put("bindOpenId", resMap.get("bindOpenId"));
-                }
-                //  红包雨活动奖励
-                UserInfo user = UserInfoConverter.convert(userInfo);
-                String activityCode = getActivityCode(user);
-                if (RedEnvelopConstant.RED_ENVELOPE_RAIN_CODE.equals(activityCode)) {
-                    redEnvelopeRainRegisterRewardService.process(user);
                 }
 
             }

@@ -14,6 +14,7 @@ import finance.domain.user.UserInviteInfo;
 import finance.domainservice.repository.CoinLogRepository;
 import finance.domainservice.repository.UserInviteRepository;
 import finance.domainservice.service.activity.RedEnvelopeRainRegisterRewardService;
+import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 
 /**
  * <p>红包雨活动邀请注册金额奖励</p>
@@ -27,16 +28,19 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
                                                       RedEnvelopeRainRegisterRewardService {
 
     @Value("${red.envelope.rain.switch}")
-    private String               redEnvelopRainSwitch;
+    private String                           redEnvelopRainSwitch;
 
     @Value("${red.envelope.rain.rewardCoinNum")
-    private String               rewardCoinNum;
+    private String                           rewardCoinNum;
 
     @Resource
-    private CoinLogRepository    coinLogRepository;
+    private CoinLogRepository                coinLogRepository;
 
     @Resource
-    private UserInviteRepository userInviteRepository;
+    private UserInviteRepository             userInviteRepository;
+
+    @Resource
+    private WeiXinTemplateMessageSendService weiXinTemplateMessageSendService;
 
     @Override
     public void process(UserInfo userInfo) {
