@@ -5,15 +5,18 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
+import com.google.common.collect.Maps;
+
 import finance.core.common.enums.ConcernStatusEnum;
+import finance.core.dal.dao.InviteOpenInfoDAO;
 import finance.domain.weixin.InviteOpenInfo;
 import finance.domain.weixin.WeChatSubscribeInfo;
 import finance.domainservice.converter.InviteOpenInfoConverter;
 import finance.domainservice.converter.WeChatSubscribeInfoConverter;
 import finance.domainservice.repository.InviteOpenInfoRepository;
-import finance.core.dal.dao.InviteOpenInfoDAO;
 
 /**
  * <p>邀请码-open_info绑定</p>
@@ -67,5 +70,18 @@ public class InviteOpenInfoRepositoryImpl implements InviteOpenInfoRepository {
     @Override
     public Long countUnSubscribeNum(String inviteCode, Long parentUserId) {
         return inviteOpenInfoDAO.countUnSubscribeNum(inviteCode, parentUserId);
+    }
+
+    @Override
+    public InviteOpenInfo queryInviteOpenInfo(String openId) {
+        InviteOpenInfo inviteOpenInfo = null;
+        Map<String, Object> param = Maps.newHashMap();
+        param.put("openId", openId);
+        List<InviteOpenInfo> inviteOpenInfoList = InviteOpenInfoConverter
+            .convert2List(inviteOpenInfoDAO.query(param));
+        if (CollectionUtils.isEmpty(inviteOpenInfoList)) {
+            inviteOpenInfo = inviteOpenInfoList.get(0);
+        }
+        return inviteOpenInfo;
     }
 }

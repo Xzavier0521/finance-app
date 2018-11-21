@@ -50,6 +50,19 @@ public interface InviteOpenInfoRepository {
      */
     int batchUpdateStatusByOpenId(List<String> openIds, ConcernStatusEnum concernStatus);
 
+    /**
+     * 统计关注记录数
+     * @param inviteCode 邀请码
+     * @param parentUserId 上级用户id
+     * @return Long
+     */
     Long countUnSubscribeNum(String inviteCode, Long parentUserId);
+
+    /**
+     *  查询活动邀请关系
+     * @param openId 微信open_id
+     * @return  InviteOpenInfo
+     */
+    InviteOpenInfo queryInviteOpenInfo(String openId);
 
 }

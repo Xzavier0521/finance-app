@@ -8,9 +8,10 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.Lists;
 
-import finance.domain.user.ThirdAccountInfo;
-import finance.core.dal.dataobject.FinanceThirdAccountInfo;
 import finance.core.common.util.ConvertBeanUtil;
+import finance.core.dal.dataobject.ThirdAccountInfoDO;
+import finance.domain.user.ThirdAccountInfo;
+
 /**
  * <p>注释</p>
  * @author lili
@@ -18,7 +19,7 @@ import finance.core.common.util.ConvertBeanUtil;
  */
 public class ThirdAccountInfoConverter {
 
-    public static ThirdAccountInfo convert(FinanceThirdAccountInfo from) {
+    public static ThirdAccountInfo convert(ThirdAccountInfoDO from) {
         if (Objects.isNull(from)) {
             return null;
         }
@@ -27,16 +28,16 @@ public class ThirdAccountInfoConverter {
         return to;
     }
 
-    public static FinanceThirdAccountInfo convert(ThirdAccountInfo from) {
+    public static ThirdAccountInfoDO convert(ThirdAccountInfo from) {
         if (Objects.isNull(from)) {
             return null;
         }
-        FinanceThirdAccountInfo to = new FinanceThirdAccountInfo();
+        ThirdAccountInfoDO to = new ThirdAccountInfoDO();
         ConvertBeanUtil.copyBeanProperties(from, to);
         return to;
     }
 
-    public static List<ThirdAccountInfo> convert2List(List<FinanceThirdAccountInfo> froms) {
+    public static List<ThirdAccountInfo> convert2List(List<ThirdAccountInfoDO> froms) {
         if (CollectionUtils.isEmpty(froms)) {
             return Collections.emptyList();
         }
@@ -45,11 +46,11 @@ public class ThirdAccountInfoConverter {
         return tos;
     }
 
-    public static List<FinanceThirdAccountInfo> convert2DoList(List<ThirdAccountInfo> froms) {
+    public static List<ThirdAccountInfoDO> convert2DoList(List<ThirdAccountInfo> froms) {
         if (CollectionUtils.isEmpty(froms)) {
             return Collections.emptyList();
         }
-        List<FinanceThirdAccountInfo> tos = Lists.newArrayListWithCapacity(froms.size());
+        List<ThirdAccountInfoDO> tos = Lists.newArrayListWithCapacity(froms.size());
         froms.forEach(from -> tos.add(convert(from)));
         return tos;
     }

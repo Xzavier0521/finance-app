@@ -1,14 +1,19 @@
 package finance.domainservice.repository.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
-import finance.core.dal.dao.FinanceThirdAccountInfoDAO;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
+import com.google.common.collect.Maps;
+
+import finance.core.dal.dao.ThirdAccountInfoDAO;
 import finance.domain.user.ThirdAccountInfo;
 import finance.domainservice.converter.ThirdAccountInfoConverter;
 import finance.domainservice.repository.ThirdAccountInfoRepository;
-import finance.core.dal.dataobject.FinanceThirdAccountInfo;
 
 /**
  * <p>注释</p>
@@ -19,7 +24,7 @@ import finance.core.dal.dataobject.FinanceThirdAccountInfo;
 public class ThirdAccountInfoRepositoryImpl implements ThirdAccountInfoRepository {
 
     @Resource
-    private FinanceThirdAccountInfoDAO financeThirdAccountInfoMapper;
+    private ThirdAccountInfoDAO thirdAccountInfoDAO;
 
     /**
      * 查询用户绑定信息
@@ -30,10 +35,17 @@ public class ThirdAccountInfoRepositoryImpl implements ThirdAccountInfoRepositor
     @Override
     public ThirdAccountInfo queryByCondition(Long userId) {
 
-        FinanceThirdAccountInfo financeThirdAccountInfo = new FinanceThirdAccountInfo();
-        financeThirdAccountInfo.setChannel("wechatPub");
-        financeThirdAccountInfo.setUserId(userId);
-        return ThirdAccountInfoConverter
-            .convert(financeThirdAccountInfoMapper.selectOneBySelective(financeThirdAccountInfo));
+        ThirdAccountInfo thirdAccountInfo = null;
+
+        Map<String, Object> parameters = Maps.newHashMap();
+        parameters.put("userId", userId);
+        parameters.put("channel", "wechatPub");
+        List<ThirdAccountInfo> thirdAccountInfoList = ThirdAccountInfoConverter
+            .convert2List(thirdAccountInfoDAO.query(parameters));
+        if (CollectionUtils.isNotEmpty(thirdAccountInfoList)) {
+            thirdAccountInfo = thirdAccountInfoList.get(0);
+        }
+
+        return thirdAccountInfo;
     }
 }

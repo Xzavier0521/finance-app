@@ -25,6 +25,7 @@ import com.google.common.collect.Sets;
 
 import finance.api.model.response.ResponseResult;
 import finance.core.common.constants.Constant;
+import finance.core.common.constants.RedEnvelopConstant;
 import finance.core.common.enums.*;
 import finance.core.common.util.NetUtils;
 import finance.core.common.util.PreconditionUtils;
@@ -39,8 +40,13 @@ import finance.core.dal.dataobject.FinanceUserInfo;
 import finance.core.dal.dataobject.FinanceUserLoginLog;
 import finance.domain.dto.LoginParamDto;
 import finance.domain.dto.ThirdLoginParamDto;
+import finance.domain.user.ThirdAccountInfo;
+import finance.domain.user.UserInfo;
 import finance.domain.weixin.InviteOpenInfo;
+import finance.domainservice.converter.UserInfoConverter;
 import finance.domainservice.repository.InviteOpenInfoRepository;
+import finance.domainservice.repository.ThirdAccountInfoRepository;
+import finance.domainservice.service.activity.RedEnvelopeRainRegisterRewardService;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.login.LoginService;
 import finance.domainservice.service.register.RegisterService;
@@ -59,36 +65,41 @@ import finance.domainservice.service.validate.SmsValidateService;
 public class LoginServiceImpl implements LoginService {
 
     @Value("${third.openId.cache.timeout.minute}")
-    private Long                        openIdCacheTimeout;
+    private Long                                 openIdCacheTimeout;
     @Value("${third.openId.cacke.key.prefix}")
-    private String                      openIdCacheKeyPrefix;
+    private String                               openIdCacheKeyPrefix;
     @Resource
-    private ImgValidateService          imgValidateService;
+    private ImgValidateService                   imgValidateService;
     @Resource
-    private SmsValidateService          smsValidateService;
+    private SmsValidateService                   smsValidateService;
     @Resource
-    private FinanceUserInfoDAO          uerInfoMapper;
+    private FinanceUserInfoDAO                   uerInfoMapper;
     @Resource
-    private RegisterService             registerService;
+    private RegisterService                      registerService;
     @Resource
-    private FinanceUserFirstLoginLogDAO firstLoginLogMapper;
+    private FinanceUserFirstLoginLogDAO          firstLoginLogMapper;
     @Resource
-    private FinanceUserLoginLogDAO      loginLogMapper;
+    private FinanceUserLoginLogDAO               loginLogMapper;
     @Resource
-    private ThirdBindService            thirdBindService;
+    private ThirdBindService                     thirdBindService;
     @Resource
-    private JwtService                  jwtService;
+    private JwtService                           jwtService;
     @Resource
-    private StringRedisTemplate         stringRedisTemplate;
+    private StringRedisTemplate                  stringRedisTemplate;
     @Resource
-    private InviteActivityService       activityService;
+    private InviteActivityService                activityService;
     @Resource
-    private FinanceThirdAccountInfoDAO  thirdAccountInfoMapper;
+    private FinanceThirdAccountInfoDAO           thirdAccountInfoMapper;
     @Resource
-    private InviteActivityService       inviteActivityServiceImpl;
+    private InviteActivityService                inviteActivityServiceImpl;
 
     @Resource
-    private InviteOpenInfoRepository    inviteOpenInfoRepository;
+    private InviteOpenInfoRepository             inviteOpenInfoRepository;
+
+    @Resource
+    private ThirdAccountInfoRepository           thirdAccountInfoRepository;
+    @Resource
+    private RedEnvelopeRainRegisterRewardService redEnvelopeRainRegisterRewardService;
 
     @Override
     public ResponseResult<Map<String, Object>> login(HttpServletRequest req,
@@ -124,10 +135,8 @@ public class LoginServiceImpl implements LoginService {
             String jwt = this.saveJwt(userInfo);
             Map<String, Object> resData = new HashMap<>(4, 4);
             // 红包活动类型
-            Set<ActivityType> activityTypeSet = Sets.newHashSet(ActivityType.step_red_envelope,
-                ActivityType.fixed_red_envelope);
-            if (isRegister
-                && activityTypeSet.contains(ActivityType.getByCode(paramDto.getActivityType()))) {
+            if (isRegister && ActivityType.step_red_envelope == ActivityType
+                .getByCode(paramDto.getActivityType())) {
                 // 红包活动奖励
                 Map<String, Object> resMap = this.redEnvelopeRewards(userInfo, paramDto);
                 if (Objects.nonNull(resMap)) {
@@ -137,6 +146,13 @@ public class LoginServiceImpl implements LoginService {
                     }
                     resData.put("bindOpenId", resMap.get("bindOpenId"));
                 }
+                //  红包雨活动奖励
+                UserInfo user = UserInfoConverter.convert(userInfo);
+                String activityCode = getActivityCode(user);
+                if (RedEnvelopConstant.RED_ENVELOPE_RAIN_CODE.equals(activityCode)) {
+                    redEnvelopeRainRegisterRewardService.process(user);
+                }
+
             }
             // 登录逻辑结束，返回
             if (Objects.nonNull(jwt)) {
@@ -154,6 +170,24 @@ public class LoginServiceImpl implements LoginService {
         }
 
         return response;
+    }
+
+    private String getActivityCode(UserInfo userInfo) {
+        String activityCode = StringUtils.EMPTY;
+        if (Objects.isNull(userInfo)) {
+            return activityCode;
+        }
+        ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository
+            .queryByCondition(userInfo.getId());
+        if (Objects.nonNull(thirdAccountInfo)
+            && StringUtils.isNotBlank(thirdAccountInfo.getOpenId())) {
+            InviteOpenInfo inviteOpenInfo = inviteOpenInfoRepository
+                .queryInviteOpenInfo(thirdAccountInfo.getOpenId());
+            if (Objects.nonNull(inviteOpenInfo)) {
+                activityCode = inviteOpenInfo.getActivityCode();
+            }
+        }
+        return activityCode;
     }
 
     private CodeEnum validateImageAndSmsCode(LoginParamDto paramDto) {
