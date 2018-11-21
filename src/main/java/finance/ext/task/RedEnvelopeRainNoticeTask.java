@@ -45,7 +45,7 @@ public class RedEnvelopeRainNoticeTask implements SchedulingConfigurer {
      */
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-        taskRegistrar.addTriggerTask(() -> {
+    /*    taskRegistrar.addTriggerTask(() -> {
             log.info("[开始同步红包雨活动-消息推送]，当前时间：{}", LocalDateTime.now());
             redEnvelopeRainNoticeService.process();
             log.info("[结束同步红包雨活动-消息推送]，当前时间：{}", LocalDateTime.now());
@@ -53,6 +53,6 @@ public class RedEnvelopeRainNoticeTask implements SchedulingConfigurer {
             // 定时任务触发，可修改定时任务的执行周期 this.corn
             CronTrigger trigger = new CronTrigger(cron);
             return trigger.nextExecutionTime(triggerContext);
-        });
+        });*/
     }
 }
