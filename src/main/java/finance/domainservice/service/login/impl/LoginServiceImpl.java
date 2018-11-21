@@ -180,6 +180,8 @@ public class LoginServiceImpl implements LoginService {
                 .queryInviteOpenInfo(paramDto.getOpenId());
             if (Objects.nonNull(inviteOpenInfo)) {
                 activityCode = inviteOpenInfo.getActivityCode();
+            }else {
+                log.info("用户:{}邀请绑定关系不存在",userInfo.getMobileNum());
             }
         } else {
             log.info("用户:{}绑定信息不存在", userInfo.getMobileNum());
