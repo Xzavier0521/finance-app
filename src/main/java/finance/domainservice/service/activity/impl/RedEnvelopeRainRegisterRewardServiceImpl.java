@@ -19,10 +19,7 @@ import finance.domain.user.ThirdAccountInfo;
 import finance.domain.user.UserInfo;
 import finance.domain.user.UserInviteInfo;
 import finance.domain.weixin.WeiXinMessageTemplate;
-import finance.domainservice.repository.CoinLogRepository;
-import finance.domainservice.repository.UserInfoRepository;
-import finance.domainservice.repository.UserInviteRepository;
-import finance.domainservice.repository.WeiXinMessageTemplateRepository;
+import finance.domainservice.repository.*;
 import finance.domainservice.service.activity.RedEnvelopeRainRegisterRewardService;
 import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 
@@ -57,6 +54,9 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
     @Resource
     private WeiXinMessageTemplateRepository  weiXinMessageTemplateRepository;
 
+    @Resource
+    private ThirdAccountInfoRepository       thirdAccountInfoRepository;
+
     @Override
     public void process(UserInfo userInfo, LoginParamDto paramDto) {
         log.info("红包雨活动邀请用户注册奖励");
@@ -76,10 +76,13 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements
         if (Objects.isNull(weiXinMessageTemplate)) {
             log.info("微信消息模版不存在，不发送模版消息！");
         }
-        ThirdAccountInfo thirdAccountInfo = new ThirdAccountInfo();
-        thirdAccountInfo.setOpenId(paramDto.getOpenId());
+        ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository
+            .queryByCondition(userInviteInfo.getParentUserId());
         UserInfo parentUserInfo = userInfoRepository
             .queryByCondition(Lists.newArrayList(userInviteInfo.getParentUserId())).get(0);
+        if (Objects.isNull(thirdAccountInfo)) {
+            log.info("用户:{}无open_info不发送模版消息!", parentUserInfo.getMobileNum());
+        }
         Map<String, String> parameters = Maps.newHashMap();
         parameters.put("coinNum", String.valueOf(coinNum));
         weiXinTemplateMessageSendService.send(parentUserInfo, thirdAccountInfo,
