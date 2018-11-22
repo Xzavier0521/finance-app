@@ -101,6 +101,7 @@ public class MessageUtils {
         b.append("\n");
         b.append(
             "<a href='https://finance.zhishush.cn/finance-h5/activity/redPocketRain/#/'>拼手速，每天3轮红包雨，金币抢不停\uD83C\uDF81</a>\n");
+        b.append("\n");
         b.append("有问题可以直接留言或者添加金主微信号17501656701进行咨询哦~");
         return b.toString();
     }
