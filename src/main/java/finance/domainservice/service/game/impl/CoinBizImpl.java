@@ -202,15 +202,21 @@ public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
             ResponseResult.error(CodeEnum.joinFail);
         }
         earlyClockPageVO.setEarlyCardUseCoinNum(financeCoinGame.getNum());
+        buildData(earlyClockPageVO);
         return ResponseResult.success(earlyClockPageVO);
     }
 
     /**
      * 获取早起打卡开始时间=
-     * @param earlyClockPageVO
      */
     private void buildData(EarlyClockPageVO earlyClockPageVO) {
+        earlyClockPageVO.setSignBeginTime(getWebFormatTime(String.valueOf(signBeginTime)));
+        earlyClockPageVO.setSignEndTime(getWebFormatTime(String.valueOf(signEndTime)));
+    }
 
+    private String getWebFormatTime(String timeStr) {
+        return timeStr.substring(0, 2) + ":" + timeStr.substring(2, 4) + ":"
+               + timeStr.substring(4, 6);
     }
 
     @Override
