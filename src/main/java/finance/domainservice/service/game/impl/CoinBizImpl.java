@@ -5,7 +5,6 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
-import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +15,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 
 import finance.api.model.base.Page;
@@ -27,10 +27,18 @@ import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.GameType;
 import finance.core.common.util.DateUtil;
 import finance.core.common.util.DateUtils;
-import finance.domain.user.ThirdAccountInfo;
+import finance.core.dal.dao.FinanceCoinGameDAO;
+import finance.core.dal.dao.FinanceCoinGameLogDAO;
+import finance.core.dal.dao.FinanceCoinLogDAO;
+import finance.core.dal.dao.FinanceUserInfoDAO;
+import finance.core.dal.dataobject.FinanceCoinGame;
+import finance.core.dal.dataobject.FinanceCoinGameLog;
+import finance.core.dal.dataobject.FinanceCoinLog;
+import finance.core.dal.dataobject.FinanceUserInfo;
 import finance.domain.dto.CoinLockParamDto;
 import finance.domain.dto.CoinLockResponseDto;
 import finance.domain.dto.RedisLockDto;
+import finance.domain.user.ThirdAccountInfo;
 import finance.domainservice.repository.ThirdAccountInfoRepository;
 import finance.domainservice.service.AbstractCoinDealMulti;
 import finance.domainservice.service.game.CoinBiz;
@@ -40,14 +48,6 @@ import finance.ext.api.model.WeiXinTemplateData;
 import finance.ext.api.request.WeiXinTemplateMessageSendRequest;
 import finance.ext.api.response.WeiXinTemplateMessageSendResponse;
 import finance.ext.integration.weixin.WeiXinTemplateMessageClient;
-import finance.core.dal.dao.FinanceCoinGameDAO;
-import finance.core.dal.dao.FinanceCoinGameLogDAO;
-import finance.core.dal.dao.FinanceCoinLogDAO;
-import finance.core.dal.dao.FinanceUserInfoDAO;
-import finance.core.dal.dataobject.FinanceCoinGame;
-import finance.core.dal.dataobject.FinanceCoinGameLog;
-import finance.core.dal.dataobject.FinanceCoinLog;
-import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * @program: finance-server
@@ -60,29 +60,29 @@ import finance.core.dal.dataobject.FinanceUserInfo;
  **/
 @Service
 public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
-    private static final Logger         logger = LoggerFactory.getLogger(CoinBizImpl.class);
+    private static final Logger           logger = LoggerFactory.getLogger(CoinBizImpl.class);
     @Value("${earlycard.sign.begintime}")
-    private int                         signBeginTime;
+    private int                           signBeginTime;
     @Value("${earlycard.sign.endtime}")
-    private int                         signEndTime;
+    private int                           signEndTime;
     @Value("${earlycard.sign.switch}")
-    private String                      signSwitch;
+    private String                        signSwitch;
     @Resource
-    private JwtService                  jwtService;
+    private JwtService                    jwtService;
     @Resource
-    private FinanceCoinGameLogDAO       financeCoinGameLogMapper;
+    private FinanceCoinGameLogDAO         financeCoinGameLogMapper;
     @Resource
-    private FinanceUserInfoDAO          financeUserInfoMapper;
+    private FinanceUserInfoDAO            financeUserInfoMapper;
     @Resource
-    private FinanceCoinLogDAO           financeCoinLogMapper;
+    private FinanceCoinLogDAO             financeCoinLogMapper;
     @Resource
-    private FinanceCoinGameDAO          financeCoinGameMapper;
+    private FinanceCoinGameDAO            financeCoinGameMapper;
     @Resource
-    private ThirdAccountInfoRepository  thirdAccountInfoRepository;
+    private ThirdAccountInfoRepository    thirdAccountInfoRepository;
     @Resource
-    private WechatService               wechatService;
+    private WechatService                 wechatService;
     @Resource
-    private WeiXinTemplateMessageClient weiXinTemplateMessageClient;
+    private WeiXinTemplateMessageClient   weiXinTemplateMessageClient;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -310,8 +310,9 @@ public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
         Integer joinCoinNum = (Integer) redisTemplate.opsForValue()
             .get("coin_game_log:joinCoinClockIn");
         HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
-        String randomCoin = (String) hashOperations.get("coin_game_log:signCoinClockIn", "randomCoin");
-        Map<String,Integer> randomCoinMap = (Map<String, Integer>) JSON.parse(randomCoin);
+        String randomCoin = (String) hashOperations.get("coin_game_log:signCoinClockIn",
+            "randomCoin");
+        Map<String, Integer> randomCoinMap = (Map<String, Integer>) JSON.parse(randomCoin);
         Integer coin = 0;
         SignCoinVO signCoinVO = new SignCoinVO();
         if (null != randomCoinMap) {
@@ -336,7 +337,8 @@ public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
         financeCoinGameLog.setSignTime(new Date());
         financeCoinGameLog.setStatus(new Integer(1));
         financeCoinGameLogMapper.updateByUserIdAndDateSelective(financeCoinGameLog);
-        FinanceCoinGame financeCoinGame = financeCoinGameMapper.selectByTaskType(Constant.EARLY_SIGN,GameType.activity.getCode());
+        FinanceCoinGame financeCoinGame = financeCoinGameMapper
+            .selectByTaskType(Constant.EARLY_SIGN, GameType.activity.getCode());
         FinanceCoinLog financeCoinLog = new FinanceCoinLog();
         financeCoinLog.setUserId(financeCoinGameLog.getUserId());
         financeCoinLog.setTaskId(financeCoinGame.getId());
@@ -345,7 +347,7 @@ public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
         financeCoinLogMapper.insertSelective(financeCoinLog);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<Object>(Object.class));
-        redisTemplate.opsForValue().set("coin_game_log:joinCoinClockIn",  joinCoinNum);
+        redisTemplate.opsForValue().set("coin_game_log:joinCoinClockIn", joinCoinNum);
         //查询是否是被邀请的第一次打卡,如果成立，需要给邀请人分配奖励
         InviteUserCoinReward(userId);
         return ResponseResult.success(signCoinVO);

@@ -134,7 +134,6 @@ public class LoginServiceImpl implements LoginService {
                 //  红包雨活动奖励
                 UserInfo user = UserInfoConverter.convert(userInfo);
                 String activityCode = getActivityCode(user, paramDto);
-                log.info("用户:{},活动代码:{}", user.getMobileNum(), activityCode);
                 if (RedEnvelopConstant.RED_ENVELOPE_RAIN_CODE.equals(activityCode)) {
                     redEnvelopeRainRegisterRewardService.process(user,paramDto);
                 }

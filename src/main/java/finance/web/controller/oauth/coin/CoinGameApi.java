@@ -1,5 +1,17 @@
 package finance.web.controller.oauth.coin;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+import javax.annotation.Resource;
+
+import lombok.extern.slf4j.Slf4j;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.web.bind.annotation.*;
+
 import finance.api.model.base.Page;
 import finance.api.model.request.ActivityCoinGameQueryRequest;
 import finance.api.model.request.BasicRequest;
@@ -15,10 +27,12 @@ import finance.api.model.vo.SignCoinVO;
 import finance.api.model.vo.activity.CoinGameVO;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.ReturnCode;
+import finance.core.common.exception.BizException;
 import finance.core.common.util.PreconditionUtils;
 import finance.core.common.util.ResponseResultUtils;
 import finance.core.common.util.ValidatorTools;
 import finance.core.dal.dataobject.FinanceCoinLog;
+import finance.core.dal.dataobject.FinanceUserInfo;
 import finance.domain.user.UserInfo;
 import finance.domainservice.converter.UserInfoConverter;
 import finance.domainservice.service.activity.ActivityCoinGameService;
@@ -26,15 +40,6 @@ import finance.domainservice.service.activity.query.ActivityCoinGameQueryService
 import finance.domainservice.service.game.CoinBiz;
 import finance.domainservice.service.jwt.JwtService;
 import finance.web.controller.response.ActivityCoinGameQueryBuilder;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * <p>金币游戏服务</p>
@@ -62,33 +67,76 @@ public class CoinGameApi {
     @GetMapping("mine")
     public ResponseResult<MyRecordVO> queryUserCoinGameInfo(@RequestParam("pageNum") Long pageNum,
                                                             @RequestParam("pageSize") Long pageSize) {
+        log.info("[开始查询早起打卡记录],请求参数:pageNum:{},pageSize:{}", pageNum, pageSize);
+        ResponseResult<MyRecordVO> response;
+        try {
+            Page<FinanceCoinLog> financeCoinLogPage = new Page<>(pageSize.intValue(), pageNum);
+            response = coinBizImpl.findMyRecordList(financeCoinLogPage);
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+
+        } catch (final Exception e) {
+            response = ResponseResult.error(CodeEnum.systemError);
+            log.error("[查询早起打卡记录],异常:{}", ExceptionUtils.getStackTrace(e));
+        }
         if (Objects.isNull(pageNum) || Objects.isNull(pageSize)) {
             return ResponseResult.error(CodeEnum.gameParamInvalid);
         }
-        Page<FinanceCoinLog> financeCoinLogPage = new Page<>(pageSize.intValue(), pageNum);
-        return coinBizImpl.findMyRecordList(financeCoinLogPage);
+
+        log.info("[开始查询早起打卡记录],请求参数:pageNum:{},pageSize:{},返回结果:{}", pageNum, pageSize, response);
+        return response;
 
     }
 
-    /*@PostMapping
-    public ResponseResult<Boolean> earlyCoinGame(@RequestBody XMap paramMap) {
-        String method = (String) paramMap.get("method");
-        if (Constant.JOIN.equals(method)) {
-            return coinBizImpl.joinEarlyCoinGame();
-        } else {
-            return coinBizImpl.signEarlyCoinGame();
+    @PostMapping("joinCoinGame")
+    public ResponseResult<Boolean> joinCoinGame(@RequestBody BasicRequest request) {
+        ResponseResult<Boolean> response;
+        FinanceUserInfo userInfo = jwtService.getUserInfo();
+        log.info("用户:{}开始参加早起打卡", userInfo.getMobileNum());
+        try {
+            response = coinBizImpl.joinEarlyCoinGame();
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+
+        } catch (final Exception e) {
+            response = ResponseResult.success(false);
+            log.error("用户:{}结束参加早起打卡,异常:{}", userInfo.getMobileNum(),
+                ExceptionUtils.getStackTrace(e));
         }
-
-    }*/
-
-    @GetMapping("joinCoinGame")
-    public ResponseResult<Boolean> joinCoinGame() {
-        return coinBizImpl.joinEarlyCoinGame();
+        log.info("用户:{}结束参加早起打卡,返回结果:{}", userInfo.getMobileNum(), response);
+        return response;
     }
 
-    @GetMapping("signCoinGame")
-    public ResponseResult<SignCoinVO> earlyCoinGame() {
-        return coinBizImpl.signEarlyCoinGame();
+    @PostMapping("signCoinGame")
+    public ResponseResult<SignCoinVO> earlyCoinGame(@RequestBody BasicRequest request) {
+        ResponseResult<SignCoinVO> response;
+        FinanceUserInfo userInfo = jwtService.getUserInfo();
+        log.info("用户:{}开始早起打卡", userInfo.getMobileNum());
+        try {
+            response = coinBizImpl.signEarlyCoinGame();
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+
+        } catch (final Exception e) {
+            response = ResponseResult.error(CodeEnum.systemError);
+        }
+        log.info("用户:{}结束早起打卡,返回结果:{}", userInfo.getMobileNum(), response);
+        return response;
     }
 
     @GetMapping("pushRewardMsg")
@@ -112,7 +160,7 @@ public class CoinGameApi {
             if (e.getMessage().contains(ReturnCode.COIN_NUM_NOT_ENOUGH.getDesc())) {
                 response = ResponseResultUtils.error(ReturnCode.COIN_NUM_NOT_ENOUGH);
             } else {
-                response = ResponseResultUtils.error(e.getMessage());
+                response = ResponseResult.error(CodeEnum.systemError);
             }
             log.error("[支付金币玩游戏],异常:{}", ExceptionUtils.getStackTrace(e));
         }
@@ -131,7 +179,7 @@ public class CoinGameApi {
             response = ActivityCoinGameQueryBuilder.build(activityCoinGameQueryService
                 .queryCoinGameList(userInfo, request.getActivityCode(), gameCodes), gameCodes);
         } catch (final Exception e) {
-            response = ResponseResultUtils.error(e.getMessage());
+            response = ResponseResult.error(CodeEnum.systemError);
             log.info("[查询用户是否支付金币玩游戏],异常:{}", ExceptionUtils.getStackTrace(e));
         }
         log.info("[结束查询用户是否支付金币玩游戏],请求参数:{},返回结果:{}", request, response);
