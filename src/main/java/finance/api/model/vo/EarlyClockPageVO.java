@@ -31,7 +31,7 @@ public class EarlyClockPageVO implements Serializable {
     private Integer           totalCanUserCoin;
     private Integer           earlyCardUseCoinNum;
     private Integer           yesterdayTotalJoinPersonNum;
-
+    private Boolean           clockTask;
     /**
      * 参加早起打卡开始时间
      */
