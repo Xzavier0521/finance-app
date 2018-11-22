@@ -13,16 +13,16 @@ import com.google.common.collect.Lists;
 
 import finance.api.model.response.ResponseResult;
 import finance.core.common.enums.CodeEnum;
-import finance.domain.user.UserInfo;
+import finance.core.dal.dao.FinanceCoinLogDAO;
+import finance.core.dal.dataobject.FinanceCoinLog;
 import finance.domain.dto.CoinLockParamDto;
 import finance.domain.dto.CoinLockResponseDto;
 import finance.domain.dto.RedisLockDto;
+import finance.domain.user.UserInfo;
 import finance.domainservice.repository.UserInfoRepository;
 import finance.domainservice.repository.UserInviteRepository;
 import finance.domainservice.service.AbstractCoinDealMulti;
 import finance.domainservice.service.invitefriends.WakeupFriendsService;
-import finance.core.dal.dao.FinanceCoinLogDAO;
-import finance.core.dal.dataobject.FinanceCoinLog;
 
 /**
  * <p>唤醒好友</p>
@@ -54,7 +54,7 @@ public class WakeupFriendsServiceImpl extends AbstractCoinDealMulti
         String redisKey = String.valueOf(userId);
         CoinLockResponseDto lockResponseDto = null;
         CoinLockParamDto lockParamDto = new CoinLockParamDto();
-        lockParamDto.setUserId(userId);
+        lockParamDto.setUserId(parentUserId);
         lockParamDto.setCoinNum(coinNum);
         RedisLockDto<CoinLockParamDto, CoinLockResponseDto> redisLockDto = new RedisLockDto<>(
             redisKey, lockParamDto, lockResponseDto);

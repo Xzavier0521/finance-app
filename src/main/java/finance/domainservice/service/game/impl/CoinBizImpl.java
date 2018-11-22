@@ -205,6 +205,14 @@ public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
         return ResponseResult.success(earlyClockPageVO);
     }
 
+    /**
+     * 获取早起打卡开始时间=
+     * @param earlyClockPageVO
+     */
+    private void buildData(EarlyClockPageVO earlyClockPageVO) {
+
+    }
+
     @Override
     public ResponseResult<MyRecordVO> findMyRecordList(Page<FinanceCoinLog> financeCoinLogPage) {
         /**1.jwt 查找user_id **/
@@ -257,9 +265,9 @@ public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
         FinanceCoinGameLog userJoinLog = financeCoinGameLogMapper.selectByCurrentDate("", "Y", "",
             userId);
         if (userJoinLog != null) {
+            //
             return ResponseResult.error(CodeEnum.invalidOperation);
         }
-
         CoinLockParamDto lockParamDto = new CoinLockParamDto();
         lockParamDto.setUserId(userId);
         String redisKey = userId + "";

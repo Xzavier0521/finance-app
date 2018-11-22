@@ -33,14 +33,6 @@ public class EarlyClockPageVO implements Serializable {
     private Integer           yesterdayTotalJoinPersonNum;
     private Boolean           clockTask;
     /**
-     * 参加早起打卡开始时间
-     */
-    private String            joinBeginTime;
-    /**
-     * 参加早起打卡结束时间
-     */
-    private String            joinEndTime;
-    /**
      * 早起打卡开始时间
      */
     private String            signBeginTime;
