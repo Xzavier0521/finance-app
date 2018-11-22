@@ -217,9 +217,9 @@ public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
 
     private String getWebFormatTime(String timeStr) {
         if (timeStr.length() < 2) {
-            return MessageFormat.format("0{}:00:00", timeStr);
+            return MessageFormat.format("0{0}:00:00", timeStr);
         } else {
-            return MessageFormat.format("{}:00:00", timeStr);
+            return MessageFormat.format("{0}:00:00", timeStr);
         }
     }
 
