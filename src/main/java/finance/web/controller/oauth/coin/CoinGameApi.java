@@ -88,7 +88,7 @@ public class CoinGameApi {
             return ResponseResult.error(CodeEnum.gameParamInvalid);
         }
 
-        log.info("[开始查询早起打卡记录],请求参数:pageNum:{},pageSize:{},返回结果:{}", pageNum, pageSize, response);
+        log.info("[结束查询早起打卡记录],请求参数:pageNum:{},pageSize:{},返回结果:{}", pageNum, pageSize, response);
         return response;
 
     }
