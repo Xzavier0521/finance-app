@@ -80,15 +80,36 @@ public class MessageUtils {
      */
     public static String welcomeText() {
         StringBuffer b = new StringBuffer();
-        b.append("小主你来了,先坐吧,容嬷嬷先给你倒杯茶！\uD83C\uDF39\n");
+        b.append("小主，您来了，我是您的贴身金融小管家—榕麽麽。金榕家是一家贷款、办卡、理财、保险的一站式金融服务返利平台，让人人都是金融受益者。\uD83C\uDF39\n");
         b.append("\n");
-        b.append("活动一：金榕家办卡奖励\n");
+        b.append("金榕家【赚钱攻略】\n");
         b.append(
             "<a href='https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=jtxyk&am_id=jinrongjia2'>首次核卡成功奖励100元\uD83C\uDF81</a>\n");
         b.append("\n");
-        b.append("活动二：金榕家产品激活奖励\n");
+        b.append("金榕家信用卡、贷款推广指南\n");
         b.append(
             "<a href='https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=jdbt&am_id=jinrongjia2'>激活奖励25元\uD83C\uDF81</a>\n");
+        b.append("\n");
+        b.append("如何一天锁粉1000人，让别人主动加你？\n");
+        b.append(
+            "<a href='https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=jdbt&am_id=jinrongjia2'>激活奖励25元\uD83C\uDF81</a>\n");
+        b.append("\n");
+        b.append("热门活动等您来参加：\n");
+        b.append("\n");
+        b.append("新用户首次核卡成功奖励100元\n");
+        b.append("\n");
+        b.append(
+            "<a href='https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=jdbt&am_id=jinrongjia2'>激活奖励25元\uD83C\uDF81</a>\n");
+        b.append("激活京东白条返利25元\n");
+        b.append("\n");
+        b.append(
+            "<a href='https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=jdbt&am_id=jinrongjia2'>激活奖励25元\uD83C\uDF81</a>\n");
+        b.append("\n");
+        b.append("拼手速，每天3轮红包雨，金币抢不停\n");
+        b.append("\n");
+        b.append(
+            "<a href='https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=jdbt&am_id=jinrongjia2'>激活奖励25元\uD83C\uDF81</a>\n");
+        b.append("有问题可以直接留言或者添加金主微信号17501656701进行咨询哦~");
         return b.toString();
     }
 
