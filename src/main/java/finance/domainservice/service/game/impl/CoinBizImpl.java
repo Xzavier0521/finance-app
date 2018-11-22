@@ -1,5 +1,6 @@
 package finance.domainservice.service.game.impl;
 
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -215,8 +216,11 @@ public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
     }
 
     private String getWebFormatTime(String timeStr) {
-        return timeStr.substring(0, 2) + ":" + timeStr.substring(2, 4) + ":"
-               + timeStr.substring(4, 6);
+        if (timeStr.length() < 2) {
+            return MessageFormat.format("0{}:00:00", timeStr);
+        } else {
+            return MessageFormat.format("{}:00:00", timeStr);
+        }
     }
 
     @Override
