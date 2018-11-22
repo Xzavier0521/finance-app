@@ -313,6 +313,7 @@ public class CoinBizImpl extends AbstractCoinDealMulti implements CoinBiz {
         String randomCoin = (String) hashOperations.get("coin_game_log:signCoinClockIn",
             "randomCoin");
         Map<String, Integer> randomCoinMap = (Map<String, Integer>) JSON.parse(randomCoin);
+        logger.info("randomCoinMap:{}", randomCoinMap);
         Integer coin = 0;
         SignCoinVO signCoinVO = new SignCoinVO();
         if (null != randomCoinMap) {
