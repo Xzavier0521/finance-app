@@ -61,7 +61,25 @@ public class CoinGameApi {
 
     @GetMapping
     public ResponseResult<EarlyClockPageVO> queryCoinGameInfo() {
-        return coinBizImpl.getClockPageData();
+        FinanceUserInfo userInfo = jwtService.getUserInfo();
+        log.info("[开始查询用户:{}早起打卡信息]", userInfo.getMobileNum());
+        ResponseResult<EarlyClockPageVO> response;
+        try {
+            response = coinBizImpl.getClockPageData();
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+        } catch (final Exception e) {
+            response = ResponseResult.error(CodeEnum.systemError);
+            log.info("[查询用户:{}早起打卡信息],异常:{}", userInfo.getMobileNum(),
+                ExceptionUtils.getStackTrace(e));
+        }
+        log.info("[结束查询用户:{}早起打卡信息]", userInfo.getMobileNum());
+        return response;
     }
 
     @GetMapping("mine")
