@@ -78,7 +78,7 @@ public class CoinGameApi {
             log.info("[查询用户:{}早起打卡信息],异常:{}", userInfo.getMobileNum(),
                 ExceptionUtils.getStackTrace(e));
         }
-        log.info("[结束查询用户:{}早起打卡信息]", userInfo.getMobileNum());
+        log.info("[结束查询用户:{}早起打卡信息],返回结果:{}", userInfo.getMobileNum(), response);
         return response;
     }
 
