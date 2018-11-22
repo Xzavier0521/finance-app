@@ -84,8 +84,9 @@ public class MessageUtils {
         b.append("\n");
         b.append(
             "<a href='https://mp.weixin.qq.com/s/ZCwLeknZkMDUWUDgI8K6JA'>金榕家【赚钱攻略】\uD83C\uDF81</a>\n");
+        b.append("\n");
         b.append(
-            "<a href='https://mp.weixin.qq.com/s/A7x5lFmd9QNn2lGdje0HaA'>金榕家信用卡、贷款推广指南\uD83C\uDF81</a>\n");
+                "<a href='https://mp.weixin.qq.com/s/A7x5lFmd9QNn2lGdje0HaA'>金榕家信用卡、贷款推广指南 \uD83C\uDF81</a>\n");
         b.append("\n");
         b.append(
             "<a href='https://mp.weixin.qq.com/s/mUfqeeGe49-mom_XR1OQcA'如何一天锁粉1000人，让别人主动加你？\uD83C\uDF81</a>\n");
