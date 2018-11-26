@@ -5,12 +5,9 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * <p>
- * 金币游戏
- * </p>
- *
+ * <p>金币游戏</p>
  * @author lili
- * @version 1.0: CoinGameVO.java, v0.1 2018/11/15 4:17 PM PM lili Exp $
+ * @version 1.0: CoinGameVO.java, v0.1 2018/11/26 7:06 PM lili Exp $
  */
 @Data
 public class CoinGameVO implements Serializable {

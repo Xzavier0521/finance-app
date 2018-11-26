@@ -8,13 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * <p>
- * 排行榜
- * </p>
- * 
+ * <p>排行榜</p>
  * @author lili
- * @version $Id: LeaderBoardQueryResponse.java, v0.1 2018/10/19 5:24 PM lili Exp
- *          $
+ * @version 1.0: LeaderBoardQueryResponse.java, v0.1 2018/11/26 7:03 PM lili Exp $
  */
 @Data
 @Builder

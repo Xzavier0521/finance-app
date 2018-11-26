@@ -6,13 +6,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * <p>
- * 金币游戏
- * </p>
- *
+ * <p>金币游戏</p>
  * @author lili
- * @version 1.0: ActivityCoinGameQueryRequest.java, v0.1 2018/11/15 4:21 PM PM
- *          lili Exp $
+ * @version 1.0: ActivityCoinGameQueryRequest.java, v0.1 2018/11/26 7:01 PM lili Exp $
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

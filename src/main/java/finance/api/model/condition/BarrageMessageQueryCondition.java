@@ -8,13 +8,9 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * <p>
- * 弹幕消息查询条件
- * </p>
- *
+ * <p>弹幕消息查询条件</p>
  * @author lili
- * @version 1.0: BarrageMessageQueryCondition.java, v 0.1 2018/9/29 上午10:02 lili
- *          Exp $
+ * @version 1.0: BarrageMessageQueryCondition.java, v0.1 2018/11/26 7:00 PM lili Exp $
  */
 @Data
 @Builder

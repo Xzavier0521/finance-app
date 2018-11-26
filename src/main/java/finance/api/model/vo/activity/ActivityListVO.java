@@ -5,12 +5,9 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * <p>
- * 注释
- * </p>
- * 
+ * <p>注释</p>
  * @author lili
- * @version $Id: ActivityListVO.java, v0.1 2018/11/14 3:26 PM lili Exp $
+ * @version 1.0: ActivityListVO.java, v0.1 2018/11/26 7:05 PM lili Exp $
  */
 @Data
 public class ActivityListVO implements Serializable {

@@ -8,12 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * <p>
- * 参数验证结果
- * </p>
- * 
+ * <p>参数验证结果</p>
  * @author lili
- * @version $Id: ValidateResponse.java, v0.1 2018/11/14 4:04 PM lili Exp $
+ * @version 1.0: ValidateResponse.java, v0.1 2018/11/26 7:05 PM lili Exp $
  */
 @Builder
 @Data

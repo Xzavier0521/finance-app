@@ -6,12 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * <p>
- * 微信公众号二维码
- * </p>
- * 
+ * <p>微信公众号二维码</p>
  * @author lili
- * @version $Id: WeChatCreateQrResponse.java, v0.1 2018/10/29 9:30 PM lili Exp $
+ * @version 1.0: WeChatCreateQrResponse.java, v0.1 2018/11/26 7:05 PM lili Exp $
  */
 @Data
 @Builder

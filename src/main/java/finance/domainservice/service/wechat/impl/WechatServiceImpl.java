@@ -17,14 +17,11 @@ import finance.ext.integration.weixin.WechatClient;
 import finance.domainservice.service.wechat.WechatService;
 import finance.core.common.util.LogUtil;
 /**
- * <p>
- * 注释
- * </p>
- * 
+ * <p>注释</p>
  * @author lili
- * @version $Id: WechatServiceImpl.java, v0.1 2018/10/23 6:47 PM lili Exp $
+ * @version 1.0: WechatServiceImpl.java, v0.1 2018/11/26 6:54 PM lili Exp $
  */
-@Service
+@Service("wechatService")
 public class WechatServiceImpl implements WechatService {
 	private static final Logger logger = LoggerFactory.getLogger(WechatServiceImpl.class);
 

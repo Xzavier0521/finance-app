@@ -4,13 +4,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * <p>
- * 用户操作记录
- * </p>
- * 
+ * <p>用户操作记录</p>
  * @author lili
- * @version $Id: OperationRecordSaveRequest.java, v0.1 2018/11/6 1:36 PM lili
- *          Exp $
+ * @version 1.0: OperationRecordSaveRequest.java, v0.1 2018/11/26 7:01 PM lili Exp $
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

@@ -4,12 +4,9 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * <p>
- * 注释
- * </p>
- * 
+ * <p>注释</p>
  * @author lili
- * @version $Id: KeyGeneratorResponse.java, v0.1 2018/11/6 3:04 PM lili Exp $
+ * @version 1.0: KeyGeneratorResponse.java, v0.1 2018/11/26 7:03 PM lili Exp $
  */
 @Data
 @Builder

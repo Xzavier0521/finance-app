@@ -5,13 +5,9 @@ import finance.api.model.base.Page;
 import finance.api.model.vo.redenvelope.ParticipantInfoVO;
 
 /**
- * <p>
- * 注释
- * </p>
- * 
+ * <p>注释</p>
  * @author lili
- * @version $Id: RedEnvelopeDetailQueryResponse.java, v0.1 2018/10/20 10:03 AM
- *          lili Exp $
+ * @version 1.0: RedEnvelopeDetailQueryResponse.java, v0.1 2018/11/26 7:04 PM lili Exp $
  */
 @Data
 public class RedEnvelopeDetailQueryResponse {

@@ -1,7 +1,6 @@
 package finance.api.model.vo.activity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -11,86 +10,82 @@ import lombok.NoArgsConstructor;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 
 /**
- * <p>
- * 红包雨活动数据
- * </p>
- *
+ * <p>红包雨活动数据p>
  * @author lili
- * @version 1.0: RedEnvelopeRainDataVO.java, v0.1 2018/11/15 12:16 AM PM lili
- *          Exp $
+ * @version 1.0: RedEnvelopeRainDataVO.java, v0.1 2018/11/26 7:10 PM lili Exp $
  */
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RedEnvelopeRainDataVO implements Serializable {
-	private static final long serialVersionUID = 7739127872932927403L;
-	/**
-	 * 主键
-	 */
-	private Long id;
+    private static final long           serialVersionUID = 7739127872932927403L;
+    /**
+     * 主键
+     */
+    private Long                        id;
 
-	/**
-	 * 用户id
-	 */
-	private Long userId;
+    /**
+     * 用户id
+     */
+    private Long                        userId;
 
-	/**
-	 * 手机号码
-	 */
-	private String mobilePhone;
-	/**
-	 * 时间编码
-	 */
-	private RedEnvelopeRainTimeCodeEnum timeCode;
+    /**
+     * 手机号码
+     */
+    private String                      mobilePhone;
+    /**
+     * 时间编码
+     */
+    private RedEnvelopeRainTimeCodeEnum timeCode;
 
-	/**
-	 * 红包总个数
-	 */
-	private Long totalNum;
+    /**
+     * 红包总个数
+     */
+    private Long                        totalNum;
 
-	/**
-	 * 总金额/金币
-	 */
-	private Long totalAmount;
+    /**
+     * 总金额/金币
+     */
+    private Long                        totalAmount;
 
-	/**
-	 * 活动日期
-	 */
-	private Integer activityDay;
+    /**
+     * 活动日期
+     */
+    private Integer                     activityDay;
 
-	/**
-	 * 排名
-	 */
-	private Long ranking;
+    /**
+     * 排名
+     */
+    private Long                        ranking;
 
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
+    /**
+     * 创建时间
+     */
+    private Date                        createTime;
 
-	/**
-	 * 更新时间
-	 */
-	private Date updateTime;
+    /**
+     * 更新时间
+     */
+    private Date                        updateTime;
 
-	/**
-	 * 创建者
-	 */
-	private String creator;
+    /**
+     * 创建者
+     */
+    private String                      creator;
 
-	/**
-	 * 更新者
-	 */
-	private String updator;
+    /**
+     * 更新者
+     */
+    private String                      updator;
 
-	/**
-	 * 是否删除 0-否，1-是
-	 */
-	private Integer isDelete;
+    /**
+     * 是否删除 0-否，1-是
+     */
+    private Integer                     isDelete;
 
-	/**
-	 * 版本号
-	 */
-	private Long version;
+    /**
+     * 版本号
+     */
+    private Long                        version;
 }

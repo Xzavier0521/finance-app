@@ -1,39 +1,28 @@
 package finance.api.model.vo.activity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class StepRewardsJoinDetailVo {
-	private String mobileNum;
-	private Integer inviteNum;
-	private BigDecimal rewardAmount;
+import lombok.Data;
 
-	public String getMobileNum() {
-		return mobileNum;
-	}
-
-	public void setMobileNum(String mobileNum) {
-		this.mobileNum = mobileNum;
-	}
-
-	public Integer getInviteNum() {
-		return inviteNum;
-	}
-
-	public void setInviteNum(Integer inviteNum) {
-		this.inviteNum = inviteNum;
-	}
-
-	public BigDecimal getRewardAmount() {
-		return rewardAmount;
-	}
-
-	public void setRewardAmount(BigDecimal rewardAmount) {
-		this.rewardAmount = rewardAmount;
-	}
-
-	@Override
-	public String toString() {
-		return "StepRewardsJoinDetailVo{" + "mobileNum='" + mobileNum + '\'' + ", inviteNum=" + inviteNum
-				+ ", rewardAmount=" + rewardAmount + '}';
-	}
+/**
+ * <p>阶梯红包参加明细</p>
+ * @author lili
+ * @version 1.0: StepRewardsJoinDetailVo.java, v0.1 2018/11/26 7:11 PM lili Exp $
+ */
+@Data
+public class StepRewardsJoinDetailVo implements Serializable {
+    private static final long serialVersionUID = 8791517643576483834L;
+    /**
+     * 手机号码
+     */
+    private String            mobileNum;
+    /**
+     * 邀请人数
+     */
+    private Integer           inviteNum;
+    /**
+     * 奖励金额
+     */
+    private BigDecimal        rewardAmount;
 }

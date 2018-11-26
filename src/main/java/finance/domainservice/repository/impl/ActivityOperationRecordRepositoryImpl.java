@@ -43,7 +43,7 @@ public class ActivityOperationRecordRepositoryImpl implements ActivityOperationR
         parameters.put("activityCode", activityCode);
         parameters.put("userId", userId);
         if (Objects.nonNull(rewardType)) {
-            parameters.put("rewardType", rewardType);
+            parameters.put("rewardType", rewardType.getCode());
         }
         List<ActivityOperationRecord> activityOperationRecords = ActivityOperationRecordConverter
             .convert2List(activityOperationRecordDAO.query(parameters));

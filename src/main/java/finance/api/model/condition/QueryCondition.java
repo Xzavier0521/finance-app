@@ -8,12 +8,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import finance.core.common.constants.QueryConstants;
 
 /**
- * <p>
- * 查询条件
- * </p>
- * 
+ * <p>查询条件</p>
  * @author lili
- * @version $Id: QueryCondition.java, v0.1 2018/10/11 11:44 AM lili Exp $
+ * @version 1.0: QueryCondition.java, v0.1 2018/11/26 7:00 PM lili Exp $
  */
 public class QueryCondition implements QueryConstants, Serializable {
 	private static final long serialVersionUID = -1631598695528368695L;

@@ -7,13 +7,9 @@ import lombok.Data;
 import finance.api.model.vo.product.ProductModuleVO;
 
 /**
- * <p>
- * 注释
- * </p>
- *
+ * <p> 产品模块查询</p>
  * @author lili
- * @version 1.0: ProductModuleQueryResponse.java, v0.1 2018/11/8 5:05 PM PM lili
- *          Exp $
+ * @version 1.0: ProductModuleQueryResponse.java, v0.1 2018/11/26 7:04 PM lili Exp $
  */
 @Data
 public class ProductModuleQueryResponse implements Serializable {

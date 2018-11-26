@@ -6,13 +6,9 @@ import finance.core.common.enums.ActivityCodeEnum;
 import finance.core.common.enums.AgentLevelEnum;
 
 /**
- * <p>
- * 注释
- * </p>
- * 
+ * <p>注释</p>
  * @author lili
- * @version $Id: AgentConfigQueryCondition.java, v0.1 2018/10/11 11:25 AM lili
- *          Exp $
+ * @version 1.0: AgentConfigQueryCondition.java, v0.1 2018/11/26 7:00 PM lili Exp $
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

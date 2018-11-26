@@ -10,12 +10,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import finance.core.common.enums.ReturnCode;
 
 /**
- * <p>
- * 基础返回结果
- * </p>
- *
+ * <p>基础返回结果</p>
  * @author lili
- * @version 1.0: BasicResponse.java, v0.1 2018/11/14 5:36 PM PM lili Exp $
+ * @version 1.0: BasicResponse.java, v0.1 2018/11/26 7:03 PM lili Exp $
  */
 @Data
 public class BasicResponse implements Serializable {

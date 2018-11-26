@@ -7,13 +7,9 @@ import finance.domain.user.UserInfo;
 import finance.domain.weixin.WeiXinMessageTemplate;
 
 /**
- * <p>
- * 注释
- * </p>
- * 
+ * <p>注释</p>
  * @author lili
- * @version $Id: WeiXinTemplateMessageSendService.java, v0.1 2018/10/24 11:09 AM
- *          lili Exp $
+ * @version 1.0: WeiXinTemplateMessageSendService.java, v0.1 2018/11/26 7:00 PM lili Exp $
  */
 public interface WeiXinTemplateMessageSendService {
 

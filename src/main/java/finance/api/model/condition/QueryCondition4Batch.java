@@ -6,12 +6,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * <p>
- * 批量查询条件
- * </p>
- * 
+ * <p>批量查询条件</p>
  * @author lili
- * @version $Id: QueryCondition4Batch.java, v0.1 2018/10/11 11:45 AM lili Exp $
+ * @version 1.0: QueryCondition4Batch.java, v0.1 2018/11/26 7:00 PM lili Exp $
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

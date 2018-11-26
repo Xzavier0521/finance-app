@@ -5,13 +5,9 @@ import lombok.EqualsAndHashCode;
 import finance.api.model.condition.QueryCondition4Batch;
 
 /**
- * <p>
- * 注释
- * </p>
- * 
+ * <p>红包活动明细查询</p>
  * @author lili
- * @version $Id: RedEnvelopeDetailQueryRequest.java, v0.1 2018/10/20 1:33 PM
- *          lili Exp $
+ * @version 1.0: RedEnvelopeDetailQueryRequest.java, v0.1 2018/11/26 7:02 PM lili Exp $
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

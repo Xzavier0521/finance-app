@@ -1,117 +1,128 @@
 package finance.api.model.vo.activity;
 
-import finance.api.model.vo.activity.FixedAmountInvitedInfoVO;
-import finance.api.model.vo.activity.FixedAmountOpenedPacketInfo;
-
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Data;
+
 /**
- * @program: finance-server
- *
- * @description:
- *
- * @author: MORUIHAI
- *
- * @create: 2018-09-10 16:27
- **/
-public class FixedAmountPageVO {
-	private Long totalJoinNum; // 所有完成参与活动人数（同一人可重复）
+ * <p>注释</p>
+ * @author lili
+ * @version 1.0: FixedAmountPageVO.java, v0.1 2018/11/26 7:07 PM lili Exp $
+ */
+@Data
+public class FixedAmountPageVO implements Serializable {
 
-	private BigDecimal redPacketTotalAmount;// 固定金额活动金额
+    private static final long                 serialVersionUID    = -971431898334288286L;
+    /**
+     * 所有完成参与活动人数（同一人可重复）
+     */
+    private Long                              totalJoinNum;
+    /**
+     *    固定金额活动金额
+     */
 
-	private BigDecimal redPacketSponsorAmount; // 活动发起人拆得金额
+    private BigDecimal                        redPacketTotalAmount;
+    /**
+     * 活动发起人拆得金额
+     */
 
-	private BigDecimal remainingAmount;// 固定金额活动剩余金额
+    private BigDecimal                        redPacketSponsorAmount;
+    /**
+     * 固定金额活动剩余金额
+     */
 
-	private int openedRedPacketNum; // 帮拆红包人数
+    private BigDecimal                        remainingAmount;
+    /**
+     *  帮拆红包人数
+     */
 
-	private int unopenedRedPacketNum; // 还剩人数
+    private int                               openedRedPacketNum;
+    /**
+     *  还剩人数
+     */
 
-	private String sponsorMobilNum;
+    private int                               unopenedRedPacketNum;
 
-	private List<FixedAmountInvitedInfoVO> invitedInfoList = new ArrayList<>();
+    private String                            sponsorMobilNum;
 
-	private List<FixedAmountOpenedPacketInfo> openedRedPacketList = new ArrayList<>();
+    private List<FixedAmountInvitedInfoVO>    invitedInfoList     = new ArrayList<>();
 
-	public Long getTotalJoinNum() {
-		return totalJoinNum;
-	}
+    private List<FixedAmountOpenedPacketInfo> openedRedPacketList = new ArrayList<>();
 
-	public void setTotalJoinNum(Long totalJoinNum) {
-		this.totalJoinNum = totalJoinNum;
-	}
+    public Long getTotalJoinNum() {
+        return totalJoinNum;
+    }
 
-	public BigDecimal getRedPacketTotalAmount() {
-		return redPacketTotalAmount;
-	}
+    public void setTotalJoinNum(Long totalJoinNum) {
+        this.totalJoinNum = totalJoinNum;
+    }
 
-	public void setRedPacketTotalAmount(BigDecimal redPacketTotalAmount) {
-		this.redPacketTotalAmount = redPacketTotalAmount;
-	}
+    public BigDecimal getRedPacketTotalAmount() {
+        return redPacketTotalAmount;
+    }
 
-	public BigDecimal getRedPacketSponsorAmount() {
-		return redPacketSponsorAmount;
-	}
+    public void setRedPacketTotalAmount(BigDecimal redPacketTotalAmount) {
+        this.redPacketTotalAmount = redPacketTotalAmount;
+    }
 
-	public void setRedPacketSponsorAmount(BigDecimal redPacketSponsorAmount) {
-		this.redPacketSponsorAmount = redPacketSponsorAmount;
-	}
+    public BigDecimal getRedPacketSponsorAmount() {
+        return redPacketSponsorAmount;
+    }
 
-	public BigDecimal getRemainingAmount() {
-		return remainingAmount;
-	}
+    public void setRedPacketSponsorAmount(BigDecimal redPacketSponsorAmount) {
+        this.redPacketSponsorAmount = redPacketSponsorAmount;
+    }
 
-	public void setRemainingAmount(BigDecimal remainingAmount) {
-		this.remainingAmount = remainingAmount;
-	}
-	public int getOpenedRedPacketNum() {
-		return openedRedPacketNum;
-	}
+    public BigDecimal getRemainingAmount() {
+        return remainingAmount;
+    }
 
-	public void setOpenedRedPacketNum(int openedRedPacketNum) {
-		this.openedRedPacketNum = openedRedPacketNum;
-	}
+    public void setRemainingAmount(BigDecimal remainingAmount) {
+        this.remainingAmount = remainingAmount;
+    }
 
-	public int getUnopenedRedPacketNum() {
-		return unopenedRedPacketNum;
-	}
+    public int getOpenedRedPacketNum() {
+        return openedRedPacketNum;
+    }
 
-	public void setUnopenedRedPacketNum(int unopenedRedPacketNum) {
-		this.unopenedRedPacketNum = unopenedRedPacketNum;
-	}
+    public void setOpenedRedPacketNum(int openedRedPacketNum) {
+        this.openedRedPacketNum = openedRedPacketNum;
+    }
 
-	public String getSponsorMobilNum() {
-		return sponsorMobilNum;
-	}
+    public int getUnopenedRedPacketNum() {
+        return unopenedRedPacketNum;
+    }
 
-	public void setSponsorMobilNum(String sponsorMobilNum) {
-		this.sponsorMobilNum = sponsorMobilNum.substring(0, 3) + "****" + sponsorMobilNum.substring(7, 11);
-	}
+    public void setUnopenedRedPacketNum(int unopenedRedPacketNum) {
+        this.unopenedRedPacketNum = unopenedRedPacketNum;
+    }
 
-	public List<FixedAmountInvitedInfoVO> getInvitedInfoList() {
-		return invitedInfoList;
-	}
+    public String getSponsorMobilNum() {
+        return sponsorMobilNum;
+    }
 
-	public void setInvitedInfoList(List<FixedAmountInvitedInfoVO> invitedInfoList) {
-		this.invitedInfoList = invitedInfoList;
-	}
+    public void setSponsorMobilNum(String sponsorMobilNum) {
+        this.sponsorMobilNum = sponsorMobilNum.substring(0, 3) + "****"
+                               + sponsorMobilNum.substring(7, 11);
+    }
 
-	public List<FixedAmountOpenedPacketInfo> getOpenedRedPacketList() {
-		return openedRedPacketList;
-	}
+    public List<FixedAmountInvitedInfoVO> getInvitedInfoList() {
+        return invitedInfoList;
+    }
 
-	public void setOpenedRedPacketList(List<FixedAmountOpenedPacketInfo> openedRedPacketList) {
-		this.openedRedPacketList = openedRedPacketList;
-	}
+    public void setInvitedInfoList(List<FixedAmountInvitedInfoVO> invitedInfoList) {
+        this.invitedInfoList = invitedInfoList;
+    }
 
-	@Override
-	public String toString() {
-		return "FixedAmountPageVO{" + "totalJoinNum=" + totalJoinNum + ", redPacketTotalAmount=" + redPacketTotalAmount
-				+ ", redPacketSponsorAmount=" + redPacketSponsorAmount + ", remainingAmount=" + remainingAmount
-				+ ", openedRedPacketNum=" + openedRedPacketNum + ", unopenedRedPacketNum=" + unopenedRedPacketNum
-				+ ", sponsorMobilNum='" + sponsorMobilNum + '\'' + ", invitedInfoList=" + invitedInfoList
-				+ ", openedRedPacketList=" + openedRedPacketList + '}';
-	}
+    public List<FixedAmountOpenedPacketInfo> getOpenedRedPacketList() {
+        return openedRedPacketList;
+    }
+
+    public void setOpenedRedPacketList(List<FixedAmountOpenedPacketInfo> openedRedPacketList) {
+        this.openedRedPacketList = openedRedPacketList;
+    }
+
 }

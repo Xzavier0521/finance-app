@@ -8,13 +8,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * <p>
- * 支付金币玩游戏
- * </p>
- *
+ * <p>支付金币玩游戏</p>
  * @author lili
- * @version 1.0: PayCoinPlayGameRequest.java, v0.1 2018/11/15 9:30 AM PM lili
- *          Exp $
+ * @version 1.0: PayCoinPlayGameRequest.java, v0.1 2018/11/26 7:01 PM lili Exp $
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

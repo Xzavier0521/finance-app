@@ -3,13 +3,9 @@ package finance.domainservice.service.wechat;
 import finance.core.common.enums.OperatorTypeEnum;
 
 /**
- * <p>
- * 注释
- * </p>
- *
+ * <p>注释</p>
  * @author lili
- * @version $Id: WeChatDataSynchronizeService.java, v0.1 2018/10/23 10:23 PM
- *          lili Exp $
+ * @version 1.0: WeChatDataSynchronizeService.java, v0.1 2018/11/26 6:58 PM lili Exp $
  */
 public interface WeChatDataSynchronizeService {
 

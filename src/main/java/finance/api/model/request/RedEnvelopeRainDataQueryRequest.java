@@ -7,13 +7,9 @@ import lombok.EqualsAndHashCode;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 
 /**
- * <p>
- * 红包雨活动数据查询请求
- * </p>
- *
+ * <p>红包雨活动数据查询请求</p>
  * @author lili
- * @version 1.0: RedEnvelopeRainDataQueryRequest.java, v0.1 2018/11/15 12:18 AM
- *          PM lili Exp $
+ * @version 1.0: RedEnvelopeRainDataQueryRequest.java, v0.1 2018/11/26 7:02 PM lili Exp $
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

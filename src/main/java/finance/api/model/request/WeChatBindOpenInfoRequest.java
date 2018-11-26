@@ -3,13 +3,9 @@ package finance.api.model.request;
 import lombok.Data;
 
 /**
- * <p>
- * 微信公众号 绑定open_id
- * </p>
- * 
+ * <p>微信公众号 绑定open_id</p>
  * @author lili
- * @version $Id: WeCharBindOpenInfoRequest.java, v0.1 2018/10/26 9:58 AM lili
- *          Exp $
+ * @version 1.0: WeChatBindOpenInfoRequest.java, v0.1 2018/11/26 7:03 PM lili Exp $
  */
 @Data
 public class WeChatBindOpenInfoRequest {
