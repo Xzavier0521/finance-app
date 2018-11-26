@@ -31,6 +31,6 @@ public class DodoSmsClientTest {
     @Test
     public void testSend() {
 
-        BasicResponse response = dodoSmsClient.sendSms("18101625436", "短信通道测试");
+        BasicResponse response = dodoSmsClient.sendSms("15936076691", "短信通道测试");
     }
 }

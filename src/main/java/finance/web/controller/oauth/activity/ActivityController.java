@@ -96,7 +96,7 @@ public class ActivityController {
         return response;
     }
 
-    @POST("saveRecord")
+    @PostMapping("saveRecord")
     public ResponseResult<ActivityRecordResponse> saveRecord(@RequestBody ActivityRecordRequest request) {
         ResponseResult<ActivityRecordResponse> response;
         log.info("[开始保存红包活动奖励记录],请求参数:{}", request);
