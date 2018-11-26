@@ -34,7 +34,7 @@ public class ActivityOperationRecordServiceImpl implements ActivityOperationReco
         BasicResponse response = ResponseUtils.buildResp(ReturnCode.SUCCESS);
         if (ActivityRewardTypeEnum.THIRD_REWARD == activityRewardType) {
             ActivityOperationRecord record = activityOperationRecordRepository.query(activityCode,
-                userInfo.getId(), activityRewardType);
+                userInfo.getId(), ActivityRewardTypeEnum.SECOND_REWARD);
             PreconditionUtils.checkArgument(Objects.nonNull(record),
                 ReturnCode.UNFINISHED_SECOND_REWARD_ACTIVITY);
         }
