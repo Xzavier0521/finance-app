@@ -60,7 +60,7 @@ public class ImgValidateApi {
 	 * @author hewenbin
 	 * @version SmsValidateApi.java, v1.0 2018年7月4日 上午9:55:05 hewenbin
 	 */
-	@GetMapping("validateImgCode")
+	@GetMapping("vidateImgCode")
 	public ResponseResult<ImgValidateVo> getVidateImgCode() {
 		ImgValidateVo imgVo = imgValidateService.getImgValidate();
 		return ResponseResult.success(imgVo);
