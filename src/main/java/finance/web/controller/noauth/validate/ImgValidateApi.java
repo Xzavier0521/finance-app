@@ -101,7 +101,7 @@ public class ImgValidateApi {
 	 * @author hewenbin
 	 * @version ImgValidateApi.java, v1.0 2018年7月6日 下午2:16:18 hewenbin
 	 */
-	@PostMapping("validateImgCode")
+	@PostMapping("vidateImgCode")
 	public ResponseResult<String> vidateImgCode(@RequestBody Map<String, String> param) {
 		String imgCodeId = param.get("imgCodeId");
 		String imgCode = param.get("imgCode");

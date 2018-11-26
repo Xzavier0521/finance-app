@@ -31,7 +31,7 @@ import finance.ext.integration.sms.DodoSmsClient;
  * @version $Id: SmsBizImpl.java, v0.1 2018/11/24 8:42 PM lili Exp $
  */
 @Slf4j
-@Service
+@Service("smsBiz")
 public class SmsBizImpl implements SmsBiz {
 
     @Resource

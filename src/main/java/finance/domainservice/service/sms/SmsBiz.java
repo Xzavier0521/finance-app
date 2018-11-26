@@ -4,9 +4,7 @@ import finance.api.model.response.ResponseResult;
 import finance.domain.dto.SendSmsCodeDto;
 
 /**
- * <p>
- * 短信
- * </p>
+ * <p>短信</p>
  * 
  * @author lili
  * @version $Id: SmsBiz.java, v0.1 2018/11/14 2:42 PM lili Exp $
