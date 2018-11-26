@@ -4,7 +4,7 @@ package finance.domainservice.service.wechat;
  * 微信服务接口
  */
 public interface WechatService {
-   String getWechatPubAccessToken();
+	String getWechatPubAccessToken();
 
-   String getWechatPubJsapiTicket();
+	String getWechatPubJsapiTicket();
 }

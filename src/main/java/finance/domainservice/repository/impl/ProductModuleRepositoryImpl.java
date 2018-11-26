@@ -14,19 +14,22 @@ import finance.domainservice.repository.ProductModuleRepository;
 import finance.core.dal.dao.ProductModuleDAO;
 
 /**
- * <p>产品模块</p>
+ * <p>
+ * 产品模块
+ * </p>
  *
  * @author lili
- * @version 1.0: ProductModuleRepositoryImpl.java, v0.1 2018/11/8 1:53 PM PM lili Exp $
+ * @version 1.0: ProductModuleRepositoryImpl.java, v0.1 2018/11/8 1:53 PM PM
+ *          lili Exp $
  */
 @Repository("productModuleRepository")
 public class ProductModuleRepositoryImpl implements ProductModuleRepository {
 
-    @Resource
-    private ProductModuleDAO productModuleDAO;
+	@Resource
+	private ProductModuleDAO productModuleDAO;
 
-    @Override
-    public List<ProductModule> queryAll() {
-        return ProductModuleConverter.convert2List(productModuleDAO.query(Maps.newHashMap()));
-    }
+	@Override
+	public List<ProductModule> queryAll() {
+		return ProductModuleConverter.convert2List(productModuleDAO.query(Maps.newHashMap()));
+	}
 }

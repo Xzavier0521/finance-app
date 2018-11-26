@@ -3,45 +3,39 @@ package finance.core.dal.dao;
 import java.util.List;
 import java.util.Map;
 
-import finance.domain.activity.RedEnvelopeRainData;
 import org.apache.ibatis.annotations.Param;
 
 import finance.core.dal.dataobject.RedEnvelopeRainDataDO;
 
 /**
- * <p>注释</p>
+ * <p>
+ * 注释
+ * </p>
  *
  * @author lili
- * @version $Id: RedEnvelopeRainDataDAO.java, v0.1 2018/11/16 10:41 AM lili Exp $
+ * @version $Id: RedEnvelopeRainDataDAO.java, v0.1 2018/11/16 10:41 AM lili Exp
+ *          $
  */
 public interface RedEnvelopeRainDataDAO {
 
-    int deleteByPrimaryKey(Long id);
+	int insertSelective(RedEnvelopeRainDataDO record);
 
-    int insert(RedEnvelopeRainDataDO record);
+	List<RedEnvelopeRainDataDO> query(Map parameters);
 
-    int insertSelective(RedEnvelopeRainDataDO record);
+	int count(Map parameters);
 
-    List<RedEnvelopeRainDataDO> query(Map parameters);
+	RedEnvelopeRainDataDO selectByPrimaryKey(Long id);
 
-    int count(Map parameters);
+	int updateByPrimaryKeySelective(RedEnvelopeRainDataDO record);
 
-    RedEnvelopeRainDataDO selectByPrimaryKey(Long id);
+	RedEnvelopeRainDataDO queryTodayData(@Param("userId") Long userId, @Param("activityCode") String activityCode,
+			@Param("activityDay") Integer activityDay);
 
-    int updateByPrimaryKeySelective(RedEnvelopeRainDataDO record);
+	RedEnvelopeRainDataDO queryHistoryData(@Param("userId") Long userId, @Param("activityCode") String activityCode);
 
-    int updateByPrimaryKey(RedEnvelopeRainDataDO record);
+	List<RedEnvelopeRainDataDO> queryRankingList(Map<String, Object> parameters);
 
-    RedEnvelopeRainDataDO queryTodayData(@Param("userId") Long userId,
-                                         @Param("activityCode") String activityCode,
-                                         @Param("activityDay") Integer activityDay);
+	List<RedEnvelopeRainDataDO> queryDailyRainData(Map<String, Object> parameters);
 
-    RedEnvelopeRainDataDO queryHistoryData(@Param("userId") Long userId,
-                                           @Param("activityCode") String activityCode);
-
-    List<RedEnvelopeRainDataDO> queryRankingList(Map<String, Object> parameters);
-
-    List<RedEnvelopeRainDataDO> queryDailyRainData(Map<String,Object> parameters);
-
-    Long countDailyRainData(Map<String,Object> parameters);
+	Long countDailyRainData(Map<String, Object> parameters);
 }

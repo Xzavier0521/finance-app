@@ -26,89 +26,92 @@ import finance.core.dal.dao.RedEnvelopeDAO;
 import finance.core.dal.dataobject.ParticipantInfoDO;
 
 /**
- * <p>排行榜</p>
+ * <p>
+ * 排行榜
+ * </p>
+ * 
  * @author lili
- * @version $Id: LeaderBoardRepositoryImpl.java, v0.1 2018/10/19 8:41 PM lili Exp $
+ * @version $Id: LeaderBoardRepositoryImpl.java, v0.1 2018/10/19 8:41 PM lili
+ *          Exp $
  */
 @Slf4j
 @Repository("leaderBoardRepository")
 public class RedEnvelopeRepositoryImpl implements RedEnvelopeRepository {
 
-    @Resource
-    private RedEnvelopeDAO redEnvelopeDAO;
+	@Resource
+	private RedEnvelopeDAO redEnvelopeDAO;
 
-    /**
-     * 根据类型查询排行榜
-     * @param leaderBoardType 榜单类型
-     * @param activityCode 活动代码
-     * @param num 排行榜人数
-     * @return List<LeaderBoard>
-     */
-    @Override
-    public List<LeaderBoard> queryByType(LeaderBoardTypeEnum leaderBoardType, String activityCode,
-                                         int num) {
+	/**
+	 * 根据类型查询排行榜
+	 * 
+	 * @param leaderBoardType
+	 *            榜单类型
+	 * @param activityCode
+	 *            活动代码
+	 * @param num
+	 *            排行榜人数
+	 * @return List<LeaderBoard>
+	 */
+	@Override
+	public List<LeaderBoard> queryByType(LeaderBoardTypeEnum leaderBoardType, String activityCode, int num) {
 
-        List<LeaderBoard> leaderBoards = Lists.newArrayList();
-        switch (leaderBoardType) {
-            case ALL_LEVEL:
-                leaderBoards = LeaderBoardConverter
-                    .convert2List(redEnvelopeDAO.queryTotalRanking(activityCode, num));
-                break;
-            case FIRST_LEVEL:
-                leaderBoards = LeaderBoardConverter
-                    .convert2List(redEnvelopeDAO.queryFirstRanking(activityCode, num));
-                break;
-            case SECOND_LEVEL:
-                leaderBoards = LeaderBoardConverter
-                    .convert2List(redEnvelopeDAO.querySecondRanking(activityCode, num));
-            default:
-        }
-        return leaderBoards;
-    }
+		List<LeaderBoard> leaderBoards = Lists.newArrayList();
+		switch (leaderBoardType) {
+			case ALL_LEVEL :
+				leaderBoards = LeaderBoardConverter.convert2List(redEnvelopeDAO.queryTotalRanking(activityCode, num));
+				break;
+			case FIRST_LEVEL :
+				leaderBoards = LeaderBoardConverter.convert2List(redEnvelopeDAO.queryFirstRanking(activityCode, num));
+				break;
+			case SECOND_LEVEL :
+				leaderBoards = LeaderBoardConverter.convert2List(redEnvelopeDAO.querySecondRanking(activityCode, num));
+			default :
+		}
+		return leaderBoards;
+	}
 
-    @Override
-    public Long queryJoinNum(String activityCode) {
-        return redEnvelopeDAO.queryJoinNum(activityCode);
-    }
+	@Override
+	public Long queryJoinNum(String activityCode) {
+		return redEnvelopeDAO.queryJoinNum(activityCode);
+	}
 
-    @Override
-    public Page<ParticipantInfo> queryDetail4Page(RedEnvelopeDetailQueryCondition condition) {
-        Map<String, Object> parameters = Maps.newHashMap();
-        Page<ParticipantInfo> page = new Page<>(condition.getPageSize(),
-            (long) condition.getCurrentPage());
-        parameters.put("page", page);
-        parameters.put("activityCode", condition.getActivityCode());
-        Long totalCount = redEnvelopeDAO.countJoinNum(parameters);
-        if (Objects.nonNull(totalCount) && totalCount > 0) {
-            page.setTotalCount(totalCount);
-            List<ParticipantInfoDO> participantInfoDOList = redEnvelopeDAO
-                .queryJoinDetail4Page(parameters);
-            page.setDataList(ParticipantInfoConverter.convert2List(participantInfoDOList));
-        } else {
-            page.setTotalCount(0L);
-        }
-        return page;
-    }
+	@Override
+	public Page<ParticipantInfo> queryDetail4Page(RedEnvelopeDetailQueryCondition condition) {
+		Map<String, Object> parameters = Maps.newHashMap();
+		Page<ParticipantInfo> page = new Page<>(condition.getPageSize(), (long) condition.getCurrentPage());
+		parameters.put("page", page);
+		parameters.put("activityCode", condition.getActivityCode());
+		Long totalCount = redEnvelopeDAO.countJoinNum(parameters);
+		if (Objects.nonNull(totalCount) && totalCount > 0) {
+			page.setTotalCount(totalCount);
+			List<ParticipantInfoDO> participantInfoDOList = redEnvelopeDAO.queryJoinDetail4Page(parameters);
+			page.setDataList(ParticipantInfoConverter.convert2List(participantInfoDOList));
+		} else {
+			page.setTotalCount(0L);
+		}
+		return page;
+	}
 
-    /**
-     * 查询单个用户的红包互动明细
-     *
-     * @param userId       用户id
-     * @param activityCode 活动代码
-     * @return ParticipantInfo
-     */
-    @Override
-    public ParticipantInfo querySingleDetail(Long userId, String activityCode) {
-        ParticipantInfo participantInfo;
-        participantInfo = ParticipantInfoConverter
-            .convert(redEnvelopeDAO.querySingleDetail(userId));
-        if (Objects.isNull(participantInfo)) {
-            participantInfo = new ParticipantInfo();
-            participantInfo.setSecondInviteNum(0L);
-            participantInfo.setSecondRewardAmount(BigDecimal.ZERO);
-            participantInfo.setSecondUnitPrice(BigDecimal.valueOf(0.2));
-        }
-        return participantInfo;
-    }
+	/**
+	 * 查询单个用户的红包互动明细
+	 *
+	 * @param userId
+	 *            用户id
+	 * @param activityCode
+	 *            活动代码
+	 * @return ParticipantInfo
+	 */
+	@Override
+	public ParticipantInfo querySingleDetail(Long userId, String activityCode) {
+		ParticipantInfo participantInfo;
+		participantInfo = ParticipantInfoConverter.convert(redEnvelopeDAO.querySingleDetail(userId));
+		if (Objects.isNull(participantInfo)) {
+			participantInfo = new ParticipantInfo();
+			participantInfo.setSecondInviteNum(0L);
+			participantInfo.setSecondRewardAmount(BigDecimal.ZERO);
+			participantInfo.setSecondUnitPrice(BigDecimal.valueOf(0.2));
+		}
+		return participantInfo;
+	}
 
 }

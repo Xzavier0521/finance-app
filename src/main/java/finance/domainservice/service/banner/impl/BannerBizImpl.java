@@ -5,12 +5,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dataobject.BannerInfoDO;
 import org.springframework.stereotype.Service;
 
 import finance.domainservice.service.banner.BannerBiz;
-import finance.core.dal.dao.FinanceBannerInfoDAO;
-import finance.core.dal.dataobject.FinanceBannerInfo;
-import finance.api.model.vo.BannerDetailVO;
+import finance.core.dal.dao.BannerInfoDAO;
+import finance.api.model.vo.info.BannerDetailVO;
 
 /**
  * @program: finance-server
@@ -23,28 +23,28 @@ import finance.api.model.vo.BannerDetailVO;
  **/
 @Service
 public class BannerBizImpl implements BannerBiz {
-    @Resource
-    private FinanceBannerInfoDAO financeBannerInfoMapper;
+	@Resource
+	private BannerInfoDAO financeBannerInfoMapper;
 
-    @Override
-    public List<BannerDetailVO> queryBannerByCodeAndType(Long pageCode, Long bannerType) {
-        List<FinanceBannerInfo> financeBannerInfoList = financeBannerInfoMapper
-            .queryBannerByCodeAndType(pageCode.intValue(), bannerType.intValue());
-        BannerDetailVO bannerDetailVO;
-        List<BannerDetailVO> bannerList = new ArrayList<>();
-        if (financeBannerInfoList != null && financeBannerInfoList.size() > 0) {
-            for (FinanceBannerInfo fbi : financeBannerInfoList) {
-                bannerDetailVO = new BannerDetailVO();
-                bannerDetailVO.setId(fbi.getId());
-                bannerDetailVO.setPageCode(pageCode);
-                bannerDetailVO.setBannerType(bannerType);
-                bannerDetailVO.setTitle(fbi.getTitle());
-                bannerDetailVO.setSeqNo(fbi.getSeqNo());
-                bannerDetailVO.setBannerUrl(fbi.getBannerUrl());
-                bannerDetailVO.setRedirectUrl(fbi.getRedirectUrl());
-                bannerList.add(bannerDetailVO);
-            }
-        }
-        return bannerList;
-    }
+	@Override
+	public List<BannerDetailVO> queryBannerByCodeAndType(Long pageCode, Long bannerType) {
+		List<BannerInfoDO> bannerInfoDOList = financeBannerInfoMapper.queryBannerByCodeAndType(pageCode.intValue(),
+				bannerType.intValue());
+		BannerDetailVO bannerDetailVO;
+		List<BannerDetailVO> bannerList = new ArrayList<>();
+		if (bannerInfoDOList != null && bannerInfoDOList.size() > 0) {
+			for (BannerInfoDO fbi : bannerInfoDOList) {
+				bannerDetailVO = new BannerDetailVO();
+				bannerDetailVO.setId(fbi.getId());
+				bannerDetailVO.setPageCode(pageCode);
+				bannerDetailVO.setBannerType(bannerType);
+				bannerDetailVO.setTitle(fbi.getTitle());
+				bannerDetailVO.setSeqNo(fbi.getSeqNo());
+				bannerDetailVO.setBannerUrl(fbi.getBannerUrl());
+				bannerDetailVO.setRedirectUrl(fbi.getRedirectUrl());
+				bannerList.add(bannerDetailVO);
+			}
+		}
+		return bannerList;
+	}
 }

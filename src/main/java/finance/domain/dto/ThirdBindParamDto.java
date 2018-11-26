@@ -2,20 +2,21 @@ package finance.domain.dto;
 
 /**
  * 第三方账号绑定参数接受类.
+ * 
  * @author hewenbin
  * @version v1.0 2018年8月17日 上午11:08:14 hewenbin
  */
 public class ThirdBindParamDto {
-	
-	/** 1：金融家*/
+
+	/** 1：金融家 */
 	private String appId;
-	/** 手机操作系统*/
+	/** 手机操作系统 */
 	private String osType;
-	/** 第三方渠道:qq、wechat*/
+	/** 第三方渠道:qq、wechat */
 	private String channel;
-	/** channel == wechat 时，wechat给的临时票据*/
+	/** channel == wechat 时，wechat给的临时票据 */
 	private String code;
-	/** channel == qq 时，qq给的用户openId*/
+	/** channel == qq 时，qq给的用户openId */
 	private String openId;
 	public String getAppId() {
 		return appId;
@@ -50,13 +51,8 @@ public class ThirdBindParamDto {
 
 	@Override
 	public String toString() {
-		return "ThirdBindParamDto{" +
-				"appId='" + appId + '\'' +
-				", osType='" + osType + '\'' +
-				", channel='" + channel + '\'' +
-				", code='" + code + '\'' +
-				", openId='" + openId + '\'' +
-				'}';
+		return "ThirdBindParamDto{" + "appId='" + appId + '\'' + ", osType='" + osType + '\'' + ", channel='" + channel
+				+ '\'' + ", code='" + code + '\'' + ", openId='" + openId + '\'' + '}';
 	}
 
 }

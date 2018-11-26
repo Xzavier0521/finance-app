@@ -7,11 +7,15 @@ import lombok.Data;
 import finance.ext.api.model.WeiXinTemplate;
 
 /**
- * <p>注释</p>
+ * <p>
+ * 注释
+ * </p>
+ * 
  * @author lili
- * @version $Id: WeiXinPrivateTemplateResponse.java, v0.1 2018/10/21 10:26 PM lili Exp $
+ * @version $Id: WeiXinPrivateTemplateResponse.java, v0.1 2018/10/21 10:26 PM
+ *          lili Exp $
  */
 @Data
 public class WeiXinPrivateTemplateResponse implements Serializable {
-    private List<WeiXinTemplate> template_list;
+	private List<WeiXinTemplate> template_list;
 }

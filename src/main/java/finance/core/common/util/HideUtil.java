@@ -1,12 +1,11 @@
 package finance.core.common.util;
 /**
- * @author lyao 
- * @time   2018-1-22 下午3:04:16
+ * @author lyao
+ * @time 2018-1-22 下午3:04:16
  * @Description: 脱敏
  */
 public class HideUtil {
-	public static String hide(String str, int prefixShowCount,
-			int suffixShowCount) {
+	public static String hide(String str, int prefixShowCount, int suffixShowCount) {
 		if ((str == null) || (str.length() == 0)) {
 			return str;
 		}
@@ -16,8 +15,7 @@ public class HideUtil {
 		if (suffixShowCount < 0) {
 			suffixShowCount = 0;
 		}
-		if ((prefixShowCount >= str.length())
-				|| (suffixShowCount >= str.length())) {
+		if ((prefixShowCount >= str.length()) || (suffixShowCount >= str.length())) {
 			return str;
 		}
 		char[] chs = str.toCharArray();
@@ -118,7 +116,7 @@ public class HideUtil {
 
 		return email;
 	}
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		System.out.println(hideMobile("18551721604"));
 		System.out.println(hideEnName("姚磊"));
 	}

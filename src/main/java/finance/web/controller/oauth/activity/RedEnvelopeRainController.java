@@ -46,7 +46,7 @@ import finance.web.controller.response.RedEnvelopeRainDataBuilder;
  * <p>红包雨活动</p>
  *
  * @author lili
- * @version 1.0: RedEnvelopeRainController.java, v0.1 2018/11/14 5:25 PM PM lili Exp $
+ * @version 1.0: RedEnvelopeRainController.java, v0.1 2018/11/14 5:25 PM lili Exp $
  */
 @Slf4j
 @RestController

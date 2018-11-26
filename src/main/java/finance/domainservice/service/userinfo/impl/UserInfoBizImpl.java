@@ -20,9 +20,9 @@ import com.google.common.collect.Maps;
 
 import finance.api.model.base.Page;
 import finance.api.model.response.ResponseResult;
-import finance.api.model.vo.InviteOrdersVo;
-import finance.api.model.vo.UserProfitInfoDetailVo;
-import finance.api.model.vo.UserInfoDetailVo;
+import finance.api.model.vo.invite.InviteOrdersVo;
+import finance.api.model.vo.userinfo.UserProfitInfoDetailVo;
+import finance.api.model.vo.userinfo.UserInfoDetailVo;
 import finance.core.common.constants.Constant;
 import finance.core.common.constants.WeChatConstant;
 import finance.core.common.enums.*;
@@ -46,15 +46,15 @@ import finance.core.dal.dao.*;
  * @version v1.0 2018年7月3日 下午9:00:27 hewenbin
  */
 @Slf4j
-@Service
+@Service("userInfoBiz")
 public class UserInfoBizImpl implements UserInfoBiz {
 
     @Resource
-    private FinanceUserInfoDAO            userInfoMapper;
+    private UserInfoDAO                   userInfoMapper;
     @Resource
-    private FinanceUserBankCardInfoDAO    bankCardInfoMapper;
+    private UserBankCardInfoDAO           bankCardInfoMapper;
     @Resource
-    private FinanceUserPwdInfoDAO         pwdInfoMapper;
+    private UserPwdInfoDAO                pwdInfoMapper;
     @Resource
     private PwdValidateService            pwdValidateService;
     @Resource
@@ -62,15 +62,15 @@ public class UserInfoBizImpl implements UserInfoBiz {
     @Resource
     private JwtService                    jwtService;
     @Resource
-    private FinanceUserInviteInfoDAO      inviteInfoMapper;
+    private UserInviteInfoDAO             inviteInfoMapper;
     @Resource
-    private FinanceUserAccountDAO         accountMapper;
+    private UserAccountDAO                accountMapper;
     @Resource
-    private FinanceIdCardInfoDAO          idCardInfoMapper;
+    private IdCardInfoDAO                 idCardInfoMapper;
     @Resource
     private AuthService                   authService;
     @Resource
-    private FinanceCoinLogDAO             financeCoinLogMapper;
+    private CoinLogDAO                    financeCoinLogMapper;
     @Resource
     private FinanceThirdAccountInfoDAO    thirdAccountInfoMapper;
 
@@ -84,29 +84,29 @@ public class UserInfoBizImpl implements UserInfoBiz {
     public UserInfoDetailVo queryUserInfo(Long userId) {
         UserInfoDetailVo detail = new UserInfoDetailVo();
         // 不存在用户不存在的情况，只有登录的用户才可以调用该方法
-        FinanceUserInfo userInfo = userInfoMapper.selectByPrimaryKey(userId);
+        UserInfoDO userInfo = userInfoMapper.selectByPrimaryKey(userId);
 
         // 检查是否有设置账户密码
-        FinanceUserPwdInfo pwdInfo = pwdInfoMapper.selectByUserId(userId, PwdType.withdraw.name());
+        UserPwdInfoDO pwdInfo = pwdInfoMapper.selectByUserId(userId, PwdType.withdraw.name());
 
-        //身份证信息
-        FinanceIdCardInfo idCardInfo = idCardInfoMapper.selectByUserId(userId);
+        // 身份证信息
+        IdCardInfoDO idCardInfo = idCardInfoMapper.selectByUserId(userId);
         if (idCardInfo != null) {
             detail.setRealName(idCardInfo.getRealName());
             detail.setIdNum(idCardInfo.getIdNum());
             detail.setAuthStatus(idCardInfo.getAuthStatus());
         } else {
-            //无信息时返回"未完善"
+            // 无信息时返回"未完善"
             detail.setAuthStatus(AuthStatus.not_save.getCode());
         }
 
-        //银行卡信息
-        FinanceUserBankCardInfo bankCardInfo = bankCardInfoMapper.selectDefaultBankCard(userId);
+        // 银行卡信息
+        UserBankCardInfoDO bankCardInfo = bankCardInfoMapper.selectDefaultBankCard(userId);
         if (bankCardInfo != null) {
             detail.setBankName(bankCardInfo.getBankName());
             detail.setAccountNo(bankCardInfo.getAccountNo());
         }
-        //是否绑定QQ、微信
+        // 是否绑定QQ、微信
         FinanceThirdAccountInfo thirdAccountInfo = new FinanceThirdAccountInfo();
         thirdAccountInfo.setUserId(userId);
         List<FinanceThirdAccountInfo> thirdAccountInfoList = thirdAccountInfoMapper
@@ -157,17 +157,18 @@ public class UserInfoBizImpl implements UserInfoBiz {
         // 计算当前收益 = 可提现 + 已提现
         BigDecimal canWithdrawMoney = BigDecimal.ZERO;
         BigDecimal totalInCome = BigDecimal.ZERO;
-        FinanceUserAccount account = accountMapper.getAccountByUserId(userId);
+        UserAccountDO account = accountMapper.getAccountByUserId(userId);
         if (account != null) {
             canWithdrawMoney = account.getCanWithdrawMoney();
             totalInCome = account.getSumChargeMoney();
         }
 
-        //可用金币数量
+        // 可用金币数量
         Integer totalAvailableCoin = financeCoinLogMapper.selectCoinNumByUserId(userId);
 
-        //今日返现金额
-        //        double todayCashBack = orderMapper.todayCashBack(userId, DateUtil.getDayBegin(new Date()), DateUtil.getDayEnd(new Date()));
+        // 今日返现金额
+        // double todayCashBack = orderMapper.todayCashBack(userId,
+        // DateUtil.getDayBegin(new Date()), DateUtil.getDayEnd(new Date()));
 
         // 计算今天邀请人数
         Long todayInviteCount = this.getInviteCont(userId,
@@ -204,14 +205,14 @@ public class UserInfoBizImpl implements UserInfoBiz {
     @Transactional
     @Override
     public ResponseResult<String> saveBankCard(UserBankCardDto bankCardDto) {
-        FinanceUserBankCardInfo bankCardInfo = new FinanceUserBankCardInfo();
+        UserBankCardInfoDO bankCardInfo = new UserBankCardInfoDO();
 
         Long userId = bankCardDto.getUserId();
         String accountNo = bankCardDto.getAccountNo();
 
-        //获取姓名
-        FinanceIdCardInfo idCardInfo = idCardInfoMapper.selectByUserId(userId);
-        //未完善身份证信息不能实名认证
+        // 获取姓名
+        IdCardInfoDO idCardInfo = idCardInfoMapper.selectByUserId(userId);
+        // 未完善身份证信息不能实名认证
         if (idCardInfo == null) {
             return ResponseResult.error(CodeEnum.idInfoNotSave);
         } else if (AuthStatus.not_save.getCode() == (idCardInfo.getAuthStatus())) {
@@ -220,7 +221,7 @@ public class UserInfoBizImpl implements UserInfoBiz {
         bankCardDto.setAccountName(idCardInfo.getRealName());
         bankCardDto.setIdNum(idCardInfo.getIdNum());
 
-        //实名身份认证
+        // 实名身份认证
         ResponseResult<String> res = authService.auth(bankCardDto);
 
         if (!res.isSucceed()) {
@@ -230,21 +231,21 @@ public class UserInfoBizImpl implements UserInfoBiz {
             return ResponseResult.error(CodeEnum.bankCardAuthError);
         }
 
-        //更新身份证信息为已验证
-        //如果该用户身份证已验证，返回错误提示
+        // 更新身份证信息为已验证
+        // 如果该用户身份证已验证，返回错误提示
         if (AuthStatus.is_auth.getCode() == idCardInfo.getAuthStatus()) {
             return ResponseResult.error(CodeEnum.bankCardAuthed);
         }
-        //如果该用户身份证未验证，则更新身份证信息
-        //查询该身份证号是否存在已认证的信息
-        FinanceIdCardInfo authIdCardInfo = idCardInfoMapper.selectByAuthId(idCardInfo.getIdNum(),
+        // 如果该用户身份证未验证，则更新身份证信息
+        // 查询该身份证号是否存在已认证的信息
+        IdCardInfoDO authIdCardInfo = idCardInfoMapper.selectByAuthId(idCardInfo.getIdNum(),
             AuthStatus.is_auth.getCode());
         if (authIdCardInfo != null) {
-            //如果该身份证号已经存在用户认证，则提示错误:身份证已被其他用户验证
+            // 如果该身份证号已经存在用户认证，则提示错误:身份证已被其他用户验证
             return ResponseResult.error(CodeEnum.idAuthByOthersError);
         }
         Long id = idCardInfo.getId();
-        idCardInfo = new FinanceIdCardInfo();
+        idCardInfo = new IdCardInfoDO();
         idCardInfo.setId(id);
         idCardInfo.setUserId(userId);
         idCardInfo.setAuthStatus(AuthStatus.is_auth.getCode());
@@ -252,13 +253,13 @@ public class UserInfoBizImpl implements UserInfoBiz {
 
         BeanUtils.copyProperties(bankCardDto, bankCardInfo);
         // 将用户自己的所有银行卡全部更新为非默认
-        FinanceUserBankCardInfo updateCardInfo = new FinanceUserBankCardInfo();
+        UserBankCardInfoDO updateCardInfo = new UserBankCardInfoDO();
         updateCardInfo.setUserId(userId);
         updateCardInfo.setIsDefault(Integer.valueOf("0"));
         bankCardInfoMapper.updateByUserId(updateCardInfo);
 
         // 检查本次要添加的银行卡是否存在
-        FinanceUserBankCardInfo existCardInfo = bankCardInfoMapper.selectUserBankCard(userId,
+        UserBankCardInfoDO existCardInfo = bankCardInfoMapper.selectUserBankCard(userId,
             accountNo);
 
         // 如果有，则更新该银行卡信息，并且为默认（为了兼容用户卡号没问题，但是姓名错误的情况）
@@ -275,12 +276,12 @@ public class UserInfoBizImpl implements UserInfoBiz {
             bankCardInfo.setIsDefault(Integer.valueOf("1"));
             bankCardInfoMapper.insertSelective(bankCardInfo);
         }
-        //        accountMapper.updateByUserId(userId, bankCardInfo.getAccountName());
+        // accountMapper.updateByUserId(userId, bankCardInfo.getAccountName());
         return ResponseResult.success(null);
     }
 
     @Override
-    public FinanceUserBankCardInfo queryDefaultBankCard(Long userId) {
+    public UserBankCardInfoDO queryDefaultBankCard(Long userId) {
         return bankCardInfoMapper.selectDefaultBankCard(userId);
     }
 
@@ -288,7 +289,7 @@ public class UserInfoBizImpl implements UserInfoBiz {
     public ResponseResult<String> savePwd(PwdType pwdType, Long userId, String pwd,
                                           String mobileCode) {
         // 检查是否已经设置密码
-        FinanceUserPwdInfo pwdInfo = pwdInfoMapper.selectByUserId(userId, pwdType.name());
+        UserPwdInfoDO pwdInfo = pwdInfoMapper.selectByUserId(userId, pwdType.name());
 
         // 生成密码
         String targetPwd = pwdValidateService.getPwd(pwdType, userId, pwd);
@@ -297,19 +298,19 @@ public class UserInfoBizImpl implements UserInfoBiz {
         if (pwdInfo != null) {
             // XXX 可以使用查询表的方式替代
             String mobileNum = jwtService.getUserInfo().getMobileNum();
-            Boolean validateRes = smsValidateService.vidateSmsCode(mobileNum, mobileCode,
+            Boolean validateRes = smsValidateService.validateSmsCode(mobileNum, mobileCode,
                 SmsUseType.changePayPwd.name());
             if (!validateRes) {
                 return ResponseResult.error(CodeEnum.accountPwdSmsValidateFail);
             }
             // 更新
-            FinanceUserPwdInfo editInfo = new FinanceUserPwdInfo();
+            UserPwdInfoDO editInfo = new UserPwdInfoDO();
             editInfo.setId(pwdInfo.getId());
             editInfo.setPwd(targetPwd);
             pwdInfoMapper.updateByPrimaryKeySelective(editInfo);
         } else {
             // 添加
-            pwdInfo = new FinanceUserPwdInfo();
+            pwdInfo = new UserPwdInfoDO();
             pwdInfo.setPwd(targetPwd);
             pwdInfo.setPwdType(pwdType.name());
             pwdInfo.setUserId(userId);
@@ -356,10 +357,10 @@ public class UserInfoBizImpl implements UserInfoBiz {
         Map<String, Integer> countMap = new HashMap<>();
 
         // 先查询一级、二级，数据量上限为总量（maxCount）的上限
-        Page<FinanceUserInviteInfo> page = new Page<>(maxCount, 1L);
+        Page<UserInviteInfoDO> page = new Page<>(maxCount, 1L);
         List<Long> rootParentIds = new ArrayList<>();
         rootParentIds.add(userId);
-        List<FinanceUserInviteInfo> firstLevels = inviteInfoMapper.selectByParentIds(rootParentIds,
+        List<UserInviteInfoDO> firstLevels = inviteInfoMapper.selectByParentIds(rootParentIds,
             page, null);
         if (firstLevels.isEmpty()) {
             countMap.put("allLevelCount", allLevelCount);
@@ -373,7 +374,7 @@ public class UserInfoBizImpl implements UserInfoBiz {
         // 过滤出第一级UserID 列表，作为查询第二级的条件ParentId
         List<Long> firstLevelUserIds = new ArrayList<>();
         firstLevels.forEach(inviteInfo -> firstLevelUserIds.add(inviteInfo.getUserId()));
-        List<FinanceUserInviteInfo> secondLevels = inviteInfoMapper
+        List<UserInviteInfoDO> secondLevels = inviteInfoMapper
             .selectByParentIds(firstLevelUserIds, page, null);
 
         secondLevelCount = secondLevels.size();
@@ -385,11 +386,11 @@ public class UserInfoBizImpl implements UserInfoBiz {
 
         // 过滤出第一级和第二级的 UserId 映射关系
         Map<Long, List<Long>> firstSecondMap = new HashMap<>();
-        for (FinanceUserInviteInfo info : firstLevels) {
+        for (UserInviteInfoDO info : firstLevels) {
             firstSecondMap.put(info.getUserId(), new ArrayList<>());
         }
 
-        for (FinanceUserInviteInfo info : secondLevels) {
+        for (UserInviteInfoDO info : secondLevels) {
             List<Long> tempUserIds = firstSecondMap.get(info.getParentUserId());
             tempUserIds.add(info.getUserId());
         }
@@ -419,27 +420,27 @@ public class UserInfoBizImpl implements UserInfoBiz {
         }
 
         // 查询用户手机号、银行卡的账户姓名
-        List<FinanceUserInfo> userInfos = userIds.isEmpty() ? new ArrayList<>()
+        List<UserInfoDO> userInfos = userIds.isEmpty() ? new ArrayList<>()
             : userInfoMapper.selectByPrimaryKeys(userIds);
-        Map<Long, FinanceUserInfo> userInfoMap = new HashMap<>();
+        Map<Long, UserInfoDO> userInfoMap = new HashMap<>();
         userInfos.forEach(info -> userInfoMap.put(info.getId(), info));
 
-        List<FinanceIdCardInfo> idCardInfos = userIds.isEmpty() ? new ArrayList<>()
+        List<IdCardInfoDO> idCardInfos = userIds.isEmpty() ? new ArrayList<>()
             : idCardInfoMapper.selectByUserIdList(userIds);
-        Map<Long, FinanceIdCardInfo> idCardInfoMap = new HashMap<>();
+        Map<Long, IdCardInfoDO> idCardInfoMap = new HashMap<>();
         idCardInfos.forEach(info -> idCardInfoMap.put(info.getUserId(), info));
 
         // 组装最终返回的数据
         for (Entry<Long, List<Long>> map1 : firstSecondMap2.entrySet()) {
             Map<String, Object> oneMap = new HashMap<>();
-            FinanceUserInfo userInfo1 = userInfoMap.get(map1.getKey());
-            FinanceIdCardInfo cardInfo1 = idCardInfoMap.get(map1.getKey());
+            UserInfoDO userInfo1 = userInfoMap.get(map1.getKey());
+            IdCardInfoDO cardInfo1 = idCardInfoMap.get(map1.getKey());
             oneMap.put("mobileNum", userInfo1.getMobileNum());
             oneMap.put("registerDate",
                 DateUtil.dateToString(userInfo1.getCreateTime(), DateUtil.fm_yyyy_MM_dd_HHmmss));
             oneMap.put("name", cardInfo1 == null ? "***" : cardInfo1.getRealName());
             List<Map<String, Object>> twoList = new ArrayList<>();
-            //查询类型为一级时不返回二级客户
+            // 查询类型为一级时不返回二级客户
             if (Constant.type_first != type) {
                 oneMap.put("inviteList", twoList);
             }
@@ -448,8 +449,8 @@ public class UserInfoBizImpl implements UserInfoBiz {
 
             for (Long tempUserId : map1.getValue()) {
                 Map<String, Object> twoMap = new HashMap<>();
-                FinanceUserInfo userInfo2 = userInfoMap.get(tempUserId);
-                FinanceIdCardInfo cardInfo2 = idCardInfoMap.get(tempUserId);
+                UserInfoDO userInfo2 = userInfoMap.get(tempUserId);
+                IdCardInfoDO cardInfo2 = idCardInfoMap.get(tempUserId);
                 twoMap.put("mobileNum", userInfo2.getMobileNum().substring(0, 3) + "****"
                                         + userInfo2.getMobileNum().substring(7));
                 twoMap.put("registerDate", DateUtil.dateToString(userInfo2.getCreateTime(),
@@ -460,7 +461,7 @@ public class UserInfoBizImpl implements UserInfoBiz {
             }
             this.sort(twoList, "registerDate");
         }
-        //根据查询类型返回0:所有1:一级客户2:二级客户
+        // 根据查询类型返回0:所有1:一级客户2:二级客户
         switch (type) {
             case Constant.type_all:
                 this.sort(oneTwoList, "registerDate");
@@ -489,13 +490,13 @@ public class UserInfoBizImpl implements UserInfoBiz {
         List<InviteOrdersVo> orders = inviteInfoMapper.selectInviteOrders(page);
         List<Long> userIds = new ArrayList<>();
         orders.forEach(info -> userIds.add(info.getUserId()));
-        //批量查询身份证信息
-        List<FinanceIdCardInfo> idCardInfos = idCardInfoMapper.selectByUserIdList(userIds);
-        Map<Long, FinanceIdCardInfo> idCardInfoMap = new HashMap<>();
+        // 批量查询身份证信息
+        List<IdCardInfoDO> idCardInfos = idCardInfoMapper.selectByUserIdList(userIds);
+        Map<Long, IdCardInfoDO> idCardInfoMap = new HashMap<>();
         idCardInfos.forEach(idCardInfo -> idCardInfoMap.put(idCardInfo.getUserId(), idCardInfo));
         for (int i = 0; i < orders.size(); i++) {
             orders.get(i).setOrderNum(i + 1);
-            //查询用户真实姓名。然后塞入 orders 中
+            // 查询用户真实姓名。然后塞入 orders 中
             if (idCardInfoMap.get(orders.get(i).getUserId()) != null) {
                 orders.get(i)
                     .setRealName(idCardInfoMap.get(orders.get(i).getUserId()).getRealName());
@@ -509,21 +510,21 @@ public class UserInfoBizImpl implements UserInfoBiz {
 
     @Override
     public ResponseResult<Boolean> saveIdCardInfo(IdCardInfoDto idCardInfoDto) {
-        FinanceIdCardInfo idCardInfo = new FinanceIdCardInfo();
+        IdCardInfoDO idCardInfo = new IdCardInfoDO();
         BeanUtils.copyProperties(idCardInfoDto, idCardInfo);
         Long userId = idCardInfoDto.getUserId();
         idCardInfo.setAuthStatus((int) -userId);
-        //检查是否有身份信息
-        FinanceIdCardInfo ExistIdCardInfo = idCardInfoMapper.selectByUserId(userId);
+        // 检查是否有身份信息
+        IdCardInfoDO ExistIdCardInfo = idCardInfoMapper.selectByUserId(userId);
 
         if (ExistIdCardInfo == null) {
             // 如果没有，则添加
             idCardInfoMapper.insertSelective(idCardInfo);
         } else if (AuthStatus.is_auth.getCode() == ExistIdCardInfo.getAuthStatus()) {
-            //如果有，且已验证则不允许修改
+            // 如果有，且已验证则不允许修改
             return ResponseResult.error(CodeEnum.idAuthExist);
         } else {
-            //如果有,且未验证则更新
+            // 如果有,且未验证则更新
             idCardInfo.setUserId(userId);
             idCardInfo.setId(ExistIdCardInfo.getId());
             idCardInfoMapper.updateByPrimaryKeySelective(idCardInfo);
@@ -540,6 +541,7 @@ public class UserInfoBizImpl implements UserInfoBiz {
 
     /**
      * 根据map的指定value排序list
+     * 
      * @param list
      * @param pkey
      * @return

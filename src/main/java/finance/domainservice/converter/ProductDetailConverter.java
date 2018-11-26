@@ -13,46 +13,49 @@ import finance.domain.product.ProductDetail;
 import finance.core.common.util.ConvertBeanUtil;
 
 /**
- * <p>产品明细</p>
+ * <p>
+ * 产品明细
+ * </p>
  *
  * @author lili
- * @version 1.0: ProductDetailConverter.java, v0.1 2018/11/8 2:08 PM PM lili Exp $
+ * @version 1.0: ProductDetailConverter.java, v0.1 2018/11/8 2:08 PM PM lili Exp
+ *          $
  */
 public class ProductDetailConverter {
 
-    public static ProductDetail convert(ProductDetailDO from) {
-        if (Objects.isNull(from)) {
-            return null;
-        }
-        ProductDetail to = new ProductDetail();
-        ConvertBeanUtil.copyBeanProperties(from, to);
-        return to;
-    }
+	public static ProductDetail convert(ProductDetailDO from) {
+		if (Objects.isNull(from)) {
+			return null;
+		}
+		ProductDetail to = new ProductDetail();
+		ConvertBeanUtil.copyBeanProperties(from, to);
+		return to;
+	}
 
-    public static ProductDetailDO convert(ProductDetail from) {
-        if (Objects.isNull(from)) {
-            return null;
-        }
-        ProductDetailDO to = new ProductDetailDO();
-        ConvertBeanUtil.copyBeanProperties(from, to);
-        return to;
-    }
+	public static ProductDetailDO convert(ProductDetail from) {
+		if (Objects.isNull(from)) {
+			return null;
+		}
+		ProductDetailDO to = new ProductDetailDO();
+		ConvertBeanUtil.copyBeanProperties(from, to);
+		return to;
+	}
 
-    public static List<ProductDetail> convert2List(List<ProductDetailDO> froms) {
-        if (CollectionUtils.isEmpty(froms)) {
-            return Collections.emptyList();
-        }
-        List<ProductDetail> tos = Lists.newArrayListWithCapacity(froms.size());
-        froms.forEach(from -> tos.add(convert(from)));
-        return tos;
-    }
+	public static List<ProductDetail> convert2List(List<ProductDetailDO> froms) {
+		if (CollectionUtils.isEmpty(froms)) {
+			return Collections.emptyList();
+		}
+		List<ProductDetail> tos = Lists.newArrayListWithCapacity(froms.size());
+		froms.forEach(from -> tos.add(convert(from)));
+		return tos;
+	}
 
-    public static List<ProductDetailDO> convert2DoList(List<ProductDetail> froms) {
-        if (CollectionUtils.isEmpty(froms)) {
-            return Collections.emptyList();
-        }
-        List<ProductDetailDO> tos = Lists.newArrayListWithCapacity(froms.size());
-        froms.forEach(from -> tos.add(convert(from)));
-        return tos;
-    }
+	public static List<ProductDetailDO> convert2DoList(List<ProductDetail> froms) {
+		if (CollectionUtils.isEmpty(froms)) {
+			return Collections.emptyList();
+		}
+		List<ProductDetailDO> tos = Lists.newArrayListWithCapacity(froms.size());
+		froms.forEach(from -> tos.add(convert(from)));
+		return tos;
+	}
 }

@@ -8,7 +8,6 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
-import finance.core.dal.dataobject.*;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -23,62 +22,64 @@ import finance.core.common.enums.AuthStatus;
 import finance.core.common.enums.ReturnCode;
 import finance.core.common.util.CommonUtils;
 import finance.core.common.util.PreconditionUtils;
-import finance.domain.log.BarrageMessage;
-import finance.domain.weixin.InviteOpenInfo;
-import finance.domain.user.UserInfo;
+import finance.core.dal.dao.*;
+import finance.core.dal.dataobject.*;
 import finance.domain.dto.LoginParamDto;
+import finance.domain.log.BarrageMessage;
+import finance.domain.user.UserInfo;
+import finance.domain.weixin.InviteOpenInfo;
 import finance.domainservice.repository.BarrageMessageRepository;
 import finance.domainservice.repository.InviteOpenInfoRepository;
 import finance.domainservice.repository.UserInfoRepository;
 import finance.domainservice.service.register.RegisterSendMessageService;
 import finance.domainservice.service.register.RegisterService;
 import finance.domainservice.service.trans.AccountService;
-import finance.core.dal.dao.*;
 
 /**
  * <p>用户注册</p>
+ * 
  * @author lili
  * @version $Id: RegisterServiceImpl.java, v0.1 2018/11/13 1:53 PM lili Exp $
  */
 @Slf4j
-@Service
+@Service("registerService")
 public class RegisterServiceImpl implements RegisterService {
 
     @Resource
-    private FinanceUserInfoDAO                uerInfoMapper;
+    private UserInfoDAO                userInfoDAO;
     @Resource
-    private FinanceUserInviteInfoDAO          inviteInfoMapper;
+    private UserInviteInfoDAO          userInviteInfoDAO;
     @Resource
-    private FinanceUserRegisterLogDAO         registerLogMapper;
+    private UserRegisterLogDAO         registerLogMapper;
     @Resource
-    private FinanceUserRegisterChannelInfoDAO registerChannelMapper;
+    private UserRegisterChannelInfoDAO registerChannelMapper;
     @Resource
-    private AccountService                    accountService;
+    private AccountService             accountService;
     @Resource
-    private FinanceIdCardInfoDAO              idCardInfoMapper;
+    private IdCardInfoDAO              idCardInfoMapper;
     @Resource
-    private BarrageMessageRepository          barrageMessageRepository;
+    private BarrageMessageRepository   barrageMessageRepository;
 
     @Resource
-    private RegisterSendMessageService        registerSendMessageService;
+    private RegisterSendMessageService registerSendMessageService;
     @Resource
-    private InviteOpenInfoRepository          inviteOpenInfoRepository;
+    private InviteOpenInfoRepository   inviteOpenInfoRepository;
 
     @Resource
-    private UserInfoRepository                userInfoRepository;
+    private UserInfoRepository         userInfoRepository;
 
     @Resource
-    private TransactionTemplate               transactionTemplate;
+    private TransactionTemplate        transactionTemplate;
 
     @Override
-    public FinanceUserInfo registerUser(LoginParamDto paramDto) {
+    public UserInfoDO registerUser(LoginParamDto paramDto) {
 
-        FinanceUserInfo financeUserInfo = transactionTemplate.execute(transactionStatus -> {
+        UserInfoDO financeUserInfo = transactionTemplate.execute(transactionStatus -> {
             // 保存用户信息
-            FinanceUserInfo userInfo = saveUserInfo(paramDto);
+            UserInfoDO userInfo = saveUserInfo(paramDto);
             // 保存邀请人关系
             saveInviteInfo(userInfo, paramDto);
-            //  保存姓名
+            // 保存姓名
             saveIdCardInfo(userInfo, paramDto);
             // 记录注册日志
             saveUserRegisterLog(userInfo, paramDto);
@@ -97,34 +98,38 @@ public class RegisterServiceImpl implements RegisterService {
         return financeUserInfo;
     }
 
-    private FinanceUserInfo saveUserInfo(LoginParamDto paramDto) {
+    private UserInfoDO saveUserInfo(LoginParamDto paramDto) {
         // 生成邀请码
         String inviteCode = UUID.randomUUID().toString().replaceAll("-", "");
-        FinanceUserInfo userInfo = new FinanceUserInfo();
+        UserInfoDO userInfo = new UserInfoDO();
         userInfo.setMobileNum(paramDto.getMobileNum());
         userInfo.setInviteCode(inviteCode);
+        // 活动代码
+        userInfo.setActivityCode(paramDto.getActivityCode());
         // 创建用户
-        uerInfoMapper.insertSelective(userInfo);
+        userInfoDAO.insertSelective(userInfo);
         return userInfo;
     }
 
-    private void saveInviteInfo(FinanceUserInfo userInfo, LoginParamDto paramDto) {
+    private void saveInviteInfo(UserInfoDO userInfo, LoginParamDto paramDto) {
         // 保存邀请人关系
         if (StringUtils.isNotBlank(paramDto.getInviteCode())) {
             // 查询邀请码对应的 UserInfo
-            FinanceUserInfo parentUser = uerInfoMapper.selectByInviteCode(paramDto.getInviteCode());
+            UserInfoDO parentUser = userInfoDAO.selectByInviteCode(paramDto.getInviteCode());
             if (Objects.isNull(parentUser)) {
                 return;
             }
-            FinanceUserInviteInfo inviteInfo = new FinanceUserInviteInfo();
+            UserInviteInfoDO inviteInfo = new UserInviteInfoDO();
             // 保存
             inviteInfo.setParentUserId(parentUser.getId());
             inviteInfo.setUserId(userInfo.getId());
-            //新增活动类型
+            // 新增活动类型
             if (paramDto.getActivityType() != null) {
                 inviteInfo.setInviteType(Integer.valueOf(paramDto.getActivityType()));
             }
-            inviteInfoMapper.insertSelective(inviteInfo);
+            // 活动代码
+            inviteInfo.setActivityCode(paramDto.getActivityCode());
+            userInviteInfoDAO.insertSelective(inviteInfo);
             //
         } else {
             if (StringUtils.isBlank(paramDto.getOpenId())) {
@@ -148,33 +153,33 @@ public class RegisterServiceImpl implements RegisterService {
                 log.info("invite_code:{},查询用户信息无记录", inviteOpenInfo.getInviteCode());
                 return;
             }
-            FinanceUserInviteInfo inviteInfo = new FinanceUserInviteInfo();
+            UserInviteInfoDO inviteInfo = new UserInviteInfoDO();
             // 保存
             inviteInfo.setParentUserId(parentUserInfo.getId());
             inviteInfo.setUserId(userInfo.getId());
-            //新增活动类型
+            // 新增活动类型
             if (paramDto.getActivityType() != null) {
                 inviteInfo.setInviteType(Integer.valueOf(paramDto.getActivityType()));
             }
-            inviteInfoMapper.insertSelective(inviteInfo);
+            userInviteInfoDAO.insertSelective(inviteInfo);
         }
     }
 
-    private void saveIdCardInfo(FinanceUserInfo userInfo, LoginParamDto paramDto) {
+    private void saveIdCardInfo(UserInfoDO userInfo, LoginParamDto paramDto) {
 
         if (StringUtils.isBlank(paramDto.getRealName())) {
             return;
         }
         // 保存姓名
-        FinanceIdCardInfo idCardInfo = new FinanceIdCardInfo();
+        IdCardInfoDO idCardInfo = new IdCardInfoDO();
         idCardInfo.setUserId(userInfo.getId());
         idCardInfo.setRealName(paramDto.getRealName());
         idCardInfo.setAuthStatus(AuthStatus.not_save.getCode());
         idCardInfoMapper.insertSelective(idCardInfo);
     }
 
-    private void saveUserRegisterLog(FinanceUserInfo userInfo, LoginParamDto paramDto) {
-        FinanceUserRegisterLog registerLog = new FinanceUserRegisterLog();
+    private void saveUserRegisterLog(UserInfoDO userInfo, LoginParamDto paramDto) {
+        UserRegisterLogDO registerLog = new UserRegisterLogDO();
         registerLog.setMobileNum(paramDto.getMobileNum());
         registerLog.setIp(paramDto.getIp());
         registerLog.setUserAgent(paramDto.getUserAgent());
@@ -182,8 +187,8 @@ public class RegisterServiceImpl implements RegisterService {
         registerLogMapper.insertSelective(registerLog);
     }
 
-    private void saveUserRegisterChannelInfo(FinanceUserInfo userInfo, LoginParamDto paramDto) {
-        FinanceUserRegisterChannelInfo registerChannelInfo = new FinanceUserRegisterChannelInfo();
+    private void saveUserRegisterChannelInfo(UserInfoDO userInfo, LoginParamDto paramDto) {
+        UserRegisterChannelInfoDO registerChannelInfo = new UserRegisterChannelInfoDO();
         BeanUtils.copyProperties(paramDto, registerChannelInfo);
         registerChannelInfo.setUserId(userInfo.getId());
         registerChannelMapper.insertSelective(registerChannelInfo);

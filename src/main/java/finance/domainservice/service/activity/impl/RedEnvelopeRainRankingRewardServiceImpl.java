@@ -31,9 +31,8 @@ import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 
 /**
  * <p>红包雨活动-排行榜奖励</p>
- *
  * @author lili
- * @version 1.0: RedEnvelopeRainRankingRewardServiceImpl.java, v0.1 2018/11/17 7:55 PM PM lili Exp $
+ * @version $Id: RedEnvelopeRainRankingRewardServiceImpl.java, v0.1 2018/11/26 9:30 AM lili Exp $
  */
 @Slf4j
 @Service("redEnvelopeRainRankingRewardService")

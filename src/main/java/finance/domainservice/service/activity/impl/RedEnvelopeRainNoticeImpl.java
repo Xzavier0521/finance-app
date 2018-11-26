@@ -27,9 +27,8 @@ import finance.ext.integration.weixin.WeiXinUserInfoQueryClient;
 
 /**
  * <p>红包雨活动微信模版消息通知</p>
- *
  * @author lili
- * @version 1.0: RedEnvelopeRainNoticeImpl.java, v0.1 2018/11/20 6:56 PM PM lili Exp $
+ * @version $Id: RedEnvelopeRainNoticeImpl.java, v0.1 2018/11/26 9:29 AM lili Exp $
  */
 @Slf4j
 @Service("redEnvelopeRainNoticeService")

@@ -5,13 +5,17 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dao.CoinLogDAO;
+import finance.core.dal.dao.GiftInfoDAO;
+import finance.core.dal.dao.UserGiftInfoDAO;
+import finance.core.dal.dataobject.GiftInfoDO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import finance.api.model.base.Page;
 import finance.api.model.base.XMap;
 import finance.api.model.response.ResponseResult;
-import finance.api.model.vo.ExchangeGoodsVO;
+import finance.api.model.vo.gift.ExchangeGoodsVO;
 import finance.core.common.enums.CodeEnum;
 import finance.domain.dto.CoinLockParamDto;
 import finance.domain.dto.CoinLockResponseDto;
@@ -19,12 +23,8 @@ import finance.domain.dto.RedisLockDto;
 import finance.domainservice.service.AbstractCoinDealMulti;
 import finance.domainservice.service.gift.GiftBiz;
 import finance.domainservice.service.jwt.JwtService;
-import finance.core.dal.dao.FinanceCoinLogDAO;
-import finance.core.dal.dao.FinanceGiftInfoDAO;
-import finance.core.dal.dao.FinanceUserGiftInfoDAO;
-import finance.core.dal.dataobject.FinanceCoinLog;
-import finance.core.dal.dataobject.FinanceGiftInfo;
-import finance.core.dal.dataobject.FinanceUserGiftInfo;
+import finance.core.dal.dataobject.CoinLogDO;
+import finance.core.dal.dataobject.UserGiftInfoDO;
 
 /**
  * @program: finance-server
@@ -38,30 +38,30 @@ import finance.core.dal.dataobject.FinanceUserGiftInfo;
 @Service
 public class GiftBizImpl extends AbstractCoinDealMulti implements GiftBiz {
     @Resource
-    private FinanceGiftInfoDAO     financeGiftInfoMapper;
+    private GiftInfoDAO     financeGiftInfoMapper;
     @Resource
-    private JwtService             jwtService;
+    private JwtService      jwtService;
     @Resource
-    private FinanceCoinLogDAO      financeCoinLogMapper;
+    private CoinLogDAO      financeCoinLogMapper;
     @Resource
-    private FinanceUserGiftInfoDAO financeUserGiftInfoMapper;
+    private UserGiftInfoDAO financeUserGiftInfoMapper;
 
     @Override
-    public List<ExchangeGoodsVO> queryCoinGoodsList(Page<FinanceGiftInfo> financeGiftInfoPage) {
+    public List<ExchangeGoodsVO> queryCoinGoodsList(Page<GiftInfoDO> financeGiftInfoPage) {
         List<ExchangeGoodsVO> exchangeGoodsVOList = new ArrayList<ExchangeGoodsVO>();
-        //根据类型查主表数据
-        List<FinanceGiftInfo> financeGiftInfoList = financeGiftInfoMapper
+        // 根据类型查主表数据
+        List<GiftInfoDO> giftInfoDOList = financeGiftInfoMapper
             .selectGiftByPage(financeGiftInfoPage);
 
-        if (financeGiftInfoList != null && financeGiftInfoList.size() > 0) {
+        if (giftInfoDOList != null && giftInfoDOList.size() > 0) {
             ExchangeGoodsVO exchangeGoodsVO = null;
-            for (FinanceGiftInfo financeGiftInfo : financeGiftInfoList) {
+            for (GiftInfoDO giftInfoDO : giftInfoDOList) {
                 exchangeGoodsVO = new ExchangeGoodsVO();
-                exchangeGoodsVO.setGoodsName(financeGiftInfo.getGiftName());
-                exchangeGoodsVO.setGoodsId(financeGiftInfo.getId());
-                exchangeGoodsVO.setBannerUrl(financeGiftInfo.getBannerUrl());
-                exchangeGoodsVO.setNeedCoinCount(financeGiftInfo.getNeedCoinNum());
-                exchangeGoodsVO.setThumbnailUrl(financeGiftInfo.getThumbnailUrl());
+                exchangeGoodsVO.setGoodsName(giftInfoDO.getGiftName());
+                exchangeGoodsVO.setGoodsId(giftInfoDO.getId());
+                exchangeGoodsVO.setBannerUrl(giftInfoDO.getBannerUrl());
+                exchangeGoodsVO.setNeedCoinCount(giftInfoDO.getNeedCoinNum());
+                exchangeGoodsVO.setThumbnailUrl(giftInfoDO.getThumbnailUrl());
                 exchangeGoodsVOList.add(exchangeGoodsVO);
             }
         }
@@ -71,11 +71,11 @@ public class GiftBizImpl extends AbstractCoinDealMulti implements GiftBiz {
     @Override
     public ResponseResult<Boolean> exchangeGoods(XMap paramMap) {
         Long giftId = Long.valueOf(paramMap.get("goodsId").toString());
-        /**1.jwt 获取用户user_id **/
+        /** 1.jwt 获取用户user_id **/
         Long userId = jwtService.getUserInfo().getId();
-        /**2.商品信息 **/
-        FinanceGiftInfo financeGiftInfo = financeGiftInfoMapper.selectByPrimaryKey(giftId);
-        if (financeGiftInfo == null) {
+        /** 2.商品信息 **/
+        GiftInfoDO giftInfoDO = financeGiftInfoMapper.selectByPrimaryKey(giftId);
+        if (giftInfoDO == null) {
             return ResponseResult.error(CodeEnum.giftNotExist);
         }
         CoinLockParamDto lockParamDto = new CoinLockParamDto();
@@ -101,16 +101,15 @@ public class GiftBizImpl extends AbstractCoinDealMulti implements GiftBiz {
     @Override
     public void dealCoinTask(RedisLockDto redisLockDto) {
         CoinLockResponseDto lockResponseDto = new CoinLockResponseDto();
-        /**1.获取数据 **/
+        /** 1.获取数据 **/
         CoinLockParamDto lockParamDto = (CoinLockParamDto) redisLockDto.getParam();
-        /**2.商品信息 **/
-        FinanceGiftInfo financeGiftInfo = financeGiftInfoMapper
-            .selectByPrimaryKey(lockParamDto.getGiftId());
+        /** 2.商品信息 **/
+        GiftInfoDO giftInfoDO = financeGiftInfoMapper.selectByPrimaryKey(lockParamDto.getGiftId());
         /** 3.判断金币是否足够 **/
         Integer totalCoin = financeCoinLogMapper.selectCoinNumByUserId(lockParamDto.getUserId());
         Boolean isFullCoin = true;
         if (totalCoin != null) {
-            if (totalCoin.intValue() < financeGiftInfo.getNeedCoinNum().intValue()) {
+            if (totalCoin.intValue() < giftInfoDO.getNeedCoinNum().intValue()) {
                 isFullCoin = false;
             }
         } else {
@@ -123,21 +122,21 @@ public class GiftBizImpl extends AbstractCoinDealMulti implements GiftBiz {
             return;
         }
 
-        /**4.插入数据 **/
-        FinanceUserGiftInfo financeUserGiftInfo = new FinanceUserGiftInfo();
+        /** 4.插入数据 **/
+        UserGiftInfoDO financeUserGiftInfo = new UserGiftInfoDO();
         financeUserGiftInfo.setUserId(lockParamDto.getUserId());
         financeUserGiftInfo.setGiftId(lockParamDto.getGiftId());
         financeUserGiftInfo.setGiftStatus(0);
         financeUserGiftInfoMapper.insertSelective(financeUserGiftInfo);
 
-        FinanceCoinLog financeCoinLog = new FinanceCoinLog();
+        CoinLogDO coinLogDO = new CoinLogDO();
 
-        financeCoinLog.setUserId(lockParamDto.getUserId());
-        //为防止和任务表里出现taskid重复，礼品的统一设为0，后续如有其他场景可以考虑表内增字段与区分。
-        financeCoinLog.setTaskId(0l);
-        financeCoinLog.setTaskName(financeGiftInfo.getGiftName());
-        financeCoinLog.setNum(-financeGiftInfo.getNeedCoinNum());
-        financeCoinLogMapper.insertSelective(financeCoinLog);
+        coinLogDO.setUserId(lockParamDto.getUserId());
+        // 为防止和任务表里出现taskid重复，礼品的统一设为0，后续如有其他场景可以考虑表内增字段与区分。
+        coinLogDO.setTaskId(0l);
+        coinLogDO.setTaskName(giftInfoDO.getGiftName());
+        coinLogDO.setNum(-giftInfoDO.getNeedCoinNum());
+        financeCoinLogMapper.insertSelective(coinLogDO);
 
         lockResponseDto.setRetrunCode(CodeEnum.succ.getCode());
         redisLockDto.setRes(lockResponseDto);

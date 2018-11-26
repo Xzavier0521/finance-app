@@ -7,17 +7,17 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import finance.api.model.vo.userinfo.UserInfoVo;
+import finance.core.dal.dao.UserInfoDAO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import finance.api.model.vo.FinanceUserInfoVo;
 import finance.domainservice.service.user.UserInfoService;
-import finance.core.dal.dao.FinanceIdCardInfoDAO;
-import finance.core.dal.dao.FinanceUserBankCardInfoDAO;
-import finance.core.dal.dao.FinanceUserInfoDAO;
-import finance.core.dal.dataobject.FinanceIdCardInfo;
-import finance.core.dal.dataobject.FinanceUserBankCardInfo;
-import finance.core.dal.dataobject.FinanceUserInfo;
+import finance.core.dal.dao.IdCardInfoDAO;
+import finance.core.dal.dao.UserBankCardInfoDAO;
+import finance.core.dal.dataobject.IdCardInfoDO;
+import finance.core.dal.dataobject.UserBankCardInfoDO;
+import finance.core.dal.dataobject.UserInfoDO;
 
 /**
  * @author hewenbin
@@ -27,17 +27,17 @@ import finance.core.dal.dataobject.FinanceUserInfo;
 public class UserInfoServiceImpl implements UserInfoService {
 
     @Resource
-    private FinanceUserInfoDAO         userInfoMapper;
+    private UserInfoDAO         userInfoMapper;
     @Resource
-    private FinanceUserBankCardInfoDAO bankCardMapper;
+    private UserBankCardInfoDAO bankCardMapper;
     @Resource
-    private FinanceIdCardInfoDAO       idCardInfoMappe;
+    private IdCardInfoDAO       idCardInfoMappe;
 
     @Override
-    public List<FinanceUserInfoVo> queryUserInfos(List<Long> userIds) {
-        List<FinanceUserInfo> users = userInfoMapper.selectByPrimaryKeys(userIds);
-        List<FinanceIdCardInfo> idCards = idCardInfoMappe.selectByUserIdList(userIds);
-        List<FinanceUserBankCardInfo> bankCards = bankCardMapper
+    public List<UserInfoVo> queryUserInfos(List<Long> userIds) {
+        List<UserInfoDO> users = userInfoMapper.selectByPrimaryKeys(userIds);
+        List<IdCardInfoDO> idCards = idCardInfoMappe.selectByUserIdList(userIds);
+        List<UserBankCardInfoDO> bankCards = bankCardMapper
             .selectDefaultBankCardByUserIds(userIds);
 
         Map<Long, String> idCardMap = new HashMap<>();// userId:realName
@@ -45,9 +45,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 
         Map<Long, String> bankCardMap = new HashMap<>();// userId:accountNo
         bankCards.forEach(n -> bankCardMap.put(n.getUserId(), n.getAccountNo()));
-        List<FinanceUserInfoVo> userVos = new ArrayList<>();
+        List<UserInfoVo> userVos = new ArrayList<>();
         users.forEach(n -> {
-            FinanceUserInfoVo userVo = new FinanceUserInfoVo();
+            UserInfoVo userVo = new UserInfoVo();
             BeanUtils.copyProperties(n, userVo);
             userVo.setRealName(idCardMap.get(n.getId()));
             userVo.setAccountNo(bankCardMap.get(n.getId()));

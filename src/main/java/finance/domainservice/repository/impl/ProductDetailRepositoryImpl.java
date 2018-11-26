@@ -13,22 +13,25 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p>注释</p>
+ * <p>
+ * 注释
+ * </p>
  *
  * @author lili
- * @version 1.0: ProductDetailRepositoryImpl.java, v0.1 2018/11/8 4:33 PM PM lili Exp $
+ * @version 1.0: ProductDetailRepositoryImpl.java, v0.1 2018/11/8 4:33 PM PM
+ *          lili Exp $
  */
 @Repository("productDetailRepository")
 public class ProductDetailRepositoryImpl implements ProductDetailRepository {
 
-    @Resource
-    private ProductDetailDAO productDetailDAO;
+	@Resource
+	private ProductDetailDAO productDetailDAO;
 
-    @Override
-    public List<ProductDetail> queryProductByModule(ProductModuleTypeEnum productModuleType) {
+	@Override
+	public List<ProductDetail> queryProductByModule(ProductModuleTypeEnum productModuleType) {
 
-        Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("module_code", productModuleType.getCode());
-        return ProductDetailConverter.convert2List(productDetailDAO.query(parameters));
-    }
+		Map<String, Object> parameters = Maps.newHashMap();
+		parameters.put("module_code", productModuleType.getCode());
+		return ProductDetailConverter.convert2List(productDetailDAO.query(parameters));
+	}
 }

@@ -7,97 +7,94 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dao.LoanDetailDAO;
+import finance.core.dal.dataobject.LoanDetailDO;
+import finance.core.dal.dataobject.ProductMain;
 import org.springframework.stereotype.Service;
 
 import finance.api.model.base.Page;
 import finance.api.model.vo.financeproduct.LoanProductDetailVO;
 import finance.api.model.vo.financeproduct.LoanProductListVO;
 import finance.domainservice.service.financeproduct.LoanProductBiz;
-import finance.core.dal.dao.FinanceLoanDetailDAO;
-import finance.core.dal.dao.FinanceProductMainDAO;
-import finance.core.dal.dataobject.FinanceLoanDetail;
-import finance.core.dal.dataobject.FinanceProductMain;
+import finance.core.dal.dao.ProductMainDAO;
 
 /**
- * <p>贷款产品Biz实现层</p>
+ * <p>
+ * 贷款产品Biz实现层
+ * </p>
+ * 
  * @author MORUIHAI
- * @version 1.0: LoanProductBizImpl.java, v0.1 2018/07/12 18:28 PM MORUIHAI Exp $
+ * @version 1.0: LoanProductBizImpl.java, v0.1 2018/07/12 18:28 PM MORUIHAI Exp
+ *          $
  * @version 1.1: 增加字段[金额类型] 2018/10/08
  */
 @Service
 public class LoanProductBizImpl implements LoanProductBiz {
-    @Resource
-    private FinanceLoanDetailDAO  financeLoanDetailMapper;
-    @Resource
-    private FinanceProductMainDAO financeProductMainMapper;
+	@Resource
+	private LoanDetailDAO financeLoanDetailMapper;
+	@Resource
+	private ProductMainDAO financeProductMainMapper;
 
-    @Override
-    public List<LoanProductListVO> findProductList(Page<FinanceProductMain> financeProductPage) {
-        List<LoanProductListVO> loanProductList = new ArrayList<>();
-        //根据类型查主表数据
-        List<FinanceProductMain> financeProductMainList = financeProductMainMapper
-            .selectProductByType(3, financeProductPage);
+	@Override
+	public List<LoanProductListVO> findProductList(Page<ProductMain> financeProductPage) {
+		List<LoanProductListVO> loanProductList = new ArrayList<>();
+		// 根据类型查主表数据
+		List<ProductMain> productMainList = financeProductMainMapper.selectProductByType(3,
+				financeProductPage);
 
-        if (financeProductMainList != null && financeProductMainList.size() > 0) {
-            //遍历主表数据取得id
-            List<Long> financeMainIds = new ArrayList<>();
-            financeProductMainList
-                .forEach(financeProductMain -> financeMainIds.add(financeProductMain.getId()));
-            //根据主表ID查询出办卡明细表
-            List<FinanceLoanDetail> financeLoanDetails = financeLoanDetailMapper
-                .selectByProductId(financeMainIds);
-            LoanProductListVO loanProductListVO;
-            FinanceLoanDetail financeLoanDetail = null;
+		if (productMainList != null && productMainList.size() > 0) {
+			// 遍历主表数据取得id
+			List<Long> financeMainIds = new ArrayList<>();
+			productMainList.forEach(financeProductMain -> financeMainIds.add(financeProductMain.getId()));
+			// 根据主表ID查询出办卡明细表
+			List<LoanDetailDO> loanDetailDOS = financeLoanDetailMapper.selectByProductId(financeMainIds);
+			LoanProductListVO loanProductListVO;
+			LoanDetailDO loanDetailDO = null;
 
-            Map<Long, FinanceLoanDetail> ffpdMap = new HashMap<>();
-            financeLoanDetails.forEach(ffpd -> ffpdMap.put(ffpd.getProductId(), ffpd));
+			Map<Long, LoanDetailDO> ffpdMap = new HashMap<>();
+			loanDetailDOS.forEach(ffpd -> ffpdMap.put(ffpd.getProductId(), ffpd));
 
-            for (FinanceProductMain fpm : financeProductMainList) {
-                financeLoanDetail = ffpdMap.get(fpm.getId());
-                loanProductListVO = new LoanProductListVO();
+			for (ProductMain fpm : productMainList) {
+				loanDetailDO = ffpdMap.get(fpm.getId());
+				loanProductListVO = new LoanProductListVO();
 
-                loanProductListVO.setId(fpm.getId());
-                loanProductListVO.setProductName(fpm.getProductName());
-                loanProductListVO.setLogoUrl(fpm.getLogoUrl());
-                loanProductListVO.setTotalBonus(fpm.getTotalBonus(), fpm.getAmountType());
-                loanProductList.add(loanProductListVO);
-            }
+				loanProductListVO.setId(fpm.getId());
+				loanProductListVO.setProductName(fpm.getProductName());
+				loanProductListVO.setLogoUrl(fpm.getLogoUrl());
+				loanProductListVO.setTotalBonus(fpm.getTotalBonus(), fpm.getAmountType());
+				loanProductList.add(loanProductListVO);
+			}
 
-        }
+		}
 
-        return loanProductList;
-    }
+		return loanProductList;
+	}
 
-    @Override
-    public LoanProductDetailVO findProductDetailByProductId(Long productId) {
-        //根据id查主表数据
-        FinanceProductMain financeProductMain = financeProductMainMapper
-            .selectByPrimaryKey(productId);
-        FinanceLoanDetail financeLoanDetail = financeLoanDetailMapper
-            .selectProductDetailByProductId(productId);
+	@Override
+	public LoanProductDetailVO findProductDetailByProductId(Long productId) {
+		// 根据id查主表数据
+		ProductMain productMain = financeProductMainMapper.selectByPrimaryKey(productId);
+		LoanDetailDO loanDetailDO = financeLoanDetailMapper.selectProductDetailByProductId(productId);
 
-        LoanProductDetailVO loanProductDetailVO = new LoanProductDetailVO();
-        loanProductDetailVO.setId(financeProductMain.getId());
-        loanProductDetailVO.setProductName(financeProductMain.getProductName());
-        loanProductDetailVO.setMark1(financeLoanDetail.getMark1());
-        loanProductDetailVO.setMark2(financeLoanDetail.getMark2());
-        loanProductDetailVO.setAmountScope(financeLoanDetail.getAmountScope());
-        loanProductDetailVO.setDateScope(financeLoanDetail.getDateScope());
-        loanProductDetailVO.setLogoUrl(financeProductMain.getLogoUrl());
-        loanProductDetailVO.setTerminalBonus(financeProductMain.getTerminalBonus(),
-            financeProductMain.getAmountType());
-        loanProductDetailVO.setDirectBonus(financeProductMain.getDirectBonus(),
-            financeProductMain.getAmountType());
-        loanProductDetailVO.setIndirectBonus(financeProductMain.getIndirectBonus(),
-            financeProductMain.getAmountType());
-        loanProductDetailVO.setCashbackDate(financeProductMain.getCashbackDate());
-        loanProductDetailVO.setRedirectUrl(financeProductMain.getRedirectUrl());
+		LoanProductDetailVO loanProductDetailVO = new LoanProductDetailVO();
+		loanProductDetailVO.setId(productMain.getId());
+		loanProductDetailVO.setProductName(productMain.getProductName());
+		loanProductDetailVO.setMark1(loanDetailDO.getMark1());
+		loanProductDetailVO.setMark2(loanDetailDO.getMark2());
+		loanProductDetailVO.setAmountScope(loanDetailDO.getAmountScope());
+		loanProductDetailVO.setDateScope(loanDetailDO.getDateScope());
+		loanProductDetailVO.setLogoUrl(productMain.getLogoUrl());
+		loanProductDetailVO.setTerminalBonus(productMain.getTerminalBonus(), productMain.getAmountType());
+		loanProductDetailVO.setDirectBonus(productMain.getDirectBonus(), productMain.getAmountType());
+		loanProductDetailVO.setIndirectBonus(productMain.getIndirectBonus(), productMain.getAmountType());
+		loanProductDetailVO.setCashbackDate(productMain.getCashbackDate());
+		loanProductDetailVO.setRedirectUrl(productMain.getRedirectUrl());
 
-        loanProductDetailVO.setProductDesc(financeProductMain.getProductDesc());
-        loanProductDetailVO.setPromotionUrl(financeProductMain.getPromotionUrl());
-        // 金额类型
-        loanProductDetailVO.setAmountType(String.valueOf(financeProductMain.getAmountType()));
+		loanProductDetailVO.setProductDesc(productMain.getProductDesc());
+		loanProductDetailVO.setPromotionUrl(productMain.getPromotionUrl());
+		// 金额类型
+		loanProductDetailVO.setAmountType(String.valueOf(productMain.getAmountType()));
 
-        return loanProductDetailVO;
-    }
+		return loanProductDetailVO;
+	}
 }

@@ -8,7 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * <p>微信公众号回复消息</p>
+ * <p>
+ * 微信公众号回复消息
+ * </p>
+ * 
  * @author lili
  * @version $Id: Message.java, v0.1 2018/10/28 1:50 PM lili Exp $
  */
@@ -18,16 +21,14 @@ import lombok.NoArgsConstructor;
 @Data
 public class Message implements Serializable {
 
-    private static final long serialVersionUID = 6337246454612744119L;
-    private String ToUserName;
+	private static final long serialVersionUID = 6337246454612744119L;
+	private String ToUserName;
 
-    private String FromUserName;
+	private String FromUserName;
 
-    private Long   CreateTime;
+	private Long CreateTime;
 
-    private String MsgType;
+	private String MsgType;
 
-
-
-    private String MsgId;
+	private String MsgId;
 }

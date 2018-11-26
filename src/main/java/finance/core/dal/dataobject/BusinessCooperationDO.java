@@ -8,7 +8,7 @@ import lombok.Data;
 /**
  * <p>注释</p>
  * @author lili
- * @version $Id: BusinessCooperationDO.java, v0.1 2018/10/29 4:46 PM lili Exp $
+ * @version $Id: BusinessCooperationDO.java, v0.1 2018/11/25 1:38 PM lili Exp $
  */
 @Data
 public class BusinessCooperationDO implements Serializable {

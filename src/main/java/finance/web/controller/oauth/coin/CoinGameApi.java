@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dataobject.UserInfoDO;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,10 +21,10 @@ import finance.api.model.response.BasicResponse;
 import finance.api.model.response.PayCoinPlayGameResponse;
 import finance.api.model.response.ResponseResult;
 import finance.api.model.response.ValidateResponse;
-import finance.api.model.vo.EarlyClockPageVO;
-import finance.api.model.vo.MyRecordVO;
-import finance.api.model.vo.PushRewardVO;
-import finance.api.model.vo.SignCoinVO;
+import finance.api.model.vo.coin.EarlyClockPageVO;
+import finance.api.model.vo.coin.MyRecordVO;
+import finance.api.model.vo.coin.PushRewardVO;
+import finance.api.model.vo.coin.SignCoinVO;
 import finance.api.model.vo.activity.CoinGameVO;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.ReturnCode;
@@ -31,8 +32,7 @@ import finance.core.common.exception.BizException;
 import finance.core.common.util.PreconditionUtils;
 import finance.core.common.util.ResponseResultUtils;
 import finance.core.common.util.ValidatorTools;
-import finance.core.dal.dataobject.FinanceCoinLog;
-import finance.core.dal.dataobject.FinanceUserInfo;
+import finance.core.dal.dataobject.CoinLogDO;
 import finance.domain.user.UserInfo;
 import finance.domainservice.converter.UserInfoConverter;
 import finance.domainservice.service.activity.ActivityCoinGameService;
@@ -42,7 +42,10 @@ import finance.domainservice.service.jwt.JwtService;
 import finance.web.controller.response.ActivityCoinGameQueryBuilder;
 
 /**
- * <p>金币游戏服务</p>
+ * <p>
+ * 金币游戏服务
+ * </p>
+ * 
  * @author lili
  * @version $Id: CoinGameApi.java, v0.1 2018/11/15 10:14 AM lili Exp $
  */
@@ -61,7 +64,7 @@ public class CoinGameApi {
 
     @GetMapping
     public ResponseResult<EarlyClockPageVO> queryCoinGameInfo() {
-        FinanceUserInfo userInfo = jwtService.getUserInfo();
+        UserInfoDO userInfo = jwtService.getUserInfo();
         log.info("[开始查询用户:{}早起打卡信息]", userInfo.getMobileNum());
         ResponseResult<EarlyClockPageVO> response;
         try {
@@ -88,7 +91,7 @@ public class CoinGameApi {
         log.info("[开始查询早起打卡记录],请求参数:pageNum:{},pageSize:{}", pageNum, pageSize);
         ResponseResult<MyRecordVO> response;
         try {
-            Page<FinanceCoinLog> financeCoinLogPage = new Page<>(pageSize.intValue(), pageNum);
+            Page<CoinLogDO> financeCoinLogPage = new Page<>(pageSize.intValue(), pageNum);
             response = coinBizImpl.findMyRecordList(financeCoinLogPage);
         } catch (BizException bizEx) {
             ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
@@ -114,7 +117,7 @@ public class CoinGameApi {
     @PostMapping("joinCoinGame")
     public ResponseResult<Boolean> joinCoinGame(@RequestBody BasicRequest request) {
         ResponseResult<Boolean> response;
-        FinanceUserInfo userInfo = jwtService.getUserInfo();
+        UserInfoDO userInfo = jwtService.getUserInfo();
         log.info("用户:{}开始参加早起打卡", userInfo.getMobileNum());
         try {
             response = coinBizImpl.joinEarlyCoinGame();
@@ -138,7 +141,7 @@ public class CoinGameApi {
     @PostMapping("signCoinGame")
     public ResponseResult<SignCoinVO> earlyCoinGame(@RequestBody BasicRequest request) {
         ResponseResult<SignCoinVO> response;
-        FinanceUserInfo userInfo = jwtService.getUserInfo();
+        UserInfoDO userInfo = jwtService.getUserInfo();
         log.info("用户:{}开始早起打卡", userInfo.getMobileNum());
         try {
             response = coinBizImpl.signEarlyCoinGame();

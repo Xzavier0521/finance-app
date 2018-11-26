@@ -6,25 +6,23 @@ import java.util.Map;
 import finance.core.dal.dataobject.ProductModuleDO;
 
 /**
- * <p>产品模块</p>
+ * <p>
+ * 产品模块
+ * </p>
+ * 
  * @author lili
  * @version 1.0 ProductModuleDAO.java, v0.1 2018/11/8 1:47 PM lili Exp $
  */
 public interface ProductModuleDAO {
 
-    int deleteByPrimaryKey(Long id);
+	int insertSelective(ProductModuleDO record);
 
-    int insert(ProductModuleDO record);
+	List<ProductModuleDO> query(Map parameters);
 
-    int insertSelective(ProductModuleDO record);
+	int count(Map parameters);
 
-    List<ProductModuleDO> query(Map parameters);
+	ProductModuleDO selectByPrimaryKey(Long id);
 
-    int count(Map parameters);
+	int updateByPrimaryKeySelective(ProductModuleDO record);
 
-    ProductModuleDO selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(ProductModuleDO record);
-
-    int updateByPrimaryKey(ProductModuleDO record);
 }

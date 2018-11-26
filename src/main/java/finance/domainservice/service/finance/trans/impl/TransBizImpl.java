@@ -39,63 +39,64 @@ import finance.core.dal.dao.*;
 @Slf4j
 @Component
 public class TransBizImpl implements TransBiz {
-    //private static final Logger logger = LoggerFactory.getLogger(TransBizImpl.class);
+    // private static final Logger logger =
+    // LoggerFactory.getLogger(TransBizImpl.class);
 
-    /** 首次登录金融家送的金额*/
+    /** 首次登录金融家送的金额 */
     @Value("${login.money}")
-    private String                     money;
+    private String                money;
 
     @Resource
-    private OrderBiz                   orderBiz;
+    private OrderBiz              orderBiz;
     @Resource
-    private ProfitBiz                  profit;
+    private ProfitBiz             profit;
     @Resource
-    private FinanceUserBankCardInfoDAO bankCardMapper;
+    private UserBankCardInfoDAO   bankCardMapper;
     @Resource
-    private PwdValidateService         pwdValidateService;
+    private PwdValidateService    pwdValidateService;
     @Resource
-    private FinanceIdCardInfoDAO       idCardInfoMapper;
+    private IdCardInfoDAO         idCardInfoMapper;
     @Resource
-    private FinanceUserAccountDAO      accountMapper;
+    private UserAccountDAO        accountMapper;
     @Resource
-    private FinanceCoinLogDAO          coinLogMapper;
+    private CoinLogDAO            coinLogMapper;
     @Resource
-    private FinanceCoinGameDAO         coinGameMapper;
+    private CoinGameDAO           coinGameMapper;
 
     @Resource(name = "accountService")
-    private AbstractCoinDealMulti      abstractAccountService;
+    private AbstractCoinDealMulti abstractAccountService;
 
     @Resource
-    private AccountService             accountService;
+    private AccountService        accountService;
 
     @Override
-    public ResponseResult<String> withdraw(FinanceUserInfo userInfo, UserWithdrawDto paramDto) {
+    public ResponseResult<String> withdraw(UserInfoDO userInfo, UserWithdrawDto paramDto) {
         Long userId = userInfo.getId();
         ResponseResult<String> res = ResponseResult.success("success");
 
-        //校验密码
+        // 校验密码
         if (!pwdValidateService.validatePwd(PwdType.withdraw, userId, paramDto.getPwd())) {
             return ResponseResult.error(finance.core.common.enums.CodeEnum.pwdError);
         }
 
-        FinanceUserBankCardInfo bankCard = bankCardMapper.selectDefaultBankCard(userId);
+        UserBankCardInfoDO bankCard = bankCardMapper.selectDefaultBankCard(userId);
         if (bankCard == null) {
             return ResponseResult.error(finance.core.common.enums.CodeEnum.bankCardNotExist);
         }
 
-        FinanceIdCardInfo idCardInfo = idCardInfoMapper.selectByUserId(userId);
+        IdCardInfoDO idCardInfo = idCardInfoMapper.selectByUserId(userId);
         if (idCardInfo == null || AuthStatus.is_auth.getCode() != idCardInfo.getAuthStatus()) {
             return ResponseResult.error(finance.core.common.enums.CodeEnum.idCardNotExist);
         }
 
-        FinanceUserAccount userAcc = accountMapper.getAccountByUserId(userId);
+        UserAccountDO userAcc = accountMapper.getAccountByUserId(userId);
         if (userAcc.getCanWithdrawMoney().compareTo(paramDto.getMoneyDecimal()) < 0) {
             // 申请提现的金额 > 可提现的金额，不给提现
             return ResponseResult.error(finance.core.common.enums.CodeEnum.extendWithDrawMoney);
         }
         if (paramDto.isByCoin()) {
             // 需要金币抵扣手续费
-            FinanceCoinGame coinGame = coinGameMapper
+            CoinGameDO coinGame = coinGameMapper
                 .selectByTaskType(GameTaskType.exchangeFee.getCode(), GameType.activity.getCode());
             Integer coinNum = coinLogMapper.selectCoinNumByUserId(userId);
             if (coinNum < coinGame.getNum()) {
@@ -103,7 +104,7 @@ public class TransBizImpl implements TransBiz {
                 return ResponseResult.error(finance.core.common.enums.CodeEnum.coinNumNotEnough);
             }
             // 查询 taskId
-            FinanceCoinLog coinLog = new FinanceCoinLog();
+            CoinLogDO coinLog = new CoinLogDO();
             coinLog.setNum(-coinGame.getNum());
             coinLog.setTaskId(coinGame.getId());
             coinLog.setTaskName(coinGame.getTaskName());
@@ -147,11 +148,11 @@ public class TransBizImpl implements TransBiz {
 
     @Override
     public List<FinanceOrderVo> transRecords(Long userId, Page<FinanceOrderVo> page) {
-        Page<FinanceOrder> paramPage = new Page<>(page.getPageSize(), page.getPageNum());
+        Page<OrderDO> paramPage = new Page<>(page.getPageSize(), page.getPageNum());
         orderBiz.transRecords(userId, paramPage);
-        List<FinanceOrder> l = paramPage.getDataList();
+        List<OrderDO> l = paramPage.getDataList();
         List<FinanceOrderVo> datalist = new ArrayList<FinanceOrderVo>();
-        for (FinanceOrder order : l) {
+        for (OrderDO order : l) {
             FinanceOrderVo financeOrderVo = new FinanceOrderVo();
             financeOrderVo.setMoney(order.getMoney().subtract(BigDecimal.valueOf(1.5)));
             financeOrderVo.setStatus(order.getStatus());

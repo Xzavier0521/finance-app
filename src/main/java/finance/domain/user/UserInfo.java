@@ -1,49 +1,50 @@
 package finance.domain.user;
 
-import lombok.Data;
-
+import java.io.Serializable;
 import java.util.Date;
 
+import lombok.Data;
+
 /**
- * <p>注释</p>
- *
+ * <p>用户信息</p>
  * @author lili
- * @version 1.0: UserInfo.java, v 0.1 2018/9/29 上午9:13 lili Exp $
+ * @version 1.0: UserInfo.java, v0.1 2018/11/26 2:45 PM lili Exp $
  */
 @Data
-public class UserInfo {
+public class UserInfo implements Serializable {
 
-    private Long    id;
+    private static final long serialVersionUID = 4595586211491791364L;
+    private Long              id;
 
-    private String  mobileNum;
+    private String            mobileNum;
 
     /**
      * 注册时间
      */
-    private String  registerDate;
+    private String            registerDate;
 
-    private  String registerTime;
+    private String            registerTime;
 
     /**
      * 是否支付金币
      */
-    private boolean isPayCoin;
+    private boolean           isPayCoin;
     /**
      * 邀请码
      */
-    private String  inviteCode;
+    private String            inviteCode;
 
-    private String  status;
+    private String            status;
 
-    private Integer isDelete;
+    private Integer           isDelete;
 
-    private String  creator;
+    private String            creator;
 
-    private String  updator;
+    private String            updator;
 
-    private Integer version;
+    private Integer           version;
 
-    private Date    createTime;
+    private Date              createTime;
 
-    private Date    updateTime;
+    private Date              updateTime;
 }

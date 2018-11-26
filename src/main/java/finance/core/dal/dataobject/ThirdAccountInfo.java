@@ -6,32 +6,32 @@ public class ThirdAccountInfo {
     /**
      * 主键ID
      */
-    private Long id;
+    private Long    id;
 
     /**
      * 用户ID
      */
-    private Long userId;
+    private Long    userId;
 
     /**
      * 第三方渠道类型（qq、wechat、wechat_public……）
      */
-    private String channel;
+    private String  channel;
 
     /**
      * 公众号名
      */
-    private String publicName;
+    private String  publicName;
 
     /**
      * 第三方账户（唯一标识）
      */
-    private String openId;
+    private String  openId;
 
     /**
      * 状态（1：已绑定；非1：已解绑）
      */
-    private String status;
+    private String  status;
 
     /**
      * 是否已删除(0:否；1:是)
@@ -41,12 +41,12 @@ public class ThirdAccountInfo {
     /**
      * 创建人
      */
-    private String creator;
+    private String  creator;
 
     /**
      * 更新人
      */
-    private String updator;
+    private String  updator;
 
     /**
      * 版本号
@@ -56,12 +56,12 @@ public class ThirdAccountInfo {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private Date    createTime;
 
     /**
      * 更新时间
      */
-    private Date updateTime;
+    private Date    updateTime;
 
     public Long getId() {
         return id;

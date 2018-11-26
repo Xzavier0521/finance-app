@@ -6,19 +6,23 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * <p>注释</p>
+ * <p>
+ * 注释
+ * </p>
+ * 
  * @author lili
- * @version $Id: WeiXinLongUrlToShortResponse.java, v0.1 2018/10/29 10:38 PM lili Exp $
+ * @version $Id: WeiXinLongUrlToShortResponse.java, v0.1 2018/10/29 10:38 PM
+ *          lili Exp $
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class WeiXinLongUrlToShortResponse extends WeiXinBasicResponse {
-    private static final long serialVersionUID = 8954319527559683305L;
+	private static final long serialVersionUID = 8954319527559683305L;
 
-    /**
-     * 短链接
-     */
-    private String            short_url;
+	/**
+	 * 短链接
+	 */
+	private String short_url;
 }

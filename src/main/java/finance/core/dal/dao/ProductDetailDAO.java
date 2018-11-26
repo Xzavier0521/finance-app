@@ -6,7 +6,9 @@ import java.util.Map;
 import finance.core.dal.dataobject.ProductDetailDO;
 
 /**
- * <p>注释</p>
+ * <p>
+ * 注释
+ * </p>
  *
  * @author lili
  * @version 1.0: ProductDetailDAO.java, v0.1 2018/11/9 2:09 PM PM lili Exp $
@@ -14,19 +16,14 @@ import finance.core.dal.dataobject.ProductDetailDO;
 
 public interface ProductDetailDAO {
 
-    int deleteByPrimaryKey(Long id);
+	int insertSelective(ProductDetailDO record);
 
-    int insert(ProductDetailDO record);
+	List<ProductDetailDO> query(Map parameters);
 
-    int insertSelective(ProductDetailDO record);
+	int count(Map parameters);
 
-    List<ProductDetailDO> query(Map parameters);
+	ProductDetailDO selectByPrimaryKey(Long id);
 
-    int count(Map parameters);
+	int updateByPrimaryKeySelective(ProductDetailDO record);
 
-    ProductDetailDO selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(ProductDetailDO record);
-
-    int updateByPrimaryKey(ProductDetailDO record);
 }

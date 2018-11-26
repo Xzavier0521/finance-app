@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.LoanDetailDAO" >
+  <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.LoanDetailDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="mark1" property="mark1" jdbcType="VARCHAR" />
+    <result column="mark2" property="mark2" jdbcType="VARCHAR" />
+    <result column="amount_scope" property="amountScope" jdbcType="VARCHAR" />
+    <result column="date_scope" property="dateScope" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product_id, mark1, mark2, amount_scope, date_scope, create_time, update_time, 
+    is_delete, creator, updator, version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from finance_loan_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insertSelective" parameterType="finance.core.dal.dataobject.LoanDetailDO" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into finance_loan_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="mark1 != null" >
+        mark1,
+      </if>
+      <if test="mark2 != null" >
+        mark2,
+      </if>
+      <if test="amountScope != null" >
+        amount_scope,
+      </if>
+      <if test="dateScope != null" >
+        date_scope,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="updator != null" >
+        updator,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="mark1 != null" >
+        #{mark1,jdbcType=VARCHAR},
+      </if>
+      <if test="mark2 != null" >
+        #{mark2,jdbcType=VARCHAR},
+      </if>
+      <if test="amountScope != null" >
+        #{amountScope,jdbcType=VARCHAR},
+      </if>
+      <if test="dateScope != null" >
+        #{dateScope,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updator != null" >
+        #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.LoanDetailDO" >
+    update finance_loan_detail
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="mark1 != null" >
+        mark1 = #{mark1,jdbcType=VARCHAR},
+      </if>
+      <if test="mark2 != null" >
+        mark2 = #{mark2,jdbcType=VARCHAR},
+      </if>
+      <if test="amountScope != null" >
+        amount_scope = #{amountScope,jdbcType=VARCHAR},
+      </if>
+      <if test="dateScope != null" >
+        date_scope = #{dateScope,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updator != null" >
+        updator = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByProductId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from finance_loan_detail
+    where product_id in
+    <foreach item="productId" collection="productIds" open="(" close=")" separator=",">
+      #{productId,jdbcType=BIGINT}
+    </foreach>
+  </select>
+  <select id="selectProductDetailByProductId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from finance_loan_detail
+    where product_id = #{productId,jdbcType=BIGINT}
+  </select>
+</mapper>

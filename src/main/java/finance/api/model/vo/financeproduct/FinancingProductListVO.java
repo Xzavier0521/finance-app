@@ -13,82 +13,79 @@ import finance.core.common.enums.AmountType;
  * @create: 2018-07-06 09:33
  **/
 public class FinancingProductListVO {
-    private Long   id;
-    private String productName;            //产品名称
-    private String logoUrl;                //logo
-    private List   mark = new ArrayList(); //标签
+	private Long id;
+	private String productName; // 产品名称
+	private String logoUrl; // logo
+	private List mark = new ArrayList(); // 标签
 
-    private String aveRevenue;             //平均收益
-    private String productBackground;      //背景
-    private String totalBonus;             //总返现
+	private String aveRevenue; // 平均收益
+	private String productBackground; // 背景
+	private String totalBonus; // 总返现
 
-    public List getMark() {
-        return mark;
-    }
+	public List getMark() {
+		return mark;
+	}
 
-    public void setMark(List mark) {
-        this.mark = mark;
-    }
+	public void setMark(List mark) {
+		this.mark = mark;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getProductName() {
-        return productName;
-    }
+	public String getProductName() {
+		return productName;
+	}
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 
-    public String getLogoUrl() {
-        return logoUrl;
-    }
+	public String getLogoUrl() {
+		return logoUrl;
+	}
 
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
-    }
+	public void setLogoUrl(String logoUrl) {
+		this.logoUrl = logoUrl;
+	}
 
-    public String getAveRevenue() {
-        return aveRevenue;
-    }
+	public String getAveRevenue() {
+		return aveRevenue;
+	}
 
-    public void setAveRevenue(String aveRevenue) {
-        this.aveRevenue = aveRevenue;
-    }
+	public void setAveRevenue(String aveRevenue) {
+		this.aveRevenue = aveRevenue;
+	}
 
-    public String getProductBackground() {
-        return productBackground;
-    }
+	public String getProductBackground() {
+		return productBackground;
+	}
 
-    public void setProductBackground(String productBackground) {
-        this.productBackground = productBackground;
-    }
+	public void setProductBackground(String productBackground) {
+		this.productBackground = productBackground;
+	}
 
-    public String getTotalBonus() {
-        return totalBonus;
-    }
+	public String getTotalBonus() {
+		return totalBonus;
+	}
 
-    public void setTotalBonus(BigDecimal totalBonus, Integer amountType) {
-        if (AmountType.amount.getCode().equals(amountType)) {
-            this.totalBonus = totalBonus == null ? ""
-                : totalBonus.stripTrailingZeros().toPlainString();
-        } else if (AmountType.percenta.getCode().equals(amountType)) {
-            this.totalBonus = totalBonus.multiply(new BigDecimal(100)).stripTrailingZeros()
-                .toPlainString() + "%";
-        }
-    }
+	public void setTotalBonus(BigDecimal totalBonus, Integer amountType) {
+		if (AmountType.amount.getCode().equals(amountType)) {
+			this.totalBonus = totalBonus == null ? "" : totalBonus.stripTrailingZeros().toPlainString();
+		} else if (AmountType.percenta.getCode().equals(amountType)) {
+			this.totalBonus = totalBonus.multiply(new BigDecimal(100)).stripTrailingZeros().toPlainString() + "%";
+		}
+	}
 
-    @Override
-    public String toString() {
-        return "FinancingProductListVO{" + "id=" + id + ", productName='" + productName + '\''
-               + ", logoUrl='" + logoUrl + '\'' + ", mark=" + mark + ", aveRevenue='" + aveRevenue
-               + '\'' + ", productBackground='" + productBackground + '\'' + ", totalBonus='"
-               + totalBonus + '\'' + '}';
-    }
+	@Override
+	public String toString() {
+		return "FinancingProductListVO{" + "id=" + id + ", productName='" + productName + '\'' + ", logoUrl='" + logoUrl
+				+ '\'' + ", mark=" + mark + ", aveRevenue='" + aveRevenue + '\'' + ", productBackground='"
+				+ productBackground + '\'' + ", totalBonus='" + totalBonus + '\'' + '}';
+	}
 }

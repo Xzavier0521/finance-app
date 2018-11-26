@@ -15,34 +15,38 @@ import org.springframework.web.bind.annotation.RestController;
 import finance.core.dal.dao.BusinessCooperationDAO;
 import finance.core.common.enums.CodeEnum;
 import finance.core.dal.dataobject.BusinessCooperationDO;
-import finance.api.model.vo.BusinessCooperationVO;
+import finance.api.model.vo.business.BusinessCooperationVO;
 
 /**
- * <p>商务合作</p>
+ * <p>
+ * 商务合作
+ * </p>
+ * 
  * @author lili
- * @version $Id: BusinessCooperationController.java, v0.1 2018/10/29 5:24 PM lili Exp $
+ * @version $Id: BusinessCooperationController.java, v0.1 2018/10/29 5:24 PM
+ *          lili Exp $
  */
 @Slf4j
 @RequestMapping("/businessCooperation")
 @RestController
 public class BusinessCooperationController {
 
-    @Resource
-    private BusinessCooperationDAO businessCooperationDAO;
+	@Resource
+	private BusinessCooperationDAO businessCooperationDAO;
 
-    @PostMapping("/save")
-    public ResponseResult<Object> saveBusinessInfo(@RequestBody BusinessCooperationVO businessCooperation) {
-        try {
-            BusinessCooperationDO businessCooperationDO = new BusinessCooperationDO();
-            if (Objects.isNull(businessCooperation)) {
-                return ResponseResult.error(CodeEnum.systemError);
-            }
-            businessCooperationDO.setRealName(businessCooperation.getRealName());
-            businessCooperationDO.setMobilePhone(businessCooperation.getMobilePhone());
-            businessCooperationDAO.insertSelective(businessCooperationDO);
-            return ResponseResult.success(null);
-        } catch (final Exception e) {
-            return ResponseResult.error(CodeEnum.systemError);
-        }
-    }
+	@PostMapping("/save")
+	public ResponseResult<Object> saveBusinessInfo(@RequestBody BusinessCooperationVO businessCooperation) {
+		try {
+			BusinessCooperationDO businessCooperationDO = new BusinessCooperationDO();
+			if (Objects.isNull(businessCooperation)) {
+				return ResponseResult.error(CodeEnum.systemError);
+			}
+			businessCooperationDO.setRealName(businessCooperation.getRealName());
+			businessCooperationDO.setMobilePhone(businessCooperation.getMobilePhone());
+			businessCooperationDAO.insertSelective(businessCooperationDO);
+			return ResponseResult.success(null);
+		} catch (final Exception e) {
+			return ResponseResult.error(CodeEnum.systemError);
+		}
+	}
 }

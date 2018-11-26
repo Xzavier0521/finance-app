@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import finance.core.dal.dao.FinanceUserAccountDAO;
+import finance.core.dal.dao.UserAccountDAO;
 import finance.domainservice.service.finance.tansAccount.TransAccBiz;
 
 /**
@@ -24,7 +24,7 @@ public class Account {
     @Autowired
     public TransAccBiz acc;
     @Autowired
-    public FinanceUserAccountDAO accountMapper;
+    public UserAccountDAO accountMapper;
 
 
     @Test

@@ -9,7 +9,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * <p>注释</p>
+ * <p>
+ * 注释
+ * </p>
  *
  * @author lili
  * @version 1.0: UserInviteInfo.java, v 0.1 2018/9/29 上午11:31 lili Exp $
@@ -20,24 +22,24 @@ import java.util.Date;
 @Builder
 public class UserInviteInfo implements Serializable {
 
-    private static final long serialVersionUID = -6823897888895059949L;
-    private Long    id;
+	private static final long serialVersionUID = -6823897888895059949L;
+	private Long id;
 
-    private Long    userId;
+	private Long userId;
 
-    private Long    parentUserId;
+	private Long parentUserId;
 
-    private Integer inviteType;
+	private Integer inviteType;
 
-    private Integer isDelete;
+	private Integer isDelete;
 
-    private String  creator;
+	private String creator;
 
-    private String  updator;
+	private String updator;
 
-    private Integer version;
+	private Integer version;
 
-    private Date    createTime;
+	private Date createTime;
 
-    private Date    updateTime;
+	private Date updateTime;
 }

@@ -16,7 +16,7 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.financeproduct.RebackCashRuleVO;
 import finance.core.common.enums.CodeEnum;
 import finance.domainservice.service.financeproduct.InsuranceProductBiz;
-import finance.core.dal.dataobject.FinanceProductMain;
+import finance.core.dal.dataobject.ProductMain;
 
 /**
  * @program: finance-app
@@ -30,76 +30,76 @@ import finance.core.dal.dataobject.FinanceProductMain;
 @RestController
 @RequestMapping("Insurance")
 public class InsuranceApi {
-    @Autowired
-    private InsuranceProductBiz insuranceProductBizImpl;
+	@Autowired
+	private InsuranceProductBiz insuranceProductBizImpl;
 
-    /**
-     * <pre>
-     * @api {GET} /Insurance/rebackCashRuleList 我要保险返现规则
-     * @apiName rebackCashRuleList
-     * @apiGroup FinanceProduct
-     * @apiVersion 0.1.0
-     * @apiDescription 我要保险返现规则分页展示所有规则
-     * @apiParam {Long} pageNum 页数
-     * @apiParam {Long} pageSize 每页条数
-     * @apiSuccess {Boolean} succeed 是否成功
-     * @apiSuccess {String} errorCode 结果码
-     * @apiSuccess {String} errorMessage 消息说明
-     * @apiSuccess {Object[]} data.list 保险产品数组
-     * @apiSuccessExample {JSON} Success-Response
-     *  HTTP/1.1 200 OK
-     *  {
-     *      "errorCode": "0000000",
-     *      "errorMessage": "success",
-     *      "data": {
-     *          "productList": [
-     *              {
-     *                  "id": 107,
-     *                  "productName": "太平保险",
-     *                  "terminalBonus": "5%",
-     *                  "directBonus": "2.5%",
-     *                  "indirectBonus": "2.5%",
-     *                  "cashbackDate": "每月15号"
-     *              },
-     *              {
-     *                  "id": 107,
-     *                  "productName": "平安保险",
-     *                  "terminalBonus": "5%",
-     *                  "directBonus": "2.5%",
-     *                  "indirectBonus": "2.5%",
-     *                  "cashbackDate": "每月15号"
-     *              },
-     *              {
-     *                  "id": 107,
-     *                  "productName": "人寿保险",
-     *                  "terminalBonus": "5%",
-     *                  "directBonus": "2.5%",
-     *                  "indirectBonus": "2.5%",
-     *                  "cashbackDate": "每月15号"
-     *              }
-     *          ]
-     *      },
-     *      "succeed": true
-     *  }
-     * @apiError 0000000 成功
-     * @apiError 9999999 网络返回错误
-     * @apiError 0304001 参数不合法
-     * </pre>
-     * @author
-     */
-    @GetMapping(value = "rebackCashRuleList")
-    public ResponseResult<Map<String, List<RebackCashRuleVO>>> rebackCashRuleList(@RequestParam("pageNum") Long pageNum,
-                                                                                  @RequestParam("pageSize") Long pageSize) {
-        if (StringUtils.isEmpty(pageNum) || StringUtils.isEmpty(pageSize)) {
-            return ResponseResult.error(CodeEnum.rebackRuleParamNUll);
-        }
+	/**
+	 * <pre>
+	 * &#64;api {GET} /Insurance/rebackCashRuleList 我要保险返现规则
+	 * &#64;apiName rebackCashRuleList
+	 * &#64;apiGroup FinanceProduct
+	 * &#64;apiVersion 0.1.0
+	 * &#64;apiDescription 我要保险返现规则分页展示所有规则
+	 * &#64;apiParam {Long} pageNum 页数
+	 * &#64;apiParam {Long} pageSize 每页条数
+	 * &#64;apiSuccess {Boolean} succeed 是否成功
+	 * &#64;apiSuccess {String} errorCode 结果码
+	 * &#64;apiSuccess {String} errorMessage 消息说明
+	 * &#64;apiSuccess {Object[]} data.list 保险产品数组
+	 * &#64;apiSuccessExample {JSON} Success-Response
+	 *  HTTP/1.1 200 OK
+	 *  {
+	 *      "errorCode": "0000000",
+	 *      "errorMessage": "success",
+	 *      "data": {
+	 *          "productList": [
+	 *              {
+	 *                  "id": 107,
+	 *                  "productName": "太平保险",
+	 *                  "terminalBonus": "5%",
+	 *                  "directBonus": "2.5%",
+	 *                  "indirectBonus": "2.5%",
+	 *                  "cashbackDate": "每月15号"
+	 *              },
+	 *              {
+	 *                  "id": 107,
+	 *                  "productName": "平安保险",
+	 *                  "terminalBonus": "5%",
+	 *                  "directBonus": "2.5%",
+	 *                  "indirectBonus": "2.5%",
+	 *                  "cashbackDate": "每月15号"
+	 *              },
+	 *              {
+	 *                  "id": 107,
+	 *                  "productName": "人寿保险",
+	 *                  "terminalBonus": "5%",
+	 *                  "directBonus": "2.5%",
+	 *                  "indirectBonus": "2.5%",
+	 *                  "cashbackDate": "每月15号"
+	 *              }
+	 *          ]
+	 *      },
+	 *      "succeed": true
+	 *  }
+	 * &#64;apiError 0000000 成功
+	 * &#64;apiError 9999999 网络返回错误
+	 * &#64;apiError 0304001 参数不合法
+	 * </pre>
+	 * 
+	 * @author
+	 */
+	@GetMapping(value = "rebackCashRuleList")
+	public ResponseResult<Map<String, List<RebackCashRuleVO>>> rebackCashRuleList(@RequestParam("pageNum") Long pageNum,
+			@RequestParam("pageSize") Long pageSize) {
+		if (StringUtils.isEmpty(pageNum) || StringUtils.isEmpty(pageSize)) {
+			return ResponseResult.error(CodeEnum.rebackRuleParamNUll);
+		}
 
-        Page<FinanceProductMain> financeProductPage = new Page<>(pageSize.intValue(), pageNum);
-        List<RebackCashRuleVO> reRulelist = insuranceProductBizImpl
-            .findProductList(financeProductPage);
-        Map<String, List<RebackCashRuleVO>> returnMap = new HashMap();
-        returnMap.put("productList", reRulelist);
-        return ResponseResult.success(returnMap);
-    }
+		Page<ProductMain> financeProductPage = new Page<>(pageSize.intValue(), pageNum);
+		List<RebackCashRuleVO> reRulelist = insuranceProductBizImpl.findProductList(financeProductPage);
+		Map<String, List<RebackCashRuleVO>> returnMap = new HashMap();
+		returnMap.put("productList", reRulelist);
+		return ResponseResult.success(returnMap);
+	}
 
 }

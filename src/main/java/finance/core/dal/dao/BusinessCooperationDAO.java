@@ -3,21 +3,24 @@ package finance.core.dal.dao;
 import finance.core.dal.dataobject.BusinessCooperationDO;
 
 /**
- * <p>商务客户</p>
+ * <p>
+ * 商务客户
+ * </p>
+ * 
  * @author lili
  * @version $Id: BusinessCooperationDAO.java, v0.1 2018/10/29 4:47 PM lili Exp $
  */
 public interface BusinessCooperationDAO {
 
-    int deleteByPrimaryKey(Long id);
+	int deleteByPrimaryKey(Long id);
 
-    int insert(BusinessCooperationDO record);
+	int insert(BusinessCooperationDO record);
 
-    int insertSelective(BusinessCooperationDO record);
+	int insertSelective(BusinessCooperationDO record);
 
-    BusinessCooperationDO selectByPrimaryKey(Long id);
+	BusinessCooperationDO selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(BusinessCooperationDO record);
+	int updateByPrimaryKeySelective(BusinessCooperationDO record);
 
-    int updateByPrimaryKey(BusinessCooperationDO record);
+	int updateByPrimaryKey(BusinessCooperationDO record);
 }

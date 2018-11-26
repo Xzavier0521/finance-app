@@ -14,31 +14,31 @@ import lombok.Data;
 @Data
 public class InviteInfoAndIncomeVo implements Serializable {
 
-    private static final long serialVersionUID = -4679852080699855955L;
-    private Long              parentUserId;
-    /**
-     * 用户id
-     */
-    private Long              userId;
+	private static final long serialVersionUID = -4679852080699855955L;
+	private Long parentUserId;
+	/**
+	 * 用户id
+	 */
+	private Long userId;
 
-    /**
-     * 手机号码
-     */
-    private String            phoneNumber;
+	/**
+	 * 手机号码
+	 */
+	private String phoneNumber;
 
-    /**
-     * 注册时间
-     */
-    private String            registerDate;
+	/**
+	 * 注册时间
+	 */
+	private String registerDate;
 
-    /**
-     * 总收益
-     */
-    private BigDecimal        totalIncome;
+	/**
+	 * 总收益
+	 */
+	private BigDecimal totalIncome;
 
-    /**
-     * 预计收益
-     */
-    private BigDecimal        predictIncome;
+	/**
+	 * 预计收益
+	 */
+	private BigDecimal predictIncome;
 
 }

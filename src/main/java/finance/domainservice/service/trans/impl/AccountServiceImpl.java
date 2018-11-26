@@ -27,26 +27,26 @@ import finance.core.dal.dao.*;
  */
 @Service("accountService")
 public class AccountServiceImpl extends AbstractCoinDealMulti implements AccountService {
-    /** 转账手续费*/
+    /** 转账手续费 */
     @Value("${beecloud.exchangeFee}")
-    private BigDecimal             exchangeFee;
+    private BigDecimal      exchangeFee;
 
     @Resource
-    private FinanceUserAccountDAO  accountMapper;
+    private UserAccountDAO  accountMapper;
     @Resource
-    private FinanceOrderDAO        orderMapper;
+    private OrderDAO        orderMapper;
     @Resource
-    private FinanceProfitDAO       profitMapper;
+    private ProfitDAO       profitMapper;
     @Resource
-    private FinanceIdCardInfoDAO   idCardInfoMapper;
+    private IdCardInfoDAO   idCardInfoMapper;
     @Resource
-    private FinanceCoinLogDAO      coinLogMapper;
+    private CoinLogDAO      coinLogMapper;
     @Resource
-    private FinanceCoinMoneyLogDAO coinMoneyLogMapper;
+    private CoinMoneyLogDAO coinMoneyLogMapper;
 
     @Override
-    public ResponseResult<FinanceUserAccount> createAccountInfo(Long userId) {
-        FinanceUserAccount account = new FinanceUserAccount();
+    public ResponseResult<UserAccountDO> createAccountInfo(Long userId) {
+        UserAccountDO account = new UserAccountDO();
         account.setUserId(userId);
         account.setStatus("0");
         account.setIncomeMoney(BigDecimal.ZERO);
@@ -64,7 +64,7 @@ public class AccountServiceImpl extends AbstractCoinDealMulti implements Account
         accountMapper.chargeMoney(userId, addMoney);
 
         // 记录分润信息(为了能够在返现记录中查询)
-        FinanceProfit profit = new FinanceProfit();
+        ProfitDO profit = new ProfitDO();
         profit.setTerminalId(userId);
         profit.setProdId(0L);
         profit.setProdName(reason);
@@ -75,7 +75,7 @@ public class AccountServiceImpl extends AbstractCoinDealMulti implements Account
         profitMapper.insertSelective(profit);
 
         // 记录流水
-        FinanceOrder order = new FinanceOrder();
+        OrderDO order = new OrderDO();
         Random rand = new Random();
         int h = rand.nextInt(899) + 100;
         order.setProfitId(profit.getId());
@@ -91,11 +91,11 @@ public class AccountServiceImpl extends AbstractCoinDealMulti implements Account
     @Override
     public void dealCoinTask(@SuppressWarnings("rawtypes") RedisLockDto redisLockDto) {
         UserWithdrawDto paramDto = (UserWithdrawDto) redisLockDto.getParam();
-        FinanceUserInfo user = paramDto.getUser();
-        FinanceUserBankCardInfo bankCard = paramDto.getBankCard();
-        FinanceCoinLog coinLog = paramDto.getCoinLog();
+        UserInfoDO user = paramDto.getUser();
+        UserBankCardInfoDO bankCard = paramDto.getBankCard();
+        CoinLogDO coinLog = paramDto.getCoinLog();
 
-        /* 判断是否够扣减*/
+        /* 判断是否够扣减 */
         if (paramDto.isByCoin()) {
             Integer coinNum = coinLogMapper.selectCoinNumByUserId(user.getId());
             if (coinNum < -coinLog.getNum()) {
@@ -105,15 +105,15 @@ public class AccountServiceImpl extends AbstractCoinDealMulti implements Account
             }
         }
 
-        /* 扣账户的钱*/
+        /* 扣账户的钱 */
         int resCount = accountMapper.countDownMoney(user.getId(), paramDto.getMoneyDecimal());
 
-        /* 保存申请提现流水*/
+        /* 保存申请提现流水 */
         if (resCount == 1) {
-            FinanceIdCardInfo idCard = idCardInfoMapper.selectByUserId(user.getId()); // 肯定存在，不存在不允许提现
+            IdCardInfoDO idCard = idCardInfoMapper.selectByUserId(user.getId()); // 肯定存在，不存在不允许提现
             Random rand = new Random();
             int h = rand.nextInt(899) + 100;
-            FinanceOrder order = new FinanceOrder();
+            OrderDO order = new OrderDO();
             order.setUserName(idCard.getRealName());
             order.setStatus(OrderStatus.init.getCode());
             order.setUserId(user.getId());
@@ -129,8 +129,8 @@ public class AccountServiceImpl extends AbstractCoinDealMulti implements Account
             orderMapper.insertSelective(order);
 
             if (paramDto.isByCoin()) {
-                /* 保存金币兑换钱日志*/
-                FinanceCoinMoneyLog coinMoneyLog = new FinanceCoinMoneyLog();
+                /* 保存金币兑换钱日志 */
+                CoinMoneyLogDO coinMoneyLog = new CoinMoneyLogDO();
                 coinMoneyLog.setCoinNum(-paramDto.getCoinLog().getNum()); // 原值是负数
                 coinMoneyLog.setOrderId(order.getId());
                 coinMoneyLog.setRemark("金币抵扣提现手续费");
@@ -138,7 +138,7 @@ public class AccountServiceImpl extends AbstractCoinDealMulti implements Account
                 coinMoneyLog.setMoney(exchangeFee); // XXX 手续费
                 coinMoneyLogMapper.insertSelective(coinMoneyLog);
 
-                /* 开始扣减金币*/
+                /* 开始扣减金币 */
                 coinLogMapper.insertSelective(coinLog);
             }
 

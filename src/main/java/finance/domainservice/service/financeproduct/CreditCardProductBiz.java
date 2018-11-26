@@ -5,7 +5,7 @@ import java.util.List;
 import finance.api.model.base.Page;
 import finance.api.model.vo.financeproduct.CreditCardProductDetailVO;
 import finance.api.model.vo.financeproduct.CreditCardProductListVO;
-import finance.core.dal.dataobject.FinanceProductMain;
+import finance.core.dal.dataobject.ProductMain;
 
 /**
  * @program: finance-app
@@ -14,17 +14,19 @@ import finance.core.dal.dataobject.FinanceProductMain;
  * @create: 2018-07-12 17:26
  **/
 public interface CreditCardProductBiz {
-    /**
-     * 信用卡-我的信用卡页面查询
-     * @param financeProductPage
-     * @return
-     */
-    public List<CreditCardProductListVO> findProductList(Page<FinanceProductMain> financeProductPage);
+	/**
+	 * 信用卡-我的信用卡页面查询
+	 * 
+	 * @param financeProductPage
+	 * @return
+	 */
+	public List<CreditCardProductListVO> findProductList(Page<ProductMain> financeProductPage);
 
-    /**
-     * 理财--我要办卡详情页查询
-     * @param productId
-     * @return
-     */
-    public CreditCardProductDetailVO findProductDetailByProductId(Long productId);
+	/**
+	 * 理财--我要办卡详情页查询
+	 * 
+	 * @param productId
+	 * @return
+	 */
+	public CreditCardProductDetailVO findProductDetailByProductId(Long productId);
 }

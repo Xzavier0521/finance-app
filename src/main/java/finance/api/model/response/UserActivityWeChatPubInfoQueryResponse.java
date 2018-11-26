@@ -5,41 +5,45 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * <p>注释</p>
+ * <p>
+ * 注释
+ * </p>
+ * 
  * @author lili
- * @version $Id: UserActivityWeChatPubInfoQueryResponse.java, v0.1 2018/11/7 1:42 PM lili Exp $
+ * @version $Id: UserActivityWeChatPubInfoQueryResponse.java, v0.1 2018/11/7
+ *          1:42 PM lili Exp $
  */
 @Data
 public class UserActivityWeChatPubInfoQueryResponse implements Serializable {
 
-    private static final long serialVersionUID = 859491862027822160L;
-    /**
-     * 用户id　
-     */
-    private Long              userId;
+	private static final long serialVersionUID = 859491862027822160L;
+	/**
+	 * 用户id
+	 */
+	private Long userId;
 
-    /**
-     * 手机号码
-     */
-    private String            mobilePhone;
+	/**
+	 * 手机号码
+	 */
+	private String mobilePhone;
 
-    /**
-     * 活动代码
-     */
-    private String            activityCode;
+	/**
+	 * 活动代码
+	 */
+	private String activityCode;
 
-    /**
-     * 历史关注人数
-     */
-    private Long              historySubscribeNum;
+	/**
+	 * 历史关注人数
+	 */
+	private Long historySubscribeNum;
 
-    /**
-     * 当前关注人数
-     */
-    private Long              subscribeNum;
+	/**
+	 * 当前关注人数
+	 */
+	private Long subscribeNum;
 
-    /**
-     * 微信公众号取消关注人数
-     */
-    private Long              unsubscribeNum;
+	/**
+	 * 微信公众号取消关注人数
+	 */
+	private Long unsubscribeNum;
 }

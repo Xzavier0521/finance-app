@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.UserInfoDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.UserInfoDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="mobile_num" property="mobileNum" jdbcType="VARCHAR"/>
+        <result column="invite_code" property="inviteCode" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, mobile_num, invite_code, `status`, is_delete, creator, updator, version, create_time,
+        update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_user_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.UserInfoDO">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into finance_user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mobileNum != null">
+                mobile_num,
+            </if>
+            <if test="inviteCode != null">
+                invite_code,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="updator != null">
+                updator,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mobileNum != null">
+                #{mobileNum,jdbcType=VARCHAR},
+            </if>
+            <if test="inviteCode != null">
+                #{inviteCode,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.UserInfoDO">
+        update finance_user_info
+        <set>
+            <if test="mobileNum != null">
+                mobile_num = #{mobileNum,jdbcType=VARCHAR},
+            </if>
+            <if test="inviteCode != null">
+                invite_code = #{inviteCode,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                updator = #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_user_info
+        where mobile_num = #{mobileNum,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectByInviteCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_user_info
+        where invite_code = #{inviteCode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPrimaryKeys" resultMap="BaseResultMap" parameterType="java.util.List">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM finance_user_info
+        where id in
+        <foreach item="id" collection="ids" open="(" close=")" separator=",">
+            #{id,jdbcType=BIGINT}
+        </foreach>
+    </select>
+
+    <select id="selectLikeMobile" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_user_info
+        where mobile_num like #{mobileNum,jdbcType=VARCHAR}
+    </select>
+    <select id="selectInviterByUserId" resultType="java.lang.Long">
+        SELECT
+        fuii.parent_user_id
+        FROM
+        finance_user_invite_info fuii
+        LEFT JOIN finance_user_info fui ON fuii.user_id = fui.id
+        LEFT JOIN finance_invite_open_info fioi ON fioi.invite_code = fui.invite_code
+        WHERE
+        fuii.user_id = #{userId}
+        AND fioi.id IS NOT NULL and fioi.activity_code=#{signActivityCode}
+    </select>
+    <sql id="finance_user_info_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="mobileNum != null and mobileNum.trim().length() != 0">
+                AND (mobile_num like '%' || #{mobileNum} || '%')
+            </if>
+            <if test="inviteCode != null and inviteCode.trim().length() != 0">
+                AND (invite_code like '%' || #{inviteCode} || '%')
+            </if>
+            <if test="activityCode != null and activityCode.trim().length() != 0">
+                AND (activity_code like '%' || #{activityCode} || '%')
+            </if>
+            <if test="status != null and status.trim().length() != 0">
+                AND (status like '%' || #{status} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_user_info_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="mobileNum != null and mobileNum.trim().length() != 0">
+                AND (mobile_num = #{mobileNum})
+            </if>
+            <if test="inviteCode != null and inviteCode.trim().length() != 0">
+                AND (invite_code = #{inviteCode})
+            </if>
+            <if test="activityCode != null and activityCode.trim().length() != 0">
+                AND (activity_code = #{activityCode})
+            </if>
+            <if test="status != null and status.trim().length() != 0">
+                AND (status = #{status})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_user_info
+        <if test="fuzzy">
+            <include refid="finance_user_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_user_info_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_user_info
+        <if test="fuzzy">
+            <include refid="finance_user_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_user_info_query_condition"/>
+        </if>
+    </select>
+</mapper>

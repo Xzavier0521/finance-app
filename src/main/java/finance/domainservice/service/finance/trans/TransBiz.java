@@ -6,8 +6,8 @@ import finance.api.model.base.Page;
 import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.financeProfit.FinanceProfitVO;
 import finance.api.model.vo.transRecord.FinanceOrderVo;
+import finance.core.dal.dataobject.UserInfoDO;
 import finance.domain.dto.UserWithdrawDto;
-import finance.core.dal.dataobject.FinanceUserInfo;
 
 /**
  * @author yaolei
@@ -17,32 +17,36 @@ import finance.core.dal.dataobject.FinanceUserInfo;
  * @date 2018/7/6下午1:41
  */
 public interface TransBiz {
-    /**
-     * 提现接口
-     * @param
-     * @return
-     */
-    ResponseResult<String> withdraw(FinanceUserInfo userInfo, UserWithdrawDto paramDto);
+	/**
+	 * 提现接口
+	 * 
+	 * @param
+	 * @return
+	 */
+	ResponseResult<String> withdraw(UserInfoDO userInfo, UserWithdrawDto paramDto);
 
-    /**
-     * 查询我的返现记录.
-     * @param userId
-     * @return
-     */
-    List<FinanceProfitVO> myProfit(Long userId, Page<FinanceProfitVO> page);
+	/**
+	 * 查询我的返现记录.
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	List<FinanceProfitVO> myProfit(Long userId, Page<FinanceProfitVO> page);
 
-    /**
-     * 注册充值
-     * @param userId
-     * @param userName
-     * @return
-     */
-    ResponseResult<String> recharge(Long userId, String userName);
+	/**
+	 * 注册充值
+	 * 
+	 * @param userId
+	 * @param userName
+	 * @return
+	 */
+	ResponseResult<String> recharge(Long userId, String userName);
 
-    /**
-     * 查询交易记录
-     * @param id
-     * @return
-     */
-    List<FinanceOrderVo> transRecords(Long id, Page<FinanceOrderVo> page);
+	/**
+	 * 查询交易记录
+	 * 
+	 * @param id
+	 * @return
+	 */
+	List<FinanceOrderVo> transRecords(Long id, Page<FinanceOrderVo> page);
 }

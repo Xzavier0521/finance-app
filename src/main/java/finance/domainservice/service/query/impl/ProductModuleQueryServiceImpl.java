@@ -18,37 +18,40 @@ import finance.domainservice.service.query.ProductModuleQueryService;
 import finance.api.model.vo.product.ProductModuleVO;
 
 /**
- * <p>产品模块查询</p>
+ * <p>
+ * 产品模块查询
+ * </p>
  *
  * @author lili
- * @version 1.0: ProductModuleQueryServiceImpl.java, v0.1 2018/11/8 5:20 PM PM lili Exp $
+ * @version 1.0: ProductModuleQueryServiceImpl.java, v0.1 2018/11/8 5:20 PM PM
+ *          lili Exp $
  */
 @Slf4j
 @Service("productModuleQueryService")
 public class ProductModuleQueryServiceImpl implements ProductModuleQueryService {
 
-    @Resource
-    private ProductModuleRepository productModuleRepository;
+	@Resource
+	private ProductModuleRepository productModuleRepository;
 
-    @Resource
-    private ProductDetailRepository productDetailRepository;
+	@Resource
+	private ProductDetailRepository productDetailRepository;
 
-    @Override
-    public List<ProductModuleVO> queryAllModule() {
+	@Override
+	public List<ProductModuleVO> queryAllModule() {
 
-        List<ProductModuleVO> productModuleVOList = Lists.newArrayList();
-        List<ProductModule> productModules = productModuleRepository.queryAll();
-        if (CollectionUtils.isEmpty(productModules)) {
-            return productModuleVOList;
-        }
-        ProductModuleVO productModuleVO;
-        for (ProductModule productModule : productModules) {
-            productModuleVO = new ProductModuleVO();
-            productModuleVO.setProductModule(productModule);
-            productModuleVO.setProductDetails(
-                productDetailRepository.queryProductByModule(productModule.getModuleCode()));
-            productModuleVOList.add(productModuleVO);
-        }
-        return productModuleVOList;
-    }
+		List<ProductModuleVO> productModuleVOList = Lists.newArrayList();
+		List<ProductModule> productModules = productModuleRepository.queryAll();
+		if (CollectionUtils.isEmpty(productModules)) {
+			return productModuleVOList;
+		}
+		ProductModuleVO productModuleVO;
+		for (ProductModule productModule : productModules) {
+			productModuleVO = new ProductModuleVO();
+			productModuleVO.setProductModule(productModule);
+			productModuleVO
+					.setProductDetails(productDetailRepository.queryProductByModule(productModule.getModuleCode()));
+			productModuleVOList.add(productModuleVO);
+		}
+		return productModuleVOList;
+	}
 }

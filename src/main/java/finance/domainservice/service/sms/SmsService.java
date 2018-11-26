@@ -3,23 +3,24 @@ package finance.domainservice.service.sms;
 import finance.api.model.response.ResponseResult;
 
 /**
+ * <p>
  * 短信服务
- * @author yaolei
- * @Title: SmsBiz
- * @ProjectName finance-app
- * @Description: 
- * @date 2018/7/6下午5:41
+ * </p>
+ * 
+ * @author lili
+ * @version $Id: SmsService.java, v0.1 2018/11/24 8:41 PM lili Exp $
  */
 public interface SmsService {
 
-    /**
-     * 发送短信
-     * @param mobile
-     * @param message 短信内容，短信签名请调用者自己添加
-     * @return
-     * @author yaolei
-     * @version SmsService.java, v1.0 2018年7月6日 上午11:05:10 yaolei
-     */
-    ResponseResult<String> sendMsg(String mobile, String message);
+	/**
+	 * 发送短信
+	 * 
+	 * @param mobile
+	 *            手机号码
+	 * @param message
+	 *            短信内容，短信签名请调用者自己添加
+	 * @return ResponseResult<String>
+	 */
+	ResponseResult<String> sendMsg(String mobile, String message);
 
 }

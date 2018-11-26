@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dataobject.SmsSendLogDO;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
@@ -15,41 +16,43 @@ import finance.api.model.response.ResponseResult;
 import finance.core.common.constants.Constant;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.SmsUseType;
+import finance.core.dal.dao.SmsSendLogDAO;
 import finance.domain.dto.SendSmsCodeDto;
 import finance.domainservice.service.sms.SmsBiz;
 import finance.domainservice.service.sms.SmsService;
 import finance.domainservice.service.validate.ImgValidateService;
 import finance.domainservice.service.validate.SmsValidateService;
-import finance.core.dal.dao.FinanceSmsSendLogDAO;
-import finance.core.dal.dataobject.FinanceSmsSendLog;
+import finance.ext.integration.sms.DodoSmsClient;
 
 /**
- * @author yaolei
- * @Title: SmsBizImpl
- * @ProjectName finance-app
- * @Description: 发送短信
- * @date 2018/7/6下午5:42
+ * <p>发送短信</p>
+ * 
+ * @author lili
+ * @version $Id: SmsBizImpl.java, v0.1 2018/11/24 8:42 PM lili Exp $
  */
 @Slf4j
 @Service
 public class SmsBizImpl implements SmsBiz {
 
     @Resource
-    private SmsService           smsServize;
+    private SmsService         smsService;
     @Resource
-    private SmsValidateService   smsValidateService;
+    private SmsValidateService smsValidateService;
     @Resource
-    private ImgValidateService   imgValidateService;
+    private ImgValidateService imgValidateService;
     @Resource
-    private FinanceSmsSendLogDAO smsSendLogMapper;
+    private SmsSendLogDAO      smsSendLogMapper;
+
+    @Resource
+    private DodoSmsClient      dodoSmsClient;
 
     @Override
     public ResponseResult<String> sendSmsValidateCode(SendSmsCodeDto paramDto) {
         String mobileNum = paramDto.getMobileNum();
-        String vidateCode = this.getSmsVidateCode();
-        String smsBody = "您的验证码为：" + vidateCode + "，5分钟内有效，如非本人操作，请忽略此短信。";
+        String validateCode = this.getSmsValidateCode();
+        String smsBody = "您的验证码为：" + validateCode + "，5分钟内有效，如非本人操作，请忽略此短信。";
 
-        //  白名单
+        // 白名单
         Set<String> whitelist = Sets.newHashSet();
         whitelist.add("17192197807");
         // whitelist.add("18101625436");
@@ -65,19 +68,22 @@ public class SmsBizImpl implements SmsBiz {
         }
 
         // 校验图片验证码
-        Boolean vaildateRes = this.vidateImgCode(paramDto.getUseType(), paramDto.getImgCodeId(),
+        Boolean validateRes = this.vidateImgCode(paramDto.getUseType(), paramDto.getImgCodeId(),
             paramDto.getImgCode());
-        if (!vaildateRes) {
+        if (!validateRes) {
             return ResponseResult.error(CodeEnum.smsImgValidateFail);
         }
         // 发送
-        ResponseResult<String> sendRes = smsServize.sendMsg(mobileNum, smsHeader + smsBody);
-
+        ResponseResult<String> sendRes = smsService.sendMsg(mobileNum, smsHeader + smsBody);
+        // 采用备用短信通道
+        if (!sendRes.isSucceed()) {
+            dodoSmsClient.sendSms(mobileNum, smsHeader + smsBody);
+        }
         // 缓存短信验证码
-        smsValidateService.cacheSmsVidateCode(mobileNum, vidateCode, paramDto.getUseType());
+        smsValidateService.cacheSmsValidateCode(mobileNum, validateCode, paramDto.getUseType());
 
         // 记录日志
-        FinanceSmsSendLog smsSendLog = new FinanceSmsSendLog();
+        SmsSendLogDO smsSendLog = new SmsSendLogDO();
         smsSendLog.setMobileNum(paramDto.getMobileNum());
         smsSendLog.setHeader(smsHeader);
         smsSendLog.setBody(smsBody + (sendRes.isSucceed() ? "" : sendRes.getData()));
@@ -97,19 +103,18 @@ public class SmsBizImpl implements SmsBiz {
         if (SmsUseType.simpleRegist.toString().equals(userType)) {
             return true;
         } else {
-            imgValidateRes = imgValidateService.vidateImgCode(imgCodeId, imgCode);
+            imgValidateRes = imgValidateService.validateImgCode(imgCodeId, imgCode);
         }
         return imgValidateRes;
     }
 
     /**
      * 生成短信验证码.
-     * @return
-     * @author hewenbin
-     * @version SmsBizImpl.java, v1.0 2018年7月11日 上午10:06:55 hewenbin
+     * 
+     * @return String
      */
-    private String getSmsVidateCode() {
-        StringBuffer charValue = new StringBuffer();
+    private String getSmsValidateCode() {
+        StringBuilder charValue = new StringBuilder();
         String str = "0123456789";
         Random random = new Random();
         for (int i = 0; i < Constant.smscode_length; i++) {

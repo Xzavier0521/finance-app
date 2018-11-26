@@ -18,7 +18,10 @@ import finance.core.common.enums.CodeEnum;
 import finance.domainservice.service.query.ProductModuleQueryService;
 
 /**
- * <p>产品模块</p>
+ * <p>
+ * 产品模块
+ * </p>
+ * 
  * @author lili
  * @version $Id: ProductModuleController.java, v0.1 2018/11/8 1:38 PM lili Exp $
  */
@@ -27,24 +30,24 @@ import finance.domainservice.service.query.ProductModuleQueryService;
 @RequestMapping("api/product")
 public class ProductModuleController {
 
-    @Resource
-    private ProductModuleQueryService productModuleQueryService;
+	@Resource
+	private ProductModuleQueryService productModuleQueryService;
 
-    @GetMapping("/getAllModule")
-    public ResponseResult<ProductModuleQueryResponse> queryAllModule() {
-        log.info("[开始查询首页产品模块]");
-        ResponseResult<ProductModuleQueryResponse> response;
-        try {
-            List<ProductModuleVO> productModuleVOList = productModuleQueryService.queryAllModule();
-            ProductModuleQueryResponse queryResponse = new ProductModuleQueryResponse();
-            queryResponse.setItems(productModuleVOList);
-            response = ResponseResult.success(queryResponse);
-        } catch (final Exception e) {
-            response = ResponseResult.error(CodeEnum.systemError);
-            log.info("[查询首页产品模块],异常:{}", ExceptionUtils.getStackTrace(e));
-        }
-        log.info("[结束查询首页产品模块],返回结果:{}", response);
-        return response;
-    }
+	@GetMapping("/getAllModule")
+	public ResponseResult<ProductModuleQueryResponse> queryAllModule() {
+		log.info("[开始查询首页产品模块]");
+		ResponseResult<ProductModuleQueryResponse> response;
+		try {
+			List<ProductModuleVO> productModuleVOList = productModuleQueryService.queryAllModule();
+			ProductModuleQueryResponse queryResponse = new ProductModuleQueryResponse();
+			queryResponse.setItems(productModuleVOList);
+			response = ResponseResult.success(queryResponse);
+		} catch (final Exception e) {
+			response = ResponseResult.error(CodeEnum.systemError);
+			log.info("[查询首页产品模块],异常:{}", ExceptionUtils.getStackTrace(e));
+		}
+		log.info("[结束查询首页产品模块],返回结果:{}", response);
+		return response;
+	}
 
 }

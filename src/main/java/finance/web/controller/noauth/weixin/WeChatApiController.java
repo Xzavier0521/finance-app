@@ -28,7 +28,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * <p>注释</p>
+ * <p>
+ * 注释
+ * </p>
+ * 
  * @author lili
  * @version $Id: WeChatApiController.java, v0.1 2018/10/31 3:07 PM lili Exp $
  */
@@ -37,36 +40,36 @@ import java.util.Date;
 @RestController
 public class WeChatApiController {
 
-    @Value("${weChat.default.inviteCode}")
-    private String             defaultInviteCode;
-    @Resource
-    private WeChatPubQrService weChatPubQrService;
+	@Value("${weChat.default.inviteCode}")
+	private String defaultInviteCode;
+	@Resource
+	private WeChatPubQrService weChatPubQrService;
 
-    @GetMapping("createTempQr")
-    public ResponseResult<WeChatCreateQrResponse> createTempQr(@Param("activityCode") String activityCode,
-                                                               @Param("inviteCode") String inviteCode) {
+	@GetMapping("createTempQr")
+	public ResponseResult<WeChatCreateQrResponse> createTempQr(@Param("activityCode") String activityCode,
+			@Param("inviteCode") String inviteCode) {
 
-        log.info("[开始生成微信公众号临时二维码],activityCode:{},inviteCode:{}", activityCode, inviteCode);
-        ResponseResult<WeChatCreateQrResponse> response;
-        try {
-            Preconditions.checkArgument(StringUtils.isNotBlank(activityCode));
-            if (StringUtils.isBlank(inviteCode)) {
-                inviteCode = defaultInviteCode;
-            }
-            WeCharQrInfo weCharQrInfo = weChatPubQrService.createTempQr(activityCode, inviteCode);
-            String url = weCharQrInfo.getUrl();
-            if (StringUtils.isNotBlank(url)) {
-                response = ResponseResult.success(
-                    WeChatCreateQrResponse.builder().url(url).ticket(weCharQrInfo.getTicket())
-                        .expireSeconds(WeChatConstant.QR_EXPIRE_SECONDS).qrUrl(weCharQrInfo.getQrUrl()).build());
-            } else {
-                response = ResponseResult.error(CodeEnum.systemError);
-            }
-        } catch (final Exception e) {
-            response = ResponseResult.error(CodeEnum.systemError);
-            log.error("[生成微信公众号临时二维码],异常:{}", ExceptionUtils.getStackTrace(e));
-        }
-        log.info("[结束生成微信公众号临时二维码],返回结果:{}", response);
-        return response;
-    }
+		log.info("[开始生成微信公众号临时二维码],activityCode:{},inviteCode:{}", activityCode, inviteCode);
+		ResponseResult<WeChatCreateQrResponse> response;
+		try {
+			Preconditions.checkArgument(StringUtils.isNotBlank(activityCode));
+			if (StringUtils.isBlank(inviteCode)) {
+				inviteCode = defaultInviteCode;
+			}
+			WeCharQrInfo weCharQrInfo = weChatPubQrService.createTempQr(activityCode, inviteCode);
+			String url = weCharQrInfo.getUrl();
+			if (StringUtils.isNotBlank(url)) {
+				response = ResponseResult.success(WeChatCreateQrResponse.builder().url(url)
+						.ticket(weCharQrInfo.getTicket()).expireSeconds(WeChatConstant.QR_EXPIRE_SECONDS)
+						.qrUrl(weCharQrInfo.getQrUrl()).build());
+			} else {
+				response = ResponseResult.error(CodeEnum.systemError);
+			}
+		} catch (final Exception e) {
+			response = ResponseResult.error(CodeEnum.systemError);
+			log.error("[生成微信公众号临时二维码],异常:{}", ExceptionUtils.getStackTrace(e));
+		}
+		log.info("[结束生成微信公众号临时二维码],返回结果:{}", response);
+		return response;
+	}
 }

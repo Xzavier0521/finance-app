@@ -17,46 +17,49 @@ import finance.domainservice.converter.WeiXinMessageTemplateConverter;
 import finance.domainservice.repository.WeiXinMessageTemplateRepository;
 
 /**
- * <p>微信公众号消息模版</p>
+ * <p>
+ * 微信公众号消息模版
+ * </p>
+ * 
  * @author lili
- * @version $Id: WeiXinMessageTemplateRepositoryImpl.java, v0.1 2018/10/24 10:50 AM lili Exp $
+ * @version $Id: WeiXinMessageTemplateRepositoryImpl.java, v0.1 2018/10/24 10:50
+ *          AM lili Exp $
  */
 @Repository("weiXinMessageTemplateRepository")
 public class WeiXinMessageTemplateRepositoryImpl implements WeiXinMessageTemplateRepository {
 
-    @Resource
-    private WeiXinMessageTemplateDAO weiXinMessageTemplateDAO;
+	@Resource
+	private WeiXinMessageTemplateDAO weiXinMessageTemplateDAO;
 
-    /**
-     * 插入记录
-     *
-     * @param weiXinMessageTemplate 微信消息模版
-     * @return int
-     */
-    @Override
-    public int save(WeiXinMessageTemplate weiXinMessageTemplate) {
-        return weiXinMessageTemplateDAO
-            .insertSelective(WeiXinMessageTemplateConverter.convert(weiXinMessageTemplate));
-    }
+	/**
+	 * 插入记录
+	 *
+	 * @param weiXinMessageTemplate
+	 *            微信消息模版
+	 * @return int
+	 */
+	@Override
+	public int save(WeiXinMessageTemplate weiXinMessageTemplate) {
+		return weiXinMessageTemplateDAO.insertSelective(WeiXinMessageTemplateConverter.convert(weiXinMessageTemplate));
+	}
 
-    /**
-     * 单个查询
-     *
-     * @param templateCode 模版代码
-     * @return WeiXinMessageTemplate
-     */
-    @Override
-    public WeiXinMessageTemplate query(String templateCode) {
+	/**
+	 * 单个查询
+	 *
+	 * @param templateCode
+	 *            模版代码
+	 * @return WeiXinMessageTemplate
+	 */
+	@Override
+	public WeiXinMessageTemplate query(String templateCode) {
 
-        WeiXinMessageTemplate weiXinMessageTemplate = new WeiXinMessageTemplate();
-        Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("templateCode", templateCode);
-        List<WeiXinMessageTemplateDO> weiXinMessageTemplateDOList = weiXinMessageTemplateDAO
-            .query(parameters);
-        if (CollectionUtils.isNotEmpty(weiXinMessageTemplateDOList)) {
-            weiXinMessageTemplate = WeiXinMessageTemplateConverter
-                .convert(weiXinMessageTemplateDOList.get(0));
-        }
-        return weiXinMessageTemplate;
-    }
+		WeiXinMessageTemplate weiXinMessageTemplate = new WeiXinMessageTemplate();
+		Map<String, Object> parameters = Maps.newHashMap();
+		parameters.put("templateCode", templateCode);
+		List<WeiXinMessageTemplateDO> weiXinMessageTemplateDOList = weiXinMessageTemplateDAO.query(parameters);
+		if (CollectionUtils.isNotEmpty(weiXinMessageTemplateDOList)) {
+			weiXinMessageTemplate = WeiXinMessageTemplateConverter.convert(weiXinMessageTemplateDOList.get(0));
+		}
+		return weiXinMessageTemplate;
+	}
 }

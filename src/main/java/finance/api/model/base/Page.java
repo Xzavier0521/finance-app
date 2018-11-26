@@ -5,26 +5,29 @@ import java.util.List;
 
 /**
  * 分页对象.
+ * 
  * @author hewenbin
  * @version $Id: Page.java, v 0.1 2017年10月30日 下午7:39:49 hewenbin Exp $
  */
 public class Page<T> {
     public final static Integer PAGE_SIZE = 10;
     public final static Long    PAGE_NUM  = 1L;
-    /**每页记录数*/
+    /** 每页记录数 */
     private Integer             pageSize  = PAGE_SIZE;
-    /**页码*/
+    /** 页码 */
     private Long                pageNum   = PAGE_NUM;
-    /**记录总数*/
+    /** 记录总数 */
     private Long                totalCount;
-    /**总页数*/
+    /** 总页数 */
     private Long                totalPage;
-    /**结果集*/
+    /** 结果集 */
     private List<T>             dataList;
 
     /**
-     * @param pageSize 每页记录数
-     * @param pageNum 第几页
+     * @param pageSize
+     *            每页记录数
+     * @param pageNum
+     *            第几页
      */
     public Page(Integer pageSize, Long pageNum) {
         if (pageSize != null) {

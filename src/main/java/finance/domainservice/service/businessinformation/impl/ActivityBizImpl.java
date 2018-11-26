@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dataobject.CoinGameDO;
 import org.apache.commons.collections.map.LinkedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,22 +15,19 @@ import org.springframework.stereotype.Service;
 
 import finance.api.model.base.Page;
 import finance.api.model.response.ResponseResult;
-import finance.api.model.vo.ActivityListVO;
-import finance.api.model.vo.StepRewardsDetailVo;
-import finance.api.model.vo.StepRewardsJoinDetailVo;
+import finance.api.model.vo.activity.ActivityListVO;
+import finance.api.model.vo.activity.StepRewardsDetailVo;
+import finance.api.model.vo.activity.StepRewardsJoinDetailVo;
 import finance.core.common.constants.Constant;
 import finance.core.common.enums.ActivityType;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.GameType;
 import finance.core.common.util.LogUtil;
-import finance.domainservice.service.businessinformation.ActivityBiz;
 import finance.core.dal.dao.*;
-import finance.core.dal.dataobject.FinanceCoinGame;
-import finance.core.dal.dataobject.FinanceStepRewardsActivity;
-import finance.core.dal.dataobject.FinanceStepRewardsAmount;
-import finance.core.dal.dataobject.FinanceUserInfo;
-
-;
+import finance.core.dal.dataobject.StepRewardsActivityDO;
+import finance.core.dal.dataobject.StepRewardsAmountDO;
+import finance.core.dal.dataobject.UserInfoDO;
+import finance.domainservice.service.businessinformation.ActivityBiz;
 
 /**
  * @program: finance-server
@@ -42,35 +40,35 @@ import finance.core.dal.dataobject.FinanceUserInfo;
  **/
 @Service
 public class ActivityBizImpl implements ActivityBiz {
-    private static final Logger           logger = LoggerFactory.getLogger(ActivityBizImpl.class);
+    private static final Logger    logger = LoggerFactory.getLogger(ActivityBizImpl.class);
 
     @Resource
-    private FinanceCoinGameDAO            financeCoinGameMapper;
+    private CoinGameDAO            financeCoinGameMapper;
     @Resource
-    private FinanceStepRewardsAmountDAO   amountMapper;
+    private StepRewardsAmountDAO   amountMapper;
     @Resource
-    private FinanceStepRewardsActivityDAO activityMapper;
+    private StepRewardsActivityDAO activityMapper;
     @Resource
-    private FinanceUserInfoDAO            userInfoMapper;
+    private UserInfoDAO            userInfoMapper;
     @Resource
-    private FinanceUserInviteInfoDAO      inviteInfoMapper;
+    private UserInviteInfoDAO      inviteInfoMapper;
 
-    //阶梯红包开关
+    // 阶梯红包开关
     @Value("${step.red.envelope.switch}")
-    private String                        stepRedEnvelopeSwitch;
+    private String                 stepRedEnvelopeSwitch;
 
     @Override
     public Map<String, List<ActivityListVO>> getActivityList() {
         Map<String, List<ActivityListVO>> returnMap = new HashMap<>();
         List<ActivityListVO> activityListVOList = new ArrayList<>();
 
-        List<FinanceCoinGame> financeCoinGameList = financeCoinGameMapper
+        List<CoinGameDO> coinGameDOList = financeCoinGameMapper
             .selectByGameType(Constant.COMMON_ACTIVITY, GameType.activity.getCode());
         ActivityListVO activityListVO = null;
-        for (FinanceCoinGame financeCoinGame : financeCoinGameList) {
+        for (CoinGameDO coinGameDO : coinGameDOList) {
 
             activityListVO = new ActivityListVO();
-            BeanUtils.copyProperties(financeCoinGame, activityListVO);
+            BeanUtils.copyProperties(coinGameDO, activityListVO);
             activityListVOList.add(activityListVO);
 
         }
@@ -84,14 +82,14 @@ public class ActivityBizImpl implements ActivityBiz {
         String isEnd = "0";
 
         if (!"1".equals(stepRedEnvelopeSwitch)) {
-            //阶梯红包活动开关关闭时，结束活动
+            // 阶梯红包活动开关关闭时，结束活动
             isEnd = "1";
             logger.info(LogUtil.getFormatLog("step.red.envelope.switch=" + stepRedEnvelopeSwitch,
                 "阶梯红包活动开关关闭，结束活动"));
         }
 
-        //奖池金额(初始化id=1)
-        FinanceStepRewardsAmount rewardsAmount = amountMapper.selectByPrimaryKey(1L);
+        // 奖池金额(初始化id=1)
+        StepRewardsAmountDO rewardsAmount = amountMapper.selectByPrimaryKey(1L);
         BigDecimal currentAmount = null;
         if (rewardsAmount != null) {
             currentAmount = rewardsAmount.getCurrentAmount();
@@ -101,36 +99,36 @@ public class ActivityBizImpl implements ActivityBiz {
             }
         }
 
-        //参加用户列表
+        // 参加用户列表
         List<StepRewardsJoinDetailVo> joinDetailVoList = new ArrayList<>();
-        //邀请用户列表
+        // 邀请用户列表
         List<String> inviteList = new ArrayList<>();
 
-        //查询用户的红包信息
-        FinanceStepRewardsActivity stepRewardsActivity = null;
+        // 查询用户的红包信息
+        StepRewardsActivityDO stepRewardsActivity = null;
         Integer inviteNum = 0;
         if (userId != null) {
             stepRewardsActivity = stepRewardsActivity = activityMapper.selectOneByUserId(userId);
         }
         if (stepRewardsActivity == null) {
             stepRewardsDetailVo.setIsNew("1");
-            //查询参加用户列表
-            List<FinanceStepRewardsActivity> rewardsActivityList = activityMapper
+            // 查询参加用户列表
+            List<StepRewardsActivityDO> rewardsActivityList = activityMapper
                 .selectStepRewardList(page);
             int joinNum = activityMapper.selectStepRewardsCount().intValue();
             if (rewardsActivityList != null && !rewardsActivityList.isEmpty()) {
-                //批量查询手机号
+                // 批量查询手机号
                 List<Long> joinUserIdList = new ArrayList<>();
                 rewardsActivityList
                     .forEach(rewardsActivity -> joinUserIdList.add(rewardsActivity.getUserId()));
-                List<FinanceUserInfo> userInfos = userInfoMapper
+                List<UserInfoDO> userInfos = userInfoMapper
                     .selectByPrimaryKeys(joinUserIdList);
                 Map<Long, String> userInfoMap = new HashMap<>();
                 userInfos.forEach(userInfo -> userInfoMap
                     .put(userInfo.getId(), userInfo.getMobileNum().substring(0, 3) + "****"
                                            + userInfo.getMobileNum().substring(7)));
-                //组装参加用户列表信息
-                for (FinanceStepRewardsActivity rewardsActivity : rewardsActivityList) {
+                // 组装参加用户列表信息
+                for (StepRewardsActivityDO rewardsActivity : rewardsActivityList) {
                     StepRewardsJoinDetailVo stepRewardsJoinDetailVo = new StepRewardsJoinDetailVo();
                     stepRewardsJoinDetailVo
                         .setMobileNum(userInfoMap.get(rewardsActivity.getUserId()));
@@ -147,10 +145,10 @@ public class ActivityBizImpl implements ActivityBiz {
             stepRewardsDetailVo.setInviteNum(stepRewardsActivity.getInviteNum());
             stepRewardsDetailVo = this.queryStepReward(stepRewardsDetailVo,
                 stepRewardsActivity.getInviteNum());
-            //根据红包类型查询邀请用户列表
+            // 根据红包类型查询邀请用户列表
             List<Long> userIdList = inviteInfoMapper.selectListByType(userId,
                 Integer.valueOf(ActivityType.step_red_envelope.getCode()), page);
-            List<FinanceUserInfo> userInfos = userIdList.isEmpty() ? new ArrayList<>()
+            List<UserInfoDO> userInfos = userIdList.isEmpty() ? new ArrayList<>()
                 : userInfoMapper.selectByPrimaryKeys(userIdList);
             Map<Long, String> userInfoMap = new HashMap<>();
             userInfos.forEach(userInfo -> userInfoMap
@@ -169,30 +167,30 @@ public class ActivityBizImpl implements ActivityBiz {
     @Override
     public ResponseResult<Boolean> saveStepRewardsActivty(Long userId) {
         if (!"1".equals(stepRedEnvelopeSwitch)) {
-            //阶梯红包活动开关关闭时，结束活动
+            // 阶梯红包活动开关关闭时，结束活动
             logger.info(LogUtil.getFormatLog("step.red.envelope.switch=" + stepRedEnvelopeSwitch,
                 "阶梯红包活动开关关闭，结束活动"));
             return ResponseResult.error(CodeEnum.stepRedEnvelopeEnd);
         }
 
-        //查询奖池金额(初始化id=1)
-        FinanceStepRewardsAmount rewardsAmount = amountMapper.selectByPrimaryKey(1L);
+        // 查询奖池金额(初始化id=1)
+        StepRewardsAmountDO rewardsAmount = amountMapper.selectByPrimaryKey(1L);
         BigDecimal currentAmount = null;
         if (rewardsAmount == null) {
             return ResponseResult.error(CodeEnum.dbException);
         }
-        //奖池金额低于1500不可再参加活动(根据配置)
+        // 奖池金额低于1500不可再参加活动(根据配置)
         if (rewardsAmount.getCurrentAmount().compareTo(this.queryEndAmount()) < 0) {
             return ResponseResult.error(CodeEnum.stepRedEnvelopeEnd);
         }
 
-        FinanceStepRewardsActivity existStepRewardsActivity = activityMapper
+        StepRewardsActivityDO existStepRewardsActivity = activityMapper
             .selectOneByUserId(userId);
         if (existStepRewardsActivity != null) {
             return ResponseResult.error(CodeEnum.stepRedEnvelopeExist);
         }
-        //保存该用户的红包记录
-        FinanceStepRewardsActivity stepRewardsActivity = new FinanceStepRewardsActivity();
+        // 保存该用户的红包记录
+        StepRewardsActivityDO stepRewardsActivity = new StepRewardsActivityDO();
         stepRewardsActivity.setUserId(userId);
         activityMapper.insertSelective(stepRewardsActivity);
         return ResponseResult.success(true);

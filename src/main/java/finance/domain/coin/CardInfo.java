@@ -7,25 +7,25 @@ import java.util.Date;
 @Data
 public class CardInfo {
 
-    private Long id;
+	private Long id;
 
-    private Long userId;
+	private Long userId;
 
-    private String realName;
+	private String realName;
 
-    private String idNum;
+	private String idNum;
 
-    private Integer authStatus;
+	private Integer authStatus;
 
-    private Date createTime;
+	private Date createTime;
 
-    private Date updateTime;
+	private Date updateTime;
 
-    private String creater;
+	private String creater;
 
-    private String updater;
+	private String updater;
 
-    private Long version;
+	private Long version;
 
-    private Integer isDelete;
+	private Integer isDelete;
 }

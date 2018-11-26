@@ -30,6 +30,7 @@ import finance.web.controller.response.RedEnvelopeDetailQueryResponseBuilder;
 
 /**
  * <p>红包活动-排行榜</p>
+ * 
  * @author lili
  * @version $Id: RedEnvelopeLeaderBoardController.java, v0.1 2018/10/19 5:02 PM lili Exp $
  */
@@ -46,7 +47,9 @@ public class RedEnvelopeLeaderBoardController {
 
     /**
      * 红包活动排行榜查询
-     * @param type 活动类型
+     * 
+     * @param type
+     *            活动类型
      * @return ResponseResult<LeaderBoardQueryResponse>
      */
     @GetMapping("/getLeaderBoard")
@@ -72,7 +75,8 @@ public class RedEnvelopeLeaderBoardController {
 
     /**
      * 查询红包活动明细
-     * @return  ResponseResult<RedEnvelopeDetailQueryResponse>
+     * 
+     * @return ResponseResult<RedEnvelopeDetailQueryResponse>
      */
     @PostMapping("/getRedEnvelopeDetailList")
     public ResponseResult<RedEnvelopeDetailQueryResponse> queryRedEnvelopeDetail(@RequestBody RedEnvelopeDetailQueryRequest request) {

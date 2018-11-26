@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>登录接口参数</p>
+ * 
  * @author lili
  * @version $Id: LoginParamDto.java, v0.1 2018/11/14 4:35 PM lili Exp $
  */
@@ -19,13 +20,17 @@ public class LoginParamDto implements Serializable {
 
     private static final long serialVersionUID = 8133562851231464575L;
     /**
-     *  登录方式
+     * 登录方式
      */
     @NotBlank(message = "登录方式不能为空")
     private String            type;
     @NotBlank(message = "活动类型不能为空")
     private String            activityType;
     private String            wechatPubName;
+    /**
+     * 活动代码
+     */
+    private String            activityCode;
     private String            openId;
 
     /**
@@ -54,7 +59,7 @@ public class LoginParamDto implements Serializable {
     private String            channelCode;
     private String            channelDetail;
     /**
-     *  平台代码
+     * 平台代码
      */
     @NotBlank(message = "平台编码不能为空")
     private String            platformCode;

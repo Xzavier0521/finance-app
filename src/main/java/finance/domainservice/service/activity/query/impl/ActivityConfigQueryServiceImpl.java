@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 
+import finance.api.model.condition.AgentConfigQueryCondition;
+import finance.core.common.constants.QueryConstants;
+import finance.core.common.enums.ActivityCodeEnum;
+import finance.core.common.enums.AgentLevelEnum;
 import finance.domain.activity.ActivityConfig;
 import finance.domain.activity.AgentConfig;
 import finance.domain.user.UserInfo;
@@ -20,18 +24,15 @@ import finance.domainservice.repository.ActivityConfigRepository;
 import finance.domainservice.repository.AgentConfigRepository;
 import finance.domainservice.repository.UserInviteRepository;
 import finance.domainservice.service.activity.query.ActivityConfigQueryService;
-import finance.api.model.condition.AgentConfigQueryCondition;
-import finance.core.common.constants.QueryConstants;
-import finance.core.common.enums.ActivityCodeEnum;
-import finance.core.common.enums.AgentLevelEnum;
 
 /**
  * <p>推广活动配置查询</p>
+ * 
  * @author lili
  * @version $Id: ActivityConfigQueryServiceImpl.java, v0.1 2018/10/11 1:33 PM lili Exp $
  */
 @Slf4j
-@Service("activityQueryService")
+@Service("activityConfigQueryService")
 public class ActivityConfigQueryServiceImpl implements ActivityConfigQueryService {
 
     @Resource
@@ -43,8 +44,11 @@ public class ActivityConfigQueryServiceImpl implements ActivityConfigQueryServic
 
     /**
      * 根据活动代码查询用户推广信息
-     * @param userInfo 用户信息
-     * @param activityCode 活动代码
+     * 
+     * @param userInfo
+     *            用户信息
+     * @param activityCode
+     *            活动代码
      * @return String
      */
     @Override

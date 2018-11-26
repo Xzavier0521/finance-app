@@ -5,7 +5,7 @@ import java.util.List;
 import finance.api.model.base.Page;
 import finance.api.model.vo.financeproduct.FinancingProductDetailVO;
 import finance.api.model.vo.financeproduct.FinancingProductListVO;
-import finance.core.dal.dataobject.FinanceProductMain;
+import finance.core.dal.dataobject.ProductMain;
 
 /**
  * @program: finance-app
@@ -17,17 +17,19 @@ import finance.core.dal.dataobject.FinanceProductMain;
  * @create: 2018-07-12 09:57
  **/
 public interface FinanceProductBiz {
-    /**
-     * 理财-我的理财页面查询
-     * @param financeProductPage
-     * @return
-     */
-    public List<FinancingProductListVO> findProductList(Page<FinanceProductMain> financeProductPage);
+	/**
+	 * 理财-我的理财页面查询
+	 * 
+	 * @param financeProductPage
+	 * @return
+	 */
+	public List<FinancingProductListVO> findProductList(Page<ProductMain> financeProductPage);
 
-    /**
-     * 理财--我要理财详情页查询
-     * @param productId
-     * @return
-     */
-    public FinancingProductDetailVO findProductDetailByProductId(Long productId);
+	/**
+	 * 理财--我要理财详情页查询
+	 * 
+	 * @param productId
+	 * @return
+	 */
+	public FinancingProductDetailVO findProductDetailByProductId(Long productId);
 }

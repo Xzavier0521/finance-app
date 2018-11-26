@@ -16,34 +16,35 @@ import finance.domainservice.converter.AgentConfigConverter;
 import finance.domainservice.repository.AgentConfigRepository;
 
 /**
- * <p></p>
+ * <p>
+ * </p>
+ * 
  * @author lili
- * @version 1.0: AgentConfigRepositoryImpl.java, v0.1 2018/10/11 11:04 AM lili Exp $
+ * @version 1.0: AgentConfigRepositoryImpl.java, v0.1 2018/10/11 11:04 AM lili
+ *          Exp $
  */
 @Repository("agentConfigRepository")
 public class AgentConfigRepositoryImpl implements AgentConfigRepository {
 
-    @Resource
-    private AgentConfigDAO agentConfigDAO;
+	@Resource
+	private AgentConfigDAO agentConfigDAO;
 
-    @Override
-    public int save(AgentConfig agentConfig) {
-        return agentConfigDAO
-            .updateByPrimaryKeySelective(AgentConfigConverter.convert(agentConfig));
-    }
+	@Override
+	public int save(AgentConfig agentConfig) {
+		return agentConfigDAO.updateByPrimaryKeySelective(AgentConfigConverter.convert(agentConfig));
+	}
 
-    @Override
-    public int update(AgentConfig agentConfig) {
-        return agentConfigDAO
-            .updateByPrimaryKeySelective(AgentConfigConverter.convert(agentConfig));
-    }
+	@Override
+	public int update(AgentConfig agentConfig) {
+		return agentConfigDAO.updateByPrimaryKeySelective(AgentConfigConverter.convert(agentConfig));
+	}
 
-    @Override
-    public List<AgentConfig> queryByCondition(AgentConfigQueryCondition condition) {
-        Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("agentId", condition.getAgentId());
-        parameters.put("agentLevel", condition.getAgentLevel().getCode());
-        parameters.put("activityCode", condition.getActivityCode().getCode());
-        return AgentConfigConverter.convert2List(agentConfigDAO.query(parameters));
-    }
+	@Override
+	public List<AgentConfig> queryByCondition(AgentConfigQueryCondition condition) {
+		Map<String, Object> parameters = Maps.newHashMap();
+		parameters.put("agentId", condition.getAgentId());
+		parameters.put("agentLevel", condition.getAgentLevel().getCode());
+		parameters.put("activityCode", condition.getActivityCode().getCode());
+		return AgentConfigConverter.convert2List(agentConfigDAO.query(parameters));
+	}
 }

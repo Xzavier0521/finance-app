@@ -5,19 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserApplyCreditCardDetailDAO {
-    int deleteByPrimaryKey(Long id);
+	int deleteByPrimaryKey(Long id);
 
-    int insert(UserApplyCreditCardDetailDO record);
+	int insert(UserApplyCreditCardDetailDO record);
 
-    int insertSelective(UserApplyCreditCardDetailDO record);
+	int insertSelective(UserApplyCreditCardDetailDO record);
 
-    List<UserApplyCreditCardDetailDO> query(Map parameters);
+	List<UserApplyCreditCardDetailDO> query(Map parameters);
 
-    int count(Map parameters);
+	int count(Map parameters);
 
-    UserApplyCreditCardDetailDO selectByPrimaryKey(Long id);
+	UserApplyCreditCardDetailDO selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(UserApplyCreditCardDetailDO record);
+	int updateByPrimaryKeySelective(UserApplyCreditCardDetailDO record);
 
-    int updateByPrimaryKey(UserApplyCreditCardDetailDO record);
+	int updateByPrimaryKey(UserApplyCreditCardDetailDO record);
 }

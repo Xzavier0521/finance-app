@@ -11,6 +11,7 @@ import finance.domain.dto.ThirdLoginParamDto;
 
 /**
  * <p>登录逻辑</p>
+ * 
  * @author lili
  * @version $Id: LoginService.java, v0.1 2018/11/14 9:23 AM lili Exp $
  */

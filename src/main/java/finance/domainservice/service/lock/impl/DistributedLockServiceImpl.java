@@ -18,10 +18,12 @@ import finance.domainservice.repository.CoinLogRepository;
 import finance.domainservice.service.lock.DistributedLockService;
 
 /**
- * <p>支付金币进行业务操作</p>
+ * <p>
+ * 支付金币进行业务操作
+ * </p>
  *
  * @author lili
- * @version 1.0: DistributedLockServiceImpl.java, v0.1 2018/11/15 10:12 PM PM lili Exp $
+ * @version 1.0: DistributedLockServiceImpl.java, v0.1 2018/11/15 10:12 PM lili Exp $
  */
 @Service("distributedLockService")
 public class DistributedLockServiceImpl implements DistributedLockService {
@@ -34,7 +36,9 @@ public class DistributedLockServiceImpl implements DistributedLockService {
 
     /**
      * 获取分布式锁
-     * @param lockKey 前缀
+     * 
+     * @param lockKey
+     *            前缀
      * @return boolean
      */
     private boolean getLock(String lockKey) {
@@ -61,10 +65,10 @@ public class DistributedLockServiceImpl implements DistributedLockService {
         BasicResponse response;
         String lockKey = payCoinCondition.getKeyPrefix() + payCoinCondition.getUserId();
         if (!getLock(lockKey)) {
-            //未获取到锁
+            // 未获取到锁
             return ResponseUtils.buildResp(ReturnCode.SYS_BUSY);
         }
-        //获取到锁，开始处理
+        // 获取到锁，开始处理
         try {
             // 表示获取到锁
             response = transactionTemplate.execute(status -> {
@@ -73,7 +77,7 @@ public class DistributedLockServiceImpl implements DistributedLockService {
                 // 记录金币日志
                 coinLogRepository.save(payCoinCondition.getUserId(), -payCoinCondition.getCoinNum(),
                     payCoinCondition.getPayReason());
-                //业务逻辑执行
+                // 业务逻辑执行
                 payCoinCondition.getFunctions()
                     .forEach(func -> func.apply(payCoinCondition.getParameter()));
                 return ResponseUtils.buildResp(ReturnCode.SUCCESS);
@@ -86,8 +90,11 @@ public class DistributedLockServiceImpl implements DistributedLockService {
 
     /**
      * 校验用户金币数目
-     * @param userId 用户id
-     * @param coinNum 金币数目
+     * 
+     * @param userId
+     *            用户id
+     * @param coinNum
+     *            金币数目
      */
     private void validateCoinNum(Long userId, Integer coinNum) {
         Integer totalCoin = coinLogRepository.selectCoinNumByUserId(userId);

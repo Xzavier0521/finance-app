@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * <p>启动类</p>
+ *
  * @author lili
  * @version $Id: FinanceAppApplication.java, v0.1 2018/10/22 8:10 PM lili Exp $
  */
@@ -26,7 +27,5 @@ public class FinanceAppApplication {
 
     public static void main(String[] args) {
         FinanceAppApplication.appContect = SpringApplication.run(FinanceAppApplication.class, args);
-
-
     }
 }

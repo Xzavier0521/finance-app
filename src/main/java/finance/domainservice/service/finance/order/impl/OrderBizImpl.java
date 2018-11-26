@@ -4,13 +4,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dao.OrderDAO;
+import finance.core.dal.dataobject.OrderDO;
 import org.springframework.stereotype.Component;
 
 import finance.api.model.base.Page;
 import finance.core.common.enums.OrderType;
 import finance.domainservice.service.finance.order.OrderBiz;
-import finance.core.dal.dao.FinanceOrderDAO;
-import finance.core.dal.dataobject.FinanceOrder;
 
 /**
  * @author yaolei
@@ -20,18 +20,18 @@ import finance.core.dal.dataobject.FinanceOrder;
  */
 @Component
 public class OrderBizImpl implements OrderBiz {
-    @Resource
-    public FinanceOrderDAO orderMapper;
+	@Resource
+	public OrderDAO orderMapper;
 
-    @Override
-    public void transRecords(Long userId, Page<FinanceOrder> page) {
-        FinanceOrder order = new FinanceOrder();
-        order.setUserId(userId);
-        order.setTransType(OrderType.debit.getCode());
-        List<FinanceOrder> dataList = orderMapper.selectPageByOrder(page, order);
-        Long totalCount = orderMapper.selectCountByOrder(order);
-        page.setDataList(dataList);
-        page.setTotalCount(totalCount);
-    }
+	@Override
+	public void transRecords(Long userId, Page<OrderDO> page) {
+		OrderDO order = new OrderDO();
+		order.setUserId(userId);
+		order.setTransType(OrderType.debit.getCode());
+		List<OrderDO> dataList = orderMapper.selectPageByOrder(page, order);
+		Long totalCount = orderMapper.selectCountByOrder(order);
+		page.setDataList(dataList);
+		page.setTotalCount(totalCount);
+	}
 
 }

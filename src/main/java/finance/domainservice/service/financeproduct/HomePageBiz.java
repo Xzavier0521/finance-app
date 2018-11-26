@@ -12,5 +12,5 @@ import java.util.List;
  * @create: 2018-07-13 09:22
  **/
 public interface HomePageBiz {
-    List<ProductMainpageVO> findHomePageList(Long productType, Page<ProductMainpageVO> page);
+	List<ProductMainpageVO> findHomePageList(Long productType, Page<ProductMainpageVO> page);
 }

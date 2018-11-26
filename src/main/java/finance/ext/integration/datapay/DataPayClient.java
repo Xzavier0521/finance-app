@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dataobject.IdAuthInfoLogDO;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
@@ -31,36 +32,36 @@ import finance.core.common.util.LogUtil;
 import finance.domain.dto.DataPayAuthResDto;
 import finance.domain.dto.UserBankCardDto;
 import finance.domainservice.service.auth.impl.AuthServiceImpl;
-import finance.core.dal.dao.FinanceIdAuthInfoLogDAO;
-import finance.core.dal.dataobject.FinanceIdAuthInfoLog;
+import finance.core.dal.dao.IdAuthInfoLogDAO;
 
 /**
-  * 调用数据宝服务
-  * @author panzhongkang
-  * @date 2018/8/24 9:31
-  */
+ * 调用数据宝服务
+ * 
+ * @author panzhongkang
+ * @date 2018/8/24 9:31
+ */
 @Service
 public class DataPayClient {
-    private static final Logger        logger = LoggerFactory.getLogger(AuthServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
     @Resource
-    private FinanceIdAuthInfoLogDAO authInfoLogMapper;
+    private IdAuthInfoLogDAO    authInfoLogMapper;
 
     /**
      * 数据宝提供的 key
      */
     @Value("${bank.card.auth.key}")
-    private String                     key;
+    private String              key;
     /**
      * 秘钥
      */
     @Value("${bank.card.auth.secretKey}")
-    private String                     secretKey;
+    private String              secretKey;
     /**
      * 接口host
      */
     @Value("${bank.card.auth.host}")
-    private String                     host;
+    private String              host;
 
     public static String post(String url, Map<String, String> params) throws Exception {
         ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
@@ -69,7 +70,7 @@ public class DataPayClient {
 
     public static String PostHttpRequest(String Url, List<NameValuePair> params) throws Exception {
         CloseableHttpClient client = HttpClients.createDefault();
-        //超时时间
+        // 超时时间
         RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(300000)
             .setConnectTimeout(300000).build();
         String result = null;
@@ -115,13 +116,13 @@ public class DataPayClient {
 
     public DataPayAuthResDto bankCardAuth(UserBankCardDto bankCardDto) {
 
-        //请求参数
+        // 请求参数
         Map<String, String> params = new HashMap<>();
         String url = host + "/communication/personal/1887";
         String result = null;
         DataPayAuthResDto authResDto = null;
         try {
-            //入参集合 针对入参 value 值进行加密
+            // 入参集合 针对入参 value 值进行加密
             params.put("name", CdpEncryptUtil.aesEncrypt(bankCardDto.getAccountName(), secretKey));
             params.put("idcard", CdpEncryptUtil.aesEncrypt(bankCardDto.getIdNum(), secretKey));
             params.put("acc_no", CdpEncryptUtil.aesEncrypt(bankCardDto.getAccountNo(), secretKey));
@@ -131,7 +132,7 @@ public class DataPayClient {
 
             String sign = CdpSignUtil.sign(params);
             params.put("sign", sign);
-            //输入数据宝提供的 key ,key不参与加密
+            // 输入数据宝提供的 key ,key不参与加密
             params.put("key", key);
 
             result = this.post(url, params);
@@ -150,8 +151,8 @@ public class DataPayClient {
         } finally {
             logger.info(LogUtil.getFormatLog(
                 "url:" + url + String.format(";params:", params) + ";result:" + result, "银行卡验证"));
-            //记录日志
-            FinanceIdAuthInfoLog authInfoLog = new FinanceIdAuthInfoLog();
+            // 记录日志
+            IdAuthInfoLogDO authInfoLog = new IdAuthInfoLogDO();
             authInfoLog.setUserId(bankCardDto.getUserId());
             authInfoLog.setRealName(bankCardDto.getAccountName());
             authInfoLog.setIdNum(bankCardDto.getIdNum());

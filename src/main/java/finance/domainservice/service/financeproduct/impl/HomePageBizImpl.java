@@ -4,12 +4,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dao.ProductMainPageDAO;
 import org.springframework.stereotype.Service;
 
 import finance.api.model.base.Page;
 import finance.api.model.vo.productmainpage.ProductMainpageVO;
 import finance.domainservice.service.financeproduct.HomePageBiz;
-import finance.core.dal.dao.FinanceProductMainPageDAO;
 
 /**
  * @program: finance-app
@@ -22,12 +22,11 @@ import finance.core.dal.dao.FinanceProductMainPageDAO;
  **/
 @Service
 public class HomePageBizImpl implements HomePageBiz {
-    @Resource
-    private FinanceProductMainPageDAO financeProductMainPageMapper;
+	@Resource
+	private ProductMainPageDAO financeProductMainPageMapper;
 
-    @Override
-    public List<ProductMainpageVO> findHomePageList(Long productType,
-                                                    Page<ProductMainpageVO> page) {
-        return financeProductMainPageMapper.selectHomePageListByProductType(productType, page);
-    }
+	@Override
+	public List<ProductMainpageVO> findHomePageList(Long productType, Page<ProductMainpageVO> page) {
+		return financeProductMainPageMapper.selectHomePageListByProductType(productType, page);
+	}
 }

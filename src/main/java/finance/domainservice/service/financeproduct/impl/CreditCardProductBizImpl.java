@@ -7,16 +7,16 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dataobject.ProductMain;
 import org.springframework.stereotype.Service;
 
 import finance.api.model.base.Page;
 import finance.api.model.vo.financeproduct.CreditCardProductDetailVO;
 import finance.api.model.vo.financeproduct.CreditCardProductListVO;
 import finance.domainservice.service.financeproduct.CreditCardProductBiz;
-import finance.core.dal.dao.FinanceCreditCardDetailDAO;
-import finance.core.dal.dao.FinanceProductMainDAO;
-import finance.core.dal.dataobject.FinanceCreditCardDetail;
-import finance.core.dal.dataobject.FinanceProductMain;
+import finance.core.dal.dao.CreditCardDetailDAO;
+import finance.core.dal.dao.ProductMainDAO;
+import finance.core.dal.dataobject.CreditCardDetailDO;
 
 /**
  * @program: finance-app
@@ -27,43 +27,42 @@ import finance.core.dal.dataobject.FinanceProductMain;
 @Service
 public class CreditCardProductBizImpl implements CreditCardProductBiz {
     @Resource
-    private FinanceCreditCardDetailDAO financeCreditCardDetailMapper;
+    private CreditCardDetailDAO financeCreditCardDetailMapper;
     @Resource
-    private FinanceProductMainDAO      financeProductMainMapper;
+    private ProductMainDAO      financeProductMainMapper;
 
     @Override
-    public List<CreditCardProductListVO> findProductList(Page<FinanceProductMain> financeProductPage) {
+    public List<CreditCardProductListVO> findProductList(Page<ProductMain> financeProductPage) {
 
         List<CreditCardProductListVO> creditCardProductList = new ArrayList<CreditCardProductListVO>();
-        //根据类型查主表数据
-        List<FinanceProductMain> financeProductMainList = financeProductMainMapper
+        // 根据类型查主表数据
+        List<ProductMain> productMainList = financeProductMainMapper
             .selectProductByType(2, financeProductPage);
 
-        if (financeProductMainList != null && financeProductMainList.size() > 0) {
-            //遍历主表数据取得id
+        if (productMainList != null && productMainList.size() > 0) {
+            // 遍历主表数据取得id
             List<Long> financeMainIds = new ArrayList<>();
-            financeProductMainList
+            productMainList
                 .forEach(financeProductMain -> financeMainIds.add(financeProductMain.getId()));
-            //根据主表ID查询出办卡明细表
-            List<FinanceCreditCardDetail> financeCreditCardDetails = financeCreditCardDetailMapper
+            // 根据主表ID查询出办卡明细表
+            List<CreditCardDetailDO> creditCardDetailDOS = financeCreditCardDetailMapper
                 .selectByProductId(financeMainIds);
             CreditCardProductListVO creditCardProductListVO = null;
-            FinanceCreditCardDetail financeCreditCardDetail = null;
+            CreditCardDetailDO creditCardDetailDO = null;
 
-            Map<Long, FinanceCreditCardDetail> ffpdMap = new HashMap<Long, FinanceCreditCardDetail>();
-            financeCreditCardDetails.forEach(ffpd -> ffpdMap.put(ffpd.getProductId(), ffpd));
+            Map<Long, CreditCardDetailDO> ffpdMap = new HashMap<Long, CreditCardDetailDO>();
+            creditCardDetailDOS.forEach(ffpd -> ffpdMap.put(ffpd.getProductId(), ffpd));
 
-            for (FinanceProductMain fpm : financeProductMainList) {
-                financeCreditCardDetail = ffpdMap.get(fpm.getId());
+            for (ProductMain fpm : productMainList) {
+                creditCardDetailDO = ffpdMap.get(fpm.getId());
                 creditCardProductListVO = new CreditCardProductListVO();
 
                 creditCardProductListVO.setId(fpm.getId());
                 creditCardProductListVO.setProductName(fpm.getProductName());
                 creditCardProductListVO.setLogoUrl(fpm.getLogoUrl());
                 creditCardProductListVO.setTotalBonus(fpm.getTotalBonus(), fpm.getAmountType());
-                creditCardProductListVO.setPassRate(financeCreditCardDetail.getPassRate());
-                creditCardProductListVO
-                    .setRebackCashDesc(financeCreditCardDetail.getRebackCashDesc());
+                creditCardProductListVO.setPassRate(creditCardDetailDO.getPassRate());
+                creditCardProductListVO.setRebackCashDesc(creditCardDetailDO.getRebackCashDesc());
                 creditCardProductListVO.setDirectBonus(fpm.getDirectBonus());
                 creditCardProductListVO.setIndirectBonus(fpm.getIndirectBonus());
                 creditCardProductList.add(creditCardProductListVO);
@@ -75,31 +74,31 @@ public class CreditCardProductBizImpl implements CreditCardProductBiz {
 
     @Override
     public CreditCardProductDetailVO findProductDetailByProductId(Long productId) {
-        //根据id查主表数据
-        FinanceProductMain financeProductMain = financeProductMainMapper
+        // 根据id查主表数据
+        ProductMain productMain = financeProductMainMapper
             .selectByPrimaryKey(productId);
-        FinanceCreditCardDetail financeCreditCardDetail = financeCreditCardDetailMapper
+        CreditCardDetailDO creditCardDetailDO = financeCreditCardDetailMapper
             .selectProductDetailByProductId(productId);
 
         CreditCardProductDetailVO creditCardProductDetailVO = new CreditCardProductDetailVO();
-        creditCardProductDetailVO.setId(financeProductMain.getId());
-        creditCardProductDetailVO.setProductName(financeProductMain.getProductName());
-        creditCardProductDetailVO.setDetailPageUrl(financeCreditCardDetail.getDetailPageUrl());
-        creditCardProductDetailVO.setAuditLength(financeCreditCardDetail.getAuditLength());
-        creditCardProductDetailVO.setPassRate(financeCreditCardDetail.getPassRate());
-        creditCardProductDetailVO.setMaxAmount(financeCreditCardDetail.getMaxAmount());
-        creditCardProductDetailVO.setTerminalBonus(financeProductMain.getTerminalBonus(),
-            financeProductMain.getAmountType());
-        creditCardProductDetailVO.setDirectBonus(financeProductMain.getDirectBonus(),
-            financeProductMain.getAmountType());
-        creditCardProductDetailVO.setIndirectBonus(financeProductMain.getIndirectBonus(),
-            financeProductMain.getAmountType());
-        creditCardProductDetailVO.setCashbackDate(financeProductMain.getCashbackDate());
-        creditCardProductDetailVO.setRedirectUrl(financeProductMain.getRedirectUrl());
+        creditCardProductDetailVO.setId(productMain.getId());
+        creditCardProductDetailVO.setProductName(productMain.getProductName());
+        creditCardProductDetailVO.setDetailPageUrl(creditCardDetailDO.getDetailPageUrl());
+        creditCardProductDetailVO.setAuditLength(creditCardDetailDO.getAuditLength());
+        creditCardProductDetailVO.setPassRate(creditCardDetailDO.getPassRate());
+        creditCardProductDetailVO.setMaxAmount(creditCardDetailDO.getMaxAmount());
+        creditCardProductDetailVO.setTerminalBonus(productMain.getTerminalBonus(),
+            productMain.getAmountType());
+        creditCardProductDetailVO.setDirectBonus(productMain.getDirectBonus(),
+            productMain.getAmountType());
+        creditCardProductDetailVO.setIndirectBonus(productMain.getIndirectBonus(),
+            productMain.getAmountType());
+        creditCardProductDetailVO.setCashbackDate(productMain.getCashbackDate());
+        creditCardProductDetailVO.setRedirectUrl(productMain.getRedirectUrl());
 
-        creditCardProductDetailVO.setProductDesc(financeProductMain.getProductDesc());
-        creditCardProductDetailVO.setPromotionUrl(financeProductMain.getPromotionUrl());
-        creditCardProductDetailVO.setAmountType(String.valueOf(financeProductMain.getAmountType()));
+        creditCardProductDetailVO.setProductDesc(productMain.getProductDesc());
+        creditCardProductDetailVO.setPromotionUrl(productMain.getPromotionUrl());
+        creditCardProductDetailVO.setAmountType(String.valueOf(productMain.getAmountType()));
 
         return creditCardProductDetailVO;
     }

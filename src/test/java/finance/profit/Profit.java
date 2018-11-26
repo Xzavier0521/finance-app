@@ -24,6 +24,6 @@ public class Profit {
 
     @Test
     public void testMyProfit() {
-//        ResponseResult<List<FinanceProfit>> res = p.myProfit(1l);
+//        ResponseResult<List<ProfitDO>> res = p.myProfit(1l);
 //        System.out.println(JSON.toJSON(res));
     }}

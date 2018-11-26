@@ -2,6 +2,7 @@ package finance.core.common.exception;
 
 /**
  * jwt自定义异常.
+ * 
  * @author hewenbin
  * @version v1.0 2018年7月17日 上午11:05:37 hewenbin
  */

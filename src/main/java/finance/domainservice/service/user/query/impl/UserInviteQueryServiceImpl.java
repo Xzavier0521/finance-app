@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+import finance.core.dal.dataobject.OperationRecordDO;
+import finance.core.dal.dataobject.ProductMain;
+import finance.core.dal.dataobject.UserAccountDO;
+import finance.core.dal.dataobject.UserInviteInfoDO;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -21,14 +25,11 @@ import finance.domain.team.InviteInfoAndIncome;
 import finance.domain.user.UserInfo;
 import finance.domainservice.repository.*;
 import finance.domainservice.service.user.query.UserInviteQueryService;
-import finance.core.dal.dataobject.FinanceOperationRecord;
-import finance.core.dal.dataobject.FinanceProductMain;
-import finance.core.dal.dataobject.FinanceUserAccount;
-import finance.core.dal.dataobject.FinanceUserInviteInfo;
 
 /**
- *  <p>用户邀请信息查询</p>
- * @author  lili
+ * <p>用户邀请信息查询</p>
+ * 
+ * @author lili
  * @version :1.0 UserInviteQueryServiceImpl.java.java, v 0.1 2018/9/27 下午8:34 lili Exp $
  */
 @Slf4j
@@ -51,7 +52,7 @@ public class UserInviteQueryServiceImpl implements UserInviteQueryService {
                                                               int pageNum) {
         Page<InviteInfoAndIncome> inviteInfoAndIncomePage = new Page<>(pageSize, (long) pageNum);
         // 1.根据邀请关系查询直接好友列表-只到一级
-        Page<FinanceUserInviteInfo> userInviteInfoPage = userInviteRepository
+        Page<UserInviteInfoDO> userInviteInfoPage = userInviteRepository
             .queryByCondition(pageNum, pageSize, userId);
         if (userInviteInfoPage.getTotalCount() == 0) {
             inviteInfoAndIncomePage.setTotalCount(0L);
@@ -61,19 +62,19 @@ public class UserInviteQueryServiceImpl implements UserInviteQueryService {
                 List<InviteInfoAndIncome> inviteInfoAndIncomeList = Lists
                     .newArrayListWithCapacity(userInviteInfoPage.getDataList().size());
                 List<Long> ids = userInviteInfoPage.getDataList().stream()
-                    .map(FinanceUserInviteInfo::getUserId).collect(Collectors.toList());
+                    .map(UserInviteInfoDO::getUserId).collect(Collectors.toList());
                 // 2.查询用户信息 -手机号码
                 List<UserInfo> userInfoList = userInfoRepository.queryByCondition(ids);
                 // 3.查询账户信息表-总收益字段
-                List<FinanceUserAccount> userAccountList = userAccountRepository
+                List<UserAccountDO> userAccountList = userAccountRepository
                     .queryCondition(ids);
                 // 4.计算预计收益
                 // 4.1，查询操作流水，需要去除产品id重复
-                List<FinanceOperationRecord> operationRecordList = operationRecordRepository
+                List<OperationRecordDO> operationRecordList = operationRecordRepository
                     .query(ids);
                 // 按照用户id分组
-                Map<Long, List<FinanceOperationRecord>> productMap = operationRecordList.stream()
-                    .collect(Collectors.groupingBy(FinanceOperationRecord::getUserId));
+                Map<Long, List<OperationRecordDO>> productMap = operationRecordList.stream()
+                    .collect(Collectors.groupingBy(OperationRecordDO::getUserId));
                 InviteInfoAndIncome inviteInfoAndIncome;
                 for (UserInfo userInfo : userInfoList) {
                     inviteInfoAndIncome = new InviteInfoAndIncome();
@@ -85,11 +86,11 @@ public class UserInviteQueryServiceImpl implements UserInviteQueryService {
                     inviteInfoAndIncome
                         .setPhoneNumber(CommonUtils.mobileEncrypt(userInfo.getMobileNum()));
                     inviteInfoAndIncome.setRegisterDate(userInfo.getRegisterDate());
-                    List<FinanceUserAccount> financeUserAccountList = userAccountList.stream()
+                    List<UserAccountDO> userAccountDOList = userAccountList.stream()
                         .filter(account -> account.getUserId().equals(userInfo.getId()))
                         .collect(Collectors.toList());
-                    if (CollectionUtils.isNotEmpty(financeUserAccountList)) {
-                        FinanceUserAccount userAccount = financeUserAccountList.get(0);
+                    if (CollectionUtils.isNotEmpty(userAccountDOList)) {
+                        UserAccountDO userAccount = userAccountDOList.get(0);
                         // 总收益
                         inviteInfoAndIncome.setTotalIncome(userAccount.getSumChargeMoney());
                     } else {
@@ -97,12 +98,12 @@ public class UserInviteQueryServiceImpl implements UserInviteQueryService {
                     }
                     // 预计收益
                     // 4.2 根据产品id获取产品的信息计算预计收益(按照间接推广金额汇总)
-                    List<FinanceOperationRecord> financeOperationRecords = productMap
+                    List<OperationRecordDO> operationRecordDOS = productMap
                         .get(userInfo.getId());
-                    if (CollectionUtils.isNotEmpty(financeOperationRecords)) {
-                        List<Long> productIds = financeOperationRecords.stream()
-                            .map(FinanceOperationRecord::getProductId).collect(Collectors.toList());
-                        FinanceProductMain productMain = productMainRepository.sumBonus(productIds);
+                    if (CollectionUtils.isNotEmpty(operationRecordDOS)) {
+                        List<Long> productIds = operationRecordDOS.stream()
+                            .map(OperationRecordDO::getProductId).collect(Collectors.toList());
+                        ProductMain productMain = productMainRepository.sumBonus(productIds);
                         if (Objects.nonNull(productMain)
                             && Objects.nonNull(productMain.getIndirectBonus())) {
                             inviteInfoAndIncome.setPredictIncome(productMain.getIndirectBonus());

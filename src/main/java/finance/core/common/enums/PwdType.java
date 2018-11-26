@@ -10,8 +10,8 @@ package finance.core.common.enums;
  * 密码类型
  */
 public enum PwdType {
-    withdraw(); // 提现
+	withdraw(); // 提现
 
-    PwdType() {
-    }
+	PwdType() {
+	}
 }

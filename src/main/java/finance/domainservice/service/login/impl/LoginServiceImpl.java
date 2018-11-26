@@ -2,7 +2,6 @@ package finance.domainservice.service.login.impl;
 
 import static finance.core.common.util.PreconditionUtils.checkArgument;
 
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -10,6 +9,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import finance.core.dal.dataobject.UserFirstLoginLogDO;
+import finance.core.dal.dataobject.UserInfoDO;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -26,18 +27,19 @@ import com.google.common.collect.Sets;
 import finance.api.model.response.ResponseResult;
 import finance.core.common.constants.Constant;
 import finance.core.common.constants.RedEnvelopConstant;
-import finance.core.common.enums.*;
+import finance.core.common.enums.ActivityType;
+import finance.core.common.enums.CodeEnum;
+import finance.core.common.enums.LoginType;
+import finance.core.common.enums.ReturnCode;
 import finance.core.common.util.NetUtils;
 import finance.core.common.util.PreconditionUtils;
 import finance.core.common.util.ResponseResultUtils;
 import finance.core.dal.dao.FinanceThirdAccountInfoDAO;
-import finance.core.dal.dao.FinanceUserFirstLoginLogDAO;
-import finance.core.dal.dao.FinanceUserInfoDAO;
-import finance.core.dal.dao.FinanceUserLoginLogDAO;
+import finance.core.dal.dao.UserFirstLoginLogDAO;
+import finance.core.dal.dao.UserInfoDAO;
+import finance.core.dal.dao.UserLoginLogDAO;
 import finance.core.dal.dataobject.FinanceThirdAccountInfo;
-import finance.core.dal.dataobject.FinanceUserFirstLoginLog;
-import finance.core.dal.dataobject.FinanceUserInfo;
-import finance.core.dal.dataobject.FinanceUserLoginLog;
+import finance.core.dal.dataobject.UserLoginLogDO;
 import finance.domain.dto.LoginParamDto;
 import finance.domain.dto.ThirdLoginParamDto;
 import finance.domain.user.UserInfo;
@@ -55,8 +57,9 @@ import finance.domainservice.service.validate.SmsValidateService;
 
 /**
  * <p>登录逻辑</p>
+ * 
  * @author lili
- * @version $Id: LoginServiceImpl.java, v0.1 2018/11/13 1:33 PM lili Exp $
+ * @version 1.0: LoginServiceImpl.java, v0.1 2018/11/13 1:33 PM lili Exp $
  */
 @Slf4j
 @Service
@@ -71,13 +74,13 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     private SmsValidateService                   smsValidateService;
     @Resource
-    private FinanceUserInfoDAO                   uerInfoMapper;
+    private UserInfoDAO                          uerInfoMapper;
     @Resource
     private RegisterService                      registerService;
     @Resource
-    private FinanceUserFirstLoginLogDAO          firstLoginLogMapper;
+    private UserFirstLoginLogDAO                 firstLoginLogMapper;
     @Resource
-    private FinanceUserLoginLogDAO               loginLogMapper;
+    private UserLoginLogDAO                      loginLogMapper;
     @Resource
     private ThirdBindService                     thirdBindService;
     @Resource
@@ -85,12 +88,9 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     private StringRedisTemplate                  stringRedisTemplate;
     @Resource
-    private InviteActivityService                activityService;
+    private InviteActivityService                inviteActivityService;
     @Resource
     private FinanceThirdAccountInfoDAO           thirdAccountInfoMapper;
-    @Resource
-    private InviteActivityService                inviteActivityServiceImpl;
-
     @Resource
     private InviteOpenInfoRepository             inviteOpenInfoRepository;
     @Resource
@@ -107,13 +107,13 @@ public class LoginServiceImpl implements LoginService {
             paramDto.setUserAgent(req.getHeader("User-Agent"));
             // 获取客户端IP
             paramDto.setIp(NetUtils.getIpAdrress(req));
-            // 校验验证码　
+            // 校验验证码
             CodeEnum resCodeEnum = this.validateImageAndSmsCode(paramDto);
             checkArgument(CodeEnum.succ == resCodeEnum, resCodeEnum.getMsg());
             // 创建用户
             // 是否是注册操作
             // 校验手机号是否存在
-            FinanceUserInfo userInfo = uerInfoMapper.selectByMobile(paramDto.getMobileNum());
+            UserInfoDO userInfo = uerInfoMapper.selectByMobile(paramDto.getMobileNum());
             // 如果不存在，则创建用户、记录注册日志、渠道信息、创建账户
             boolean isRegister = Objects.isNull(userInfo);
             if (isRegister) {
@@ -131,24 +131,26 @@ public class LoginServiceImpl implements LoginService {
             Map<String, Object> resData = new HashMap<>(4, 4);
             // 红包活动类型
             if (isRegister) {
-                //  红包雨活动奖励
+                // 红包雨活动奖励
                 UserInfo user = UserInfoConverter.convert(userInfo);
                 String activityCode = getActivityCode(user, paramDto);
+                log.info("用户:{},活动代码:{}", user.getMobileNum(), activityCode);
                 if (RedEnvelopConstant.RED_ENVELOPE_RAIN_CODE.equals(activityCode)) {
-                    redEnvelopeRainRegisterRewardService.process(user,paramDto);
+                    redEnvelopeRainRegisterRewardService.process(user, paramDto);
                 }
             }
+            //
             if (isRegister && ActivityType.step_red_envelope == ActivityType
                 .getByCode(paramDto.getActivityType())) {
                 // 红包活动奖励
-                Map<String, Object> resMap = this.redEnvelopeRewards(userInfo, paramDto);
+                /*Map<String, Object> resMap = this.redEnvelopeRewards(userInfo, paramDto);
                 if (Objects.nonNull(resMap)) {
                     if (ActivityType.fixed_red_envelope == ActivityType
                         .getByCode(paramDto.getActivityType())) {
                         resData.put("fixedAmountActivity", resMap);
                     }
                     resData.put("bindOpenId", resMap.get("bindOpenId"));
-                }
+                }*/
 
             }
             // 登录逻辑结束，返回
@@ -179,8 +181,8 @@ public class LoginServiceImpl implements LoginService {
                 .queryInviteOpenInfo(paramDto.getOpenId());
             if (Objects.nonNull(inviteOpenInfo)) {
                 activityCode = inviteOpenInfo.getActivityCode();
-            }else {
-                log.info("用户:{}邀请绑定关系不存在",userInfo.getMobileNum());
+            } else {
+                log.info("用户:{}邀请绑定关系不存在", userInfo.getMobileNum());
             }
         } else {
             log.info("用户:{}绑定信息不存在", userInfo.getMobileNum());
@@ -201,7 +203,7 @@ public class LoginServiceImpl implements LoginService {
             paramDto.getImgCode());
         PreconditionUtils.checkArgument(imgValidateRes, ReturnCode.LOGIN_IMG_VALIDATE_FAIL);
         // 校验短信验证码
-        Boolean smsValidateRes = smsValidateService.vidateSmsCode(paramDto.getMobileNum(),
+        Boolean smsValidateRes = smsValidateService.validateSmsCode(paramDto.getMobileNum(),
             paramDto.getMobileCode(), paramDto.getType());
         PreconditionUtils.checkArgument(smsValidateRes, ReturnCode.LOGIN_SMS_VALIDATE_FAIL);
         return resCodeEnum;
@@ -229,19 +231,19 @@ public class LoginServiceImpl implements LoginService {
     /**
      * 红包活动奖励
      */
-    private Map<String, Object> redEnvelopeRewards(FinanceUserInfo userInfo,
+    private Map<String, Object> redEnvelopeRewards(UserInfoDO userInfo,
                                                    LoginParamDto paramDto) {
         Map<String, Object> redEnvelopeMap = Maps.newHashMap();
         String activityType = paramDto.getActivityType();
-        //判断是否成功绑定openId
+        // 判断是否成功绑定openId
         String channel = paramDto.getType();
         if (StringUtils.isNotBlank(paramDto.getWechatPubName())) {
             channel = Constant.THIRD_PARD_WECHATPUB;
         }
         if (ActivityType.step_red_envelope == ActivityType.getByCode(activityType)) {
-            activityService.stepRewards(userInfo, paramDto);
+            inviteActivityService.stepRewards(userInfo, paramDto);
         }
-        // 账号绑定信息　
+        // 账号绑定信息
         FinanceThirdAccountInfo queryParam = new FinanceThirdAccountInfo();
         queryParam.setUserId(userInfo.getId());
         String openId = stringRedisTemplate.opsForValue()
@@ -255,20 +257,6 @@ public class LoginServiceImpl implements LoginService {
             redEnvelopeMap.put("bindOpenId", "0");
             return redEnvelopeMap;
         }
-        if (ActivityType.fixed_red_envelope == ActivityType.getByCode(activityType)) {
-            Map<String, Object> resMap = inviteActivityServiceImpl
-                .handleFixedAmountActivity(userInfo, paramDto);
-            //固定金额活动处理
-            CodeEnum responseCode = ((CodeEnum) resMap.get("code"));
-            BigDecimal userDivideMoney = resMap.get("userDivideMoney") != null
-                ? (BigDecimal) resMap.get("userDivideMoney")
-                : null;
-
-            redEnvelopeMap.put("fixedAmountActivityDivideMoney", userDivideMoney);
-            redEnvelopeMap.put("code", responseCode.getCode());
-            redEnvelopeMap.put("msg", responseCode.getMsg());
-            return redEnvelopeMap;
-        }
         return null;
     }
 
@@ -277,37 +265,32 @@ public class LoginServiceImpl implements LoginService {
         if (LoginType.MOBILE == LoginType.getByCode(type)) {
             return true;
         }
-        imgValidateRes = imgValidateService.vidateImgCode(imgCodeId, imgCode);
+        imgValidateRes = imgValidateService.validateImgCode(imgCodeId, imgCode);
         return imgValidateRes;
     }
 
-    private void firstLogin(FinanceUserInfo userInfo, LoginParamDto paramDto) {
+    private void firstLogin(UserInfoDO userInfo, LoginParamDto paramDto) {
 
         if (Objects.isNull(userInfo) || userInfo.getId() < 1
             || StringUtils.isBlank(paramDto.getPlatformCode())) {
             return;
         }
         // 判断是否是首次登录某个平台（模块）
-        FinanceUserFirstLoginLog firstLoginLog = firstLoginLogMapper
+        UserFirstLoginLogDO firstLoginLog = firstLoginLogMapper
             .selectByUserId(userInfo.getId(), paramDto.getPlatformCode());
         if (Objects.nonNull(firstLoginLog)) {
             return;
         }
         // 如果是首次登录，则记录首次登录记录
-        firstLoginLog = new FinanceUserFirstLoginLog();
+        firstLoginLog = new UserFirstLoginLogDO();
         firstLoginLog.setPlatformCode(paramDto.getPlatformCode());
         firstLoginLog.setPlatformDetail(paramDto.getPlatformDetail());
         firstLoginLog.setUserId(userInfo.getId());
         firstLoginLogMapper.insertSelective(firstLoginLog);
-        // 首次登录finance_home时送钱
-        if (PlatformCodeEnum.FINANCE_HOME == PlatformCodeEnum
-            .getByCode(paramDto.getPlatformCode())) {
-            //transBiz.recharge(userInfo.getId(), userInfo.getMobileNum());
-        }
     }
 
-    private void saveLoginLog(FinanceUserInfo userInfo, LoginParamDto paramDto) {
-        FinanceUserLoginLog loginLog = new FinanceUserLoginLog();
+    private void saveLoginLog(UserInfoDO userInfo, LoginParamDto paramDto) {
+        UserLoginLogDO loginLog = new UserLoginLogDO();
         BeanUtils.copyProperties(paramDto, loginLog);
         loginLog.setUserId(userInfo != null ? userInfo.getId() : null);
         loginLog.setLoginName(paramDto.getMobileNum());
@@ -316,14 +299,14 @@ public class LoginServiceImpl implements LoginService {
         loginLogMapper.insertSelective(loginLog);
     }
 
-    private String saveJwt(FinanceUserInfo userInfo) {
+    private String saveJwt(UserInfoDO userInfo) {
         return jwtService.saveJwt(userInfo);
     }
 
     /**
      * 保存用户的openId等信息
      */
-    private void saveOpenInfo(FinanceUserInfo userInfo, LoginParamDto paramDto) {
+    private void saveOpenInfo(UserInfoDO userInfo, LoginParamDto paramDto) {
         String loginType = paramDto.getType();
         String activityType = paramDto.getActivityType();
         String weChatPubName = paramDto.getWechatPubName();
@@ -340,12 +323,12 @@ public class LoginServiceImpl implements LoginService {
             || activityTypeSet.contains(ActivityType.getByCode(activityType))) {
             // 保存绑定信息
             String openId = paramDto.getOpenId();
-            //红包分享分享的是微信公众号
+            // 红包分享分享的是微信公众号
             if (StringUtils.isNotBlank(paramDto.getWechatPubName())) {
                 loginType = Constant.THIRD_PARD_WECHATPUB;
             }
             thirdBindService.bindUser(userInfo.getId(), openId, loginType, weChatPubName);
-            //删除openid-key
+            // 删除openid-key
             stringRedisTemplate.delete(openIdCacheKeyPrefix + paramDto.getOpenId());
         }
 
@@ -373,7 +356,7 @@ public class LoginServiceImpl implements LoginService {
         if (accountInfo != null) {
             // 已绑定
             // 记录登录日志
-            FinanceUserInfo userInfo = uerInfoMapper.selectByPrimaryKey(accountInfo.getUserId());
+            UserInfoDO userInfo = uerInfoMapper.selectByPrimaryKey(accountInfo.getUserId());
             LoginParamDto loginParamDto = new LoginParamDto();
             BeanUtils.copyProperties(paramDto, loginParamDto);
             loginParamDto.setType(channel);
