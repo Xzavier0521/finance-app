@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 
-import finance.core.dal.dataobject.UserInfoDO;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +24,7 @@ import finance.core.common.enums.ReturnCode;
 import finance.core.common.exception.BizException;
 import finance.core.common.util.PreconditionUtils;
 import finance.core.common.util.ResponseResultUtils;
+import finance.core.dal.dataobject.UserInfoDO;
 import finance.domain.log.BarrageMessage;
 import finance.domain.team.InviteInfoAndIncome;
 import finance.domain.user.UserInfo;
@@ -139,6 +139,7 @@ public class InviteApi {
             UserInviteInfoQueryResponse userInviteInfoQueryResponse = new UserInviteInfoQueryResponse();
             userInviteInfoQueryResponse
                 .setFirstInviteNum(userInviteRepository.countFirstInviteNum(userId, activityCode));
+            userInviteInfoQueryResponse.setMobileNum(userInfo.getMobileNum());
             userInviteInfoQueryResponse.setUserId(userId);
             userInviteInfoQueryResponse.setActivityCode(activityCode);
             response = ResponseResult.success(userInviteInfoQueryResponse);
