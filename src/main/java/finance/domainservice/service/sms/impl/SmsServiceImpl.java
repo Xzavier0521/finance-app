@@ -53,7 +53,7 @@ public class SmsServiceImpl implements SmsService {
      */
     private static String calculateSign(String username, String password, String timestamp,
                                         byte[] message) throws Exception {
-        MessageDigest md = MessageDigest.getInstance("MD5Utils");
+        MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(username.getBytes(StandardCharsets.UTF_8));
         md.update(password.getBytes(StandardCharsets.UTF_8));
         md.update(timestamp.getBytes(StandardCharsets.UTF_8));
