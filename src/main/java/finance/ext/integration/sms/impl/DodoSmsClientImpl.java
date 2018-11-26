@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import finance.api.model.response.BasicResponse;
 import finance.core.common.enums.ReturnCode;
-import finance.core.common.util.MD5Utils;
+import finance.core.common.util.MD5Util;
 import finance.core.common.util.ResponseUtils;
 import finance.ext.integration.config.RetrofitHttpClient;
 import finance.ext.integration.sms.DodoSmsClient;
@@ -43,7 +43,7 @@ public class DodoSmsClientImpl implements DodoSmsClient {
      * 计算签名
      */
     private static String calculateSign(String smsDodoCode, String smsDodoPassword) {
-        return StringUtils.lowerCase(MD5Utils.sign(smsDodoCode, smsDodoPassword, SMS_ENCODE));
+        return StringUtils.lowerCase(MD5Util.sign(smsDodoCode, smsDodoPassword, SMS_ENCODE));
     }
 
     private DodoSmsService create() {

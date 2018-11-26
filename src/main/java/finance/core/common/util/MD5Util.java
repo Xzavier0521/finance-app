@@ -8,7 +8,7 @@ import org.apache.commons.codec.digest.DigestUtils;
  * MD5签名处理核心文件
  * */
 
-public class MD5Utils {
+public class MD5Util {
 
     /**
      * 签名字符串
