@@ -1,0 +1,97 @@
+package finance.web.controller.oauth.loan;
+
+import java.util.Objects;
+
+import javax.annotation.Resource;
+
+import lombok.extern.slf4j.Slf4j;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.web.bind.annotation.*;
+
+import finance.api.model.base.Page;
+import finance.api.model.request.LoadApplyInfoSaveRequest;
+import finance.api.model.response.LoadApplyInfoSaveResponse;
+import finance.api.model.response.ResponseResult;
+import finance.core.common.enums.ReturnCode;
+import finance.core.common.exception.BizException;
+import finance.core.common.util.ConvertBeanUtil;
+import finance.core.common.util.ResponseResultUtils;
+import finance.domain.loan.LoanApplyInfo;
+import finance.domain.user.UserInfo;
+import finance.domainservice.converter.UserInfoConverter;
+import finance.domainservice.repository.LoanApplyInfoRepository;
+import finance.domainservice.service.jwt.JwtService;
+
+/**
+ * <p>贷款</p>
+ *
+ * @author lili
+ * @version 1.0: LoadController.java, v0.1 2018/11/29 2:38 AM PM lili Exp $
+ */
+
+@Slf4j
+@RequestMapping("api/loan/")
+@RestController
+public class LoadController {
+
+    @Resource
+    private JwtService              jwtService;
+
+    @Resource
+    private LoanApplyInfoRepository loanApplyInfoRepository;
+
+    @PostMapping("saveApplyInfo")
+    public ResponseResult<LoadApplyInfoSaveResponse> saveAppleInfo(@RequestBody LoadApplyInfoSaveRequest request) {
+        ResponseResult<LoadApplyInfoSaveResponse> response;
+        log.info("[开始保存贷款申请记录],请求参数:{}", request);
+        try {
+            UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
+            LoanApplyInfo loanApplyInfo = new LoanApplyInfo();
+            ConvertBeanUtil.copyBeanProperties(request, loanApplyInfo);
+            loanApplyInfo.setUserId(userInfo.getId());
+            loanApplyInfo.setMobileNum(userInfo.getMobileNum());
+            loanApplyInfoRepository.save(loanApplyInfo);
+            response = ResponseResult.success(null);
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+
+        } catch (final Exception e) {
+            response = ResponseResultUtils.error(ReturnCode.SYS_ERROR);
+            log.error("[保存贷款申请记录]，异常:{}", ExceptionUtils.getStackTrace(e));
+        }
+        log.info("[结束保存贷款申请记录],请求参数:{},返回结果:{}", request, response);
+        return response;
+    }
+
+    @GetMapping("queryApplyInfo")
+    public ResponseResult<Page<LoanApplyInfo>> queryApplyInfo(@RequestParam("pageSize") int pageSize,
+                                                              @RequestParam("pageNum") int pageNum) {
+        ResponseResult<Page<LoanApplyInfo>> response;
+        log.info("[开始分页查询贷款申请记录],请求参数,pageSize:{},pageNum:{}", pageNum, pageSize);
+        try {
+            UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
+            Page<LoanApplyInfo> page = loanApplyInfoRepository.query(userInfo.getId(), pageSize,
+                pageNum);
+            response = ResponseResult.success(page);
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+
+        } catch (final Exception e) {
+            response = ResponseResultUtils.error(ReturnCode.SYS_ERROR);
+            log.error("[查询贷款申请记录]，异常:{}", ExceptionUtils.getStackTrace(e));
+        }
+        log.info("[结束分页查询贷款申请记录],请求参数,pageSize:{},pageNum:{},返回结果:{}", pageNum, pageSize, response);
+        return response;
+    }
+}

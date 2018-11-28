@@ -42,7 +42,7 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="${daoMapperPackage}" targetProject="./src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table schema="" tableName="finance_cashback_config" domainObjectName="CashBackConfigDO"
+        <table schema="" tableName="finance_loan_apply_info" domainObjectName="LoanApplyInfoDO"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"
                enableDeleteByPrimaryKey="true"

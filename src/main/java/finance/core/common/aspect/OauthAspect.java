@@ -19,10 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 /**
- * 请求权限验证.
- *
- * @author hewenbin
- * @version v1.0 2018年7月4日 上午9:05:12 hewenbin
+ * <p>请求权限验证</p>
+ * @author lili
+ * @version 1.0: OauthAspect.java, v0.1 2018/11/29 3:49 AM lili Exp $
  */
 @Slf4j
 @Aspect

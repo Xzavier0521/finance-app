@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.LoanApplyInfoDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.LoanApplyInfoDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="mobile_num" property="mobileNum" jdbcType="VARCHAR"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <result column="id_card" property="idCard" jdbcType="VARCHAR"/>
+        <result column="education_level" property="educationLevel" jdbcType="VARCHAR"/>
+        <result column="is_pay_social_security" property="isPaySocialSecurity" jdbcType="VARCHAR"/>
+        <result column="max_monthly_repayment_limit" property="maxMonthlyRepaymentLimit" jdbcType="VARCHAR"/>
+        <result column="monthly_salary" property="monthlySalary" jdbcType="VARCHAR"/>
+        <result column="working_years" property="workingYears" jdbcType="VARCHAR"/>
+        <result column="vehicle_situation" property="vehicleSituation" jdbcType="VARCHAR"/>
+        <result column="career_category" property="careerCategory" jdbcType="VARCHAR"/>
+        <result column="estimated_amount" property="estimatedAmount" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, mobile_num, real_name, id_card, education_level, is_pay_social_security,
+        max_monthly_repayment_limit, monthly_salary, working_years, vehicle_situation, career_category,
+        estimated_amount, create_time, update_time, creator, updator, is_delete, version
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_loan_apply_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.LoanApplyInfoDO">
+        insert into finance_loan_apply_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="mobileNum != null">
+                mobile_num,
+            </if>
+            <if test="realName != null">
+                real_name,
+            </if>
+            <if test="idCard != null">
+                id_card,
+            </if>
+            <if test="educationLevel != null">
+                education_level,
+            </if>
+            <if test="isPaySocialSecurity != null">
+                is_pay_social_security,
+            </if>
+            <if test="maxMonthlyRepaymentLimit != null">
+                max_monthly_repayment_limit,
+            </if>
+            <if test="monthlySalary != null">
+                monthly_salary,
+            </if>
+            <if test="workingYears != null">
+                working_years,
+            </if>
+            <if test="vehicleSituation != null">
+                vehicle_situation,
+            </if>
+            <if test="careerCategory != null">
+                career_category,
+            </if>
+            <if test="estimatedAmount != null">
+                estimated_amount,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="updator != null">
+                updator,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="mobileNum != null">
+                #{mobileNum,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="idCard != null">
+                #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="educationLevel != null">
+                #{educationLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="isPaySocialSecurity != null">
+                #{isPaySocialSecurity,jdbcType=VARCHAR},
+            </if>
+            <if test="maxMonthlyRepaymentLimit != null">
+                #{maxMonthlyRepaymentLimit,jdbcType=VARCHAR},
+            </if>
+            <if test="monthlySalary != null">
+                #{monthlySalary,jdbcType=VARCHAR},
+            </if>
+            <if test="workingYears != null">
+                #{workingYears,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicleSituation != null">
+                #{vehicleSituation,jdbcType=VARCHAR},
+            </if>
+            <if test="careerCategory != null">
+                #{careerCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="estimatedAmount != null">
+                #{estimatedAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <sql id="finance_loan_apply_info_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="userId != null">
+                AND (user_id = #{userId})
+            </if>
+            <if test="mobileNum != null and mobileNum.trim().length() != 0">
+                AND (mobile_num like '%' || #{mobileNum} || '%')
+            </if>
+            <if test="realName != null and realName.trim().length() != 0">
+                AND (real_name like '%' || #{realName} || '%')
+            </if>
+            <if test="idCard != null and idCard.trim().length() != 0">
+                AND (id_card like '%' || #{idCard} || '%')
+            </if>
+            <if test="educationLevel != null and educationLevel.trim().length() != 0">
+                AND (education_level like '%' || #{educationLevel} || '%')
+            </if>
+            <if test="isPaySocialSecurity != null and isPaySocialSecurity.trim().length() != 0">
+                AND (is_pay_social_security like '%' || #{isPaySocialSecurity} || '%')
+            </if>
+            <if test="maxMonthlyRepaymentLimit != null and maxMonthlyRepaymentLimit.trim().length() != 0">
+                AND (max_monthly_repayment_limit like '%' || #{maxMonthlyRepaymentLimit} || '%')
+            </if>
+            <if test="monthlySalary != null and monthlySalary.trim().length() != 0">
+                AND (monthly_salary like '%' || #{monthlySalary} || '%')
+            </if>
+            <if test="workingYears != null and workingYears.trim().length() != 0">
+                AND (working_years like '%' || #{workingYears} || '%')
+            </if>
+            <if test="vehicleSituation != null and vehicleSituation.trim().length() != 0">
+                AND (vehicle_situation like '%' || #{vehicleSituation} || '%')
+            </if>
+            <if test="careerCategory != null and careerCategory.trim().length() != 0">
+                AND (career_category like '%' || #{careerCategory} || '%')
+            </if>
+            <if test="estimatedAmount != null and estimatedAmount.trim().length() != 0">
+                AND (estimated_amount like '%' || #{estimatedAmount} || '%')
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete like '%' || #{isDelete} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_loan_apply_info_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="userId != null">
+                AND (user_id = #{userId})
+            </if>
+            <if test="mobileNum != null and mobileNum.trim().length() != 0">
+                AND (mobile_num = #{mobileNum})
+            </if>
+            <if test="realName != null and realName.trim().length() != 0">
+                AND (real_name = #{realName})
+            </if>
+            <if test="idCard != null and idCard.trim().length() != 0">
+                AND (id_card = #{idCard})
+            </if>
+            <if test="educationLevel != null and educationLevel.trim().length() != 0">
+                AND (education_level = #{educationLevel})
+            </if>
+            <if test="isPaySocialSecurity != null and isPaySocialSecurity.trim().length() != 0">
+                AND (is_pay_social_security = #{isPaySocialSecurity})
+            </if>
+            <if test="maxMonthlyRepaymentLimit != null and maxMonthlyRepaymentLimit.trim().length() != 0">
+                AND (max_monthly_repayment_limit = #{maxMonthlyRepaymentLimit})
+            </if>
+            <if test="monthlySalary != null and monthlySalary.trim().length() != 0">
+                AND (monthly_salary = #{monthlySalary})
+            </if>
+            <if test="workingYears != null and workingYears.trim().length() != 0">
+                AND (working_years = #{workingYears})
+            </if>
+            <if test="vehicleSituation != null and vehicleSituation.trim().length() != 0">
+                AND (vehicle_situation = #{vehicleSituation})
+            </if>
+            <if test="careerCategory != null and careerCategory.trim().length() != 0">
+                AND (career_category = #{careerCategory})
+            </if>
+            <if test="estimatedAmount != null and estimatedAmount.trim().length() != 0">
+                AND (estimated_amount = #{estimatedAmount})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_loan_apply_info
+        <if test="fuzzy">
+            <include refid="finance_loan_apply_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_loan_apply_info_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_loan_apply_info
+        <if test="fuzzy">
+            <include refid="finance_loan_apply_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_loan_apply_info_query_condition"/>
+        </if>
+    </select>
+</mapper>
