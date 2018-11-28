@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.CreditCardInfoDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.CreditCardInfoDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="bank_code" property="bankCode" jdbcType="VARCHAR"/>
+        <result column="card_code" property="cardCode" jdbcType="VARCHAR"/>
+        <result column="card_name" property="cardName" jdbcType="VARCHAR"/>
+        <result column="card_logo_url" property="cardLogoUrl" jdbcType="VARCHAR"/>
+        <result column="card_limit_min" property="cardLimitMin" jdbcType="DECIMAL"/>
+        <result column="card_limit_max" property="cardLimitMax" jdbcType="DECIMAL"/>
+        <result column="predict_passing_rate" property="predictPassingRate" jdbcType="VARCHAR"/>
+        <result column="order" property="order" jdbcType="BIGINT"/>
+        <result column="card_types" property="cardTypes" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, bank_code, card_code, card_name, card_logo_url, card_limit_min, card_limit_max,
+        predict_passing_rate, order, card_types, create_time, update_time, creator, updator,
+        is_delete, version
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_credit_card_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <sql id="finance_credit_card_info_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="bankCode != null and bankCode.trim().length() != 0">
+                AND (bank_code like '%' || #{bankCode} || '%')
+            </if>
+            <if test="cardCode != null and cardCode.trim().length() != 0">
+                AND (card_code like '%' || #{cardCode} || '%')
+            </if>
+            <if test="cardName != null and cardName.trim().length() != 0">
+                AND (card_name like '%' || #{cardName} || '%')
+            </if>
+            <if test="cardLogoUrl != null and cardLogoUrl.trim().length() != 0">
+                AND (card_logo_url like '%' || #{cardLogoUrl} || '%')
+            </if>
+            <if test="cardLimitMin != null and cardLimitMin.trim().length() != 0">
+                AND (card_limit_min = #{cardLimitMin})
+            </if>
+            <if test="cardLimitMax != null and cardLimitMax.trim().length() != 0">
+                AND (card_limit_max = #{cardLimitMax})
+            </if>
+            <if test="predictPassingRate != null and predictPassingRate.trim().length() != 0">
+                AND (predict_passing_rate like '%' || #{predictPassingRate} || '%')
+            </if>
+            <if test="order != null and order.trim().length() != 0">
+                AND (order = #{order})
+            </if>
+            <if test="cardTypes != null and cardTypes.trim().length() != 0">
+                AND (card_types like '%' || #{cardTypes} || '%')
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete like '%' || #{isDelete} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_credit_card_info_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="bankCode != null and bankCode.trim().length() != 0">
+                AND (bank_code = #{bankCode})
+            </if>
+            <if test="cardCode != null and cardCode.trim().length() != 0">
+                AND (card_code = #{cardCode})
+            </if>
+            <if test="cardName != null and cardName.trim().length() != 0">
+                AND (card_name = #{cardName})
+            </if>
+            <if test="cardLogoUrl != null and cardLogoUrl.trim().length() != 0">
+                AND (card_logo_url = #{cardLogoUrl})
+            </if>
+            <if test="cardLimitMin != null and cardLimitMin.trim().length() != 0">
+                AND (card_limit_min = #{cardLimitMin})
+            </if>
+            <if test="cardLimitMax != null and cardLimitMax.trim().length() != 0">
+                AND (card_limit_max = #{cardLimitMax})
+            </if>
+            <if test="predictPassingRate != null and predictPassingRate.trim().length() != 0">
+                AND (predict_passing_rate = #{predictPassingRate})
+            </if>
+            <if test="order != null and order.trim().length() != 0">
+                AND (order = #{order})
+            </if>
+            <if test="cardTypes != null and cardTypes.trim().length() != 0">
+                AND (card_types = #{cardTypes})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_credit_card_info
+        <if test="fuzzy">
+            <include refid="finance_credit_card_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_credit_card_info_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_credit_card_info
+        <if test="fuzzy">
+            <include refid="finance_credit_card_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_credit_card_info_query_condition"/>
+        </if>
+    </select>
+</mapper>

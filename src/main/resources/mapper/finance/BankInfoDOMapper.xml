@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.BankInfoDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.BankInfoDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="bank_code" property="bankCode" jdbcType="VARCHAR"/>
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR"/>
+        <result column="bank_logo_url" property="bankLogoUrl" jdbcType="VARCHAR"/>
+        <result column="bank_introduction" property="bankIntroduction" jdbcType="VARCHAR"/>
+        <result column="bank_tag" property="bankTag" jdbcType="VARCHAR"/>
+        <result column="bank_limit_min" property="bankLimitMin" jdbcType="DECIMAL"/>
+        <result column="bank_limit_max" property="bankLimitMax" jdbcType="DECIMAL"/>
+        <result column="predict_passing_rate" property="predictPassingRate" jdbcType="VARCHAR"/>
+        <result column="order" property="order" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, bank_code, bank_name, bank_logo_url, bank_introduction, bank_tag, bank_limit_min,
+        bank_limit_max,predict_passing_rate, order, create_time, update_time, creator, updator, is_delete, version
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_bank_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <sql id="finance_bank_info_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="bankCode != null and bankCode.trim().length() != 0">
+                AND (bank_code like '%' || #{bankCode} || '%')
+            </if>
+            <if test="bankName != null and bankName.trim().length() != 0">
+                AND (bank_name like '%' || #{bankName} || '%')
+            </if>
+            <if test="bankLogoUrl != null and bankLogoUrl.trim().length() != 0">
+                AND (bank_logo_url like '%' || #{bankLogoUrl} || '%')
+            </if>
+            <if test="bankIntroduction != null and bankIntroduction.trim().length() != 0">
+                AND (bank_introduction like '%' || #{bankIntroduction} || '%')
+            </if>
+            <if test="bankTag != null and bankTag.trim().length() != 0">
+                AND (bank_tag like '%' || #{bankTag} || '%')
+            </if>
+            <if test="bankLimitMin != null and bankLimitMin.trim().length() != 0">
+                AND (bank_limit_min = #{bankLimitMin})
+            </if>
+            <if test="bankLimitMax != null and bankLimitMax.trim().length() != 0">
+                AND (bank_limit_max = #{bankLimitMax})
+            </if>
+            <if test="order != null and order.trim().length() != 0">
+                AND (order = #{order})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete like '%' || #{isDelete} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_bank_info_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="bankCode != null and bankCode.trim().length() != 0">
+                AND (bank_code = #{bankCode})
+            </if>
+            <if test="bankName != null and bankName.trim().length() != 0">
+                AND (bank_name = #{bankName})
+            </if>
+            <if test="bankLogoUrl != null and bankLogoUrl.trim().length() != 0">
+                AND (bank_logo_url = #{bankLogoUrl})
+            </if>
+            <if test="bankIntroduction != null and bankIntroduction.trim().length() != 0">
+                AND (bank_introduction = #{bankIntroduction})
+            </if>
+            <if test="bankTag != null and bankTag.trim().length() != 0">
+                AND (bank_tag = #{bankTag})
+            </if>
+            <if test="bankLimitMin != null and bankLimitMin.trim().length() != 0">
+                AND (bank_limit_min = #{bankLimitMin})
+            </if>
+            <if test="bankLimitMax != null and bankLimitMax.trim().length() != 0">
+                AND (bank_limit_max = #{bankLimitMax})
+            </if>
+            <if test="order != null and order.trim().length() != 0">
+                AND (order = #{order})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_bank_info
+        <if test="fuzzy">
+            <include refid="finance_bank_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_bank_info_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_bank_info
+        <if test="fuzzy">
+            <include refid="finance_bank_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_bank_info_query_condition"/>
+        </if>
+    </select>
+</mapper>

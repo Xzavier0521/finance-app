@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.CashBackConfigDAO" >
+  <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.CashBackConfigDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="config_id" property="configId" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
+    <result column="product_type" property="productType" jdbcType="VARCHAR" />
+    <result column="start_effective_date" property="startEffectiveDate" jdbcType="TIMESTAMP" />
+    <result column="end_effective_date" property="endEffectiveDate" jdbcType="TIMESTAMP" />
+    <result column="cashback_type" property="cashbackType" jdbcType="VARCHAR" />
+    <result column="total_bonus" property="totalBonus" jdbcType="DECIMAL" />
+    <result column="terminal_bonus" property="terminalBonus" jdbcType="DECIMAL" />
+    <result column="direct_bonus" property="directBonus" jdbcType="DECIMAL" />
+    <result column="indirect_bonus" property="indirectBonus" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, config_id, product_id, product_code, product_type, start_effective_date, end_effective_date, 
+    cashback_type, total_bonus, terminal_bonus, direct_bonus, indirect_bonus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from finance_cashback_config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <sql id="finance_cashback_config_query_fuzzy_condition" >
+    <trim prefix="WHERE" prefixOverrides="AND |OR " >
+      <if test="configId != null and configId.trim().length() != 0" >
+        AND (config_id = #{configId})
+      </if>
+      <if test="productId != null and productId.trim().length() != 0" >
+        AND (product_id = #{productId})
+      </if>
+      <if test="productCode != null and productCode.trim().length() != 0" >
+         AND (product_code like '%' || #{productCode} || '%') 
+      </if>
+      <if test="productType != null and productType.trim().length() != 0" >
+         AND (product_type like '%' || #{productType} || '%') 
+      </if>
+      <if test="startEffectiveDate != null and startEffectiveDate.trim().length() != 0" >
+        AND (start_effective_date = #{startEffectiveDate})
+      </if>
+      <if test="endEffectiveDate != null and endEffectiveDate.trim().length() != 0" >
+        AND (end_effective_date = #{endEffectiveDate})
+      </if>
+      <if test="cashbackType != null and cashbackType.trim().length() != 0" >
+         AND (cashback_type like '%' || #{cashbackType} || '%') 
+      </if>
+      <if test="totalBonus != null and totalBonus.trim().length() != 0" >
+        AND (total_bonus = #{totalBonus})
+      </if>
+      <if test="terminalBonus != null and terminalBonus.trim().length() != 0" >
+        AND (terminal_bonus = #{terminalBonus})
+      </if>
+      <if test="directBonus != null and directBonus.trim().length() != 0" >
+        AND (direct_bonus = #{directBonus})
+      </if>
+      <if test="indirectBonus != null and indirectBonus.trim().length() != 0" >
+        AND (indirect_bonus = #{indirectBonus})
+      </if>
+    </trim>
+  </sql>
+  <sql id="finance_cashback_config_query_condition" >
+    <trim prefix="WHERE" prefixOverrides="AND |OR " >
+      <if test="configId != null and configId.trim().length() != 0" >
+        AND (config_id = #{configId})
+      </if>
+      <if test="productId != null and productId.trim().length() != 0" >
+        AND (product_id = #{productId})
+      </if>
+      <if test="productCode != null and productCode.trim().length() != 0" >
+        AND (product_code = #{productCode})
+      </if>
+      <if test="productType != null and productType.trim().length() != 0" >
+        AND (product_type = #{productType})
+      </if>
+      <if test="startEffectiveDate != null and startEffectiveDate.trim().length() != 0" >
+        AND (start_effective_date = #{startEffectiveDate})
+      </if>
+      <if test="endEffectiveDate != null and endEffectiveDate.trim().length() != 0" >
+        AND (end_effective_date = #{endEffectiveDate})
+      </if>
+      <if test="cashbackType != null and cashbackType.trim().length() != 0" >
+        AND (cashback_type = #{cashbackType})
+      </if>
+      <if test="totalBonus != null and totalBonus.trim().length() != 0" >
+        AND (total_bonus = #{totalBonus})
+      </if>
+      <if test="terminalBonus != null and terminalBonus.trim().length() != 0" >
+        AND (terminal_bonus = #{terminalBonus})
+      </if>
+      <if test="directBonus != null and directBonus.trim().length() != 0" >
+        AND (direct_bonus = #{directBonus})
+      </if>
+      <if test="indirectBonus != null and indirectBonus.trim().length() != 0" >
+        AND (indirect_bonus = #{indirectBonus})
+      </if>
+    </trim>
+  </sql>
+  <select id="query" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+     from finance_cashback_config 
+    <if test="fuzzy" >
+      <include refid="finance_cashback_config_query_fuzzy_condition" />
+    </if>
+    <if test="!fuzzy" >
+      <include refid="finance_cashback_config_query_condition" />
+    </if>
+    <if test="order" >
+      order by ID desc
+    </if>
+    <include refid="base.limit" />
+  </select>
+  <select id="count" resultType="int" >
+    select count(*) from finance_cashback_config 
+    <if test="fuzzy" >
+      <include refid="finance_cashback_config_query_fuzzy_condition" />
+    </if>
+    <if test="!fuzzy" >
+      <include refid="finance_cashback_config_query_condition" />
+    </if>
+  </select>
+</mapper>

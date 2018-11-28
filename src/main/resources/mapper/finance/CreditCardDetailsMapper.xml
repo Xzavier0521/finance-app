@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.CreditCardDetailsDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.CreditCardDetailsDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="card_code" property="cardCode" jdbcType="VARCHAR"/>
+        <result column="card_name" property="cardName" jdbcType="VARCHAR"/>
+        <result column="card_banner_url" property="cardBannerUrl" jdbcType="VARCHAR"/>
+        <result column="redirect_url" property="redirectUrl" jdbcType="VARCHAR"/>
+        <result column="card_detail_desc" property="cardDetailDesc" jdbcType="VARCHAR"/>
+        <result column="card_detail_tag" property="cardDetailTag" jdbcType="VARCHAR"/>
+        <result column="cashback_config_id" property="cashbackConfigId" jdbcType="BIGINT"/>
+        <result column="card_welfare" property="cardWelfare" jdbcType="VARCHAR"/>
+        <result column="card_conditions" property="cardConditions" jdbcType="VARCHAR"/>
+        <result column="card_basic_info" property="cardBasicInfo" jdbcType="VARCHAR"/>
+        <result column="card_process_url" property="cardProcessUrl" jdbcType="VARCHAR"/>
+        <result column="share_img_url" property="shareImgUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, card_code, card_name, card_banner_url, redirect_url, card_detail_desc, card_detail_tag,
+        cashback_config_id, card_welfare, card_conditions, card_basic_info, card_process_url,share_img_url
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_credit_card_details
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <sql id="finance_credit_card_details_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="cardCode != null and cardCode.trim().length() != 0">
+                AND (card_code like '%' || #{cardCode} || '%')
+            </if>
+            <if test="cardName != null and cardName.trim().length() != 0">
+                AND (card_name like '%' || #{cardName} || '%')
+            </if>
+            <if test="cardBannerUrl != null and cardBannerUrl.trim().length() != 0">
+                AND (card_banner_url like '%' || #{cardBannerUrl} || '%')
+            </if>
+            <if test="redirectUrl != null and redirectUrl.trim().length() != 0">
+                AND (redirect_url like '%' || #{redirectUrl} || '%')
+            </if>
+            <if test="cardDetailDesc != null and cardDetailDesc.trim().length() != 0">
+                AND (card_detail_desc like '%' || #{cardDetailDesc} || '%')
+            </if>
+            <if test="cardDetailTag != null and cardDetailTag.trim().length() != 0">
+                AND (card_detail_tag like '%' || #{cardDetailTag} || '%')
+            </if>
+            <if test="cashbackConfigId != null and cashbackConfigId.trim().length() != 0">
+                AND (cashback_config_id = #{cashbackConfigId})
+            </if>
+            <if test="cardWelfare != null and cardWelfare.trim().length() != 0">
+                AND (card_welfare like '%' || #{cardWelfare} || '%')
+            </if>
+            <if test="cardConditions != null and cardConditions.trim().length() != 0">
+                AND (card_conditions like '%' || #{cardConditions} || '%')
+            </if>
+            <if test="cardBasicInfo != null and cardBasicInfo.trim().length() != 0">
+                AND (card_basic_info like '%' || #{cardBasicInfo} || '%')
+            </if>
+            <if test="cardProcessUrl != null and cardProcessUrl.trim().length() != 0">
+                AND (card_process_url like '%' || #{cardProcessUrl} || '%')
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_credit_card_details_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="cardCode != null and cardCode.trim().length() != 0">
+                AND (card_code = #{cardCode})
+            </if>
+            <if test="cardName != null and cardName.trim().length() != 0">
+                AND (card_name = #{cardName})
+            </if>
+            <if test="cardBannerUrl != null and cardBannerUrl.trim().length() != 0">
+                AND (card_banner_url = #{cardBannerUrl})
+            </if>
+            <if test="redirectUrl != null and redirectUrl.trim().length() != 0">
+                AND (redirect_url = #{redirectUrl})
+            </if>
+            <if test="cardDetailDesc != null and cardDetailDesc.trim().length() != 0">
+                AND (card_detail_desc = #{cardDetailDesc})
+            </if>
+            <if test="cardDetailTag != null and cardDetailTag.trim().length() != 0">
+                AND (card_detail_tag = #{cardDetailTag})
+            </if>
+            <if test="cashbackConfigId != null and cashbackConfigId.trim().length() != 0">
+                AND (cashback_config_id = #{cashbackConfigId})
+            </if>
+            <if test="cardWelfare != null and cardWelfare.trim().length() != 0">
+                AND (card_welfare = #{cardWelfare})
+            </if>
+            <if test="cardConditions != null and cardConditions.trim().length() != 0">
+                AND (card_conditions = #{cardConditions})
+            </if>
+            <if test="cardBasicInfo != null and cardBasicInfo.trim().length() != 0">
+                AND (card_basic_info = #{cardBasicInfo})
+            </if>
+            <if test="cardProcessUrl != null and cardProcessUrl.trim().length() != 0">
+                AND (card_process_url = #{cardProcessUrl})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_credit_card_details
+        <if test="fuzzy">
+            <include refid="finance_credit_card_details_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_credit_card_details_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_credit_card_details
+        <if test="fuzzy">
+            <include refid="finance_credit_card_details_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_credit_card_details_query_condition"/>
+        </if>
+    </select>
+</mapper>
