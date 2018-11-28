@@ -11,13 +11,11 @@ import finance.domain.dto.SendSmsCodeDto;
  */
 public interface SmsBiz {
 
-	/**
-	 * 发送短信验证码
-	 * 
-	 * @param paramDto
-	 *            参数
-	 * @return ResponseResult<String>
-	 */
-	ResponseResult<String> sendSmsValidateCode(SendSmsCodeDto paramDto);
+    /**
+     * 发送短信验证码 
+     * @param paramDto 参数
+     * @return ResponseResult<String>
+     */
+    ResponseResult<String> sendSmsValidateCode(SendSmsCodeDto paramDto);
 
 }

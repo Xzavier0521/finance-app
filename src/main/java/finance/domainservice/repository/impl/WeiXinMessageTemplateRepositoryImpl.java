@@ -17,13 +17,9 @@ import finance.domainservice.converter.WeiXinMessageTemplateConverter;
 import finance.domainservice.repository.WeiXinMessageTemplateRepository;
 
 /**
- * <p>
- * 微信公众号消息模版
- * </p>
- * 
+ * <p>微信公众号消息模版</p>
  * @author lili
- * @version $Id: WeiXinMessageTemplateRepositoryImpl.java, v0.1 2018/10/24 10:50
- *          AM lili Exp $
+ * @version 1.0: WeiXinMessageTemplateRepositoryImpl.java, v0.1 2018/11/26 9:51 PM lili Exp $
  */
 @Repository("weiXinMessageTemplateRepository")
 public class WeiXinMessageTemplateRepositoryImpl implements WeiXinMessageTemplateRepository {

@@ -22,9 +22,7 @@ import finance.core.common.util.LogUtil;
 import finance.domainservice.service.sms.SmsService;
 
 /**
- * <p>
- * 发送短信
- * </p>
+ * <p>发送短信</p>
  * 
  * @author lili
  * @version 1.0: SmsServiceImpl.java, v0.1 2018/11/24 8:40 PM lili Exp $

@@ -6,13 +6,9 @@ import java.util.Map;
 import finance.core.dal.dataobject.WeiXinMessageTemplateDO;
 
 /**
- * <p>
- * 微信公众号消息模版
- * </p>
- * 
+ * <p>微信公众号消息模版</p>
  * @author lili
- * @version $Id: WeiXinMessageTemplateDAO.java, v0.1 2018/10/24 10:23 AM lili
- *          Exp $
+ * @version 1.0: WeiXinMessageTemplateDAO.java, v0.1 2018/11/26 9:52 PM lili Exp $
  */
 public interface WeiXinMessageTemplateDAO {
 
