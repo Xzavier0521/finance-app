@@ -9,7 +9,7 @@
         <result column="redirect_url" property="redirectUrl" jdbcType="VARCHAR"/>
         <result column="card_detail_desc" property="cardDetailDesc" jdbcType="VARCHAR"/>
         <result column="card_detail_tag" property="cardDetailTag" jdbcType="VARCHAR"/>
-        <result column="cashback_config_id" property="cashbackConfigId" jdbcType="BIGINT"/>
+        <result column="cashback_config_id" property="cashbackConfigId" jdbcType="VARCHAR"/>
         <result column="card_welfare" property="cardWelfare" jdbcType="VARCHAR"/>
         <result column="card_conditions" property="cardConditions" jdbcType="VARCHAR"/>
         <result column="card_basic_info" property="cardBasicInfo" jdbcType="VARCHAR"/>

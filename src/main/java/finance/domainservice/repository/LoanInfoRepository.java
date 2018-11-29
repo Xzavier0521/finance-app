@@ -12,4 +12,6 @@ import finance.domain.loan.LoanInfo;
 public interface LoanInfoRepository {
 
     Page<LoanInfo> query(int pageSize, int pageNum);
+
+    LoanInfo query(String productCode);
 }

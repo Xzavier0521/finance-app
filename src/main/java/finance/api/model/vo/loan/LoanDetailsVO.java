@@ -60,7 +60,7 @@ public class LoanDetailsVO implements Serializable {
     /**
      * 申请人数
      */
-    private String                applyNum;
+    private Long                applyNum;
 
     /**
      * 均单时长

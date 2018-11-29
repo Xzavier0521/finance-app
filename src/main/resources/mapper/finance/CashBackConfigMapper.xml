@@ -4,9 +4,6 @@
   <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.CashBackConfigDO" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="config_id" property="configId" jdbcType="BIGINT" />
-    <result column="product_id" property="productId" jdbcType="BIGINT" />
-    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
-    <result column="product_type" property="productType" jdbcType="VARCHAR" />
     <result column="start_effective_date" property="startEffectiveDate" jdbcType="TIMESTAMP" />
     <result column="end_effective_date" property="endEffectiveDate" jdbcType="TIMESTAMP" />
     <result column="cashback_type" property="cashbackType" jdbcType="VARCHAR" />
@@ -16,7 +13,7 @@
     <result column="indirect_bonus" property="indirectBonus" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, config_id, product_id, product_code, product_type, start_effective_date, end_effective_date, 
+    id, config_id, start_effective_date, end_effective_date,
     cashback_type, total_bonus, terminal_bonus, direct_bonus, indirect_bonus
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >

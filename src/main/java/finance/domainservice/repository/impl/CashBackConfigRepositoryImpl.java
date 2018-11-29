@@ -28,7 +28,7 @@ public class CashBackConfigRepositoryImpl implements CashBackConfigRepository {
     private CashBackConfigDAO cashBackConfigDAO;
 
     @Override
-    public CashBackConfig query(Long configId) {
+    public CashBackConfig query(String configId) {
         CashBackConfig cashBackConfig = null;
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("configId", configId);

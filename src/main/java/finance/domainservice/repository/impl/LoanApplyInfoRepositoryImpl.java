@@ -35,6 +35,7 @@ public class LoanApplyInfoRepositoryImpl implements LoanApplyInfoRepository {
     public Page<LoanApplyInfo> query(Long userId, int pageSize, int pageNum) {
         Page<LoanApplyInfo> page = new Page<>(pageSize, (long) pageNum);
         Map<String, Object> parameters = Maps.newHashMap();
+        parameters.put("userId", userId);
         parameters.put("page", page);
         int count = loanApplyInfoDAO.count(parameters);
         page.setTotalCount((long) count);

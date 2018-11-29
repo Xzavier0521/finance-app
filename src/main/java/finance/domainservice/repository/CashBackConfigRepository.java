@@ -9,5 +9,5 @@ import finance.domain.cashbak.CashBackConfig;
  * @version 1.0: CashBackConfigRepository.java, v0.1 2018/11/29 2:12 AM PM lili Exp $
  */
 public interface CashBackConfigRepository {
-    CashBackConfig query(Long configId);
+    CashBackConfig query(String configId);
 }
