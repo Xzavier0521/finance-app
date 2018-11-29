@@ -1,9 +1,11 @@
 package finance.domainservice.repository.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Maps;
@@ -37,5 +39,17 @@ public class BankInfoRepositoryImpl implements BankInfoRepository {
             page.setDataList(BankInfoConverter.convert2List(bankInfoDAO.query(parameters)));
         }
         return page;
+    }
+
+    @Override
+    public BankInfo query(String bankCode) {
+        BankInfo bankInfo = null;
+        Map<String, Object> parameters = Maps.newHashMap();
+        parameters.put("bankCode", bankCode);
+        List<BankInfo> bankInfoList = BankInfoConverter.convert2List(bankInfoDAO.query(parameters));
+        if (CollectionUtils.isNotEmpty(bankInfoList)) {
+            bankInfo = bankInfoList.get(0);
+        }
+        return bankInfo;
     }
 }

@@ -1,5 +1,7 @@
 package finance.domainservice.service.creditcard;
 
+import finance.api.model.base.Page;
+import finance.api.model.vo.creditCard.CreditCardApplyInfoVO;
 import finance.api.model.vo.creditCard.CreditCardDetailVO;
 
 /**
@@ -11,4 +13,6 @@ import finance.api.model.vo.creditCard.CreditCardDetailVO;
 public interface CreditCardQueryService {
 
     CreditCardDetailVO queryCreditCardDetail(String cardCode);
+
+    Page<CreditCardApplyInfoVO> queryApplyInfo(Long userId, int pageSize, int pageNum);
 }

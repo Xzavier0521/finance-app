@@ -8,19 +8,23 @@ import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 
+import finance.api.model.base.Page;
 import finance.api.model.vo.cashback.CashBackConfigTableVO;
 import finance.api.model.vo.common.BodyVO;
+import finance.api.model.vo.creditCard.CreditCardApplyInfoVO;
 import finance.api.model.vo.creditCard.CreditCardDetailVO;
+import finance.core.common.util.DateUtils;
 import finance.domain.cashbak.CashBackConfig;
+import finance.domain.creditcard.BankInfo;
+import finance.domain.creditcard.CreditCardApplyInfo;
 import finance.domain.creditcard.CreditCardDetails;
 import finance.domain.creditcard.CreditCardInfo;
-import finance.domainservice.repository.CashBackConfigRepository;
-import finance.domainservice.repository.CreditCardDetailsRepository;
-import finance.domainservice.repository.CreditCardInfoRepository;
+import finance.domainservice.repository.*;
 import finance.domainservice.service.creditcard.CreditCardQueryService;
 
 /**
@@ -34,12 +38,15 @@ import finance.domainservice.service.creditcard.CreditCardQueryService;
 public class CreditCardQueryServiceImpl implements CreditCardQueryService {
 
     @Resource
-    private CashBackConfigRepository    cashBackConfigRepository;
+    private BankInfoRepository            bankInfoRepository;
     @Resource
-    private CreditCardInfoRepository    creditCardInfoRepository;
-
+    private CashBackConfigRepository      cashBackConfigRepository;
     @Resource
-    private CreditCardDetailsRepository creditCardDetailsRepository;
+    private CreditCardInfoRepository      creditCardInfoRepository;
+    @Resource
+    private CreditCardApplyInfoRepository creditCardApplyInfoRepository;
+    @Resource
+    private CreditCardDetailsRepository   creditCardDetailsRepository;
 
     @Override
     public CreditCardDetailVO queryCreditCardDetail(String cardCode) {
@@ -90,5 +97,43 @@ public class CreditCardQueryServiceImpl implements CreditCardQueryService {
             creditCardDetailVO.setBodyList(bodyList);
         }
         return creditCardDetailVO;
+    }
+
+    @Override
+    public Page<CreditCardApplyInfoVO> queryApplyInfo(Long userId, int pageSize, int pageNum) {
+
+        Page<CreditCardApplyInfo> creditCardApplyInfoPage = creditCardApplyInfoRepository
+            .query(userId, pageSize, pageNum);
+        Page<CreditCardApplyInfoVO> page = new Page<>(creditCardApplyInfoPage.getPageSize(),
+            creditCardApplyInfoPage.getPageNum());
+        page.setTotalCount(creditCardApplyInfoPage.getTotalCount());
+        List<CreditCardApplyInfo> creditCardApplyInfoList = creditCardApplyInfoPage.getDataList();
+        if (CollectionUtils.isNotEmpty(creditCardApplyInfoList)) {
+            List<CreditCardApplyInfoVO> creditCardApplyInfoVOList = Lists
+                .newArrayListWithCapacity(creditCardApplyInfoList.size());
+            CreditCardApplyInfoVO creditCardApplyInfoVO;
+            for (CreditCardApplyInfo creditCardApplyInfo : creditCardApplyInfoList) {
+                creditCardApplyInfoVO = new CreditCardApplyInfoVO();
+                creditCardApplyInfoVO.setUserId(userId);
+                CreditCardInfo creditCardInfo = creditCardInfoRepository
+                    .query(creditCardApplyInfo.getProductCode());
+                creditCardApplyInfoVO.setProductCode(creditCardApplyInfo.getProductCode());
+                creditCardApplyInfoVO.setProductTag(creditCardInfo.getCardTag());
+                creditCardApplyInfoVO.setProductName(creditCardInfo.getCardName());
+                creditCardApplyInfoVO.setApplyTime(DateUtils
+                    .format(creditCardApplyInfo.getUpdateTime(), DateUtils.LONG_WEB_FORMAT));
+                creditCardApplyInfoVO.setApplyStatus("申请中");
+                BankInfo bankInfo = bankInfoRepository.query(creditCardInfo.getBankCode());
+                if (Objects.nonNull(bankInfo)) {
+                    creditCardApplyInfoVO
+                        .setTitle(MessageFormat.format("{0}信用卡审批记录", bankInfo.getBankName()));
+                    creditCardApplyInfoVO.setBankLogoUrl(bankInfo.getBankLogoUrl());
+                }
+                creditCardApplyInfoVOList.add(creditCardApplyInfoVO);
+            }
+            page.setDataList(creditCardApplyInfoVOList);
+        }
+
+        return page;
     }
 }

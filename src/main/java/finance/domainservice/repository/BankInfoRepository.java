@@ -12,4 +12,6 @@ import finance.domain.creditcard.BankInfo;
 public interface BankInfoRepository {
 
     Page<BankInfo> query(int pageSize, int pageNum);
+
+    BankInfo query(String bankCode);
 }

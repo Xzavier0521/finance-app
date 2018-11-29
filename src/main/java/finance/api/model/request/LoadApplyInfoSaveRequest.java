@@ -1,8 +1,7 @@
 package finance.api.model.request;
 
-import java.io.Serializable;
-
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * <p>贷款申请</p>
@@ -10,8 +9,9 @@ import lombok.Data;
  * @author lili
  * @version 1.0: LoadApplyInfoSaveRequest.java, v0.1 2018/11/29 2:41 AM PM lili Exp $
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class LoadApplyInfoSaveRequest implements Serializable {
+public class LoadApplyInfoSaveRequest extends BasicRequest {
 
     private static final long serialVersionUID = -257238297642612997L;
     /**

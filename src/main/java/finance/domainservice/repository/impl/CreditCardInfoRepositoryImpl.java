@@ -47,7 +47,6 @@ public class CreditCardInfoRepositoryImpl implements CreditCardInfoRepository {
         CreditCardInfo creditCardInfo = null;
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("cardCode", cardCode);
-
         List<CreditCardInfo> creditCardInfoList = CreditCardInfoConverter
             .convert2List(creditCardInfoDAO.query(parameters));
         if (CollectionUtils.isNotEmpty(creditCardInfoList)) {
