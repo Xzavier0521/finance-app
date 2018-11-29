@@ -58,6 +58,6 @@ public class BankInfoVO implements Serializable {
     /**
      * 顺序
      */
-    private String            order;
+    private Long            order;
 
 }

@@ -21,7 +21,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         id, bank_code, card_code, card_name, card_logo_url, card_limit_min, card_limit_max,
-        predict_passing_rate, order, card_types, create_time, update_time, creator, updator,
+        predict_passing_rate, `order`, card_types, create_time, update_time, creator, updator,
         is_delete, version
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">

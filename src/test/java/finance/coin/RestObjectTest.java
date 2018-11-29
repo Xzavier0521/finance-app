@@ -23,7 +23,7 @@ import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.activity.CoinGameVO;
 import finance.api.model.vo.activity.RedEnvelopeRainDataVO;
 import finance.api.model.vo.activity.UserCurrentRankingVO;
-import finance.api.model.vo.creditCard.BankInfo;
+import finance.api.model.vo.creditCard.BankInfoVO;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
 import finance.domainservice.service.activity.RedEnvelopeRainRankingRewardService;
 import finance.domainservice.service.activity.RedEnvelopeRainRankingSyncService;
@@ -84,12 +84,12 @@ public class RestObjectTest {
         String json2 = objectMapper.writeValueAsString(res);
         log.info(json2);
         //
-        Page<BankInfo> bankInfoPage = new Page<>(20, 1L);
-        List<BankInfo> bankInfoList = Lists.newArrayList();
-        bankInfoList.add(BankInfo.builder().bankCode("0001").bankName("招商银行")
+        Page<BankInfoVO> bankInfoPage = new Page<>(20, 1L);
+        List<BankInfoVO> bankInfoList = Lists.newArrayList();
+        bankInfoList.add(BankInfoVO.builder().bankCode("0001").bankName("招商银行")
             .bankLogoUrl("www.xxxx.com").bankTag("易下").build());
         bankInfoPage.setDataList(bankInfoList);
-        ResponseResult<Page<BankInfo>> pageResponseResult = ResponseResult.success(bankInfoPage);
+        ResponseResult<Page<BankInfoVO>> pageResponseResult = ResponseResult.success(bankInfoPage);
 
         String json3 = objectMapper.writeValueAsString(pageResponseResult);
         log.info("json3:{}",json3);

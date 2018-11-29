@@ -5,7 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * <p>贷款申请p>
+ * <p>贷款申请</p>
  *
  * @author lili
  * @version 1.0: LoadApplyInfoSaveRequest.java, v0.1 2018/11/29 2:41 AM PM lili Exp $

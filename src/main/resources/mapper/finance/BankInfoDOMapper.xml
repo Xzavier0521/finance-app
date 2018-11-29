@@ -21,7 +21,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         id, bank_code, bank_name, bank_logo_url, bank_introduction, bank_tag, bank_limit_min,
-        bank_limit_max,predict_passing_rate, order, create_time, update_time, creator, updator, is_delete, version
+        bank_limit_max,predict_passing_rate, `order`, create_time, update_time, creator, updator, is_delete, version
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
@@ -52,7 +52,7 @@
             <if test="bankLimitMax != null and bankLimitMax.trim().length() != 0">
                 AND (bank_limit_max = #{bankLimitMax})
             </if>
-            <if test="order != null and order.trim().length() != 0">
+            <if test="order != null">
                 AND (order = #{order})
             </if>
             <if test="createTime != null and createTime.trim().length() != 0">
