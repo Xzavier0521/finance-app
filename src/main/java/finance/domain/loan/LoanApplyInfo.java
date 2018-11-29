@@ -1,9 +1,9 @@
 package finance.domain.loan;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
+
+import lombok.Data;
 
 /**
  * <p>贷款申请记录</p>
@@ -77,11 +77,15 @@ public class LoanApplyInfo implements Serializable {
      * 预估额度
      */
     private String            estimatedAmount;
+    /**
+     * 产品代码
+     */
+    private String            productCode;
 
     /**
      * 创建时间
      */
-    private Date createTime;
+    private Date              createTime;
 
     /**
      * 更新时间

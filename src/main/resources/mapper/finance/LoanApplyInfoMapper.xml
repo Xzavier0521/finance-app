@@ -15,6 +15,7 @@
         <result column="vehicle_situation" property="vehicleSituation" jdbcType="VARCHAR"/>
         <result column="career_category" property="careerCategory" jdbcType="VARCHAR"/>
         <result column="estimated_amount" property="estimatedAmount" jdbcType="VARCHAR"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="creator" property="creator" jdbcType="VARCHAR"/>
@@ -25,7 +26,7 @@
     <sql id="Base_Column_List">
         id, user_id, mobile_num, real_name, id_card, education_level, is_pay_social_security,
         max_monthly_repayment_limit, monthly_salary, working_years, vehicle_situation, career_category,
-        estimated_amount, create_time, update_time, creator, updator, is_delete, version
+        estimated_amount,product_code, create_time, update_time, creator, updator, is_delete, version
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select

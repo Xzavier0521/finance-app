@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.LoanDetailsDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.LoanDetailsDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+        <result column="product_desc" property="productDesc" jdbcType="VARCHAR"/>
+        <result column="product_logo_url" property="productLogoUrl" jdbcType="VARCHAR"/>
+        <result column="lending_time" property="lendingTime" jdbcType="VARCHAR"/>
+        <result column="reference_interest" property="referenceInterest" jdbcType="VARCHAR"/>
+        <result column="loan_amount" property="loanAmount" jdbcType="VARCHAR"/>
+        <result column="loan_term" property="loanTerm" jdbcType="VARCHAR"/>
+        <result column="apply_num" property="applyNum" jdbcType="BIGINT"/>
+        <result column="avg_order_time" property="avgOrderTime" jdbcType="VARCHAR"/>
+        <result column="avg_order_amount" property="avgOrderAmount" jdbcType="DECIMAL"/>
+        <result column="loan_conditions" property="loanConditions" jdbcType="VARCHAR"/>
+        <result column="apply_info" property="applyInfo" jdbcType="VARCHAR"/>
+        <result column="loan_process_url" property="loanProcessUrl" jdbcType="VARCHAR"/>
+        <result column="fee_desc" property="feeDesc" jdbcType="VARCHAR"/>
+        <result column="repayment_desc" property="repaymentDesc" jdbcType="VARCHAR"/>
+        <result column="share_img_url" property="shareImgUrl" jdbcType="VARCHAR"/>
+        <result column="cashback_config_id" property="cashbackConfigId" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, product_code, product_name, product_desc, product_logo_url, lending_time, reference_interest,
+        loan_amount, loan_term, apply_num, avg_order_time, avg_order_amount, loan_conditions,
+        apply_info, loan_process_url, fee_desc, repayment_desc, share_img_url, cashback_config_id,
+        create_time, update_time, creator, updator, is_delete, version
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_loan_details
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <sql id="finance_loan_details_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="productCode != null and productCode.trim().length() != 0">
+                AND (product_code like '%' || #{productCode} || '%')
+            </if>
+            <if test="productName != null and productName.trim().length() != 0">
+                AND (product_name like '%' || #{productName} || '%')
+            </if>
+            <if test="productDesc != null and productDesc.trim().length() != 0">
+                AND (product_desc like '%' || #{productDesc} || '%')
+            </if>
+            <if test="productLogoUrl != null and productLogoUrl.trim().length() != 0">
+                AND (product_logo_url like '%' || #{productLogoUrl} || '%')
+            </if>
+            <if test="lendingTime != null and lendingTime.trim().length() != 0">
+                AND (lending_time like '%' || #{lendingTime} || '%')
+            </if>
+            <if test="referenceInterest != null and referenceInterest.trim().length() != 0">
+                AND (reference_interest like '%' || #{referenceInterest} || '%')
+            </if>
+            <if test="loanAmount != null and loanAmount.trim().length() != 0">
+                AND (loan_amount like '%' || #{loanAmount} || '%')
+            </if>
+            <if test="loanTerm != null and loanTerm.trim().length() != 0">
+                AND (loan_term like '%' || #{loanTerm} || '%')
+            </if>
+            <if test="applyNum != null and applyNum.trim().length() != 0">
+                AND (apply_num = #{applyNum})
+            </if>
+            <if test="avgOrderTime != null and avgOrderTime.trim().length() != 0">
+                AND (avg_order_time like '%' || #{avgOrderTime} || '%')
+            </if>
+            <if test="avgOrderAmount != null and avgOrderAmount.trim().length() != 0">
+                AND (avg_order_amount = #{avgOrderAmount})
+            </if>
+            <if test="loanConditions != null and loanConditions.trim().length() != 0">
+                AND (loan_conditions like '%' || #{loanConditions} || '%')
+            </if>
+            <if test="applyInfo != null and applyInfo.trim().length() != 0">
+                AND (apply_info like '%' || #{applyInfo} || '%')
+            </if>
+            <if test="loanProcessUrl != null and loanProcessUrl.trim().length() != 0">
+                AND (loan_process_url like '%' || #{loanProcessUrl} || '%')
+            </if>
+            <if test="feeDesc != null and feeDesc.trim().length() != 0">
+                AND (fee_desc like '%' || #{feeDesc} || '%')
+            </if>
+            <if test="repaymentDesc != null and repaymentDesc.trim().length() != 0">
+                AND (repayment_desc like '%' || #{repaymentDesc} || '%')
+            </if>
+            <if test="shareImgUrl != null and shareImgUrl.trim().length() != 0">
+                AND (share_img_url like '%' || #{shareImgUrl} || '%')
+            </if>
+            <if test="cashbackConfigId != null and cashbackConfigId.trim().length() != 0">
+                AND (cashback_config_id like '%' || #{cashbackConfigId} || '%')
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete like '%' || #{isDelete} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_loan_details_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="productCode != null and productCode.trim().length() != 0">
+                AND (product_code = #{productCode})
+            </if>
+            <if test="productName != null and productName.trim().length() != 0">
+                AND (product_name = #{productName})
+            </if>
+            <if test="productDesc != null and productDesc.trim().length() != 0">
+                AND (product_desc = #{productDesc})
+            </if>
+            <if test="productLogoUrl != null and productLogoUrl.trim().length() != 0">
+                AND (product_logo_url = #{productLogoUrl})
+            </if>
+            <if test="lendingTime != null and lendingTime.trim().length() != 0">
+                AND (lending_time = #{lendingTime})
+            </if>
+            <if test="referenceInterest != null and referenceInterest.trim().length() != 0">
+                AND (reference_interest = #{referenceInterest})
+            </if>
+            <if test="loanAmount != null and loanAmount.trim().length() != 0">
+                AND (loan_amount = #{loanAmount})
+            </if>
+            <if test="loanTerm != null and loanTerm.trim().length() != 0">
+                AND (loan_term = #{loanTerm})
+            </if>
+            <if test="applyNum != null and applyNum.trim().length() != 0">
+                AND (apply_num = #{applyNum})
+            </if>
+            <if test="avgOrderTime != null and avgOrderTime.trim().length() != 0">
+                AND (avg_order_time = #{avgOrderTime})
+            </if>
+            <if test="avgOrderAmount != null and avgOrderAmount.trim().length() != 0">
+                AND (avg_order_amount = #{avgOrderAmount})
+            </if>
+            <if test="loanConditions != null and loanConditions.trim().length() != 0">
+                AND (loan_conditions = #{loanConditions})
+            </if>
+            <if test="applyInfo != null and applyInfo.trim().length() != 0">
+                AND (apply_info = #{applyInfo})
+            </if>
+            <if test="loanProcessUrl != null and loanProcessUrl.trim().length() != 0">
+                AND (loan_process_url = #{loanProcessUrl})
+            </if>
+            <if test="feeDesc != null and feeDesc.trim().length() != 0">
+                AND (fee_desc = #{feeDesc})
+            </if>
+            <if test="repaymentDesc != null and repaymentDesc.trim().length() != 0">
+                AND (repayment_desc = #{repaymentDesc})
+            </if>
+            <if test="shareImgUrl != null and shareImgUrl.trim().length() != 0">
+                AND (share_img_url = #{shareImgUrl})
+            </if>
+            <if test="cashbackConfigId != null and cashbackConfigId.trim().length() != 0">
+                AND (cashback_config_id = #{cashbackConfigId})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_loan_details
+        <if test="fuzzy">
+            <include refid="finance_loan_details_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_loan_details_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_loan_details
+        <if test="fuzzy">
+            <include refid="finance_loan_details_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_loan_details_query_condition"/>
+        </if>
+    </select>
+</mapper>

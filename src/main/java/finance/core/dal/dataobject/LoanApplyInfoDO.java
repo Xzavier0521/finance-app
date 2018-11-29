@@ -74,6 +74,11 @@ public class LoanApplyInfoDO implements Serializable {
     private String            careerCategory;
 
     /**
+     * 产品代码
+     */
+    private String            productCode;
+
+    /**
      * 预估额度
      */
     private String            estimatedAmount;

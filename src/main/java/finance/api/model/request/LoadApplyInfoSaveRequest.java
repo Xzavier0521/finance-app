@@ -56,4 +56,9 @@ public class LoadApplyInfoSaveRequest implements Serializable {
      * 预估额度
      */
     private String            estimatedAmount;
+
+    /**
+     * 产品代码
+     */
+    private String            productCode;
 }
