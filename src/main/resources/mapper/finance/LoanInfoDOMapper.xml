@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.LoanInfoDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.LoanInfoDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+        <result column="product_desc" property="productDesc" jdbcType="VARCHAR"/>
+        <result column="product_logo_url" property="productLogoUrl" jdbcType="VARCHAR"/>
+        <result column="product_features" property="productFeatures" jdbcType="VARCHAR"/>
+        <result column="product_tags" property="productTags" jdbcType="VARCHAR"/>
+        <result column="lending_time" property="lendingTime" jdbcType="VARCHAR"/>
+        <result column="loan_amount" property="loanAmount" jdbcType="VARCHAR"/>
+        <result column="loan_interest" property="loanInterest" jdbcType="VARCHAR"/>
+        <result column="loan_term" property="loanTerm" jdbcType="VARCHAR"/>
+        <result column="hot_percent" property="hotPercent" jdbcType="VARCHAR"/>
+        <result column="product_top_tag" property="productTopTag" jdbcType="VARCHAR"/>
+        <result column="order" property="order" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, product_code, product_name, product_desc, product_logo_url, product_features,product_tags,
+        lending_time, loan_amount, loan_interest, loan_term, hot_percent, product_top_tag,
+        `order`, create_time, update_time, creator, updator, is_delete, version
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_loan_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <sql id="finance_loan_info_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="productCode != null and productCode.trim().length() != 0">
+                AND (product_code like '%' || #{productCode} || '%')
+            </if>
+            <if test="productName != null and productName.trim().length() != 0">
+                AND (product_name like '%' || #{productName} || '%')
+            </if>
+            <if test="productDesc != null and productDesc.trim().length() != 0">
+                AND (product_desc like '%' || #{productDesc} || '%')
+            </if>
+            <if test="productLogoUrl != null and productLogoUrl.trim().length() != 0">
+                AND (product_logo_url like '%' || #{productLogoUrl} || '%')
+            </if>
+            <if test="productFeatures != null and productFeatures.trim().length() != 0">
+                AND (product_features like '%' || #{productFeatures} || '%')
+            </if>
+            <if test="lendingTime != null and lendingTime.trim().length() != 0">
+                AND (lending_time like '%' || #{lendingTime} || '%')
+            </if>
+            <if test="loanAmount != null and loanAmount.trim().length() != 0">
+                AND (loan_amount like '%' || #{loanAmount} || '%')
+            </if>
+            <if test="loanInterest != null and loanInterest.trim().length() != 0">
+                AND (loan_interest like '%' || #{loanInterest} || '%')
+            </if>
+            <if test="loanTerm != null and loanTerm.trim().length() != 0">
+                AND (loan_term like '%' || #{loanTerm} || '%')
+            </if>
+            <if test="hotPercent != null and hotPercent.trim().length() != 0">
+                AND (hot_percent like '%' || #{hotPercent} || '%')
+            </if>
+            <if test="productTopTag != null and productTopTag.trim().length() != 0">
+                AND (product_top_tag like '%' || #{productTopTag} || '%')
+            </if>
+            <if test="order != null and order.trim().length() != 0">
+                AND (order = #{order})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete like '%' || #{isDelete} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_loan_info_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="productCode != null and productCode.trim().length() != 0">
+                AND (product_code = #{productCode})
+            </if>
+            <if test="productName != null and productName.trim().length() != 0">
+                AND (product_name = #{productName})
+            </if>
+            <if test="productDesc != null and productDesc.trim().length() != 0">
+                AND (product_desc = #{productDesc})
+            </if>
+            <if test="productLogoUrl != null and productLogoUrl.trim().length() != 0">
+                AND (product_logo_url = #{productLogoUrl})
+            </if>
+            <if test="productFeatures != null and productFeatures.trim().length() != 0">
+                AND (product_features = #{productFeatures})
+            </if>
+            <if test="lendingTime != null and lendingTime.trim().length() != 0">
+                AND (lending_time = #{lendingTime})
+            </if>
+            <if test="loanAmount != null and loanAmount.trim().length() != 0">
+                AND (loan_amount = #{loanAmount})
+            </if>
+            <if test="loanInterest != null and loanInterest.trim().length() != 0">
+                AND (loan_interest = #{loanInterest})
+            </if>
+            <if test="loanTerm != null and loanTerm.trim().length() != 0">
+                AND (loan_term = #{loanTerm})
+            </if>
+            <if test="hotPercent != null and hotPercent.trim().length() != 0">
+                AND (hot_percent = #{hotPercent})
+            </if>
+            <if test="productTopTag != null and productTopTag.trim().length() != 0">
+                AND (product_top_tag = #{productTopTag})
+            </if>
+            <if test="order != null and order.trim().length() != 0">
+                AND (order = #{order})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_loan_info
+        <if test="fuzzy">
+            <include refid="finance_loan_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_loan_info_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_loan_info
+        <if test="fuzzy">
+            <include refid="finance_loan_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_loan_info_query_condition"/>
+        </if>
+    </select>
+</mapper>
