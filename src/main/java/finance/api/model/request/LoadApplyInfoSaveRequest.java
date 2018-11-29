@@ -43,6 +43,11 @@ public class LoadApplyInfoSaveRequest implements Serializable {
      * 月收入
      */
     private String            monthlySalary;
+
+    /**
+     * 职业类别
+     */
+    private String            careerCategory;
     /**
      * 工作年限
      */
