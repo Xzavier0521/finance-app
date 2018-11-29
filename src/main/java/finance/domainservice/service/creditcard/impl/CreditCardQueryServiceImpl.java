@@ -117,18 +117,20 @@ public class CreditCardQueryServiceImpl implements CreditCardQueryService {
                 creditCardApplyInfoVO.setUserId(userId);
                 CreditCardInfo creditCardInfo = creditCardInfoRepository
                     .query(creditCardApplyInfo.getProductCode());
+                if (Objects.nonNull(creditCardInfo)) {
+                    creditCardApplyInfoVO.setProductTag(creditCardInfo.getCardTag());
+                    creditCardApplyInfoVO.setProductName(creditCardInfo.getCardName());
+                    BankInfo bankInfo = bankInfoRepository.query(creditCardInfo.getBankCode());
+                    if (Objects.nonNull(bankInfo)) {
+                        creditCardApplyInfoVO
+                                .setTitle(MessageFormat.format("{0}信用卡审批记录", bankInfo.getBankName()));
+                        creditCardApplyInfoVO.setBankLogoUrl(bankInfo.getBankLogoUrl());
+                    }
+                }
                 creditCardApplyInfoVO.setProductCode(creditCardApplyInfo.getProductCode());
-                creditCardApplyInfoVO.setProductTag(creditCardInfo.getCardTag());
-                creditCardApplyInfoVO.setProductName(creditCardInfo.getCardName());
                 creditCardApplyInfoVO.setApplyTime(DateUtils
                     .format(creditCardApplyInfo.getUpdateTime(), DateUtils.LONG_WEB_FORMAT));
                 creditCardApplyInfoVO.setApplyStatus("申请中");
-                BankInfo bankInfo = bankInfoRepository.query(creditCardInfo.getBankCode());
-                if (Objects.nonNull(bankInfo)) {
-                    creditCardApplyInfoVO
-                        .setTitle(MessageFormat.format("{0}信用卡审批记录", bankInfo.getBankName()));
-                    creditCardApplyInfoVO.setBankLogoUrl(bankInfo.getBankLogoUrl());
-                }
                 creditCardApplyInfoVOList.add(creditCardApplyInfoVO);
             }
             page.setDataList(creditCardApplyInfoVOList);
