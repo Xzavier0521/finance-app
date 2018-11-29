@@ -38,7 +38,10 @@ public class CreditCardInfoDO implements Serializable {
      * logo url
      */
     private String            cardLogoUrl;
-
+    /**
+     * 标签
+     */
+    private String            cardTag;
     /**
      * 起始额度
      */

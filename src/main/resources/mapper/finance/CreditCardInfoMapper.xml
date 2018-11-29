@@ -7,6 +7,7 @@
         <result column="card_code" property="cardCode" jdbcType="VARCHAR"/>
         <result column="card_name" property="cardName" jdbcType="VARCHAR"/>
         <result column="card_logo_url" property="cardLogoUrl" jdbcType="VARCHAR"/>
+        <result column="card_tag" property="cardTag" jdbcType="VARCHAR"/>
         <result column="card_limit_min" property="cardLimitMin" jdbcType="DECIMAL"/>
         <result column="card_limit_max" property="cardLimitMax" jdbcType="DECIMAL"/>
         <result column="predict_passing_rate" property="predictPassingRate" jdbcType="VARCHAR"/>
@@ -20,7 +21,7 @@
         <result column="version" property="version" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, bank_code, card_code, card_name, card_logo_url, card_limit_min, card_limit_max,
+        id, bank_code, card_code, card_name, card_logo_url,card_tag, card_limit_min, card_limit_max,
         predict_passing_rate, `order`, card_types, create_time, update_time, creator, updator,
         is_delete, version
     </sql>
