@@ -101,7 +101,7 @@ public class CreditCardController {
     }
 
     @GetMapping("getCreditCardDetail")
-    public ResponseResult<CreditCardDetailVO> getCreditCardDetail(@RequestParam("cardCode") String cardCode) {
+    public ResponseResult<CreditCardDetailVO> queryCreditCardDetail(@RequestParam("cardCode") String cardCode) {
         ResponseResult<CreditCardDetailVO> response;
         log.info("[开始查询信用卡详情],请求参数,cardCodee:{}", cardCode);
         try {

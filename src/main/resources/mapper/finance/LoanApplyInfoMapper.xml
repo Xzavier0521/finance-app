@@ -94,6 +94,9 @@
             <if test="version != null">
                 version,
             </if>
+            <if test="productCode != null">
+                product_code,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -152,6 +155,9 @@
             </if>
             <if test="version != null">
                 #{version,jdbcType=BIGINT},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=BIGINT},
             </if>
         </trim>
     </insert>
