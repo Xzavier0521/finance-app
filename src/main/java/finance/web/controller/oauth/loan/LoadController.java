@@ -13,6 +13,7 @@ import finance.api.model.base.Page;
 import finance.api.model.request.LoadApplyInfoSaveRequest;
 import finance.api.model.response.LoadApplyInfoSaveResponse;
 import finance.api.model.response.ResponseResult;
+import finance.api.model.vo.loan.LoanInfoVO;
 import finance.core.common.enums.ReturnCode;
 import finance.core.common.exception.BizException;
 import finance.core.common.util.ConvertBeanUtil;
@@ -21,7 +22,9 @@ import finance.domain.loan.LoanApplyInfo;
 import finance.domain.user.UserInfo;
 import finance.domainservice.converter.UserInfoConverter;
 import finance.domainservice.repository.LoanApplyInfoRepository;
+import finance.domainservice.repository.LoanInfoRepository;
 import finance.domainservice.service.jwt.JwtService;
+import finance.web.controller.response.LoadInfoQueryBuilder;
 
 /**
  * <p>贷款</p>
@@ -40,6 +43,34 @@ public class LoadController {
 
     @Resource
     private LoanApplyInfoRepository loanApplyInfoRepository;
+
+    @Resource
+    private LoanInfoRepository      loanInfoRepository;
+
+    @GetMapping("getLoanList")
+    public ResponseResult<Page<LoanInfoVO>> queryLoanList(@RequestParam("pageSize") int pageSize,
+                                                          @RequestParam("pageNum") int pageNum) {
+        ResponseResult<Page<LoanInfoVO>> response;
+        log.info("[开始分页查询贷款产品列表],请求参数,pageSize:{},pageNum:{}", pageNum, pageSize);
+        try {
+            Page<LoanInfoVO> page = LoadInfoQueryBuilder
+                .build(loanInfoRepository.query(pageSize, pageNum));
+            response = ResponseResult.success(page);
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+
+        } catch (final Exception e) {
+            response = ResponseResultUtils.error(ReturnCode.SYS_ERROR);
+            log.error("[分页查询贷款产品列表]，异常:{}", ExceptionUtils.getStackTrace(e));
+        }
+        log.info("[结束分页查询贷款产品列表],请求参数,pageSize:{},pageNum:{},返回结果:{}", pageNum, pageSize, response);
+        return response;
+    }
 
     @PostMapping("saveApplyInfo")
     public ResponseResult<LoadApplyInfoSaveResponse> saveAppleInfo(@RequestBody LoadApplyInfoSaveRequest request) {
