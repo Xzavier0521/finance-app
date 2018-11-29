@@ -14,6 +14,7 @@ import finance.api.model.base.Page;
 import finance.core.dal.dao.LoanInfoDAO;
 import finance.domain.loan.LoanInfo;
 import finance.domainservice.converter.LoanInfoConverter;
+import finance.domainservice.repository.LoanDetailsRepository;
 import finance.domainservice.repository.LoanInfoRepository;
 
 /**
@@ -26,7 +27,10 @@ import finance.domainservice.repository.LoanInfoRepository;
 public class LoanInfoRepositoryImpl implements LoanInfoRepository {
 
     @Resource
-    private LoanInfoDAO loanInfoDAO;
+    private LoanInfoDAO           loanInfoDAO;
+
+    @Resource
+    private LoanDetailsRepository loanDetailsRepository;
 
     @Override
     public Page<LoanInfo> query(int pageSize, int pageNum) {
@@ -37,7 +41,13 @@ public class LoanInfoRepositoryImpl implements LoanInfoRepository {
         int count = loanInfoDAO.count(parameters);
         page.setTotalCount((long) count);
         if (count > 0) {
-            page.setDataList(LoanInfoConverter.convert2List(loanInfoDAO.query(parameters)));
+            List<LoanInfo> loanInfoList = LoanInfoConverter
+                .convert2List(loanInfoDAO.query(parameters));
+            loanInfoList.forEach(loanInfo -> {
+                loanInfo.setAvgOrderAmount(loanDetailsRepository.query(loanInfo.getProductCode())
+                    .getAvgOrderAmount().toString());
+            });
+            page.setDataList(loanInfoList);
         }
         return page;
     }

@@ -1,6 +1,7 @@
 package finance.api.model.vo.loan;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import lombok.Data;
 
@@ -73,5 +74,10 @@ public class LoanInfoVO implements Serializable {
     /**
      * 顺序
      */
-    private Integer              order;
+    private Integer           order;
+
+    /**
+     * 均单金额
+     */
+    private String                avgOrderAmount;
 }

@@ -80,7 +80,10 @@ public class LoanInfo implements Serializable {
     
      */
     private String            productTopTag;
-
+    /**
+     * 均单金额
+     */
+    private String            avgOrderAmount;
     /**
      * 顺序
      */
