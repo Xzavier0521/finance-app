@@ -44,6 +44,10 @@ public class LoanInfo implements Serializable {
     private String            productFeatures;
 
     /**
+     * 标签
+     */
+    private String            productTags;
+    /**
      * 放款时长
     
      */

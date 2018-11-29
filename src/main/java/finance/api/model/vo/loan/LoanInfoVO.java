@@ -38,6 +38,10 @@ public class LoanInfoVO implements Serializable {
     private String            productFeatures;
 
     /**
+     * 标签
+     */
+    private String            productTags;
+    /**
      * 放款时长
      */
     private String            lendingTime;
@@ -65,4 +69,9 @@ public class LoanInfoVO implements Serializable {
      * 头部标签
      */
     private String            productTopTag;
+
+    /**
+     * 顺序
+     */
+    private Integer              order;
 }
