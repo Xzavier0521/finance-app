@@ -38,6 +38,11 @@ public class LoanDetailsVO implements Serializable {
     private String                productLogoUrl;
 
     /**
+     * 跳转url
+     */
+    private String                redirectUrl;
+
+    /**
      * 放款时长
      */
     private String                lendingTime;
@@ -60,7 +65,7 @@ public class LoanDetailsVO implements Serializable {
     /**
      * 申请人数
      */
-    private Long                applyNum;
+    private Long                  applyNum;
 
     /**
      * 均单时长

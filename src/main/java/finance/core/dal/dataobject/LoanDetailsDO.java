@@ -38,7 +38,10 @@ public class LoanDetailsDO implements Serializable {
      * logo url
      */
     private String            productLogoUrl;
-
+    /**
+     * 跳转url
+     */
+    private String            redirectUrl;
     /**
      * 放款时长
     放款时长

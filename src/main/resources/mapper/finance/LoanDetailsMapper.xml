@@ -7,6 +7,7 @@
         <result column="product_name" property="productName" jdbcType="VARCHAR"/>
         <result column="product_desc" property="productDesc" jdbcType="VARCHAR"/>
         <result column="product_logo_url" property="productLogoUrl" jdbcType="VARCHAR"/>
+        <result column="redirect_url" property="redirectUrl" jdbcType="VARCHAR"/>
         <result column="lending_time" property="lendingTime" jdbcType="VARCHAR"/>
         <result column="reference_interest" property="referenceInterest" jdbcType="VARCHAR"/>
         <result column="loan_amount" property="loanAmount" jdbcType="VARCHAR"/>
@@ -29,7 +30,7 @@
         <result column="version" property="version" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, product_code, product_name, product_desc, product_logo_url, lending_time, reference_interest,
+        id, product_code, product_name, product_desc, product_logo_url, lending_time, reference_interest,redirect_url,
         loan_amount, loan_term, apply_num, avg_order_time, avg_order_amount, loan_conditions,
         apply_info, loan_process_url, fee_desc, repayment_desc, share_img_url, cashback_config_id,
         create_time, update_time, creator, updator, is_delete, version
