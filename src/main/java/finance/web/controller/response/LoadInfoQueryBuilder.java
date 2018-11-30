@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Objects;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.Lists;
@@ -25,6 +26,7 @@ import finance.domain.loan.LoanInfo;
  * @author lili
  * @version 1.0: LoadInfoQueryBuilder.java, v0.1 2018/11/29 1:51 PM PM lili Exp $
  */
+@Slf4j
 public class LoadInfoQueryBuilder {
 
     public static Page<LoanInfoVO> build(Page<LoanInfo> fromPage) {
@@ -65,12 +67,12 @@ public class LoadInfoQueryBuilder {
             CashBackConfigTableVO cashBackConfigTableVO = new CashBackConfigTableVO();
             cashBackConfigTableVO.setTitle("角色|办卡人|直接推广者|间接推广者");
             String body;
-            if ("percentage".equals(cashBackConfig.getCashbackType())) {
+            if ("percentage".equalsIgnoreCase(cashBackConfig.getCashbackType())) {
                 body = MessageFormat.format("返现比例|{0}%|{1}%|{2}%",
                     cashBackConfig.getTerminalBonus(), cashBackConfig.getDirectBonus(),
                     cashBackConfig.getIndirectBonus());
             } else {
-                body = MessageFormat.format("返现比例|{0}|{1}|{2}",
+                body = MessageFormat.format("返现比例|{0}元|{1}元|{2}元",
                         cashBackConfig.getTerminalBonus(), cashBackConfig.getDirectBonus(),
                         cashBackConfig.getIndirectBonus());
             }
