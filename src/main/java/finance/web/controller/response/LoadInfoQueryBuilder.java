@@ -65,7 +65,7 @@ public class LoadInfoQueryBuilder {
         // 返佣配置
         if (Objects.nonNull(cashBackConfig)) {
             CashBackConfigTableVO cashBackConfigTableVO = new CashBackConfigTableVO();
-            cashBackConfigTableVO.setTitle("角色|办卡人|直接推广者|间接推广者");
+            cashBackConfigTableVO.setTitle("角色|借款人|直接推广者|间接推广者");
             String body;
             if ("percentage".equalsIgnoreCase(cashBackConfig.getCashbackType())) {
                 body = MessageFormat.format("返现比例|{0}%|{1}%|{2}%",
