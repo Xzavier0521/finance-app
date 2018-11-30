@@ -70,6 +70,7 @@ public class ThirdUnionController {
 
         } catch (final Exception e) {
             response = ResponseResult.error(CodeEnum.systemError);
+            log.info("[联合登陆],请求参数:{},异常:{}", request, ExceptionUtils.getStackTrace(e));
         }
         log.info("[结束联合登陆],请求参数:{},返回结果:{}", request, response);
         return response;
