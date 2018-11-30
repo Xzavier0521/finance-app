@@ -8,7 +8,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import finance.core.common.enums.ReturnCode;
 import finance.ext.api.request.YunJuHeUnionLoginRequest;
 import finance.ext.api.response.YunJuHeUnionLoginResponse;
 import finance.ext.integration.config.RetrofitHttpClient;
@@ -43,7 +42,7 @@ public class YunJuHeClientImpl implements YunJuHeClient {
             response = create().unionLogin(request).execute().body();
         } catch (final Exception e) {
             response = new YunJuHeUnionLoginResponse();
-            response.setCode(ReturnCode.SYS_ERROR.getCode());
+            response.setCode(1);
             response.setMsg(e.getMessage());
             log.info("[云聚合联合登陆],请求参数:{},异常:{}", request, ExceptionUtils.getStackTrace(e));
         }
