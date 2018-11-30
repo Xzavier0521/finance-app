@@ -45,8 +45,10 @@ public class YunJuHeServiceImpl implements YunJuHeService {
         yunJuHeUnionLoginRequest.setRealName(realName);
         yunJuHeUnionLoginRequest.setUserId(String.valueOf(userInfo.getId()));
         yunJuHeUnionLoginRequest.setMobile(userInfo.getMobileNum());
+        yunJuHeUnionLoginRequest.setCertcode(userInfo.getMobileNum());
         String md5Msg = "deptId=" + deptId + "&userId=" + userInfo.getId() + "&realName=" + realName
-                        + "&mobile=" + userInfo.getMobileNum() + "&certcode=";
+                        + "&mobile=" + userInfo.getMobileNum() + "&certcode="
+                        + userInfo.getMobileNum();
         yunJuHeUnionLoginRequest.setSign(MD5Util.sign(md5Msg, "", "utf-8"));
         YunJuHeUnionLoginResponse yunJuHeUnionLoginResponse = yunJuHeClient
             .unionLogin(yunJuHeUnionLoginRequest);

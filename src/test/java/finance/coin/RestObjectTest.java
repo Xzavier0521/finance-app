@@ -25,6 +25,7 @@ import finance.api.model.vo.activity.RedEnvelopeRainDataVO;
 import finance.api.model.vo.activity.UserCurrentRankingVO;
 import finance.api.model.vo.creditCard.BankInfoVO;
 import finance.core.common.enums.RedEnvelopeRainTimeCodeEnum;
+import finance.core.common.util.MD5Util;
 import finance.domainservice.service.activity.RedEnvelopeRainRankingRewardService;
 import finance.domainservice.service.activity.RedEnvelopeRainRankingSyncService;
 
@@ -92,7 +93,7 @@ public class RestObjectTest {
         ResponseResult<Page<BankInfoVO>> pageResponseResult = ResponseResult.success(bankInfoPage);
 
         String json3 = objectMapper.writeValueAsString(pageResponseResult);
-        log.info("json3:{}",json3);
+        log.info("json3:{}", json3);
 
     }
 
@@ -104,4 +105,9 @@ public class RestObjectTest {
         // redEnvelopeRainRankingSyncService.process();
     }
 
+    @Test
+    public void test2() {
+        String md5Msg = "deptId=500087&userId=0&realName=测试&mobile=18112345678&certcode=18112345678";
+        log.info("md5Msg:{}", MD5Util.sign(md5Msg, "", "utf-8"));
+    }
 }
