@@ -1,5 +1,6 @@
 package finance.domainservice.repository.impl;
 
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 
@@ -36,17 +37,16 @@ public class LoanInfoRepositoryImpl implements LoanInfoRepository {
     public Page<LoanInfo> query(int pageSize, int pageNum) {
 
         Map<String, Object> parameters = Maps.newHashMap();
-        Page<LoanInfo> page = new Page<>(pageNum, (long) pageNum);
+        Page<LoanInfo> page = new Page<>(pageSize, (long) pageNum);
         parameters.put("page", page);
         int count = loanInfoDAO.count(parameters);
         page.setTotalCount((long) count);
         if (count > 0) {
             List<LoanInfo> loanInfoList = LoanInfoConverter
                 .convert2List(loanInfoDAO.query(parameters));
-            loanInfoList.forEach(loanInfo -> {
-                loanInfo.setAvgOrderAmount(loanDetailsRepository.query(loanInfo.getProductCode())
-                    .getAvgOrderAmount().toString());
-            });
+            loanInfoList.forEach(loanInfo -> loanInfo
+                .setAvgOrderAmount(loanDetailsRepository.query(loanInfo.getProductCode())
+                    .getAvgOrderAmount().setScale(0, RoundingMode.HALF_UP).toString()));
             page.setDataList(loanInfoList);
         }
         return page;
