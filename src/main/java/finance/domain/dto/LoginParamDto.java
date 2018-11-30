@@ -24,7 +24,7 @@ public class LoginParamDto implements Serializable {
      */
     @NotBlank(message = "登录方式不能为空")
     private String            type;
-    @NotBlank(message = "活动类型不能为空")
+    //@NotBlank(message = "活动类型不能为空")
     private String            activityType;
     private String            wechatPubName;
     /**
@@ -61,7 +61,7 @@ public class LoginParamDto implements Serializable {
     /**
      * 平台代码
      */
-    @NotBlank(message = "平台编码不能为空")
+    // @NotBlank(message = "平台编码不能为空")
     private String            platformCode;
     private String            platformDetail;
     private String            ip;
