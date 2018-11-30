@@ -78,6 +78,11 @@ public class LoanDetailsVO implements Serializable {
     private String                avgOrderAmount;
 
     /**
+     * 分享图片地址
+     */
+    private String            shareImgUrl;
+
+    /**
      * 返佣配置
      */
     private CashBackConfigTableVO cashBackConfigTable;
