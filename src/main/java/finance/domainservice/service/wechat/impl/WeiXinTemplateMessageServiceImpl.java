@@ -94,7 +94,7 @@ public class WeiXinTemplateMessageServiceImpl implements WeiXinTemplateMessageSe
                     .color("#0000ff").build());
                 break;
             case FIRST_SUBSCRIBE_NOTICE:
-                data.put("first", WeiXinTemplateData.builder().value("恭喜您，通过分享链接加入金榕家！")
+                data.put("first", WeiXinTemplateData.builder().value("欢迎您，关注金榕家！")
                     .color("#0000ff").build());
                 data.put("keyword1", WeiXinTemplateData.builder().value(parameters.get("nickName"))
                     .color("#0000ff").build());
@@ -102,7 +102,7 @@ public class WeiXinTemplateMessageServiceImpl implements WeiXinTemplateMessageSe
                     WeiXinTemplateData.builder()
                         .value(DateUtils.format(new Date(), DateUtils.LONG_WEB_FORMAT))
                         .color("#0000ff").build());
-                data.put("remark", WeiXinTemplateData.builder().value("您如果取消关注，会影响邀请人的奖励哦！您要慎重哦！")
+                data.put("remark", WeiXinTemplateData.builder().value("现在办理信用卡奖励升级了，90%佣金，赶快去办理！")
                     .color("#0000ff").build());
                 break;
             case SECOND_INVITE_NOTICE:
