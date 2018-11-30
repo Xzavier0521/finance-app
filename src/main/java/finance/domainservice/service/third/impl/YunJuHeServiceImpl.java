@@ -56,7 +56,7 @@ public class YunJuHeServiceImpl implements YunJuHeService {
             yunJuHeUnionLoginResponse);
         thirdUnionLoginLogRepository.save(thirdUnionLoginLog);
         if (YunJuHeReturnCode.SUCCESS == YunJuHeReturnCode
-            .getByCode(yunJuHeUnionLoginResponse.getCode())) {
+            .getByCode(String.valueOf(yunJuHeUnionLoginResponse.getCode()))) {
             response = ResponseUtils.buildResp(ReturnCode.SUCCESS,
                 yunJuHeUnionLoginResponse.getData());
         } else {
@@ -77,7 +77,7 @@ public class YunJuHeServiceImpl implements YunJuHeService {
         thirdUnionLoginLog.setThirdType("yunjuhe");
         thirdUnionLoginLog.setDeptId(deptId);
         thirdUnionLoginLog.setThirdUserId(response.getData());
-        thirdUnionLoginLog.setErrorCode(response.getCode());
+        thirdUnionLoginLog.setErrorCode(String.valueOf(response.getCode()));
         thirdUnionLoginLog.setErrorMsg(response.getMsg());
         return thirdUnionLoginLog;
     }

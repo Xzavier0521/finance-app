@@ -17,7 +17,7 @@ public class YunJuHeUnionLoginResponse implements Serializable {
     /**
      *  响应业务状态
      */
-    private String            code;
+    private int               code;
 
     /**
      * 响应消息
