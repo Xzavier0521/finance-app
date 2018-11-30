@@ -15,6 +15,10 @@ public class CreditCardInfoVO implements Serializable {
     private static final long serialVersionUID = 7615627703771834728L;
 
     /**
+     * 银行代码
+     */
+    private String            bankCode;
+    /**
      * 信用卡代码 
      */
     private String            cardCode;
@@ -52,6 +56,6 @@ public class CreditCardInfoVO implements Serializable {
     /**
      * 顺序
      */
-    private Long           order;
+    private Long              order;
 
 }
