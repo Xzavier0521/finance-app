@@ -1,5 +1,6 @@
 package finance.web.controller.response;
 
+import java.math.RoundingMode;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Objects;
@@ -57,7 +58,8 @@ public class LoadInfoQueryBuilder {
         loanDetailsVO.setLoanAmountStr(loanDetails.getLoanAmount());
         loanDetailsVO.setLoanTermStr(loanDetails.getLoanTerm());
         loanDetailsVO.setReferenceInterestStr(loanDetails.getReferenceInterest());
-        loanDetailsVO.setAvgOrderAmount(loanDetails.getAvgOrderAmount().toString());
+        loanDetailsVO.setAvgOrderAmount(
+            loanDetails.getAvgOrderAmount().setScale(1, RoundingMode.HALF_UP).toString());
         // 返佣配置
         if (Objects.nonNull(cashBackConfig)) {
             CashBackConfigTableVO cashBackConfigTableVO = new CashBackConfigTableVO();
