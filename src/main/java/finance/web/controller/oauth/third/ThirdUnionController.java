@@ -13,6 +13,7 @@ import finance.api.model.base.Page;
 import finance.api.model.request.ThirdJointLoginRequest;
 import finance.api.model.response.BasicResponse;
 import finance.api.model.response.ResponseResult;
+import finance.api.model.vo.third.ThirdUserInfoVO;
 import finance.core.common.enums.CodeEnum;
 import finance.core.common.enums.ReturnCode;
 import finance.core.common.exception.BizException;
@@ -46,8 +47,8 @@ public class ThirdUnionController {
     private ThirdUnionLoginLogRepository thirdUnionLoginLogRepository;
 
     @PostMapping("yunjuhe")
-    public ResponseResult<Void> login(@RequestBody ThirdJointLoginRequest request) {
-        ResponseResult<Void> response;
+    public ResponseResult<ThirdUserInfoVO> login(@RequestBody ThirdJointLoginRequest request) {
+        ResponseResult<ThirdUserInfoVO> response;
         try {
             UserInfoDO userInfo = jwtService.getUserInfo();
             ProductInfo productInfo = new ProductInfo();
@@ -56,7 +57,9 @@ public class ThirdUnionController {
             BasicResponse basicResponse = yunJuHeService.unionLogin(
                 UserInfoConverter.convert(userInfo), request.getRealName(), productInfo);
             if (basicResponse.isSuccess()) {
-                response = ResponseResult.success(null);
+                ThirdUserInfoVO thirdUserInfoVO = new ThirdUserInfoVO();
+                thirdUserInfoVO.setThirdUserId(basicResponse.getReturnMessage());
+                response = ResponseResult.success(thirdUserInfoVO);
             } else {
                 response = ResponseResultUtils.error(basicResponse.getReturnMessage());
             }

@@ -54,7 +54,8 @@ public class YunJuHeServiceImpl implements YunJuHeService {
         thirdUnionLoginLogRepository.save(thirdUnionLoginLog);
         if (YunJuHeReturnCode.SUCCESS == YunJuHeReturnCode
             .getByCode(yunJuHeUnionLoginResponse.getCode())) {
-            response = ResponseUtils.buildResp(ReturnCode.SUCCESS);
+            response = ResponseUtils.buildResp(ReturnCode.SUCCESS,
+                yunJuHeUnionLoginResponse.getData());
         } else {
             response = ResponseUtils.buildResp(ReturnCode.SYSTEM_ERROR,
                 yunJuHeUnionLoginResponse.getMsg());
