@@ -91,8 +91,10 @@ public class LoadController {
         try {
             LoanDetails loanDetails = loanDetailsRepository.query(productCode);
             LoanInfo loanInfo = loanInfoRepository.query(productCode);
-            CashBackConfig cashBackConfig = cashBackConfigRepository
-                .query(loanDetails.getCashbackConfigId());
+            CashBackConfig cashBackConfig = new CashBackConfig();
+            if (Objects.nonNull(loanDetails)) {
+                cashBackConfig = cashBackConfigRepository.query(loanDetails.getCashbackConfigId());
+            }
             LoanDetailsVO loanDetailsVO = LoadInfoQueryBuilder.build(loanInfo, loanDetails,
                 cashBackConfig);
             response = ResponseResult.success(loanDetailsVO);

@@ -64,9 +64,16 @@ public class LoadInfoQueryBuilder {
         if (Objects.nonNull(cashBackConfig)) {
             CashBackConfigTableVO cashBackConfigTableVO = new CashBackConfigTableVO();
             cashBackConfigTableVO.setTitle("角色|办卡人|直接推广者|间接推广者");
-            String body = MessageFormat.format("返现比例|{0}%|{1}%|{2}%",
-                cashBackConfig.getTerminalBonus(), cashBackConfig.getDirectBonus(),
-                cashBackConfig.getIndirectBonus());
+            String body;
+            if ("percentage".equals(cashBackConfig.getCashbackType())) {
+                body = MessageFormat.format("返现比例|{0}%|{1}%|{2}%",
+                    cashBackConfig.getTerminalBonus(), cashBackConfig.getDirectBonus(),
+                    cashBackConfig.getIndirectBonus());
+            } else {
+                body = MessageFormat.format("返现比例|{0}|{1}|{2}",
+                        cashBackConfig.getTerminalBonus(), cashBackConfig.getDirectBonus(),
+                        cashBackConfig.getIndirectBonus());
+            }
             cashBackConfigTableVO.setBody(Lists.newArrayList(body));
             loanDetailsVO.setCashBackConfigTable(cashBackConfigTableVO);
         }
