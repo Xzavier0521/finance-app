@@ -22,7 +22,7 @@ public class CashBackConfigDO implements Serializable {
     /**
      * 配置id
      */
-    private Long              configId;
+    private String              configId;
 
     /**
      * 产品id
