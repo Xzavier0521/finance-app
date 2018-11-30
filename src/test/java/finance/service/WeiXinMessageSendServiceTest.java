@@ -31,7 +31,7 @@ public class WeiXinMessageSendServiceTest {
 
     @Test
     public void test() {
-        // registerSendMessageService.sendMessage(1172L);
+         registerSendMessageService.sendMessage(1172L);
         log.info("{}",  LocalDate.now().plusDays(-1).format(DateTimeFormatter.ISO_DATE));
     }
 
