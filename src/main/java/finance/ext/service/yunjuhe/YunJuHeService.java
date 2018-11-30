@@ -19,6 +19,6 @@ public interface YunJuHeService {
      * @param request  请求参数
      * @return 返回结果 YunJuHeUnionLoginResponse
      */
-    @POST("app/unionLogin")
+    @POST("app/uionLogin")
     Call<YunJuHeUnionLoginResponse> unionLogin(@Body YunJuHeUnionLoginRequest request);
 }
