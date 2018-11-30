@@ -11,7 +11,7 @@ import finance.domain.creditcard.CreditCardInfo;
  */
 public interface CreditCardInfoRepository {
 
-    Page<CreditCardInfo> query(int pageSize, int pageNum,String cardCode);
+    Page<CreditCardInfo> query(int pageSize, int pageNum,String cardCode,String bankCode);
 
     CreditCardInfo query(String cardCode);
 }

@@ -86,14 +86,15 @@ public class CreditCardController {
     @GetMapping("getCreditCardList")
     public ResponseResult<Page<CreditCardInfoVO>> queryCreditCardList(@RequestParam("pageSize") int pageSize,
                                                                       @RequestParam("pageNum") int pageNum,
-                                                                      @Param("cardCode") String cardCode) {
+                                                                      @Param("cardCode") String cardCode,
+                                                                      @Param("bankCode") String bankCode) {
 
         ResponseResult<Page<CreditCardInfoVO>> response;
-        log.info("[开始分页查询信用卡列表],请求参数,pageSize:{},pageNum:{},cardCode:{}", pageNum, pageSize,
-            cardCode);
+        log.info("[开始分页查询信用卡列表],请求参数,pageSize:{},pageNum:{},cardCode:{},bankCode:{}", pageNum,
+            pageSize, cardCode, bankCode);
         try {
-            Page<CreditCardInfoVO> page = CreditCardQueryBuilder
-                .build4CreditCardInfo(creditCardInfoRepository.query(pageSize, pageNum, cardCode));
+            Page<CreditCardInfoVO> page = CreditCardQueryBuilder.build4CreditCardInfo(
+                creditCardInfoRepository.query(pageSize, pageNum, cardCode, bankCode));
             response = ResponseResult.success(page);
         } catch (BizException bizEx) {
             ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
@@ -107,8 +108,8 @@ public class CreditCardController {
             response = ResponseResultUtils.error(ReturnCode.SYS_ERROR);
             log.error("[分页查询信用卡列表]，异常:{}", ExceptionUtils.getStackTrace(e));
         }
-        log.info("[结束分页查询信用卡列表],请求参数,pageSize:{},pageNum:{},cardCode{},返回结果:{}", pageNum, pageSize,
-            cardCode, response);
+        log.info("[结束分页查询信用卡列表],请求参数,pageSize:{},pageNum:{},cardCode{},bankCode:{},返回结果:{}",
+            pageNum, pageSize, cardCode, bankCode, response);
         return response;
     }
 

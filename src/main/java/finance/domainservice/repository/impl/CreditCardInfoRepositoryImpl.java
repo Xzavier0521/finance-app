@@ -29,11 +29,12 @@ public class CreditCardInfoRepositoryImpl implements CreditCardInfoRepository {
     private CreditCardInfoDAO creditCardInfoDAO;
 
     @Override
-    public Page<CreditCardInfo> query(int pageSize, int pageNum, String cardCode) {
+    public Page<CreditCardInfo> query(int pageSize, int pageNum, String cardCode, String bankCode) {
         Page<CreditCardInfo> page = new Page<>(pageSize, (long) pageNum);
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("page", page);
         parameters.put("cardCode", cardCode);
+        parameters.put("bankCode", bankCode);
         int count = creditCardInfoDAO.count(parameters);
         page.setTotalCount((long) count);
         if (count > 0) {
