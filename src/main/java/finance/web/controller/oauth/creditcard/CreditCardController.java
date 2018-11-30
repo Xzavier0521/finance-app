@@ -92,7 +92,7 @@ public class CreditCardController {
         log.info("[开始分页查询信用卡列表],请求参数,pageSize:{},pageNum:{}", pageNum, pageSize);
         try {
             Page<CreditCardInfoVO> page = CreditCardQueryBuilder
-                .build4CreditCardInfo(creditCardInfoRepository.query(pageSize, pageNum));
+                .build4CreditCardInfo(creditCardInfoRepository.query(pageSize, pageNum, cardCode));
             response = ResponseResult.success(page);
         } catch (BizException bizEx) {
             ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
