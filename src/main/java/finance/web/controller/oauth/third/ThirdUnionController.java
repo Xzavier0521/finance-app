@@ -48,6 +48,7 @@ public class ThirdUnionController {
 
     @PostMapping("yunjuhe")
     public ResponseResult<ThirdUserInfoVO> login(@RequestBody ThirdJointLoginRequest request) {
+        log.info("[开始联合登陆],请求参数:{}", request);
         ResponseResult<ThirdUserInfoVO> response;
         try {
             UserInfoDO userInfo = jwtService.getUserInfo();
@@ -74,6 +75,7 @@ public class ThirdUnionController {
         } catch (final Exception e) {
             response = ResponseResult.error(CodeEnum.systemError);
         }
+        log.info("[开始联合登陆],请求参数:{},返回结果:{}", request, response);
         return response;
     }
 

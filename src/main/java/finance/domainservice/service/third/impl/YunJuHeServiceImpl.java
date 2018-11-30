@@ -45,8 +45,9 @@ public class YunJuHeServiceImpl implements YunJuHeService {
         yunJuHeUnionLoginRequest.setRealName(realName);
         yunJuHeUnionLoginRequest.setUserId(String.valueOf(userInfo.getId()));
         yunJuHeUnionLoginRequest.setMobile(userInfo.getMobileNum());
-        yunJuHeUnionLoginRequest.setSign(MD5Util.sign(deptId + String.valueOf(userInfo.getId()),
-            realName + userInfo.getMobileNum(), "utf-8"));
+        String md5Msg = "deptId=" + deptId + "&userId=" + userInfo.getId() + "&realName=" + realName
+                        + "&mobile=" + userInfo.getMobileNum() + "&certcode=";
+        yunJuHeUnionLoginRequest.setSign(MD5Util.sign(md5Msg, "", "utf-8"));
         YunJuHeUnionLoginResponse yunJuHeUnionLoginResponse = yunJuHeClient
             .unionLogin(yunJuHeUnionLoginRequest);
         ThirdUnionLoginLog thirdUnionLoginLog = buildData(userInfo, productInfo, realName,
