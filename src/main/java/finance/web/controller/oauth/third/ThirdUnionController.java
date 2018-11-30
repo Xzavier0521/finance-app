@@ -57,13 +57,9 @@ public class ThirdUnionController {
             productInfo.setProductName(request.getProductName());
             BasicResponse basicResponse = yunJuHeService.unionLogin(
                 UserInfoConverter.convert(userInfo), request.getRealName(), productInfo);
-            if (basicResponse.isSuccess()) {
-                ThirdUserInfoVO thirdUserInfoVO = new ThirdUserInfoVO();
-                thirdUserInfoVO.setThirdUserId(basicResponse.getReturnMessage());
-                response = ResponseResult.success(thirdUserInfoVO);
-            } else {
-                response = ResponseResultUtils.error(basicResponse.getReturnMessage());
-            }
+            ThirdUserInfoVO thirdUserInfoVO = new ThirdUserInfoVO();
+            thirdUserInfoVO.setThirdUserId(basicResponse.getReturnMessage());
+            response = ResponseResult.success(thirdUserInfoVO);
         } catch (BizException bizEx) {
             ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
             if (Objects.nonNull(code)) {
@@ -75,7 +71,7 @@ public class ThirdUnionController {
         } catch (final Exception e) {
             response = ResponseResult.error(CodeEnum.systemError);
         }
-        log.info("[开始联合登陆],请求参数:{},返回结果:{}", request, response);
+        log.info("[结束联合登陆],请求参数:{},返回结果:{}", request, response);
         return response;
     }
 
