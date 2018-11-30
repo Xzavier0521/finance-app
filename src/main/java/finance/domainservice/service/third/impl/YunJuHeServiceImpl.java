@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import finance.api.model.response.BasicResponse;
 import finance.core.common.enums.ReturnCode;
+import finance.core.common.util.MD5Util;
 import finance.core.common.util.ResponseUtils;
 import finance.domain.product.ProductInfo;
 import finance.domain.third.ThirdUnionLoginLog;
@@ -44,6 +45,8 @@ public class YunJuHeServiceImpl implements YunJuHeService {
         yunJuHeUnionLoginRequest.setRealName(realName);
         yunJuHeUnionLoginRequest.setUserId(String.valueOf(userInfo.getId()));
         yunJuHeUnionLoginRequest.setMobile(userInfo.getMobileNum());
+        yunJuHeUnionLoginRequest.setSign(MD5Util.sign(deptId + String.valueOf(userInfo.getId()),
+            realName + userInfo.getMobileNum(), "utf-8"));
         YunJuHeUnionLoginResponse yunJuHeUnionLoginResponse = yunJuHeClient
             .unionLogin(yunJuHeUnionLoginRequest);
         ThirdUnionLoginLog thirdUnionLoginLog = buildData(userInfo, productInfo, realName,
