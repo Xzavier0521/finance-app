@@ -15,9 +15,10 @@
         <result column="card_basic_info" property="cardBasicInfo" jdbcType="VARCHAR"/>
         <result column="card_process_url" property="cardProcessUrl" jdbcType="VARCHAR"/>
         <result column="share_img_url" property="shareImgUrl" jdbcType="VARCHAR"/>
+        <result column="channel_type" property="channelType" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, card_code, card_name, card_banner_url, redirect_url, card_detail_desc, card_detail_tag,
+        id, card_code, card_name, card_banner_url, redirect_url, card_detail_desc, card_detail_tag,channel_type,
         cashback_config_id, card_welfare, card_conditions, card_basic_info, card_process_url,share_img_url
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
