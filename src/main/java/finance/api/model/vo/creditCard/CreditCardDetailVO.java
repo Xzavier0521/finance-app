@@ -38,6 +38,10 @@ public class CreditCardDetailVO implements Serializable {
     private String                cardBannerUrl;
 
     /**
+     * 渠道类型
+     */
+    private String                channelType;
+    /**
      * 跳转第三方url
      */
     private String                redirectUrl;

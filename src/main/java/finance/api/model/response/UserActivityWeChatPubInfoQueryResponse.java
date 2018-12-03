@@ -17,30 +17,30 @@ public class UserActivityWeChatPubInfoQueryResponse implements Serializable {
     /**
      * 用户id
      */
-    private Long userId;
+    private Long              userId;
 
     /**
      * 手机号码
      */
-    private String mobilePhone;
+    private String            mobilePhone;
 
     /**
      * 活动代码
      */
-    private String activityCode;
+    private String            activityCode;
 
     /**
      * 历史关注人数
      */
-    private Long historySubscribeNum;
+    private Long              historySubscribeNum;
 
     /**
      * 当前关注人数
      */
-    private Long subscribeNum;
+    private Long              subscribeNum;
 
     /**
      * 微信公众号取消关注人数
      */
-    private Long unsubscribeNum;
+    private Long              unsubscribeNum;
 }

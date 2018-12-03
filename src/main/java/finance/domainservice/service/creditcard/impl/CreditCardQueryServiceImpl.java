@@ -64,6 +64,7 @@ public class CreditCardQueryServiceImpl implements CreditCardQueryService {
             creditCardDetailVO.setShareImgUrl(creditCardDetails.getShareImgUrl());
             creditCardDetailVO.setCardDetailDesc(creditCardDetails.getCardDetailDesc());
             creditCardDetailVO.setCardDetailTag(creditCardDetails.getCardDetailTag());
+            creditCardDetailVO.setChannelType(creditCardDetails.getChannelType());
             //
             CashBackConfig cashBackConfig = cashBackConfigRepository
                 .query(creditCardDetails.getCashbackConfigId());
@@ -73,12 +74,12 @@ public class CreditCardQueryServiceImpl implements CreditCardQueryService {
                 String body;
                 if ("percentage".equalsIgnoreCase(cashBackConfig.getCashbackType())) {
                     body = MessageFormat.format("返现比例|{0}%|{1}%|{2}%",
-                            cashBackConfig.getTerminalBonus(), cashBackConfig.getDirectBonus(),
-                            cashBackConfig.getIndirectBonus());
+                        cashBackConfig.getTerminalBonus(), cashBackConfig.getDirectBonus(),
+                        cashBackConfig.getIndirectBonus());
                 } else {
                     body = MessageFormat.format("返现比例|{0}元|{1}元|{2}元",
-                            cashBackConfig.getTerminalBonus(), cashBackConfig.getDirectBonus(),
-                            cashBackConfig.getIndirectBonus());
+                        cashBackConfig.getTerminalBonus(), cashBackConfig.getDirectBonus(),
+                        cashBackConfig.getIndirectBonus());
                 }
                 cashBackConfigTableVO.setBody(Lists.newArrayList(body));
                 creditCardDetailVO.setCashBackConfigTable(cashBackConfigTableVO);
@@ -130,7 +131,7 @@ public class CreditCardQueryServiceImpl implements CreditCardQueryService {
                     BankInfo bankInfo = bankInfoRepository.query(creditCardInfo.getBankCode());
                     if (Objects.nonNull(bankInfo)) {
                         creditCardApplyInfoVO
-                                .setTitle(MessageFormat.format("{0}信用卡审批记录", bankInfo.getBankName()));
+                            .setTitle(MessageFormat.format("{0}信用卡审批记录", bankInfo.getBankName()));
                         creditCardApplyInfoVO.setBankLogoUrl(bankInfo.getBankLogoUrl());
                     }
                 }

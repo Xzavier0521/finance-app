@@ -52,7 +52,7 @@ public class CreditCardDetails implements Serializable {
     /**
      * 推广返佣配置id
      */
-    private String              cashbackConfigId;
+    private String            cashbackConfigId;
 
     /**
      * 办卡福利
@@ -78,6 +78,11 @@ public class CreditCardDetails implements Serializable {
      * 分享图片url
      */
     private String            shareImgUrl;
+
+    /**
+     * 渠道类型
+     */
+    private String            channelType;
 
     /**
      * 创建时间

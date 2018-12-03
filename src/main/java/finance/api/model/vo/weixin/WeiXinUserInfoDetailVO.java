@@ -1,22 +1,20 @@
-package finance.ext.api.model;
+package finance.api.model.vo.weixin;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import finance.ext.api.response.WeiXinBasicResponse;
 
 /**
  * <p>微信用户信息</p>
- * 
+ *
  * @author lili
- * @version $Id: WeiXinUserInfoDetail.java, v0.1 2018/10/29 11:46 PM lili Exp $
+ * @version 1.0: WeiXinUserInfoDetailVO.java, v0.1 2018/12/2 12:25 PM PM lili Exp $
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class WeiXinUserInfoDetail extends WeiXinBasicResponse {
+public class WeiXinUserInfoDetailVO implements Serializable {
+    private static final long serialVersionUID = 7132671763834912593L;
 
-    private static final long serialVersionUID = 5839595773085641753L;
     /**
      * 用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。
      */
