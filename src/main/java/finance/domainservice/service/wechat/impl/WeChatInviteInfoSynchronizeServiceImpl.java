@@ -44,7 +44,7 @@ import finance.ext.integration.weixin.WeiXinUserInfoQueryClient;
 @Service("weChatInviteInfoSynchronizeService")
 public class WeChatInviteInfoSynchronizeServiceImpl implements WeChatInviteInfoSynchronizeService {
 
-    private static final int           BATCH_SIZE = 10;
+    private static final int           BATCH_SIZE = 20;
 
     @Resource
     private ThreadPoolExecutor         threadPoolExecutor;
@@ -126,10 +126,8 @@ public class WeChatInviteInfoSynchronizeServiceImpl implements WeChatInviteInfoS
         String token = wechatService.getWechatPubAccessToken();
         // open_id 绑定关系
         ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository.queryByOenId(openId);
-        WeiXinUserInfoDetail weiXinUserInfoDetail = weiXinUserInfoQueryClient.queryUserInfo(token,
-            openId);
-        String nickName = Objects.nonNull(weiXinUserInfoDetail) ? weiXinUserInfoDetail.getNickname()
-            : "";
+        // Objects.nonNull(weiXinUserInfoDetail) ? weiXinUserInfoDetail.getNickname()
+        String nickName = "";
         weiXinInviteInfoRepository.delete(CommonConstant.CUSTOMER_MESSAGE_ACTIVITY_CODE, openId);
         if (Objects.isNull(thirdAccountInfo)) {
             weiXinInviteInfoRepository.save(WeiXinInviteInfo.builder().openId(openId)
@@ -171,9 +169,8 @@ public class WeChatInviteInfoSynchronizeServiceImpl implements WeChatInviteInfoS
         weiXinInviteInfoRepository.save(WeiXinInviteInfo.builder().openId(openId).nickName(nickName)
             .activityCode(CommonConstant.CUSTOMER_MESSAGE_ACTIVITY_CODE)
             .userId(thirdAccountInfo.getUserId()).parentUserId(userInviteInfo.getParentUserId())
-            .parentOpenId(parentThirdAccountInfo.getOpenId())
-            .nickName(parentWeiXinUserInfoDetail.getNickname()).isSend(WeChatSendStatusEnum.UN_SEND)
-            .build());
+            .parentOpenId(parentThirdAccountInfo.getOpenId()).parentNickName("")
+            .isSend(WeChatSendStatusEnum.UN_SEND).build());
         return ResponseUtils.buildResp(ReturnCode.SUCCESS);
     }
 }

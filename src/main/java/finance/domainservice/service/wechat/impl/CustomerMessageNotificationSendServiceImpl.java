@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Maps;
@@ -31,7 +32,10 @@ import finance.domain.weixin.WeiXinMessageTemplate;
 import finance.domainservice.repository.WeiXinInviteInfoRepository;
 import finance.domainservice.repository.WeiXinMessageTemplateRepository;
 import finance.domainservice.service.wechat.CustomerMessageNotificationSendService;
+import finance.domainservice.service.wechat.WechatService;
 import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
+import finance.ext.api.model.WeiXinUserInfoDetail;
+import finance.ext.integration.weixin.WeiXinUserInfoQueryClient;
 
 /**
  * <p>客户留言通知</p>
@@ -44,6 +48,10 @@ import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 public class CustomerMessageNotificationSendServiceImpl implements
                                                         CustomerMessageNotificationSendService {
 
+    @Resource
+    private WechatService                    wechatService;
+    @Resource
+    private WeiXinUserInfoQueryClient        weiXinUserInfoQueryClient;
     @Resource
     private ThreadPoolExecutor               threadPoolExecutor;
     @Resource
@@ -98,12 +106,19 @@ public class CustomerMessageNotificationSendServiceImpl implements
     private void send(WeiXinInviteInfo weiXinInviteInfo,
                       WeiXinMessageTemplate weiXinMessageTemplate) {
         log.info("[客户留言通知]");
+        String token = wechatService.getWechatPubAccessToken();
         UserInfo userInfo = new UserInfo();
         userInfo.setId(weiXinInviteInfo.getUserId());
         ThirdAccountInfo thirdAccountInfo = new ThirdAccountInfo();
         thirdAccountInfo.setOpenId(weiXinInviteInfo.getOpenId());
         Map<String, String> parameters = Maps.newHashMap();
-        parameters.put("parentNickName", weiXinInviteInfo.getParentNickName());
+        String parentNickName = weiXinInviteInfo.getParentNickName();
+        if (StringUtils.isBlank(parentNickName)) {
+            WeiXinUserInfoDetail weiXinUserInfoDetail = weiXinUserInfoQueryClient
+                .queryUserInfo(token, weiXinInviteInfo.getParentOpenId());
+            parentNickName = weiXinUserInfoDetail.getNickname();
+        }
+        parameters.put("parentNickName", parentNickName);
         weiXinTemplateMessageSendService.send(userInfo, thirdAccountInfo, weiXinMessageTemplate,
             parameters);
         // 更新状态
