@@ -2,6 +2,7 @@ package finance.domainservice.service.wechat.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
@@ -116,7 +117,12 @@ public class CustomerMessageNotificationSendServiceImpl implements
         if (StringUtils.isBlank(parentNickName)) {
             WeiXinUserInfoDetail weiXinUserInfoDetail = weiXinUserInfoQueryClient
                 .queryUserInfo(token, weiXinInviteInfo.getParentOpenId());
-            parentNickName = weiXinUserInfoDetail.getNickname();
+            if (Objects.nonNull(weiXinUserInfoDetail)) {
+                parentNickName = weiXinUserInfoDetail.getNickname();
+            } else {
+                parentNickName = CommonConstant.DEFAULT_WE_CHAT_NUMBER;
+            }
+
         }
         parameters.put("parentNickName", parentNickName);
         weiXinTemplateMessageSendService.send(userInfo, thirdAccountInfo, weiXinMessageTemplate,
