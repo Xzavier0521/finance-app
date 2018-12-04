@@ -3,9 +3,7 @@ package finance.domainservice.service.wechat.impl;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -24,7 +22,6 @@ import finance.core.common.constants.CommonConstant;
 import finance.core.common.enums.ReturnCode;
 import finance.core.common.enums.WeChatSendStatusEnum;
 import finance.core.common.enums.WeiXinMessageTemplateCodeEnum;
-import finance.core.common.util.ConcurrentUtils;
 import finance.core.common.util.ResponseUtils;
 import finance.domain.user.ThirdAccountInfo;
 import finance.domain.user.UserInfo;
@@ -96,12 +93,9 @@ public class CustomerMessageNotificationSendServiceImpl implements
 
     private BasicResponse batchSend(List<WeiXinInviteInfo> weiXinInviteInfoList,
                                     WeiXinMessageTemplate weiXinMessageTemplate) {
-        List<CompletableFuture<BasicResponse>> completableFutures = weiXinInviteInfoList.stream()
-            .map(weiXinInviteIn -> CompletableFuture.supplyAsync(() -> {
-                send(weiXinInviteIn, weiXinMessageTemplate);
-                return ResponseUtils.buildResp(ReturnCode.SUCCESS);
-            }, threadPoolExecutor)).collect(Collectors.toList());
-        return ConcurrentUtils.getExecuteResult(completableFutures);
+
+        weiXinInviteInfoList.forEach(weiXinInviteInfo -> send(weiXinInviteInfo, weiXinMessageTemplate));
+        return ResponseUtils.buildResp(ReturnCode.SUCCESS);
     }
 
     private void send(WeiXinInviteInfo weiXinInviteInfo,
