@@ -44,7 +44,7 @@ import finance.ext.integration.weixin.WeiXinUserInfoQueryClient;
 @Service("weChatInviteInfoSynchronizeService")
 public class WeChatInviteInfoSynchronizeServiceImpl implements WeChatInviteInfoSynchronizeService {
 
-    private static final int           BATCH_SIZE = 1000;
+    private static final int           BATCH_SIZE = 20;
 
     @Resource
     private ThreadPoolExecutor         threadPoolExecutor;
