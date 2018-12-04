@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
@@ -22,7 +24,8 @@ import finance.domainservice.service.wechat.WeChatInviteInfoSynchronizeService;
  */
 @Slf4j
 @Service
-public class WeChatInviteInfoSynchronizeTask implements SchedulingConfigurer {
+public class WeChatInviteInfoSynchronizeTask implements SchedulingConfigurer,
+                                             ApplicationListener<ApplicationReadyEvent> {
 
     @Resource
     private WeChatInviteInfoSynchronizeService weChatInviteInfoSynchronizeService;
@@ -46,5 +49,14 @@ public class WeChatInviteInfoSynchronizeTask implements SchedulingConfigurer {
             CronTrigger trigger = new CronTrigger(cron);
             return trigger.nextExecutionTime(triggerContext);
         });
+    }
+
+    @Override
+    public void onApplicationEvent(ApplicationReadyEvent event) {
+        log.info("[开始同步微信公众号数据]，当前时间：{}", LocalDateTime.now());
+        if ("1".equalsIgnoreCase(syncSwitch)) {
+            weChatInviteInfoSynchronizeService.process();
+        }
+        log.info("[结束同步微信公众号数据]，当前时间：{}", LocalDateTime.now());
     }
 }

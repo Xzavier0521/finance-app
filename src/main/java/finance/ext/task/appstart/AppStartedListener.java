@@ -9,14 +9,9 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 /**
- * app启动监听类.
- * 
- * <pre>
- * 将app启动之后需要执行的动作加到这里
- * </pre>
- * 
- * @author hewenbin
- * @version v1.0 2018年6月5日 下午1:44:41 hewenbin
+ * <p> app启动监听类.将app启动之后需要执行的动作加到这里</p>
+ * @author lili
+ * @version 1.0: AppStartedListener.java, v0.1 2018/12/4 6:42 PM lili Exp $
  */
 @Component
 public class AppStartedListener implements ApplicationListener<ApplicationReadyEvent> {
