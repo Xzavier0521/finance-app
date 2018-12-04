@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -20,7 +19,6 @@ import finance.api.model.response.BasicResponse;
 import finance.core.common.constants.CommonConstant;
 import finance.core.common.enums.ReturnCode;
 import finance.core.common.enums.WeChatSendStatusEnum;
-import finance.core.common.util.ConcurrentUtils;
 import finance.core.common.util.ResponseUtils;
 import finance.domain.user.ThirdAccountInfo;
 import finance.domain.user.UserInviteInfo;
@@ -112,11 +110,13 @@ public class WeChatInviteInfoSynchronizeServiceImpl implements WeChatInviteInfoS
         // 批处理的openId列表
         List<String> openIdSubList = Lists.newArrayList(openIds.subList(startIndex, endIndex));
         // 异步执行任务
-        completableFutures = openIdSubList.stream()
+        /* completableFutures = openIdSubList.stream()
             .map(openId -> CompletableFuture.supplyAsync(() -> execute(openId), threadPoolExecutor))
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+        openIds.forEach(openId -> execute(openId));
         // 获取异步执行结果
-        BasicResponse response = ConcurrentUtils.getExecuteResult(completableFutures);
+        BasicResponse response = ResponseUtils.buildResp(ReturnCode.SUCCESS);
+        //ConcurrentUtils.getExecuteResult(completableFutures);
         log.info("openId列表:[{}],执行结果:{}", openIdSubList, response);
         return response;
     }
