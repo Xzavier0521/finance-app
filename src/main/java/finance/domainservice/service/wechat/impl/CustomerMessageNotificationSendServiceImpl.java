@@ -68,7 +68,7 @@ public class CustomerMessageNotificationSendServiceImpl implements
         WeiXinInviteInfoQueryCondition condition = new WeiXinInviteInfoQueryCondition();
         condition.setActivityCode(CommonConstant.CUSTOMER_MESSAGE_ACTIVITY_CODE);
         condition.setIsSend(WeChatSendStatusEnum.UN_SEND);
-        condition.setPageSize(10);
+        condition.setPageSize(20);
         condition.setCurrentPage(1);
         Page<WeiXinInviteInfo> page = weiXinInviteInfoRepository.query4Page(condition);
         log.info("page:{}", page);

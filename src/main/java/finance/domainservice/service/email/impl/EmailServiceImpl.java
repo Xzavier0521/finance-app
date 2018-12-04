@@ -17,9 +17,7 @@ import org.springframework.stereotype.Service;
 import finance.domainservice.service.email.EmailService;
 
 /**
- * <p>
- * 邮件发送
- * </p>
+ * <p>邮件发送</p>
  *
  * @author lili
  * @version 1.0: EmailServiceImpl.java, v0.1 2018/11/14 10:13 AM PM lili Exp $
@@ -28,39 +26,39 @@ import finance.domainservice.service.email.EmailService;
 @Service("EmailService")
 public class EmailServiceImpl implements EmailService {
 
-	@Resource
-	private JavaMailSender mailSender;
-	@Value("${spring.mail.username}")
-	private String emailFrom;
-	@Value("${spring.mail.alarm.sendto}")
-	private String emailSendTo;
+    @Resource
+    private JavaMailSender mailSender;
+    @Value("${spring.mail.username}")
+    private String         emailFrom;
+    @Value("${spring.mail.alarm.sendto}")
+    private String         emailSendTo;
 
-	/**
-	 * 告警邮件发送
-	 *
-	 * @param title
-	 *            主题
-	 * @param content
-	 *            内容
-	 */
-	@Async
-	@Override
-	public void sendAlarmMail(String title, String content) {
-		try {
-			String[] sendTo = this.emailSendTo.split(",");
-			if (sendTo.length == 0) {
-				return;
-			}
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setFrom(this.emailFrom);
-			message.setTo(sendTo);
-			message.setSubject(title);
-			message.setText(
-					MessageFormat.format("from:{0};<br>内容：{1}", InetAddress.getLocalHost().getHostAddress(), content));
-			this.mailSender.send(message);
-		} catch (final Exception e) {
-			log.warn("告警邮件发送失败,{}", ExceptionUtils.getStackTrace(e));
-		}
+    /**
+     * 告警邮件发送
+     *
+     * @param title
+     *            主题
+     * @param content
+     *            内容
+     */
+    @Async
+    @Override
+    public void sendAlarmMail(String title, String content) {
+        try {
+            String[] sendTo = this.emailSendTo.split(",");
+            if (sendTo.length == 0) {
+                return;
+            }
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(this.emailFrom);
+            message.setTo(sendTo);
+            message.setSubject(title);
+            message.setText(MessageFormat.format("from:{0};<br>内容：{1}",
+                InetAddress.getLocalHost().getHostAddress(), content));
+            this.mailSender.send(message);
+        } catch (final Exception e) {
+            log.warn("告警邮件发送失败,{}", ExceptionUtils.getStackTrace(e));
+        }
 
-	}
+    }
 }
