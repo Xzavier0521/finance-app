@@ -4,9 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * <p>
- * 注释
- * </p>
+ * <p>注释</p>
  *
  * @author lili
  * @version $Id: MediaMessage.java, v0.1 2018/10/28 4:03 PM lili Exp $
@@ -15,11 +13,11 @@ import lombok.EqualsAndHashCode;
 @Data
 public class MediaMessage extends Message {
 
-	private static final long serialVersionUID = 6917641753423529548L;
+    private static final long serialVersionUID = 6917641753423529548L;
 
-	/**
-	 * 上传的素材id
-	 */
-	private Image Image;
+    /**
+     * 上传的素材id
+     */
+    private Image             Image;
 
 }

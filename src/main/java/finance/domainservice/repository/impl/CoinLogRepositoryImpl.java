@@ -13,9 +13,7 @@ import finance.domainservice.converter.CoinLogConverter;
 import finance.domainservice.repository.CoinLogRepository;
 
 /**
- * <p>
- * 注释
- * </p>
+ * <p>注释</p>
  *
  * @author lili
  * @version 1.0: CoinLogRepositoryImpl.java, v 0.1 2018/9/28 上午9:33 lili Exp $

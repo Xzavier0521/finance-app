@@ -13,6 +13,7 @@ import finance.domain.team.FirstLevelTeamUserInfo;
 import finance.domain.team.SecondLevelTeamUserInfo;
 import finance.domain.team.TeamInfoQueryResult;
 import finance.domain.user.UserInfo;
+import finance.domainservice.repository.UserInviteInfoRepository;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,6 @@ import finance.core.common.enums.CustomerQueryTypeEnum;
 import finance.core.common.util.ConvertBeanUtil;
 import finance.domainservice.repository.CardInfoRepository;
 import finance.domainservice.repository.UserInfoRepository;
-import finance.domainservice.repository.UserInviteRepository;
 import finance.domainservice.service.user.query.TeamInfoQueryService;
 import finance.core.dal.dataobject.UserInviteInfoDO;
 
@@ -41,7 +41,7 @@ import finance.core.dal.dataobject.UserInviteInfoDO;
 public class TeamInfoQueryServiceImpl implements TeamInfoQueryService {
 
 	@Resource
-	private UserInviteRepository userInviteRepository;
+	private UserInviteInfoRepository userInviteInfoRepository;
 
 	@Resource
 	private UserInfoRepository userInfoRepository;
@@ -67,7 +67,7 @@ public class TeamInfoQueryServiceImpl implements TeamInfoQueryService {
 		parameters.put("parentUserIds", Lists.newArrayList(userId));
 		// 查询一级用户
 		// 查询总数
-		int firstLevelUserCount = userInviteRepository.count(parameters);
+		int firstLevelUserCount = userInviteInfoRepository.count(parameters);
 		result.setFirstLevelCount(firstLevelUserCount);
 		if (firstLevelUserCount == 0) {
 			result.setSecondLevelCount(firstLevelUserCount);
@@ -75,7 +75,7 @@ public class TeamInfoQueryServiceImpl implements TeamInfoQueryService {
 			return result;
 		}
 		// 查询明细
-		List<UserInviteInfoDO> firstLevelInviteInfoList = userInviteRepository
+		List<UserInviteInfoDO> firstLevelInviteInfoList = userInviteInfoRepository
 				.queryByCondition(1, maxCount, userId).getDataList();
 		// 一级用户id列表
 		List<Long> firstLevelUserIdList = firstLevelInviteInfoList.stream().map(UserInviteInfoDO::getUserId)
@@ -89,7 +89,7 @@ public class TeamInfoQueryServiceImpl implements TeamInfoQueryService {
 		// 查询二级用户
 		parameters.put("parentUserIds", firstLevelUserIdList);
 		// 查询总数
-		int secondLevelUserCount = userInviteRepository.countSecondLevelInviteUser(userId);
+		int secondLevelUserCount = userInviteInfoRepository.countSecondLevelInviteUser(userId);
 		result.setSecondLevelCount(secondLevelUserCount);
 		// 无二级用户
 		if (secondLevelUserCount == 0) {
@@ -105,7 +105,7 @@ public class TeamInfoQueryServiceImpl implements TeamInfoQueryService {
 			return result;
 		}
 		// 查询明细
-		List<UserInviteInfoDO> secondLevelInviteInfoList = userInviteRepository
+		List<UserInviteInfoDO> secondLevelInviteInfoList = userInviteInfoRepository
 				.querySecondLevelInviteUser(userId, 1, maxCount).getDataList();
 		// 二级用户id列表
 		List<SecondLevelTeamUserInfo> secondLevelUserInfoList = buildTeamUserInfo(secondLevelInviteInfoList);
@@ -119,7 +119,7 @@ public class TeamInfoQueryServiceImpl implements TeamInfoQueryService {
 			Long[] parentUserIds = new Long[firstLevelUserIdList.size()];
 			firstLevelUserIdList.toArray(parentUserIds);
 			// 一级用户对应的二级用户
-			Page<UserInviteInfoDO> userInviteInfoPage = userInviteRepository.queryByCondition(1, 300,
+			Page<UserInviteInfoDO> userInviteInfoPage = userInviteInfoRepository.queryByCondition(1, 300,
 					parentUserIds);
 			List<SecondLevelTeamUserInfo> secondTeamUserInfoList = Lists.newArrayList();
 			if (userInviteInfoPage.getTotalCount() > 0) {

@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 
+import finance.domainservice.repository.UserInviteInfoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,7 +31,6 @@ import finance.domain.team.InviteInfoAndIncome;
 import finance.domain.user.UserInfo;
 import finance.domain.user.UserInviteInfo;
 import finance.domainservice.repository.BarrageMessageRepository;
-import finance.domainservice.repository.UserInviteRepository;
 import finance.domainservice.service.invitefriends.WakeupFriendsService;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.user.query.UserInviteQueryService;
@@ -62,7 +62,7 @@ public class InviteApi {
     private BarrageMessageRepository barrageMessageRepository;
 
     @Resource
-    private UserInviteRepository     userInviteRepository;
+    private UserInviteInfoRepository userInviteInfoRepository;
 
     @GetMapping("rankingList")
     public ResponseResult<Map<String, List<InviteOrdersVo>>> queryRankingList() {
@@ -138,7 +138,7 @@ public class InviteApi {
             Long userId = userInfo.getId();
             UserInviteInfoQueryResponse userInviteInfoQueryResponse = new UserInviteInfoQueryResponse();
             userInviteInfoQueryResponse
-                .setFirstInviteNum(userInviteRepository.countFirstInviteNum(userId, activityCode));
+                .setFirstInviteNum(userInviteInfoRepository.countFirstInviteNum(userId, activityCode));
             userInviteInfoQueryResponse.setMobileNum(userInfo.getMobileNum());
             userInviteInfoQueryResponse.setUserId(userId);
             userInviteInfoQueryResponse.setActivityCode(activityCode);

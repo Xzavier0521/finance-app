@@ -48,15 +48,11 @@ public class WeiXinTemplateMessageServiceImpl implements WeiXinTemplateMessageSe
 
     /**
      * 发送微信消息
-     * 
-     * @param userInfo
-     *            新注册用户的基本信息
-     * @param thirdAccountInfo
-     *            新注册用户的父级用户的绑定信息
-     * @param weiXinMessageTemplate
-     *            模版信息
-     * @param parameters
-     *            参数
+     * @param userInfo 新注册用户的基本信息
+     * @param thirdAccountInfo 新注册用户的父级用户的绑定信息
+     * @param weiXinMessageTemplate 模版信息
+     * @param parameters 参数
+     *
      */
     @Override
     public void send(UserInfo userInfo, ThirdAccountInfo thirdAccountInfo,
@@ -94,8 +90,8 @@ public class WeiXinTemplateMessageServiceImpl implements WeiXinTemplateMessageSe
                     .color("#0000ff").build());
                 break;
             case FIRST_SUBSCRIBE_NOTICE:
-                data.put("first", WeiXinTemplateData.builder().value("欢迎您，关注金榕家！")
-                    .color("#0000ff").build());
+                data.put("first",
+                    WeiXinTemplateData.builder().value("欢迎您，关注金榕家！").color("#0000ff").build());
                 data.put("keyword1", WeiXinTemplateData.builder().value(parameters.get("nickName"))
                     .color("#0000ff").build());
                 data.put("keyword2",
@@ -155,6 +151,24 @@ public class WeiXinTemplateMessageServiceImpl implements WeiXinTemplateMessageSe
                 break;
             case RED_ENVELOPE_RAIN_NOTICE:
                 buildRedEnvelopeRainData(data, parameters);
+                break;
+            case CUSTOMER_MESSAGE_NOTICE:
+                // 客户留言通知
+                data.put("first",
+                    WeiXinTemplateData.builder().value(MessageFormat.format(
+                        "         你的好友{0}通知你，金榕家佣金升级到90%了，奖励高到你难以想象，还是当天返现！（金榕家老板说：我就不信还有谁比我返现更快！）",
+                        parameters.get("parentNickName"))).color("#0000ff").build());
+                data.put("keyword1", WeiXinTemplateData.builder()
+                    .value(parameters.get("parentNickName")).color("#0000ff").build());
+                data.put("keyword2", WeiXinTemplateData.builder()
+                    .value("金榕家佣金大升级，90%佣金全部发，办卡最高可得150元").color("#0000ff").build());
+                data.put("keyword3",
+                    WeiXinTemplateData.builder()
+                        .value(DateUtils.format(new Date(), DateUtils.LONG_WEB_FORMAT))
+                        .color("#0000ff").build());
+                data.put("remark", WeiXinTemplateData.builder().value(
+                    "金榕家3大升级\r\n1、平台升级,1000万奖金冲刺12月\r\n2、奖励升级：返还90%金融红利\r\n3、结算升级：当天结算返现")
+                    .color("#0000ff").build());
                 break;
             default:
         }

@@ -37,7 +37,7 @@ import finance.domainservice.service.user.query.UserInviteQueryService;
 public class UserInviteQueryServiceImpl implements UserInviteQueryService {
 
     @Resource
-    private UserInviteRepository      userInviteRepository;
+    private UserInviteInfoRepository userInviteInfoRepository;
     @Resource
     private UserInfoRepository        userInfoRepository;
     @Resource
@@ -52,7 +52,7 @@ public class UserInviteQueryServiceImpl implements UserInviteQueryService {
                                                               int pageNum) {
         Page<InviteInfoAndIncome> inviteInfoAndIncomePage = new Page<>(pageSize, (long) pageNum);
         // 1.根据邀请关系查询直接好友列表-只到一级
-        Page<UserInviteInfoDO> userInviteInfoPage = userInviteRepository
+        Page<UserInviteInfoDO> userInviteInfoPage = userInviteInfoRepository
             .queryByCondition(pageNum, pageSize, userId);
         if (userInviteInfoPage.getTotalCount() == 0) {
             inviteInfoAndIncomePage.setTotalCount(0L);

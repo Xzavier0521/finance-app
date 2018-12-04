@@ -15,13 +15,8 @@
         },
         {
           "type": "view",
-          "name": "奖励25元",
-          "url": "https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=jdbt&am_id=jinrongjia2"
-        },
-        {
-          "type": "view",
-          "name": "奖励100元",
-          "url": "https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=jtxyk&am_id=jinrongjia2"
+          "name": "极速借款",
+          "url": "https://finance.zhishush.cn/finance-h5/loanmall/#/?am_id=JRJweixin"
         }
       ]
     },

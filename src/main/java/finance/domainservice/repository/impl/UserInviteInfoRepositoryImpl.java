@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 
-import finance.core.dal.dataobject.UserInviteInfoDO;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -17,18 +16,19 @@ import com.google.common.collect.Maps;
 
 import finance.api.model.base.Page;
 import finance.core.dal.dao.UserInviteInfoDAO;
+import finance.core.dal.dataobject.UserInviteInfoDO;
 import finance.domain.user.UserInviteInfo;
 import finance.domainservice.converter.UserInviteInfoConverter;
-import finance.domainservice.repository.UserInviteRepository;
+import finance.domainservice.repository.UserInviteInfoRepository;
 
 /**
  * <p>用户邀请信息查询</p>
  * @author lili
- * @version 1.0: UserInviteRepositoryImpl.java, v0.1 2018/11/26 10:22 AM lili Exp $
+ * @version 1.0: UserInviteInfoRepositoryImpl.java, v0.1 2018/11/26 10:22 AM lili Exp $
  */
 @Slf4j
-@Repository("userInviteRepository")
-public class UserInviteRepositoryImpl implements UserInviteRepository {
+@Repository("userInviteInfoRepository")
+public class UserInviteInfoRepositoryImpl implements UserInviteInfoRepository {
 
     @Resource
     private UserInviteInfoDAO userInviteInfoDAO;
@@ -82,8 +82,7 @@ public class UserInviteRepositoryImpl implements UserInviteRepository {
     @Override
     public Page<UserInviteInfoDO> queryByCondition(int pageNum, int pageSize,
                                                    Long... parentUserIds) {
-        Page<UserInviteInfoDO> financeUserInviteInfoPage = new Page<>(pageSize,
-            (long) pageNum);
+        Page<UserInviteInfoDO> financeUserInviteInfoPage = new Page<>(pageSize, (long) pageNum);
         Map<String, Object> parameters = Maps.newHashMap();
         if (Objects.nonNull(parentUserIds) && parentUserIds.length > 0) {
             parameters.put("parentUserIds", parentUserIds);

@@ -20,7 +20,7 @@ import finance.domain.dto.CoinLockResponseDto;
 import finance.domain.dto.RedisLockDto;
 import finance.domain.user.UserInfo;
 import finance.domainservice.repository.UserInfoRepository;
-import finance.domainservice.repository.UserInviteRepository;
+import finance.domainservice.repository.UserInviteInfoRepository;
 import finance.domainservice.service.AbstractCoinDealMulti;
 import finance.domainservice.service.invitefriends.WakeupFriendsService;
 
@@ -38,7 +38,7 @@ public class WakeupFriendsServiceImpl extends AbstractCoinDealMulti
                                       implements WakeupFriendsService {
 
     @Resource
-    private UserInviteRepository userInviteRepository;
+    private UserInviteInfoRepository userInviteInfoRepository;
     @Resource
     private CoinLogDAO           financeCoinLogMapper;
     @Resource
@@ -104,7 +104,7 @@ public class WakeupFriendsServiceImpl extends AbstractCoinDealMulti
         coinLogDO.setNum(-lockParamDto.getCoinNum());
         financeCoinLogMapper.insertSelective(coinLogDO);
         // 更新支付金币标志
-        userInviteRepository.updatePayCoinFlag(lockParamDto.getUserId());
+        userInviteInfoRepository.updatePayCoinFlag(lockParamDto.getUserId());
         lockResponseDto.setRetrunCode(CodeEnum.succ.getCode());
         redisLockDto.setRes(lockResponseDto);
     }

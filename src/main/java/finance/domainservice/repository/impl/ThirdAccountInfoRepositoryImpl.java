@@ -16,7 +16,7 @@ import finance.domainservice.converter.ThirdAccountInfoConverter;
 import finance.domainservice.repository.ThirdAccountInfoRepository;
 
 /**
- * <p>注释</p>
+ * <p>账户绑定信息</p>
  * 
  * @author lili
  * @version $Id: ThirdAccountInfoRepositoryImpl.java, v0.1 2018/10/24 3:40 PM lili Exp $
@@ -41,6 +41,22 @@ public class ThirdAccountInfoRepositoryImpl implements ThirdAccountInfoRepositor
 
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("userId", userId);
+        parameters.put("channel", "wechatPub");
+        List<ThirdAccountInfo> thirdAccountInfoList = ThirdAccountInfoConverter
+            .convert2List(thirdAccountInfoDAO.query(parameters));
+        if (CollectionUtils.isNotEmpty(thirdAccountInfoList)) {
+            thirdAccountInfo = thirdAccountInfoList.get(0);
+        }
+
+        return thirdAccountInfo;
+    }
+
+    @Override
+    public ThirdAccountInfo queryByOenId(String openId) {
+        ThirdAccountInfo thirdAccountInfo = null;
+
+        Map<String, Object> parameters = Maps.newHashMap();
+        parameters.put("openId", openId);
         parameters.put("channel", "wechatPub");
         List<ThirdAccountInfo> thirdAccountInfoList = ThirdAccountInfoConverter
             .convert2List(thirdAccountInfoDAO.query(parameters));

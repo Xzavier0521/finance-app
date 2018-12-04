@@ -23,7 +23,7 @@ import finance.core.dal.dataobject.UserInfoDO;
 import finance.domain.user.UserInfo;
 import finance.domain.weixin.WeCharQrInfo;
 import finance.domainservice.converter.UserInfoConverter;
-import finance.domainservice.repository.UserInviteRepository;
+import finance.domainservice.repository.UserInviteInfoRepository;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.query.UserActivityWeChatPubInfoQueryService;
 import finance.domainservice.service.wechat.WeChatPubQrService;
@@ -47,7 +47,7 @@ public class WeChatController {
     private WeChatPubQrService                    weChatPubQrService;
 
     @Resource
-    private UserInviteRepository                  userInviteRepository;
+    private UserInviteInfoRepository userInviteInfoRepository;
     @Resource
     private UserActivityWeChatPubInfoQueryService userActivityWeChatPubInfoQueryService;
 
@@ -115,7 +115,7 @@ public class WeChatController {
             queryResponse.setActivityCode(activityCode);
             queryResponse.setUserId(userInfo.getId());
             queryResponse.setMobilePhone(userInfo.getMobileNum());
-            Long firstInviteNum = userInviteRepository.countFirstInviteNum(userInfo.getId());
+            Long firstInviteNum = userInviteInfoRepository.countFirstInviteNum(userInfo.getId());
             queryResponse
                 .setHistorySubscribeNum(Objects.nonNull(firstInviteNum) ? firstInviteNum : 0L);
             queryResponse.setUnsubscribeNum(Objects.nonNull(unsubscribeNum) ? unsubscribeNum : 0L);

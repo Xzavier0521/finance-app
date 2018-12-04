@@ -10,9 +10,9 @@ import finance.domain.user.UserInviteInfo;
 /**
  * <p>用户邀请信息</p>
  * @author lili
- * @version 1.0: UserInviteRepository.java, v0.1 2018/11/26 10:21 AM lili Exp $
+ * @version 1.0: UserInviteInfoRepository.java, v0.1 2018/11/26 10:21 AM lili Exp $
  */
-public interface UserInviteRepository {
+public interface UserInviteInfoRepository {
 
     /**
      * 分页查询邀请信息列表

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Resource;
 
 import finance.core.dal.dataobject.UserInviteInfoDO;
+import finance.domainservice.repository.UserInviteInfoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -21,7 +22,6 @@ import finance.domain.log.OperationLog;
 import finance.domain.user.UserInfo;
 import finance.domainservice.repository.OperationLogRepository;
 import finance.domainservice.repository.UserInfoRepository;
-import finance.domainservice.repository.UserInviteRepository;
 import finance.domainservice.service.user.query.UserInfoQueryService;
 
 /**
@@ -38,7 +38,7 @@ import finance.domainservice.service.user.query.UserInfoQueryService;
 public class UserInfoQueryServiceImpl implements UserInfoQueryService {
 
 	@Resource
-	private UserInviteRepository userInviteRepository;
+	private UserInviteInfoRepository userInviteInfoRepository;
 	@Resource
 	private UserInfoRepository userInfoRepository;
 	@Resource
@@ -68,7 +68,7 @@ public class UserInfoQueryServiceImpl implements UserInfoQueryService {
 			// 查询用户是否支付金币显示手机号码
 			Map<String, Object> parameters = Maps.newHashMap();
 			parameters.put("userIds", userIds);
-			List<UserInviteInfoDO> userInviteInfoList = userInviteRepository.queryByCondition(parameters);
+			List<UserInviteInfoDO> userInviteInfoList = userInviteInfoRepository.queryByCondition(parameters);
 			if (CollectionUtils.isNotEmpty(userInfoList)) {
 				userInfoList.forEach(userInfo -> {
 					List<UserInviteInfoDO> userInviteInfos = userInviteInfoList.stream()

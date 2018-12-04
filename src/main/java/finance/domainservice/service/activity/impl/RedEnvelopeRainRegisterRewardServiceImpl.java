@@ -44,7 +44,7 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements RedEnvelopeRain
 	private UserInfoRepository userInfoRepository;
 
 	@Resource
-	private UserInviteRepository userInviteRepository;
+	private UserInviteInfoRepository userInviteInfoRepository;
 
 	@Resource
 	private WeiXinTemplateMessageSendService weiXinTemplateMessageSendService;
@@ -63,7 +63,7 @@ public class RedEnvelopeRainRegisterRewardServiceImpl implements RedEnvelopeRain
 			return;
 		}
 		// 查询用户邀请关系
-		UserInviteInfo userInviteInfo = userInviteRepository.queryByCondition(userInfo.getId());
+		UserInviteInfo userInviteInfo = userInviteInfoRepository.queryByCondition(userInfo.getId());
 		if (Objects.isNull(userInviteInfo)) {
 			log.info("用户:{}无邀请关系，不发放金币奖励!", userInfo.getMobileNum());
 			return;

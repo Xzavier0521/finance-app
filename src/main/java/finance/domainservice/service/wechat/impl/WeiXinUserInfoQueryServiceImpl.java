@@ -48,4 +48,5 @@ public class WeiXinUserInfoQueryServiceImpl implements WeiXinUserInfoQueryServic
         }
         return weiXinUserInfoDetailVO;
     }
+
 }

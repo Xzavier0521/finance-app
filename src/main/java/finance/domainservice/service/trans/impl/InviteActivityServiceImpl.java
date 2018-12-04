@@ -29,7 +29,7 @@ import finance.core.dal.dao.*;
 import finance.core.dal.dataobject.*;
 import finance.domain.dto.FixedAmountPageDto;
 import finance.domain.dto.LoginParamDto;
-import finance.domainservice.repository.UserInviteRepository;
+import finance.domainservice.repository.UserInviteInfoRepository;
 import finance.domainservice.service.activity.LeaderBoardDataSyncToCacheService;
 import finance.domainservice.service.jwt.JwtService;
 import finance.domainservice.service.register.RegisterSendMessageService;
@@ -61,7 +61,7 @@ public class InviteActivityServiceImpl implements InviteActivityService {
 	private ActivityFixedAmountDetailDAO financeActivityFixedAmountDetailMapper;
 
 	@Resource
-	private UserInviteRepository userInviteRepository;
+	private UserInviteInfoRepository userInviteInfoRepository;
 	@Resource
 	private AccountService accountService;
 	@Value("${activity.fixAmount.switch}")
@@ -125,7 +125,7 @@ public class InviteActivityServiceImpl implements InviteActivityService {
 		logger.info("userInviteInfo:{}", userInviteInfo);
 		Map<String, Object> parameters = Maps.newHashMap();
 		parameters.put("userId", userInviteInfo.getParentUserId());
-		List<UserInviteInfoDO> grandInviteInfoList = userInviteRepository.queryByCondition(parameters);
+		List<UserInviteInfoDO> grandInviteInfoList = userInviteInfoRepository.queryByCondition(parameters);
 		BigDecimal secondInviteAmount = BigDecimal.ZERO;
 		if (CollectionUtils.isNotEmpty(grandInviteInfoList)) {
 			secondInviteAmount = BigDecimal.valueOf(0.2);

@@ -10,9 +10,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * <p>
- * 注释
- * </p>
+ * <p>注释</p>
  * 
  * @author lili
  * @version $Id: CardInfoRepositoryImpl.java, v0.1 2018/10/5 8:07 PM lili Exp $

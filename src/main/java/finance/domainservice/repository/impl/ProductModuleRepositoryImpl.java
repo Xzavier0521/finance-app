@@ -14,13 +14,10 @@ import finance.domainservice.repository.ProductModuleRepository;
 import finance.core.dal.dao.ProductModuleDAO;
 
 /**
- * <p>
- * 产品模块
- * </p>
+ * <p>产品模块</p>
  *
  * @author lili
- * @version 1.0: ProductModuleRepositoryImpl.java, v0.1 2018/11/8 1:53 PM PM
- *          lili Exp $
+ * @version 1.0: ProductModuleRepositoryImpl.java, v0.1 2018/11/8 1:53 PM lili Exp $
  */
 @Repository("productModuleRepository")
 public class ProductModuleRepositoryImpl implements ProductModuleRepository {

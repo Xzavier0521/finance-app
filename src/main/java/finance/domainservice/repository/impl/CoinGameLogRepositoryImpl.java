@@ -10,13 +10,10 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * <p>
- * 注释
- * </p>
+ * <p>注释</p>
  *
  * @author lili
- * @version 1.0: CoinGameLogRepositoryImpl.java, v 0.1 2018/9/28 上午10:36 lili
- *          Exp $
+ * @version 1.0: CoinGameLogRepositoryImpl.java, v 0.1 2018/9/28 上午10:36 lili Exp $
  */
 @Repository("coinGameLogRepository")
 public class CoinGameLogRepositoryImpl implements CoinGameLogRepository {

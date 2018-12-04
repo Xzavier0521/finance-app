@@ -2,13 +2,12 @@ package finance.core.dal.dao;
 
 import java.util.List;
 
-import finance.core.dal.dataobject.IdCardInfoDO;
 import org.apache.ibatis.annotations.Param;
 
+import finance.core.dal.dataobject.IdCardInfoDO;
+
 /**
- * <p>
- * 注释
- * </p>
+ * <p>注释</p>
  * 
  * @author lili
  * @version $Id: IdCardInfoDAO.java, v0.1 2018/11/14 12:47 PM lili Exp $

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.WeiXinInviteInfoDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.WeiXinInviteInfoDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="open_id" property="openId" jdbcType="VARCHAR"/>
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="parent_user_id" property="parentUserId" jdbcType="BIGINT"/>
+        <result column="parent_open_id" property="parentOpenId" jdbcType="VARCHAR"/>
+        <result column="parent_nick_name" property="parentNickName" jdbcType="VARCHAR"/>
+        <result column="activity_code" property="activityCode" jdbcType="VARCHAR"/>
+        <result column="is_send" property="isSend" jdbcType="VARCHAR"/>
+        <result column="send_date" property="sendDate" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, open_id, nick_name, user_id, parent_user_id,parent_open_id, parent_nick_name, activity_code,
+        is_send, send_date, create_time, update_time, creator, updator, is_delete, version
+    </sql>
+    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.WeiXinInviteInfoDO">
+        insert into finance_weixin_invite_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="openId != null">
+                open_id,
+            </if>
+            <if test="nickName != null">
+                nick_name,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="parentUserId != null">
+                parent_user_id,
+            </if>
+            <if test="parentOpenId != null">
+                parent_open_id,
+            </if>
+            <if test="parentNickName != null">
+                parent_nick_name,
+            </if>
+            <if test="activityCode != null">
+                activity_code,
+            </if>
+            <if test="isSend != null">
+                is_send,
+            </if>
+            <if test="sendDate != null">
+                send_date,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="updator != null">
+                updator,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="parentUserId != null">
+                #{parentUserId,jdbcType=BIGINT},
+            </if>
+            <if test="parentOpenId != null">
+                #{parentOpenId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentNickName != null">
+                #{parentNickName,jdbcType=VARCHAR},
+            </if>
+            <if test="activityCode != null">
+                #{activityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="isSend != null">
+                #{isSend,jdbcType=VARCHAR},
+            </if>
+            <if test="sendDate != null">
+                #{sendDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <insert id="batchInsert">
+        insert into finance_weixin_invite_info(open_id, nick_name, user_id, parent_user_id, parent_nick_name,
+        activity_code,is_send) values
+        <foreach item="item" collection="items" open="(" close=")" separator=",">
+            item.openId,item.nickName,item.userId,item.parentUserId,item.parentNickName,item.activityCode, item.isSend
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.WeiXinInviteInfoDO">
+        update finance_weixin_invite_info
+        <set>
+            <if test="openId != null">
+                open_id = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="parentUserId != null">
+                parent_user_id = #{parentUserId,jdbcType=BIGINT},
+            </if>
+            <if test="parentNickName != null">
+                parent_nick_name = #{parentNickName,jdbcType=VARCHAR},
+            </if>
+            <if test="activityCode != null">
+                activity_code = #{activityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="isSend != null">
+                is_send = #{isSend,jdbcType=VARCHAR},
+            </if>
+            <if test="sendDate != null">
+                send_date = #{sendDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                updator = #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <sql id="finance_weixin_invite_info_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="openId != null and openId.trim().length() != 0">
+                AND (open_id like '%' || #{openId} || '%')
+            </if>
+            <if test="nickName != null and nickName.trim().length() != 0">
+                AND (nick_name like '%' || #{nickName} || '%')
+            </if>
+            <if test="userId != null and userId.trim().length() != 0">
+                AND (user_id = #{userId})
+            </if>
+            <if test="parentUserId != null and parentUserId.trim().length() != 0">
+                AND (parent_user_id = #{parentUserId})
+            </if>
+            <if test="parentNickName != null and parentNickName.trim().length() != 0">
+                AND (parent_nick_name like '%' || #{parentNickName} || '%')
+            </if>
+            <if test="activityCode != null and activityCode.trim().length() != 0">
+                AND (activity_code like '%' || #{activityCode} || '%')
+            </if>
+            <if test="isSend != null and isSend.trim().length() != 0">
+                AND (is_send like '%' || #{isSend} || '%')
+            </if>
+            <if test="sendDate != null and sendDate.trim().length() != 0">
+                AND (send_date = #{sendDate})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete like '%' || #{isDelete} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_weixin_invite_info_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="openId != null and openId.trim().length() != 0">
+                AND (open_id = #{openId})
+            </if>
+            <if test="nickName != null and nickName.trim().length() != 0">
+                AND (nick_name = #{nickName})
+            </if>
+            <if test="userId != null and userId.trim().length() != 0">
+                AND (user_id = #{userId})
+            </if>
+            <if test="parentUserId != null and parentUserId.trim().length() != 0">
+                AND (parent_user_id = #{parentUserId})
+            </if>
+            <if test="parentNickName != null and parentNickName.trim().length() != 0">
+                AND (parent_nick_name = #{parentNickName})
+            </if>
+            <if test="activityCode != null and activityCode.trim().length() != 0">
+                AND (activity_code = #{activityCode})
+            </if>
+            <if test="isSend != null and isSend.trim().length() != 0">
+                AND (is_send = #{isSend})
+            </if>
+            <if test="sendDate != null and sendDate.trim().length() != 0">
+                AND (send_date = #{sendDate})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_weixin_invite_info
+        <if test="fuzzy">
+            <include refid="finance_weixin_invite_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_weixin_invite_info_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_weixin_invite_info
+        <if test="fuzzy">
+            <include refid="finance_weixin_invite_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_weixin_invite_info_query_condition"/>
+        </if>
+    </select>
+    <delete id="delete">
+        delete from finance_weixin_invite_info where (activity_code = #{activityCode}) AND (open_id = #{openId})
+    </delete>
+</mapper>

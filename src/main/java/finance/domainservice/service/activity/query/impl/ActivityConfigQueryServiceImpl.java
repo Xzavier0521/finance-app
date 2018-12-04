@@ -22,7 +22,7 @@ import finance.domain.user.UserInfo;
 import finance.domain.user.UserInviteInfo;
 import finance.domainservice.repository.ActivityConfigRepository;
 import finance.domainservice.repository.AgentConfigRepository;
-import finance.domainservice.repository.UserInviteRepository;
+import finance.domainservice.repository.UserInviteInfoRepository;
 import finance.domainservice.service.activity.query.ActivityConfigQueryService;
 
 /**
@@ -40,7 +40,7 @@ public class ActivityConfigQueryServiceImpl implements ActivityConfigQueryServic
     @Resource
     private ActivityConfigRepository activityConfigRepository;
     @Resource
-    private UserInviteRepository     userInviteRepository;
+    private UserInviteInfoRepository userInviteInfoRepository;
 
     /**
      * 根据活动代码查询用户推广信息
@@ -62,7 +62,7 @@ public class ActivityConfigQueryServiceImpl implements ActivityConfigQueryServic
             activityConfig = getActivityConfig(userId, activityCode);
             if (Objects.isNull(activityConfig)) {
                 // 用户非一级代理，查询用户的邀请者（用户的父级）
-                UserInviteInfo userInviteInfo = userInviteRepository.queryByCondition(userId);
+                UserInviteInfo userInviteInfo = userInviteInfoRepository.queryByCondition(userId);
                 if (Objects.nonNull(userInviteInfo)) {
                     Long parentUserId = userInviteInfo.getParentUserId();
                     activityConfig = getActivityConfig(parentUserId, activityCode);

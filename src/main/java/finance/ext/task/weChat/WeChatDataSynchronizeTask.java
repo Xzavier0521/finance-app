@@ -1,7 +1,5 @@
 package finance.ext.task.weChat;
 
-import java.time.LocalDateTime;
-
 import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
@@ -9,19 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
-import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 import finance.domainservice.service.wechat.WeChatDataSynchronizeService;
 
 /**
- * <p>
- * 微信公众号用户数据同步到redis
- * </p>
+ * <p>微信公众号用户数据同步到redis</p>
  * 
  * @author lili
- * @version $Id: WeChatDataSynchronizeTask.java, v0.1 2018/10/23 5:45 PM lili
- *          Exp $
+ * @version $Id: WeChatDataSynchronizeTask.java, v0.1 2018/10/23 5:45 PM lili Exp $
  */
 @Slf4j
 @Service

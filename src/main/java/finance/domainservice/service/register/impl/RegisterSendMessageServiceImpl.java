@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 
+import finance.domainservice.repository.UserInviteInfoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -23,7 +24,6 @@ import finance.domain.user.UserInviteInfo;
 import finance.domain.weixin.WeiXinMessageTemplate;
 import finance.domainservice.repository.ThirdAccountInfoRepository;
 import finance.domainservice.repository.UserInfoRepository;
-import finance.domainservice.repository.UserInviteRepository;
 import finance.domainservice.repository.WeiXinMessageTemplateRepository;
 import finance.domainservice.service.wechat.WeiXinTemplateMessageSendService;
 import finance.domainservice.service.register.RegisterSendMessageService;
@@ -46,7 +46,7 @@ public class RegisterSendMessageServiceImpl implements RegisterSendMessageServic
 	private UserInfoRepository userInfoRepository;
 
 	@Resource
-	private UserInviteRepository userInviteRepository;
+	private UserInviteInfoRepository userInviteInfoRepository;
 	@Resource
 	private ThirdAccountInfoRepository thirdAccountInfoRepository;
 	@Resource
@@ -67,7 +67,7 @@ public class RegisterSendMessageServiceImpl implements RegisterSendMessageServic
 			return;
 		}
 		UserInfo userInfo = userInfoList.get(0);
-		UserInviteInfo userInviteInfo = userInviteRepository.queryByCondition(userId);
+		UserInviteInfo userInviteInfo = userInviteInfoRepository.queryByCondition(userId);
 		if (Objects.isNull(userInviteInfo)) {
 			log.info("用户id：{}，无邀请关系，不发送微信模版消息", userId);
 			return;
@@ -110,7 +110,7 @@ public class RegisterSendMessageServiceImpl implements RegisterSendMessageServic
 	 */
 	private void sendSecondInviteMessage(UserInfo userInfo, ThirdAccountInfo parentThirdAccountInfo) {
 
-		UserInviteInfo parentUserInviteInfo = userInviteRepository.queryByCondition(parentThirdAccountInfo.getUserId());
+		UserInviteInfo parentUserInviteInfo = userInviteInfoRepository.queryByCondition(parentThirdAccountInfo.getUserId());
 		if (Objects.isNull(parentUserInviteInfo)) {
 			log.info("用户id:{},无邀请关系,不发送微信模版消息", parentThirdAccountInfo.getUserId());
 			return;

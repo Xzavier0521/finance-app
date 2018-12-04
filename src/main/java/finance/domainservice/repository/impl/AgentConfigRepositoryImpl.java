@@ -16,12 +16,10 @@ import finance.domainservice.converter.AgentConfigConverter;
 import finance.domainservice.repository.AgentConfigRepository;
 
 /**
- * <p>
- * </p>
+ * <p></p>
  * 
  * @author lili
- * @version 1.0: AgentConfigRepositoryImpl.java, v0.1 2018/10/11 11:04 AM lili
- *          Exp $
+ * @version 1.0: AgentConfigRepositoryImpl.java, v0.1 2018/10/11 11:04 AM lili Exp $
  */
 @Repository("agentConfigRepository")
 public class AgentConfigRepositoryImpl implements AgentConfigRepository {

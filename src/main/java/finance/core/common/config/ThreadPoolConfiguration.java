@@ -11,36 +11,33 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * <p>
- * 线程池配置
- * </p>
+ * <p>线程池配置</p>
  * 
  * @author lili
- * @version $Id: ThreadPoolConfiguration.java, v0.1 2018/10/31 11:37 PM lili Exp
- *          $
+ * @version $Id: ThreadPoolConfiguration.java, v0.1 2018/10/31 11:37 PM lili Exp$
  */
 @Slf4j
 @Configuration
 public class ThreadPoolConfiguration {
 
-	/**
-	 * 最大线程数
-	 */
-	@Value("${finance.threadPool.max}")
-	private int maximumPoolSize;
-	/**
-	 * 最小线程数
-	 */
-	@Value("${finance.threadPool.min}")
-	private int corePoolSize;
+    /**
+     * 最大线程数
+     */
+    @Value("${finance.threadPool.max}")
+    private int maximumPoolSize;
+    /**
+     * 最小线程数
+     */
+    @Value("${finance.threadPool.min}")
+    private int corePoolSize;
 
-	@Bean("threadPoolExecutor")
-	public ThreadPoolExecutor getExecutorPool() {
-		return new ThreadPoolExecutor(corePoolSize, maximumPoolSize, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
-				r -> {
-					Thread thread = new Thread(r);
-					thread.setName("fiance-app-pool");
-					return thread;
-				});
-	}
+    @Bean("threadPoolExecutor")
+    public ThreadPoolExecutor getExecutorPool() {
+        return new ThreadPoolExecutor(corePoolSize, maximumPoolSize, 60L, TimeUnit.SECONDS,
+            new LinkedBlockingQueue<>(), r -> {
+                Thread thread = new Thread(r);
+                thread.setName("fiance-app-pool");
+                return thread;
+            });
+    }
 }

@@ -13,23 +13,23 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class QueryCondition4Batch extends QueryCondition {
-	private static final long serialVersionUID = -1739173523246055200L;
+    private static final long serialVersionUID = -1739173523246055200L;
 
-	/**
-	 * 分页大小
-	 */
-	private int pageSize = DEFAULT_PAGE_SIZE;
-	/**
-	 * 当前页码
-	 */
-	private int currentPage = 1;
-	/**
-	 * 开始时间
-	 */
-	private Date beginTime;
-	/**
-	 * 结束时间
-	 */
-	private Date endTime;
+    /**
+     * 分页大小
+     */
+    private int               pageSize         = DEFAULT_PAGE_SIZE;
+    /**
+     * 当前页码
+     */
+    private int               currentPage      = 1;
+    /**
+     * 开始时间
+     */
+    private Date              beginTime;
+    /**
+     * 结束时间
+     */
+    private Date              endTime;
 
 }
