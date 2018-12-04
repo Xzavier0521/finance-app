@@ -125,7 +125,11 @@ public class WeChatInviteInfoSynchronizeServiceImpl implements WeChatInviteInfoS
         // open_id 绑定关系
         ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository.queryByOenId(openId);
         String nickName = "";
-        weiXinInviteInfoRepository.delete(CommonConstant.CUSTOMER_MESSAGE_ACTIVITY_CODE, openId);
+        WeiXinInviteInfo weiXinInviteInfo = weiXinInviteInfoRepository
+            .query(CommonConstant.CUSTOMER_MESSAGE_ACTIVITY_CODE, openId);
+        if (Objects.nonNull(weiXinInviteInfo)) {
+            return ResponseUtils.buildResp(ReturnCode.SUCCESS);
+        }
         if (Objects.isNull(thirdAccountInfo)) {
             weiXinInviteInfoRepository.save(WeiXinInviteInfo.builder().openId(openId)
                 .nickName(nickName).activityCode(CommonConstant.CUSTOMER_MESSAGE_ACTIVITY_CODE)

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Maps;
@@ -40,6 +41,21 @@ public class WeiXinInviteInfoRepositoryImpl implements WeiXinInviteInfoRepositor
     @Override
     public int delete(String activityCode, String openId) {
         return weiXinInviteInfoDAO.delete(activityCode, openId);
+    }
+
+    @Override
+    public WeiXinInviteInfo query(String activityCode, String openId) {
+
+        WeiXinInviteInfo weiXinInviteInfo = null;
+        Map<String, Object> parameters = Maps.newHashMap();
+        parameters.put("activityCode", activityCode);
+        parameters.put("openId", openId);
+        List<WeiXinInviteInfo> weiXinInviteInfoList = WeiXinInviteInfoConverter
+            .convert2List(weiXinInviteInfoDAO.query(parameters));
+        if (CollectionUtils.isNotEmpty(weiXinInviteInfoList)) {
+            weiXinInviteInfo = weiXinInviteInfoList.get(0);
+        }
+        return weiXinInviteInfo;
     }
 
     @Override

@@ -18,6 +18,8 @@ public interface WeiXinInviteInfoRepository {
 
     int delete(String activityCode, String openId);
 
+    WeiXinInviteInfo query(String activityCode, String openId);
+
     void batchSave(List<WeiXinInviteInfo> weiXinInviteInfoList);
 
     Page<WeiXinInviteInfo> query4Page(WeiXinInviteInfoQueryCondition condition);
