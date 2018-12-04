@@ -113,8 +113,8 @@ public class CustomerMessageNotificationSendServiceImpl implements
         ThirdAccountInfo thirdAccountInfo = new ThirdAccountInfo();
         thirdAccountInfo.setOpenId(weiXinInviteInfo.getOpenId());
         Map<String, String> parameters = Maps.newHashMap();
-        String parentNickName = weiXinInviteInfo.getParentNickName();
-        if (StringUtils.isBlank(parentNickName)) {
+        String parentNickName;
+        if (StringUtils.isNotBlank(weiXinInviteInfo.getParentOpenId())) {
             WeiXinUserInfoDetail weiXinUserInfoDetail = weiXinUserInfoQueryClient
                 .queryUserInfo(token, weiXinInviteInfo.getParentOpenId());
             if (Objects.nonNull(weiXinUserInfoDetail)) {
@@ -122,7 +122,8 @@ public class CustomerMessageNotificationSendServiceImpl implements
             } else {
                 parentNickName = CommonConstant.DEFAULT_WE_CHAT_NUMBER;
             }
-
+        } else {
+            parentNickName = CommonConstant.DEFAULT_WE_CHAT_NUMBER;
         }
         parameters.put("parentNickName", parentNickName);
         weiXinTemplateMessageSendService.send(userInfo, thirdAccountInfo, weiXinMessageTemplate,

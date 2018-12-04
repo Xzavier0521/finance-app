@@ -5,13 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 
-import finance.core.common.constants.CommonConstant;
 import finance.core.common.util.ConvertBeanUtil;
-import finance.core.common.util.EmojiStringUtils;
 import finance.core.dal.dataobject.WeiXinInviteInfoDO;
 import finance.domain.weixin.WeiXinInviteInfo;
 
@@ -38,16 +35,16 @@ public class WeiXinInviteInfoConverter {
         }
         WeiXinInviteInfoDO to = new WeiXinInviteInfoDO();
         ConvertBeanUtil.copyBeanProperties(from, to);
-        if (StringUtils.isNotBlank(from.getNickName())) {
+        /*  if (StringUtils.isNotBlank(from.getNickName())) {
             to.setNickName(EmojiStringUtils.replaceEmoji(from.getNickName()));
         }
         if (StringUtils.isNotBlank(from.getParentNickName())) {
             to.setParentNickName(EmojiStringUtils.replaceEmoji(from.getParentNickName()));
-
+        
         }
         if (StringUtils.isBlank(from.getParentNickName())) {
             to.setParentNickName(CommonConstant.DEFAULT_WE_CHAT_NUMBER);
-        }
+        }*/
         if (Objects.nonNull(from.getIsSend())) {
             to.setIsSend(from.getIsSend().getCode());
         }

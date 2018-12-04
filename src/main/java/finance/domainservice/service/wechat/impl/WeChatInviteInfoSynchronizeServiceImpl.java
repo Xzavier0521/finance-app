@@ -30,7 +30,6 @@ import finance.domainservice.repository.UserInviteInfoRepository;
 import finance.domainservice.repository.WeiXinInviteInfoRepository;
 import finance.domainservice.service.wechat.WeChatInviteInfoSynchronizeService;
 import finance.domainservice.service.wechat.WechatService;
-import finance.ext.api.model.WeiXinUserInfoDetail;
 import finance.ext.api.response.UserInfoQueryResponse;
 import finance.ext.integration.weixin.WeiXinUserInfoQueryClient;
 
@@ -123,15 +122,14 @@ public class WeChatInviteInfoSynchronizeServiceImpl implements WeChatInviteInfoS
     }
 
     private BasicResponse execute(String openId) {
-        String token = wechatService.getWechatPubAccessToken();
         // open_id 绑定关系
         ThirdAccountInfo thirdAccountInfo = thirdAccountInfoRepository.queryByOenId(openId);
-        // Objects.nonNull(weiXinUserInfoDetail) ? weiXinUserInfoDetail.getNickname()
         String nickName = "";
         weiXinInviteInfoRepository.delete(CommonConstant.CUSTOMER_MESSAGE_ACTIVITY_CODE, openId);
         if (Objects.isNull(thirdAccountInfo)) {
             weiXinInviteInfoRepository.save(WeiXinInviteInfo.builder().openId(openId)
                 .nickName(nickName).activityCode(CommonConstant.CUSTOMER_MESSAGE_ACTIVITY_CODE)
+                .parentNickName(CommonConstant.DEFAULT_WE_CHAT_NUMBER)
                 .isSend(WeChatSendStatusEnum.UN_SEND).build());
             return ResponseUtils.buildResp(ReturnCode.SUCCESS);
         }
@@ -141,7 +139,9 @@ public class WeChatInviteInfoSynchronizeServiceImpl implements WeChatInviteInfoS
         if (Objects.isNull(userInviteInfo)) {
             weiXinInviteInfoRepository.save(WeiXinInviteInfo.builder().openId(openId)
                 .nickName(nickName).activityCode(CommonConstant.CUSTOMER_MESSAGE_ACTIVITY_CODE)
-                .userId(thirdAccountInfo.getUserId()).isSend(WeChatSendStatusEnum.UN_SEND).build());
+                .userId(thirdAccountInfo.getUserId())
+                .parentNickName(CommonConstant.DEFAULT_WE_CHAT_NUMBER)
+                .isSend(WeChatSendStatusEnum.UN_SEND).build());
             return ResponseUtils.buildResp(ReturnCode.SUCCESS);
         }
         // 查询上级是否绑定open_id
@@ -155,17 +155,6 @@ public class WeChatInviteInfoSynchronizeServiceImpl implements WeChatInviteInfoS
             return ResponseUtils.buildResp(ReturnCode.SUCCESS);
         }
         // 查询上级是否关注微信公众号
-        WeiXinUserInfoDetail parentWeiXinUserInfoDetail = weiXinUserInfoQueryClient
-            .queryUserInfo(token, parentThirdAccountInfo.getOpenId());
-        if (Objects.isNull(parentWeiXinUserInfoDetail)) {
-            weiXinInviteInfoRepository.save(WeiXinInviteInfo.builder().openId(openId)
-                .nickName(nickName).activityCode(CommonConstant.CUSTOMER_MESSAGE_ACTIVITY_CODE)
-                .userId(thirdAccountInfo.getUserId()).parentUserId(userInviteInfo.getParentUserId())
-                .parentOpenId(parentThirdAccountInfo.getOpenId())
-                .isSend(WeChatSendStatusEnum.UN_SEND).build());
-            return ResponseUtils.buildResp(ReturnCode.SUCCESS);
-        }
-        //
         weiXinInviteInfoRepository.save(WeiXinInviteInfo.builder().openId(openId).nickName(nickName)
             .activityCode(CommonConstant.CUSTOMER_MESSAGE_ACTIVITY_CODE)
             .userId(thirdAccountInfo.getUserId()).parentUserId(userInviteInfo.getParentUserId())
