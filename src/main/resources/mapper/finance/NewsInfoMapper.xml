@@ -18,7 +18,7 @@
         <result column="is_delete" property="isDelete" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, title, tag1, tag2, banner_url, redirect_url, `state`, create_time, update_time,
+        id, title, tag1, tag2, banner_url, redirect_url, `state`, create_time, update_time,reward_coin_num,
         creater, updater, version, is_delete
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
