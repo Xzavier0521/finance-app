@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import finance.api.model.vo.info.NewsDetailVO;
+import finance.domain.user.UserInfo;
 
 /**
  * <p>资讯</p>
@@ -13,5 +14,5 @@ import finance.api.model.vo.info.NewsDetailVO;
  */
 public interface NewsBiz {
 
-    Map<String, List<NewsDetailVO>> queryNews(String newsType, Integer maxCount);
+    Map<String, List<NewsDetailVO>> queryNews(String newsType, Integer maxCount, UserInfo userInfo);
 }

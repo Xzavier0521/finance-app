@@ -1,4 +1,4 @@
-package finance.core.dal.dataobject;
+package finance.domain.news;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,7 +12,7 @@ import lombok.Data;
  * @version $Id: NewsInfoDO.java, v0.1 2018/11/25 4:45 PM lili Exp $
  */
 @Data
-public class NewsInfoDO implements Serializable {
+public class NewsInfo implements Serializable {
     private static final long serialVersionUID = -7417862791188070628L;
     private Long              id;
 

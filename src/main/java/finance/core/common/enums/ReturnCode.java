@@ -61,7 +61,10 @@ public enum ReturnCode {
 
     UNFINISHED_SECOND_REWARD_ACTIVITY("060106","未完成二级奖励活动"),
 	// 业务CODE
-	NEWS_PARAM_INVALID("0501001", "资讯信息输入不合法"), STEP_RED_ENVELOPE_END("0601001", "阶梯红包活动已结束"), STEP_RED_ENVELOPE_EXIST(
+	NEWS_PARAM_INVALID("0501001", "资讯信息输入不合法"),
+    NEWS_NOT_EXISTS("0501002","资讯信息不存在"),
+    // 红包活动
+	STEP_RED_ENVELOPE_END("0601001", "阶梯红包活动已结束"), STEP_RED_ENVELOPE_EXIST(
 			"0601002", "已参加阶梯红包活动"), RAIN_RED_ENVELOPE_UN_START("0601003", "红包雨活动未开始"),
 	// 第三方渠道
 	KAMENG_CREDIT_CARD_ISNULL("0901001", "卡盟渠道返回信息为空"), SYS_BUSY("888888", "系统繁忙，请稍后重试"), SYS_ERROR("999999", "系统异常");

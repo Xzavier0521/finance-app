@@ -42,7 +42,7 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="${daoMapperPackage}" targetProject="./src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table schema="" tableName="finance_weixin_invite_info" domainObjectName="WeiXinInviteInfoDO"
+        <table schema="" tableName="finance_news_read_record" domainObjectName="NewsReadRecordDO"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"
                enableDeleteByPrimaryKey="true"

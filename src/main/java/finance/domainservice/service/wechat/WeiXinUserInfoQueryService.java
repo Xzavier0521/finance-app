@@ -2,7 +2,6 @@ package finance.domainservice.service.wechat;
 
 import finance.api.model.vo.weixin.WeiXinUserInfoDetailVO;
 import finance.domain.user.UserInfo;
-import finance.domain.weixin.WeiXinSubscribeSummaryInfo;
 
 /**
  * <p>微信公众号用户信息查询</p>

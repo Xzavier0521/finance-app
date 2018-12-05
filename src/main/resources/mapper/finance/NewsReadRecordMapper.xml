@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.NewsReadRecordDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.NewsReadRecordDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="news_id" property="newsId" jdbcType="BIGINT"/>
+        <result column="reward_coin_num" property="rewardCoinNum" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, news_id, reward_coin_num, create_date, update_time, creator, updator,
+        is_delete, version
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_news_read_record
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.NewsReadRecordDO">
+        insert into finance_news_read_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="newsId != null">
+                news_id,
+            </if>
+            <if test="rewardCoinNum != null">
+                reward_coin_num,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="updator != null">
+                updator,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="newsId != null">
+                #{newsId,jdbcType=BIGINT},
+            </if>
+            <if test="rewardCoinNum != null">
+                #{rewardCoinNum,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.NewsReadRecordDO">
+        update finance_news_read_record
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="newsId != null">
+                news_id = #{newsId,jdbcType=BIGINT},
+            </if>
+            <if test="rewardCoinNum != null">
+                reward_coin_num = #{rewardCoinNum,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updator != null">
+                updator = #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <sql id="finance_news_read_record_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="userId != null">
+                AND (user_id = #{userId})
+            </if>
+            <if test="newsId != null">
+                AND (news_id = #{newsId})
+            </if>
+            <if test="rewardCoinNum != null">
+                AND (reward_coin_num = #{rewardCoinNum})
+            </if>
+            <if test="createDate != null and createDate.trim().length() != 0">
+                AND (create_date = #{createDate})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete like '%' || #{isDelete} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_news_read_record_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="userId != null and userId.trim().length() != 0">
+                AND (user_id = #{userId})
+            </if>
+            <if test="newsId != null and newsId.trim().length() != 0">
+                AND (news_id = #{newsId})
+            </if>
+            <if test="rewardCoinNum != null and rewardCoinNum.trim().length() != 0">
+                AND (reward_coin_num = #{rewardCoinNum})
+            </if>
+            <if test="createDate != null and createDate.trim().length() != 0">
+                AND (create_date = #{createDate})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_news_read_record
+        <if test="fuzzy">
+            <include refid="finance_news_read_record_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_news_read_record_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_news_read_record
+        <if test="fuzzy">
+            <include refid="finance_news_read_record_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_news_read_record_query_condition"/>
+        </if>
+    </select>
+</mapper>

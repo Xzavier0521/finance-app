@@ -13,6 +13,12 @@ import lombok.Data;
 public class NewsDetailVO implements Serializable {
     private static final long serialVersionUID = 5513634366327024492L;
     /**
+     * 主键
+     */
+
+    private Long              id;
+
+    /**
      * 标题
      */
     private String            title;
@@ -40,5 +46,15 @@ public class NewsDetailVO implements Serializable {
      * 创建时间
      */
     private String            createTime;
+
+    /**
+     * 用户id
+     */
+    private Long              userId;
+
+    /**
+     * 是否已经阅读
+     */
+    private boolean           isRead;
 
 }
