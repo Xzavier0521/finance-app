@@ -80,7 +80,7 @@ public class WeiXinUserInfoQueryClientImpl implements WeiXinUserInfoQueryClient 
     @Override
     public WeiXinUserInfoDetail queryUserInfo(String accessToken, String openId) {
         WeiXinUserInfoDetail response;
-        log.info("[开始获取用户列表],请求参数:accessToken:{},nextOpenid:{}", accessToken, openId);
+        log.info("[开始获取用户基本信息],请求参数:accessToken:{},nextOpenid:{}", accessToken, openId);
         try {
             response = create().queryUserInfo(accessToken, openId, "zh_CN").execute().body();
             log.info("[获取用户基本信息],返回结果{}", response);

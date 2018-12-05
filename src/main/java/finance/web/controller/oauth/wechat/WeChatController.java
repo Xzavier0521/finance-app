@@ -47,7 +47,7 @@ public class WeChatController {
     private WeChatPubQrService                    weChatPubQrService;
 
     @Resource
-    private UserInviteInfoRepository userInviteInfoRepository;
+    private UserInviteInfoRepository              userInviteInfoRepository;
     @Resource
     private UserActivityWeChatPubInfoQueryService userActivityWeChatPubInfoQueryService;
 
@@ -140,7 +140,7 @@ public class WeChatController {
             response = ResponseResult.error(CodeEnum.systemError);
         }
         log.info("[结束查询用户微信信息],返回结果:{}", response);
-        return null;
+        return response;
     }
 
 }
