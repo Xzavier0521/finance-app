@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import finance.api.model.request.NewsReadRecordSaveRequest;
 import finance.api.model.response.BasicResponse;
 import finance.api.model.response.ResponseResult;
 import finance.api.model.vo.info.NewsDetailVO;
@@ -57,12 +58,13 @@ public class NewsController {
     }
 
     @PostMapping("saveReadRecord")
-    public ResponseResult<Void> saveReadRecord(@RequestParam("newsId") Long newsId) {
-        log.info("[开始保存资讯文章阅读记录],请求参数,newsId:{}", newsId);
+    public ResponseResult<Void> saveReadRecord(@RequestBody NewsReadRecordSaveRequest request) {
+        log.info("[开始保存资讯文章阅读记录],请求参数,newsId:{}", request.getNewsId());
         ResponseResult<Void> response;
         try {
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
-            BasicResponse basicResponse = newsReadRecordService.localData(newsId, userInfo);
+            BasicResponse basicResponse = newsReadRecordService.localData(request.getNewsId(),
+                userInfo);
             if (basicResponse.isSuccess()) {
                 response = ResponseResult.success(null);
             } else {
@@ -78,9 +80,10 @@ public class NewsController {
 
         } catch (final Exception e) {
             response = ResponseResult.error(CodeEnum.systemError);
-            log.error("[保存资讯文章阅读记录],请求参数,newsId:{}，异常:{}", newsId, ExceptionUtils.getStackTrace(e));
+            log.error("[保存资讯文章阅读记录],请求参数,newsId:{}，异常:{}", request.getNewsId(),
+                ExceptionUtils.getStackTrace(e));
         }
-        log.info("[结束保存资讯文章阅读记录],请求参数,newsId:{},返回结果:{}", newsId, response);
+        log.info("[结束保存资讯文章阅读记录],请求参数,newsId:{},返回结果:{}", request.getNewsId(), response);
         return response;
     }
 
