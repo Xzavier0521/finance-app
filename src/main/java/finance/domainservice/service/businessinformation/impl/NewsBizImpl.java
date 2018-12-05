@@ -15,7 +15,9 @@ import finance.core.common.enums.NewsTag2;
 import finance.core.common.util.ConvertBeanUtil;
 import finance.core.dal.dao.NewsInfoDAO;
 import finance.core.dal.dataobject.NewsInfoDO;
+import finance.domain.news.NewsReadRecord;
 import finance.domain.user.UserInfo;
+import finance.domainservice.repository.NewsReadRecordRepository;
 import finance.domainservice.service.businessinformation.NewsBiz;
 
 /**
@@ -28,7 +30,10 @@ import finance.domainservice.service.businessinformation.NewsBiz;
 public class NewsBizImpl implements NewsBiz {
 
     @Resource
-    private NewsInfoDAO newsInfoMapper;
+    private NewsInfoDAO              newsInfoMapper;
+
+    @Resource
+    private NewsReadRecordRepository newsReadRecordRepository;
 
     @Override
     public Map<String, List<NewsDetailVO>> queryNews(String newsType, Integer maxCount,
@@ -42,6 +47,14 @@ public class NewsBizImpl implements NewsBiz {
             ConvertBeanUtil.copyBeanProperties(newsInfoDO, newsDetailVO);
             newsDetailVO.setCreateTime(
                 new SimpleDateFormat("yyyy-MM-dd").format(newsInfoDO.getCreateTime()));
+            NewsReadRecord newsReadRecord = newsReadRecordRepository.query(newsInfoDO.getId(),
+                userInfo.getId());
+            newsDetailVO.setUserId(userInfo.getId());
+            if (Objects.nonNull(newsReadRecord)) {
+                newsDetailVO.setRead(true);
+            } else {
+                newsDetailVO.setRead(false);
+            }
             detailVOList.add(newsDetailVO);
         }
         Map<String, List<NewsDetailVO>> returnMap = new HashMap<>();

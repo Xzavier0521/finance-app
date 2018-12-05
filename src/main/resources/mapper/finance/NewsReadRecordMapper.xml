@@ -156,10 +156,10 @@
     </sql>
     <sql id="finance_news_read_record_query_condition">
         <trim prefix="WHERE" prefixOverrides="AND |OR ">
-            <if test="userId != null and userId.trim().length() != 0">
+            <if test="userId != null">
                 AND (user_id = #{userId})
             </if>
-            <if test="newsId != null and newsId.trim().length() != 0">
+            <if test="newsId != null">
                 AND (news_id = #{newsId})
             </if>
             <if test="rewardCoinNum != null and rewardCoinNum.trim().length() != 0">
