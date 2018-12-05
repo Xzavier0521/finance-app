@@ -49,12 +49,23 @@ public class NewsController {
     @GetMapping(value = "newsDetail")
     public ResponseResult<Map<String, List<NewsDetailVO>>> queryNewsDetail(@RequestParam(required = false, name = "maxCount", defaultValue = "15") Integer maxCount,
                                                                            @RequestParam("newsType") String newsType) {
-        if (!NewsTag1.contains(newsType)) {
-            return ResponseResult.error(CodeEnum.newsParamInvalid);
+        log.info("[开始查询资讯信息],请求参数,maxCount:{},newsType:{}", maxCount, newsType);
+        ResponseResult<Map<String, List<NewsDetailVO>>> response;
+        try {
+            if (!NewsTag1.contains(newsType)) {
+                return ResponseResult.error(CodeEnum.newsParamInvalid);
+            }
+            UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
+            Map<String, List<NewsDetailVO>> returnMap = newsBiz.queryNews(newsType, maxCount,
+                userInfo);
+            response = ResponseResult.success(returnMap);
+        } catch (final Exception e) {
+            response = ResponseResultUtils.error(ReturnCode.SYS_ERROR);
+            log.info("[查询资讯信息],请求参数,maxCount:{},newsType:{},异常:{}", maxCount, newsType,
+                ExceptionUtils.getStackTrace(e));
         }
-        UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
-        Map<String, List<NewsDetailVO>> returnMap = newsBiz.queryNews(newsType, maxCount, userInfo);
-        return ResponseResult.success(returnMap);
+        log.info("[开始查询资讯信息],请求参数,maxCount:{},newsType:{},返回结果:{}", maxCount, newsType, response);
+        return response;
     }
 
     @PostMapping("saveReadRecord")
