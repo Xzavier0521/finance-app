@@ -36,6 +36,10 @@
         from finance_user_register_channel_info
         where id = #{id,jdbcType=BIGINT}
     </select>
+    <select id="countRegisterNumByChannel" resultType="java.lang.Integer">
+        select count(1) from finance_user_register_channel_info
+        where channel_code= #{channelCode,jdbcType=VARCHAR}
+    </select>
     <insert id="insertSelective" parameterType="finance.core.dal.dataobject.UserRegisterChannelInfoDO">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()

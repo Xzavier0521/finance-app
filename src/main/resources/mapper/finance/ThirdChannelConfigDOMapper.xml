@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="finance.core.dal.dao.ThirdChannelConfigDAO">
+    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.ThirdChannelConfigDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="mobile_num" property="mobileNum" jdbcType="VARCHAR"/>
+        <result column="channel_code" property="channelCode" jdbcType="VARCHAR"/>
+        <result column="channel_name" property="channelName" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, mobile_num, channel_code, channel_name, create_date, update_time, creator,
+        updator, is_delete, version
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_third_channel_config
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <sql id="finance_third_channel_config_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="userId != null">
+                AND (user_id = #{userId})
+            </if>
+            <if test="mobileNum != null and mobileNum.trim().length() != 0">
+                AND (mobile_num like '%' || #{mobileNum} || '%')
+            </if>
+            <if test="channelCode != null and channelCode.trim().length() != 0">
+                AND (channel_code like '%' || #{channelCode} || '%')
+            </if>
+            <if test="channelName != null and channelName.trim().length() != 0">
+                AND (channel_name like '%' || #{channelName} || '%')
+            </if>
+            <if test="createDate != null and createDate.trim().length() != 0">
+                AND (create_date = #{createDate})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete like '%' || #{isDelete} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_third_channel_config_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="userId != null">
+                AND (user_id = #{userId})
+            </if>
+            <if test="mobileNum != null and mobileNum.trim().length() != 0">
+                AND (mobile_num = #{mobileNum})
+            </if>
+            <if test="channelCode != null and channelCode.trim().length() != 0">
+                AND (channel_code = #{channelCode})
+            </if>
+            <if test="channelName != null and channelName.trim().length() != 0">
+                AND (channel_name = #{channelName})
+            </if>
+            <if test="createDate != null and createDate.trim().length() != 0">
+                AND (create_date = #{createDate})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_third_channel_config
+        <if test="fuzzy">
+            <include refid="finance_third_channel_config_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_third_channel_config_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_third_channel_config
+        <if test="fuzzy">
+            <include refid="finance_third_channel_config_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_third_channel_config_query_condition"/>
+        </if>
+    </select>
+</mapper>

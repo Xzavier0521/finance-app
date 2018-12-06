@@ -9,49 +9,49 @@ import org.apache.commons.collections4.CollectionUtils;
 import com.google.common.collect.Lists;
 
 import finance.core.common.util.ConvertBeanUtil;
-import finance.core.dal.dataobject.ThirdAccountInfoDO;
-import finance.domain.user.ThirdAccountInfo;
+import finance.core.dal.dataobject.ThirdChannelConfigDO;
+import finance.domain.third.ThirdChannelConfig;
 
 /**
- * <p>注释</p>
- * 
+ * <p>第三方渠道配置</p>
+ *
  * @author lili
- * @version $Id: ThirdAccountInfoConverter.java, v0.1 2018/10/24 1:44 PM lili Exp $
+ * @version 1.0: ThirdChannelConfigConverter.java, v0.1 2018/12/5 6:17 PM PM lili Exp $
  */
-public class ThirdAccountInfoConverter {
+public class ThirdChannelConfigConverter {
 
-    public static ThirdAccountInfo convert(ThirdAccountInfoDO from) {
+    public static ThirdChannelConfig convert(ThirdChannelConfigDO from) {
         if (Objects.isNull(from)) {
             return null;
         }
-        ThirdAccountInfo to = new ThirdAccountInfo();
+        ThirdChannelConfig to = new ThirdChannelConfig();
         ConvertBeanUtil.copyBeanProperties(from, to);
         return to;
     }
 
-    public static ThirdAccountInfoDO convert(ThirdAccountInfo from) {
+    public static ThirdChannelConfigDO convert(ThirdChannelConfig from) {
         if (Objects.isNull(from)) {
             return null;
         }
-        ThirdAccountInfoDO to = new ThirdAccountInfoDO();
+        ThirdChannelConfigDO to = new ThirdChannelConfigDO();
         ConvertBeanUtil.copyBeanProperties(from, to);
         return to;
     }
 
-    public static List<ThirdAccountInfo> convert2List(List<ThirdAccountInfoDO> froms) {
+    public static List<ThirdChannelConfig> convert2List(List<ThirdChannelConfigDO> froms) {
         if (CollectionUtils.isEmpty(froms)) {
             return Collections.emptyList();
         }
-        List<ThirdAccountInfo> tos = Lists.newArrayListWithCapacity(froms.size());
+        List<ThirdChannelConfig> tos = Lists.newArrayListWithCapacity(froms.size());
         froms.forEach(from -> tos.add(convert(from)));
         return tos;
     }
 
-    public static List<ThirdAccountInfoDO> convert2DoList(List<ThirdAccountInfo> froms) {
+    public static List<ThirdChannelConfigDO> convert2DoList(List<ThirdChannelConfig> froms) {
         if (CollectionUtils.isEmpty(froms)) {
             return Collections.emptyList();
         }
-        List<ThirdAccountInfoDO> tos = Lists.newArrayListWithCapacity(froms.size());
+        List<ThirdChannelConfigDO> tos = Lists.newArrayListWithCapacity(froms.size());
         froms.forEach(from -> tos.add(convert(from)));
         return tos;
     }
