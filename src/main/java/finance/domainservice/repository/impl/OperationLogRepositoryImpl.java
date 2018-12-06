@@ -17,8 +17,7 @@ import finance.domainservice.repository.OperationLogRepository;
  * <p>用户操作日志</p>
  *
  * @author lili
- * @version 1.0: OperationLogRepositoryImpl.java, v 0.1 2018/9/28 下午4:11 lili
- *          Exp $
+ * @version 1.0: OperationLogRepositoryImpl.java, v 0.1 2018/9/28 下午4:11 lili Exp $
  */
 @Repository("operationLogRepository")
 public class OperationLogRepositoryImpl implements OperationLogRepository {
@@ -27,9 +26,7 @@ public class OperationLogRepositoryImpl implements OperationLogRepository {
 
     /**
      * 保存数据
-     *
-     * @param operationLog
-     *            记录
+     * @param operationLog 记录
      * @return int
      */
     @Override
@@ -40,9 +37,7 @@ public class OperationLogRepositoryImpl implements OperationLogRepository {
 
     /**
      * 批量保存
-     *
-     * @param operationLogs
-     *            记录列表
+     * @param operationLogs 记录列表
      * @return int
      */
     @Override
@@ -54,14 +49,10 @@ public class OperationLogRepositoryImpl implements OperationLogRepository {
     /**
      * 查询用户最新操作日志
      * 
-     * @param parentUserId
-     *            用户id列表
-     * @param opCodes
-     *            操作码
-     * @param pageNum
-     *            第几页
-     * @param pageSize
-     *            每页记录数
+     * @param parentUserId 用户id列表
+     * @param opCodes 操作码
+     * @param pageNum 第几页
+     * @param pageSize 每页记录数
      * @return List<OperationLogDO>
      */
     @Override
