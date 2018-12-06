@@ -32,6 +32,7 @@ public class ThirdChannelConfigRepositoryImpl implements ThirdChannelConfigRepos
         ThirdChannelConfig thirdChannelConfig = null;
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("mobileNum", mobileNum);
+        parameters.put("isDelete", "0");
         List<ThirdChannelConfig> thirdChannelConfigList = ThirdChannelConfigConverter
             .convert2List(thirdChannelConfigDAO.query(parameters));
         if (CollectionUtils.isNotEmpty(thirdChannelConfigList)) {
