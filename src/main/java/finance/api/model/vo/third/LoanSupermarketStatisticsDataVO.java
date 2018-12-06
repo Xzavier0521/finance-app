@@ -1,6 +1,7 @@
 package finance.api.model.vo.third;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.Data;
 
@@ -13,20 +14,25 @@ import lombok.Data;
 @Data
 public class LoanSupermarketStatisticsDataVO implements Serializable {
 
-    private static final long serialVersionUID = 7078179847917791920L;
+    private static final long            serialVersionUID = 7078179847917791920L;
     /**
      * 注册用户数
      */
-    private int               registerNum;
+    private int                          registerNum;
 
     /**
      * 渠道代码
      */
-    private String            channelCode;
+    private String                       channelCode;
 
     /**
      * 渠道名称
      */
-    private String            channelName;
+    private String                       channelName;
+
+    /**
+     * 
+     */
+    private List<RegisterStatisticsData> registerDetails;
 
 }

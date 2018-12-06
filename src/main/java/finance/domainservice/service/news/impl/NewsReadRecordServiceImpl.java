@@ -45,6 +45,10 @@ public class NewsReadRecordServiceImpl implements NewsReadRecordService {
 
         NewsInfo newsInfo = newsInfoRepository.query(newsId);
         PreconditionUtils.checkArgument(Objects.nonNull(newsInfo), ReturnCode.NEWS_NOT_EXISTS);
+        NewsReadRecord record = newsReadRecordRepository.query(newsId, userInfo.getId());
+        if (Objects.nonNull(record)) {
+            return ResponseUtils.buildResp(ReturnCode.SUCCESS);
+        }
         return transactionTemplate.execute(status -> {
             // 保存阅读记录
             NewsReadRecord newsReadRecord = new NewsReadRecord();
