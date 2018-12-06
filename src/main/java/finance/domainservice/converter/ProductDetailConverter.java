@@ -13,9 +13,7 @@ import finance.domain.product.ProductDetail;
 import finance.core.common.util.ConvertBeanUtil;
 
 /**
- * <p>
- * 产品明细
- * </p>
+ * <p>产品明细</p>
  *
  * @author lili
  * @version 1.0: ProductDetailConverter.java, v0.1 2018/11/8 2:08 PM PM lili Exp

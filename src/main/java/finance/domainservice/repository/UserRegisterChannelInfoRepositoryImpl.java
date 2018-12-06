@@ -1,10 +1,14 @@
 package finance.domainservice.repository;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Repository;
 
+import finance.api.model.vo.third.RegisterStatisticsData;
 import finance.core.dal.dao.UserRegisterChannelInfoDAO;
+import finance.domainservice.converter.RegisterStatisticsDataConverter;
 
 /**
  * <p>用户注册渠道信息</p>
@@ -21,5 +25,11 @@ public class UserRegisterChannelInfoRepositoryImpl implements UserRegisterChanne
     @Override
     public int countRegisterNumByChannel(String channelCode) {
         return userRegisterChannelInfoDAO.countRegisterNumByChannel(channelCode);
+    }
+
+    @Override
+    public List<RegisterStatisticsData> queryStatisticsData(String channelCode) {
+        return RegisterStatisticsDataConverter
+            .convert2List(userRegisterChannelInfoDAO.queryStatisticsData(channelCode));
     }
 }

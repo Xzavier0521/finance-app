@@ -41,6 +41,8 @@ public class LoanSupermarketQueryServiceImpl implements LoanSupermarketQueryServ
         loanSupermarketStatisticsDataVO.setChannelName(thirdChannelConfig.getChannelName());
         loanSupermarketStatisticsDataVO.setRegisterNum(userRegisterChannelInfoRepository
             .countRegisterNumByChannel(thirdChannelConfig.getChannelCode()));
+        loanSupermarketStatisticsDataVO.setRegisterDetails(userRegisterChannelInfoRepository
+            .queryStatisticsData(thirdChannelConfig.getChannelCode()));
         return loanSupermarketStatisticsDataVO;
     }
 }

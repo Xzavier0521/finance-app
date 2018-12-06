@@ -25,6 +25,10 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
+    <resultMap id="registerStatisticsDataMap" type="finance.core.dal.dataobject.RegisterStatisticsDataDO">
+        <result column="register_date" property="registerDate" jdbcType="VARCHAR"/>
+        <result column="register_num" property="registerNum" jdbcType="BIGINT"/>
+    </resultMap>
     <sql id="Base_Column_List">
         id, user_id, channel_code, channel_detail, platform_code, platform_detail, approach1,
         approach2, approach3, approach4, approach5, approach6, approach7, approach8, approach9,
@@ -245,4 +249,10 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+    <select id="queryStatisticsData" resultMap="registerStatisticsDataMap">
+        select DATE_FORMAT(create_time,'%Y-%m-%d') as register_date,count(user_id) as register_num
+        from finance_user_register_channel_info
+        where channel_code=#{channelCode,jdbcType=VARCHAR}
+        GROUP BY DATE_FORMAT(create_time,'%Y-%m-%d')
+    </select>
 </mapper>

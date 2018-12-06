@@ -1,7 +1,10 @@
 package finance.core.dal.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
+import finance.core.dal.dataobject.RegisterStatisticsDataDO;
 import finance.core.dal.dataobject.UserRegisterChannelInfoDO;
 
 /**
@@ -13,4 +16,6 @@ import finance.core.dal.dataobject.UserRegisterChannelInfoDO;
 public interface UserRegisterChannelInfoDAO extends BaseDAO<UserRegisterChannelInfoDO, Long> {
 
     int countRegisterNumByChannel(@Param("channelCode") String channelCode);
+
+    List<RegisterStatisticsDataDO> queryStatisticsData(String channelCode);
 }
