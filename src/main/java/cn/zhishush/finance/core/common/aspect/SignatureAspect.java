@@ -63,7 +63,7 @@ public class SignatureAspect {
     /**
      * 只拦截api包下以Api结尾的文件（注意区分大小写）
      */
-    @Around("execution(public * finance.web.controller.oauth.*.*(..))")
+    @Around("execution(public *  cn.zhishush.finance.web.controller.oauth.*.*(..))")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         Object res = null;
         try {

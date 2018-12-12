@@ -36,7 +36,7 @@ public class OauthAspect {
     @Resource
     private OperationLogRepository operationLogRepository;
 
-    @Before("execution(public * finance.web.controller.oauth..*(..))")
+    @Before("execution(public *  cn.zhishush.finance.web.controller.oauth..*(..))")
     public void before(JoinPoint joinPoint) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
             .getRequestAttributes();
