@@ -56,6 +56,7 @@ public class NewsController {
                 return ResponseResult.error(CodeEnum.newsParamInvalid);
             }
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
+            log.info("userInfo:{}",userInfo);
             Map<String, List<NewsDetailVO>> returnMap = newsBiz.queryNews(newsType, maxCount,
                 userInfo);
             response = ResponseResult.success(returnMap);
