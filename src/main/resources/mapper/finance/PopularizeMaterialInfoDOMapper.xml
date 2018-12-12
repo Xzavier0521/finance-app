@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.zhishush.finance.core.dal.dao.popularize.PopularizeMaterialInfoDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.popularize.PopularizeMaterialInfoDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="sub_module_code" property="subModuleCode" jdbcType="VARCHAR"/>
+        <result column="material_code" property="materialCode" jdbcType="VARCHAR"/>
+        <result column="material_type" property="materialType" jdbcType="VARCHAR"/>
+        <result column="material_title" property="materialTitle" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="first_banner_url" property="firstBannerUrl" jdbcType="VARCHAR"/>
+        <result column="second_banner_url" property="secondBannerUrl" jdbcType="VARCHAR"/>
+        <result column="material_order" property="materialOrder" jdbcType="BIGINT"/>
+        <result column="material_status" property="materialStatus" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, sub_module_code, material_code, material_type, material_title, content, first_banner_url,
+        second_banner_url, material_order, material_status, create_time, update_time, creator,
+        updator, is_delete, version
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_popularize_material_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <sql id="finance_popularize_material_info_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="subModuleCode != null and subModuleCode.trim().length() != 0">
+                AND (sub_module_code like '%' || #{subModuleCode} || '%')
+            </if>
+            <if test="materialCode != null and materialCode.trim().length() != 0">
+                AND (material_code like '%' || #{materialCode} || '%')
+            </if>
+            <if test="materialType != null and materialType.trim().length() != 0">
+                AND (material_type like '%' || #{materialType} || '%')
+            </if>
+            <if test="materialTitle != null and materialTitle.trim().length() != 0">
+                AND (material_title like '%' || #{materialTitle} || '%')
+            </if>
+            <if test="content != null and content.trim().length() != 0">
+                AND (content like '%' || #{content} || '%')
+            </if>
+            <if test="firstBannerUrl != null and firstBannerUrl.trim().length() != 0">
+                AND (first_banner_url like '%' || #{firstBannerUrl} || '%')
+            </if>
+            <if test="secondBannerUrl != null and secondBannerUrl.trim().length() != 0">
+                AND (second_banner_url like '%' || #{secondBannerUrl} || '%')
+            </if>
+            <if test="materialOrder != null and materialOrder.trim().length() != 0">
+                AND (material_order = #{materialOrder})
+            </if>
+            <if test="materialStatus != null and materialStatus.trim().length() != 0">
+                AND (material_status like '%' || #{materialStatus} || '%')
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete like '%' || #{isDelete} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_popularize_material_info_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="subModuleCode != null and subModuleCode.trim().length() != 0">
+                AND (sub_module_code = #{subModuleCode})
+            </if>
+            <if test="materialCode != null and materialCode.trim().length() != 0">
+                AND (material_code = #{materialCode})
+            </if>
+            <if test="materialType != null and materialType.trim().length() != 0">
+                AND (material_type = #{materialType})
+            </if>
+            <if test="materialTitle != null and materialTitle.trim().length() != 0">
+                AND (material_title = #{materialTitle})
+            </if>
+            <if test="content != null and content.trim().length() != 0">
+                AND (content = #{content})
+            </if>
+            <if test="firstBannerUrl != null and firstBannerUrl.trim().length() != 0">
+                AND (first_banner_url = #{firstBannerUrl})
+            </if>
+            <if test="secondBannerUrl != null and secondBannerUrl.trim().length() != 0">
+                AND (second_banner_url = #{secondBannerUrl})
+            </if>
+            <if test="materialOrder != null and materialOrder.trim().length() != 0">
+                AND (material_order = #{materialOrder})
+            </if>
+            <if test="materialStatus != null and materialStatus.trim().length() != 0">
+                AND (material_status = #{materialStatus})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_popularize_material_info
+        <if test="fuzzy">
+            <include refid="finance_popularize_material_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_popularize_material_info_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_popularize_material_info
+        <if test="fuzzy">
+            <include refid="finance_popularize_material_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_popularize_material_info_query_condition"/>
+        </if>
+    </select>
+</mapper>

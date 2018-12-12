@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.zhishush.finance.core.dal.dao.popularize.PopularizeProductInfoDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.popularize.PopularizeProductInfoDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="sub_module_code" property="subModuleCode" jdbcType="VARCHAR"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="product_type" property="productType" jdbcType="VARCHAR"/>
+        <result column="product_status" property="productStatus" jdbcType="VARCHAR"/>
+        <result column="promotion_text" property="promotionText" jdbcType="VARCHAR"/>
+        <result column="product_order" property="productOrder" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, sub_module_code, product_code, product_type, product_status, create_time,
+        update_time,promotion_text,product_order,
+        creator, updator, is_delete, version
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_popularize_product_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <sql id="finance_popularize_product_info_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="subModuleCode != null and subModuleCode.trim().length() != 0">
+                AND (sub_module_code like '%' || #{subModuleCode} || '%')
+            </if>
+            <if test="productCode != null and productCode.trim().length() != 0">
+                AND (product_code like '%' || #{productCode} || '%')
+            </if>
+            <if test="productType != null and productType.trim().length() != 0">
+                AND (product_type like '%' || #{productType} || '%')
+            </if>
+            <if test="productStatus != null and productStatus.trim().length() != 0">
+                AND (product_status like '%' || #{productStatus} || '%')
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete like '%' || #{isDelete} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_popularize_product_info_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="subModuleCode != null and subModuleCode.trim().length() != 0">
+                AND (sub_module_code = #{subModuleCode})
+            </if>
+            <if test="productCode != null and productCode.trim().length() != 0">
+                AND (product_code = #{productCode})
+            </if>
+            <if test="productType != null and productType.trim().length() != 0">
+                AND (product_type = #{productType})
+            </if>
+            <if test="productStatus != null and productStatus.trim().length() != 0">
+                AND (product_status = #{productStatus})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_popularize_product_info
+        <if test="fuzzy">
+            <include refid="finance_popularize_product_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_popularize_product_info_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_popularize_product_info
+        <if test="fuzzy">
+            <include refid="finance_popularize_product_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_popularize_product_info_query_condition"/>
+        </if>
+    </select>
+</mapper>

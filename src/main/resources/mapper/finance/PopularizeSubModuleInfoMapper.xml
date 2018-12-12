@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.zhishush.finance.core.dal.dao.popularize.PopularizeSubModuleInfoDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.popularize.PopularizeSubModuleInfoDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="module_code" property="moduleCode" jdbcType="VARCHAR"/>
+        <result column="sub_module_code" property="subModuleCode" jdbcType="VARCHAR"/>
+        <result column="sub_module_name" property="subModuleName" jdbcType="VARCHAR"/>
+        <result column="sub_module_type" property="subModuleType" jdbcType="VARCHAR"/>
+        <result column="sub_module_order" property="subModuleOrder" jdbcType="BIGINT"/>
+        <result column="sub_module_status" property="subModuleStatus" jdbcType="VARCHAR"/>
+        <result column="redirect_url" property="redirectUrl" jdbcType="VARCHAR"/>
+        <result column="banner_url" property="bannerUrl" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, module_code, sub_module_code, sub_module_name, sub_module_type, sub_module_order,
+        sub_module_status, redirect_url, banner_url, create_time, update_time, creator, updator,
+        is_delete, version
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_popularize_sub_module_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <sql id="finance_popularize_sub_module_info_query_fuzzy_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="moduleCode != null and moduleCode.trim().length() != 0">
+                AND (module_code like '%' || #{moduleCode} || '%')
+            </if>
+            <if test="subModuleCode != null and subModuleCode.trim().length() != 0">
+                AND (sub_module_code like '%' || #{subModuleCode} || '%')
+            </if>
+            <if test="subModuleName != null and subModuleName.trim().length() != 0">
+                AND (sub_module_name like '%' || #{subModuleName} || '%')
+            </if>
+            <if test="subModuleType != null and subModuleType.trim().length() != 0">
+                AND (sub_module_type like '%' || #{subModuleType} || '%')
+            </if>
+            <if test="subModuleOrder != null and subModuleOrder.trim().length() != 0">
+                AND (sub_module_order = #{subModuleOrder})
+            </if>
+            <if test="subModuleStatus != null and subModuleStatus.trim().length() != 0">
+                AND (sub_module_status like '%' || #{subModuleStatus} || '%')
+            </if>
+            <if test="redirectUrl != null and redirectUrl.trim().length() != 0">
+                AND (redirect_url like '%' || #{redirectUrl} || '%')
+            </if>
+            <if test="bannerUrl != null and bannerUrl.trim().length() != 0">
+                AND (banner_url like '%' || #{bannerUrl} || '%')
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator like '%' || #{creator} || '%')
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator like '%' || #{updator} || '%')
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete like '%' || #{isDelete} || '%')
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <sql id="finance_popularize_sub_module_info_query_condition">
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="moduleCode != null and moduleCode.trim().length() != 0">
+                AND (module_code = #{moduleCode})
+            </if>
+            <if test="subModuleCode != null and subModuleCode.trim().length() != 0">
+                AND (sub_module_code = #{subModuleCode})
+            </if>
+            <if test="subModuleName != null and subModuleName.trim().length() != 0">
+                AND (sub_module_name = #{subModuleName})
+            </if>
+            <if test="subModuleType != null and subModuleType.trim().length() != 0">
+                AND (sub_module_type = #{subModuleType})
+            </if>
+            <if test="subModuleOrder != null and subModuleOrder.trim().length() != 0">
+                AND (sub_module_order = #{subModuleOrder})
+            </if>
+            <if test="subModuleStatus != null and subModuleStatus.trim().length() != 0">
+                AND (sub_module_status = #{subModuleStatus})
+            </if>
+            <if test="redirectUrl != null and redirectUrl.trim().length() != 0">
+                AND (redirect_url = #{redirectUrl})
+            </if>
+            <if test="bannerUrl != null and bannerUrl.trim().length() != 0">
+                AND (banner_url = #{bannerUrl})
+            </if>
+            <if test="createTime != null and createTime.trim().length() != 0">
+                AND (create_time = #{createTime})
+            </if>
+            <if test="updateTime != null and updateTime.trim().length() != 0">
+                AND (update_time = #{updateTime})
+            </if>
+            <if test="creator != null and creator.trim().length() != 0">
+                AND (creator = #{creator})
+            </if>
+            <if test="updator != null and updator.trim().length() != 0">
+                AND (updator = #{updator})
+            </if>
+            <if test="isDelete != null and isDelete.trim().length() != 0">
+                AND (is_delete = #{isDelete})
+            </if>
+            <if test="version != null and version.trim().length() != 0">
+                AND (version = #{version})
+            </if>
+        </trim>
+    </sql>
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_popularize_sub_module_info
+        <if test="fuzzy">
+            <include refid="finance_popularize_sub_module_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_popularize_sub_module_info_query_condition"/>
+        </if>
+        <if test="order">
+            order by ID desc
+        </if>
+        <include refid="base.limit"/>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from finance_popularize_sub_module_info
+        <if test="fuzzy">
+            <include refid="finance_popularize_sub_module_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_popularize_sub_module_info_query_condition"/>
+        </if>
+    </select>
+</mapper>
