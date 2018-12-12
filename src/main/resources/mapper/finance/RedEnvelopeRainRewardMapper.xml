@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.core.dal.dao.RedEnvelopeRainRewardDAO">
-    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.RedEnvelopeRainRewardDO">
+<mapper namespace="cn.zhishush.finance.core.dal.dao.activity.RedEnvelopeRainRewardDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.activity.RedEnvelopeRainRewardDO">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="activity_code" property="activityCode" jdbcType="VARCHAR"/>
         <result column="time_code" property="timeCode" jdbcType="VARCHAR"/>
@@ -29,7 +29,7 @@
         from finance_red_envelope_rain_reward
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.RedEnvelopeRainRewardDO">
+    <insert id="insertSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.activity.RedEnvelopeRainRewardDO">
         insert into finance_red_envelope_rain_reward
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -132,7 +132,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.RedEnvelopeRainRewardDO">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.activity.RedEnvelopeRainRewardDO">
         update finance_red_envelope_rain_reward
         <set>
             <if test="activityCode != null">

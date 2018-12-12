@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.core.dal.dao.UserGiftInfoDAO">
-    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.UserGiftInfoDO">
+<mapper namespace="cn.zhishush.finance.core.dal.dao.gift.UserGiftInfoDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.gift.UserGiftInfoDO">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
         <result column="gift_id" property="giftId" jdbcType="BIGINT"/>
@@ -24,7 +24,7 @@
         from finance_user_gift_info
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.UserGiftInfoDO">
+    <insert id="insertSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.gift.UserGiftInfoDO">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -94,7 +94,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.UserGiftInfoDO">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.gift.UserGiftInfoDO">
         update finance_user_gift_info
         <set>
             <if test="userId != null">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.core.dal.dao.CoinGameLogDAO" >
-  <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.CoinGameLogDO" >
+<mapper namespace="cn.zhishush.finance.core.dal.dao.coin.CoinGameLogDAO" >
+  <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.coin.CoinGameLogDO" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="out_num" property="outNum" jdbcType="INTEGER" />
@@ -28,7 +28,7 @@
     from finance_coin_game_log
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <insert id="insertSelective" parameterType="finance.core.dal.dataobject.CoinGameLogDO" >
+  <insert id="insertSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.coin.CoinGameLogDO" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -122,7 +122,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.CoinGameLogDO" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.coin.CoinGameLogDO" >
     update finance_coin_game_log
     <set >
       <if test="userId != null" >
@@ -189,7 +189,7 @@
     </if>
   </select>
 
-  <resultMap id="JoinResultMap" type="finance.api.model.vo.coin.JoinTaskBaseVO" >
+  <resultMap id="JoinResultMap" type="cn.zhishush.finance.api.model.vo.coin.JoinTaskBaseVO" >
     <result column="totalJoinNum" property="totalJoinNum" jdbcType="BIGINT" />
     <result column="totalCoinNum" property="totalCoinNum" jdbcType="BIGINT" />
   </resultMap>
@@ -230,7 +230,7 @@
     join_date = DATE_SUB( CURDATE( ), INTERVAL + 1 DAY )
   </select>
 
-  <resultMap id="RecordResultMap" type="finance.api.model.vo.coin.MyRecordVO" >
+  <resultMap id="RecordResultMap" type="cn.zhishush.finance.api.model.vo.coin.MyRecordVO" >
     <result column="totalOutCoin" property="totalOutCoin" jdbcType="INTEGER" />
     <result column="totalInCoin" property="totalInCoin" jdbcType="INTEGER" />
     <result column="totalSign" property="totalSign" jdbcType="INTEGER" />
@@ -255,7 +255,7 @@
     and date(sign_time) = DATE_SUB( CURDATE( ), INTERVAL + 1 DAY )
   </select>
 
-  <update id="updateByUserIdAndDateSelective" parameterType="finance.core.dal.dataobject.CoinGameLogDO" >
+  <update id="updateByUserIdAndDateSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.coin.CoinGameLogDO" >
     update finance_coin_game_log
     <set >
       <if test="outNum != null" >

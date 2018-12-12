@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.core.dal.dao.ProfitDAO">
-    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.ProfitDO">
+<mapper namespace="cn.zhishush.finance.core.dal.dao.order.ProfitDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.order.ProfitDO">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="detail_id" property="detailId" jdbcType="BIGINT"/>
         <result column="prod_id" property="prodId" jdbcType="BIGINT"/>
@@ -40,7 +40,7 @@
         delete from finance_profit
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="finance.core.dal.dataobject.ProfitDO">
+    <insert id="insert" parameterType="cn.zhishush.finance.core.dal.dataobject.order.ProfitDO">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -59,7 +59,7 @@
         #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
         #{version,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.ProfitDO">
+    <insert id="insertSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.order.ProfitDO">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -189,7 +189,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.ProfitDO">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.order.ProfitDO">
         update finance_profit
         <set>
             <if test="detailId != null">
@@ -255,7 +255,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="finance.core.dal.dataobject.ProfitDO">
+    <update id="updateByPrimaryKey" parameterType="cn.zhishush.finance.core.dal.dataobject.order.ProfitDO">
         update finance_profit
         set detail_id = #{detailId,jdbcType=BIGINT},
         prod_id = #{prodId,jdbcType=BIGINT},

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.core.dal.dao.CashBackConfigDAO" >
-  <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.CashBackConfigDO" >
+<mapper namespace="cn.zhishush.finance.core.dal.dao.product.CashBackConfigDAO" >
+  <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.product.CashBackConfigDO" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="config_id" property="configId" jdbcType="VARCHAR" />
     <result column="start_effective_date" property="startEffectiveDate" jdbcType="TIMESTAMP" />

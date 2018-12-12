@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.core.dal.dao.ThirdAccountInfoDAO">
-    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.ThirdAccountInfoDO">
+<mapper namespace="cn.zhishush.finance.core.dal.dao.third.ThirdAccountInfoDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.third.ThirdAccountInfoDO">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
         <result column="channel" property="channel" jdbcType="VARCHAR"/>
@@ -25,7 +25,7 @@
         from finance_third_account_info
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.ThirdAccountInfoDO">
+    <insert id="insertSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.third.ThirdAccountInfoDO">
         insert into finance_third_account_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -104,7 +104,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.ThirdAccountInfoDO">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.third.ThirdAccountInfoDO">
         update finance_third_account_info
         <set>
             <if test="userId != null">

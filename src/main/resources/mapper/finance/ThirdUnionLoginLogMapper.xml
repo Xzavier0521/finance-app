@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.core.dal.dao.ThirdUnionLoginLogDAO">
-    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.ThirdUnionLoginLogDO">
+<mapper namespace="cn.zhishush.finance.core.dal.dao.third.ThirdUnionLoginLogDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.third.ThirdUnionLoginLogDO">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
         <result column="real_name" property="realName" jdbcType="VARCHAR"/>
@@ -31,7 +31,7 @@
         from finance_third_union_login_log
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.ThirdUnionLoginLogDO">
+    <insert id="insertSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.third.ThirdUnionLoginLogDO">
         insert into finance_third_union_login_log
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -140,7 +140,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.ThirdUnionLoginLogDO">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.third.ThirdUnionLoginLogDO">
         update finance_third_union_login_log
         <set>
             <if test="userId != null">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.core.dal.dao.CreditCardInfoDAO">
-    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.CreditCardInfoDO">
+<mapper namespace="cn.zhishush.finance.core.dal.dao.product.CreditCardInfoDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.product.CreditCardInfoDO">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="bank_code" property="bankCode" jdbcType="VARCHAR"/>
         <result column="card_code" property="cardCode" jdbcType="VARCHAR"/>

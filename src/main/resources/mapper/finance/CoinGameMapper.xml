@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.core.dal.dao.CoinGameDAO" >
-  <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.CoinGameDO" >
+<mapper namespace="cn.zhishush.finance.core.dal.dao.coin.CoinGameDAO" >
+  <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.coin.CoinGameDO" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="task_type" property="taskType" jdbcType="VARCHAR" />
     <result column="task_name" property="taskName" jdbcType="VARCHAR" />
@@ -32,7 +32,7 @@
     from finance_coin_game
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <insert id="insertSelective" parameterType="finance.core.dal.dataobject.CoinGameDO" >
+  <insert id="insertSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.coin.CoinGameDO" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -144,7 +144,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.CoinGameDO" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.coin.CoinGameDO" >
     update finance_coin_game
     <set >
       <if test="taskType != null" >

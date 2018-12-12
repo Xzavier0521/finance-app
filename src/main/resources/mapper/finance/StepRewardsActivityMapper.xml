@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.core.dal.dao.StepRewardsActivityDAO">
-    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.StepRewardsActivityDO">
+<mapper namespace="cn.zhishush.finance.core.dal.dao.activity.StepRewardsActivityDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.activity.StepRewardsActivityDO">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
         <result column="invite_num" property="inviteNum" jdbcType="INTEGER"/>
@@ -22,7 +22,7 @@
         from finance_step_rewards_activity
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.StepRewardsActivityDO">
+    <insert id="insertSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.activity.StepRewardsActivityDO">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -80,7 +80,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.StepRewardsActivityDO">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.activity.StepRewardsActivityDO">
         update finance_step_rewards_activity
         <set>
             <if test="userId != null">

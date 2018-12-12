@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.core.dal.dao.NewsReadRecordDAO">
-    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.NewsReadRecordDO">
+<mapper namespace="cn.zhishush.finance.core.dal.dao.news.NewsReadRecordDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.news.NewsReadRecordDO">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
         <result column="news_id" property="newsId" jdbcType="BIGINT"/>
@@ -23,7 +23,7 @@
         from finance_news_read_record
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.NewsReadRecordDO">
+    <insert id="insertSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.news.NewsReadRecordDO">
         insert into finance_news_read_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -90,7 +90,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.NewsReadRecordDO">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.news.NewsReadRecordDO">
         update finance_news_read_record
         <set>
             <if test="userId != null">

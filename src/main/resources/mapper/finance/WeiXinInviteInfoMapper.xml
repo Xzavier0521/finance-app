@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.core.dal.dao.WeiXinInviteInfoDAO">
-    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.WeiXinInviteInfoDO">
+<mapper namespace="cn.zhishush.finance.core.dal.dao.weixin.WeiXinInviteInfoDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.weixin.WeiXinInviteInfoDO">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="open_id" property="openId" jdbcType="VARCHAR"/>
         <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
@@ -23,7 +23,7 @@
         id, open_id, nick_name, user_id, parent_user_id,parent_open_id, parent_nick_name, activity_code,
         is_send, send_date, create_time, update_time, creator, updator, is_delete, version
     </sql>
-    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.WeiXinInviteInfoDO">
+    <insert id="insertSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.weixin.WeiXinInviteInfoDO">
         insert into finance_weixin_invite_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -133,7 +133,7 @@
             item.openId,item.nickName,item.userId,item.parentUserId,item.parentNickName,item.activityCode, item.isSend
         </foreach>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.WeiXinInviteInfoDO">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.weixin.WeiXinInviteInfoDO">
         update finance_weixin_invite_info
         <set>
             <if test="openId != null">

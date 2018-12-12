@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="3600 second" >
 
-    <property name="logPath" value="/JAVA_Files/finance-app/log/app" />
+    <property name="logPath" value="/Users/lili/Documents/logs/finance-app/log/app" />
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
     </contextListener>
-
     <!-- 标准输出，除开发环境之外不能使用 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -90,27 +89,31 @@
             <pattern>%date|%thread|%5level|%logger{50}|%L|%msg%n</pattern>
         </encoder>
     </appender>
-
-
     <!-- 预定义如下几个logger -->
-    <logger name="finance.dao" level="DEBUG" additivity="false">
+    <logger name="cn.zhishush.finance.core.dal.dao.*" level="INFO" additivity="false">
     		<appender-ref ref="bizLog" />
         <appender-ref ref="frameworkLog" />
+        <appender-ref ref="console" />
     </logger>
-     <logger name="finance" level="INFO" additivity="false">
+     <logger name="cn.zhishush.finance" level="INFO" additivity="false">
         <appender-ref ref="bizLog" />
+         <appender-ref ref="console" />
     </logger>
-    <logger name="finance" level="WARN" additivity="false">
+    <logger name="cn.zhishush.finance" level="WARN" additivity="false">
         <appender-ref ref="warnLog" />
+        <appender-ref ref="console" />
     </logger>
-    <logger name="finance" level="ERROF" additivity="false">
+    <logger name="cn.zhishush.finance" level="ERROF" additivity="false">
         <appender-ref ref="errorLog" />
+        <appender-ref ref="console" />
     </logger>
     <logger name="org.springframework.boot" level="INFO" additivity="false">
         <appender-ref ref="frameworkLog" />
+        <appender-ref ref="console" />
     </logger>
      <!-- 默认日志,凡是没有指定的日志全部输出到frameworkLog中，业务日志一般会直接写到bizlog中，而没有配置的基本都是框架级日志 -->
     <root level="INFO">
         <appender-ref ref="frameworkLog" />
+        <appender-ref ref="console" />
     </root>
 </configuration>

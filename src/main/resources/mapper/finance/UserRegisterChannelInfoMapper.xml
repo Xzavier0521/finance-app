@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="finance.core.dal.dao.UserRegisterChannelInfoDAO">
-    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.UserRegisterChannelInfoDO">
+<mapper namespace="cn.zhishush.finance.core.dal.dao.user.UserRegisterChannelInfoDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.user.UserRegisterChannelInfoDO">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
         <result column="channel_code" property="channelCode" jdbcType="VARCHAR"/>
@@ -25,7 +25,7 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <resultMap id="registerStatisticsDataMap" type="finance.core.dal.dataobject.RegisterStatisticsDataDO">
+    <resultMap id="registerStatisticsDataMap" type="cn.zhishush.finance.core.dal.dataobject.third.RegisterStatisticsDataDO">
         <result column="register_date" property="registerDate" jdbcType="VARCHAR"/>
         <result column="register_num" property="registerNum" jdbcType="BIGINT"/>
     </resultMap>
@@ -44,7 +44,7 @@
         select count(1) from finance_user_register_channel_info
         where channel_code= #{channelCode,jdbcType=VARCHAR}
     </select>
-    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.UserRegisterChannelInfoDO">
+    <insert id="insertSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.user.UserRegisterChannelInfoDO">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -180,7 +180,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.UserRegisterChannelInfoDO">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.user.UserRegisterChannelInfoDO">
         update finance_user_register_channel_info
         <set>
             <if test="userId != null">

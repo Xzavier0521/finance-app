@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="finance.core.dal.dao.IdCardInfoDAO">
-    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.IdCardInfoDO">
+<mapper namespace="cn.zhishush.finance.core.dal.dao.account.IdCardInfoDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.account.IdCardInfoDO">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="user_id" jdbcType="BIGINT" property="userId"/>
         <result column="real_name" jdbcType="VARCHAR" property="realName"/>
@@ -24,7 +24,7 @@
         from finance_id_card_info
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.IdCardInfoDO">
+    <insert id="insertSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.account.IdCardInfoDO">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -94,7 +94,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.IdCardInfoDO">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.account.IdCardInfoDO">
         update finance_id_card_info
         <set>
             <if test="userId != null">

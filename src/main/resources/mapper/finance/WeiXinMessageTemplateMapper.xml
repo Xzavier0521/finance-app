@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="finance.core.dal.dao.WeiXinMessageTemplateDAO">
-    <resultMap id="BaseResultMap" type="finance.core.dal.dataobject.WeiXinMessageTemplateDO">
+<mapper namespace="cn.zhishush.finance.core.dal.dao.weixin.WeiXinMessageTemplateDAO">
+    <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.weixin.WeiXinMessageTemplateDO">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="template_code" jdbcType="VARCHAR" property="templateCode"/>
         <result column="template_desc" jdbcType="VARCHAR" property="templateDesc"/>
@@ -46,7 +46,7 @@
         <include refid="queryCondition"/>
         <include refid="base.limit"/>
     </select>
-    <insert id="insertSelective" parameterType="finance.core.dal.dataobject.WeiXinMessageTemplateDO">
+    <insert id="insertSelective" parameterType="cn.zhishush.finance.core.dal.dataobject.weixin.WeiXinMessageTemplateDO">
         insert into finance_weixin_message_template
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -125,7 +125,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="finance.core.dal.dataobject.WeiXinMessageTemplateDO">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.weixin.WeiXinMessageTemplateDO">
         update finance_weixin_message_template
         <set>
             <if test="templateCode != null">
