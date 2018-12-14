@@ -88,6 +88,8 @@ public class PopularizeLoanInfoVO extends PopularizeItemInfoVO {
      */
     private Long              productOrder;
 
+    private Long              order;
+
     /**
      * 推广文字
      */

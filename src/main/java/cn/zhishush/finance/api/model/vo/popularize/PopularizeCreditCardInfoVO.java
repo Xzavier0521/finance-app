@@ -63,7 +63,10 @@ public class PopularizeCreditCardInfoVO extends PopularizeItemInfoVO {
      * 顺序
      */
     private Long              productOrder;
-
+    /**
+     * 顺序
+     */
+    private Long              order;
     /**
      * 卡类型:1-热门,2-白金卡,3-双币卡
      */
