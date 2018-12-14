@@ -85,6 +85,11 @@ public class LoanInfo implements Serializable {
      */
     private String            avgOrderAmount;
     /**
+     * 预计通过率
+     */
+    private String            predictPassingRate;
+
+    /**
      * 顺序
      */
     private Integer           order;

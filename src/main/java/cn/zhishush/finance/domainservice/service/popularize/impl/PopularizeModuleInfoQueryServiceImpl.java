@@ -198,7 +198,8 @@ public class PopularizeModuleInfoQueryServiceImpl implements PopularizeModuleInf
             ConvertBeanUtil.copyBeanProperties(creditCardInfo, popularizeCreditCardInfoVO);
             popularizeCreditCardInfoVO.setCardLimitStr(MessageFormat.format("{0}~{1}",
                 creditCardInfo.getCardLimitMin(), creditCardInfo.getCardLimitMax()));
-            popularizeCreditCardInfoVO.setPredictPassingRateStr(creditCardInfo.getPredictPassingRate());
+            popularizeCreditCardInfoVO
+                .setPredictPassingRateStr(creditCardInfo.getPredictPassingRate());
             // 返现规则
             CreditCardDetails creditCardDetails = creditCardDetailsRepository
                 .query(productInfo.getProductCode());
@@ -250,6 +251,7 @@ public class PopularizeModuleInfoQueryServiceImpl implements PopularizeModuleInf
             ConvertBeanUtil.copyBeanProperties(productInfo, popularizeLoanInfoVO);
             loanInfo = loanInfoRepository.query(productInfo.getProductCode());
             ConvertBeanUtil.copyBeanProperties(loanInfo, popularizeLoanInfoVO);
+            popularizeLoanInfoVO.setPredictPassingRateStr(loanInfo.getPredictPassingRate());
             // 返现规则
             LoanDetails loanDetails = loanDetailsRepository.query(productInfo.getProductCode());
             if (Objects.nonNull(loanDetails)

@@ -15,6 +15,7 @@
         <result column="loan_term" property="loanTerm" jdbcType="VARCHAR"/>
         <result column="hot_percent" property="hotPercent" jdbcType="VARCHAR"/>
         <result column="product_top_tag" property="productTopTag" jdbcType="VARCHAR"/>
+        <result column="predict_passing_rate" property="predictPassingRate" jdbcType="VARCHAR"/>
         <result column="order" property="order" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
@@ -24,7 +25,8 @@
         <result column="version" property="version" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, product_code, product_name, product_desc, product_logo_url, product_features,product_tags,
+        id, product_code, product_name, product_desc, product_logo_url,
+        product_features,product_tags,predict_passing_rate,
         lending_time, loan_amount, loan_interest, loan_term, hot_percent, product_top_tag,
         `order`, create_time, update_time, creator, updator, is_delete, version
     </sql>

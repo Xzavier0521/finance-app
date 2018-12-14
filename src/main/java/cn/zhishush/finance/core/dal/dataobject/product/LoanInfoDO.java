@@ -83,6 +83,11 @@ public class LoanInfoDO implements Serializable {
     private String            productTopTag;
 
     /**
+     * 预计通过率
+     */
+    private String            predictPassingRate;
+
+    /**
      * 顺序
      */
     private Integer           order;
