@@ -138,9 +138,7 @@
         <if test="!fuzzy">
             <include refid="finance_popularize_material_info_query_condition"/>
         </if>
-        <if test="order">
-            order by ID desc
-        </if>
+        order by ID update_time desc
         <include refid="base.limit"/>
     </select>
     <select id="count" resultType="int">
