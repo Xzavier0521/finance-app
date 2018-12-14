@@ -73,6 +73,11 @@ public class PopularizeLoanInfoVO extends PopularizeItemInfoVO {
     private String            hotPercent;
 
     /**
+     * 预计通过率
+     */
+    private String            predictPassingRateStr;
+
+    /**
      * 头部标签
     
      */

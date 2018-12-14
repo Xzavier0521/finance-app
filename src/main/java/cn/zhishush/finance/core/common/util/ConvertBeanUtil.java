@@ -1,10 +1,10 @@
 
 package cn.zhishush.finance.core.common.util;
 
-import org.springframework.cglib.beans.BeanCopier;
-
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.springframework.cglib.beans.BeanCopier;
 /**
  * <p>注释</p>
  * 

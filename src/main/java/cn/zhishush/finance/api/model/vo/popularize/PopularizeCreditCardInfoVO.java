@@ -50,9 +50,14 @@ public class PopularizeCreditCardInfoVO extends PopularizeItemInfoVO {
     private BigDecimal        cardLimitMax;
 
     /**
+     * 额度
+     */
+    private String            cardLimitStr;
+
+    /**
      * 预计通过率
      */
-    private String            predictPassingRate;
+    private String            predictPassingRateStr;
 
     /**
      * 顺序
