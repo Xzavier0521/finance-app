@@ -256,7 +256,6 @@ public class PopularizeModuleInfoQueryServiceImpl implements PopularizeModuleInf
             LoanDetails loanDetails = loanDetailsRepository.query(productInfo.getProductCode());
             if (Objects.nonNull(loanDetails)
                 && StringUtils.isNotBlank(loanDetails.getCashbackConfigId())) {
-                popularizeLoanInfoVO.setPredictPassingRateStr("");
                 CashBackConfig cashBackConfig = cashBackConfigRepository
                     .query(loanDetails.getCashbackConfigId());
                 if (Objects.nonNull(cashBackConfig)) {
