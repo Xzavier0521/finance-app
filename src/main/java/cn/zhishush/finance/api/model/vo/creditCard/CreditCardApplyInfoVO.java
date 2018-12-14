@@ -50,4 +50,9 @@ public class CreditCardApplyInfoVO implements Serializable {
 
     private String            applyStatus;
 
+    /**
+     *  身份证号码
+     */
+    private String            identificationNumber;
+
 }

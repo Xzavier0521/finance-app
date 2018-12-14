@@ -143,7 +143,7 @@ public class CreditCardController {
         try {
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
             BasicResponse basicResponse = creditCardService.saveApplyInfo(userInfo,
-                request.getProductCode());
+                request.getProductCode(), request.getIdentificationNumber());
             if (basicResponse.isSuccess()) {
                 response = ResponseResult.success(null);
             } else {

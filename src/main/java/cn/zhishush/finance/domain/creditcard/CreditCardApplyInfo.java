@@ -27,6 +27,10 @@ public class CreditCardApplyInfo implements Serializable {
      * 产品代码
      */
     private String            productCode;
+    /**
+     *  身份证号码
+     */
+    private String            identificationNumber;
 
     /**
      * 创建时间

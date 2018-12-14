@@ -11,5 +11,5 @@ import cn.zhishush.finance.domain.user.UserInfo;
  */
 public interface CreditCardService {
 
-    BasicResponse saveApplyInfo(UserInfo userInfo, String productCode);
+    BasicResponse saveApplyInfo(UserInfo userInfo, String productCode, String identificationNumber);
 }

@@ -18,4 +18,9 @@ public class CreditCardApplyInfoSaveRequest extends BasicRequest {
      * 产品代码
      */
     private String            productCode;
+
+    /**
+     *  身份证号码
+     */
+    private String            identificationNumber;
 }

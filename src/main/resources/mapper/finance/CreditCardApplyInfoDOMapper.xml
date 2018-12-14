@@ -5,6 +5,7 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
         <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="identification_number" property="identificationNumber" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="creator" property="creator" jdbcType="VARCHAR"/>
@@ -13,7 +14,7 @@
         <result column="version" property="version" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, user_id, product_code, create_time, update_time, creator, updator, is_delete,
+        id, user_id, product_code,identification_number, create_time, update_time, creator, updator, is_delete,
         version
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -33,6 +34,9 @@
             </if>
             <if test="productCode != null">
                 product_code,
+            </if>
+            <if test="identificationNumber !=null">
+                identification_number,
             </if>
             <if test="createTime != null">
                 create_time,
@@ -63,6 +67,9 @@
             <if test="productCode != null">
                 #{productCode,jdbcType=VARCHAR},
             </if>
+            <if test="identificationNumber !=null">
+                #{identificationNumber,jdbcType=VARCHAR},
+            </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
@@ -83,9 +90,11 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.core.dal.dataobject.product.CreditCardApplyInfoDO">
+    <update id="updateByPrimaryKeySelective"
+            parameterType="cn.zhishush.finance.core.dal.dataobject.product.CreditCardApplyInfoDO">
         update finance_credit_card_apply_info
-        set version = version+1
+        set version = version+1,
+        identification_number= #{identificationNumber,jdbcType=VARCHAR}
         where id = #{id,jdbcType=BIGINT}
     </update>
     <sql id="finance_credit_card_apply_info_query_fuzzy_condition">

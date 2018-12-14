@@ -4,13 +4,13 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import cn.zhishush.finance.api.model.response.BasicResponse;
 import cn.zhishush.finance.core.common.enums.ReturnCode;
 import cn.zhishush.finance.core.common.util.ResponseUtils;
-import cn.zhishush.finance.domain.user.UserInfo;
-import org.springframework.stereotype.Service;
-
 import cn.zhishush.finance.domain.creditcard.CreditCardApplyInfo;
+import cn.zhishush.finance.domain.user.UserInfo;
 import cn.zhishush.finance.domainservice.repository.third.impl.product.CreditCardApplyInfoRepository;
 import cn.zhishush.finance.domainservice.service.creditcard.CreditCardService;
 
@@ -27,16 +27,19 @@ public class CreditCardServiceImpl implements CreditCardService {
     private CreditCardApplyInfoRepository creditCardApplyInfoRepository;
 
     @Override
-    public BasicResponse saveApplyInfo(UserInfo userInfo, String productCode) {
+    public BasicResponse saveApplyInfo(UserInfo userInfo, String productCode,
+                                       String identificationNumber) {
         CreditCardApplyInfo creditCardApplyInfo = creditCardApplyInfoRepository
             .query(userInfo.getId(), productCode);
         if (Objects.isNull(creditCardApplyInfo)) {
             CreditCardApplyInfo record = new CreditCardApplyInfo();
             record.setUserId(userInfo.getId());
             record.setProductCode(productCode);
+            record.setIdentificationNumber(identificationNumber);
             creditCardApplyInfoRepository.save(record);
         } else {
             creditCardApplyInfo.setProductCode(productCode);
+            creditCardApplyInfo.setIdentificationNumber(identificationNumber);
             creditCardApplyInfoRepository.update(creditCardApplyInfo);
         }
         return ResponseUtils.buildResp(ReturnCode.SUCCESS);

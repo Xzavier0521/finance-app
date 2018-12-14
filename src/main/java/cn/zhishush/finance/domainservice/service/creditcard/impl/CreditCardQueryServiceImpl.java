@@ -6,30 +6,30 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 
-import cn.zhishush.finance.api.model.base.Page;
-import cn.zhishush.finance.api.model.vo.cashback.CashBackConfigTableVO;
-import cn.zhishush.finance.api.model.vo.common.BodyVO;
-import cn.zhishush.finance.api.model.vo.creditCard.CreditCardDetailVO;
-import cn.zhishush.finance.core.common.util.DateUtils;
-import cn.zhishush.finance.domain.creditcard.BankInfo;
-import cn.zhishush.finance.domain.creditcard.CreditCardDetails;
-import cn.zhishush.finance.domain.creditcard.CreditCardInfo;
-import cn.zhishush.finance.domainservice.repository.account.BankInfoRepository;
-import cn.zhishush.finance.domainservice.repository.third.impl.product.CreditCardDetailsRepository;
-import cn.zhishush.finance.domainservice.repository.third.impl.product.CreditCardInfoRepository;
-import cn.zhishush.finance.domainservice.service.creditcard.CreditCardQueryService;
-import cn.zhishush.finance.domainservice.repository.third.impl.product.CashBackConfigRepository;
-import cn.zhishush.finance.domainservice.repository.third.impl.product.CreditCardApplyInfoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Lists;
-
+import cn.zhishush.finance.api.model.base.Page;
+import cn.zhishush.finance.api.model.vo.cashback.CashBackConfigTableVO;
+import cn.zhishush.finance.api.model.vo.common.BodyVO;
 import cn.zhishush.finance.api.model.vo.creditCard.CreditCardApplyInfoVO;
+import cn.zhishush.finance.api.model.vo.creditCard.CreditCardDetailVO;
+import cn.zhishush.finance.core.common.util.DateUtils;
 import cn.zhishush.finance.domain.cashbak.CashBackConfig;
+import cn.zhishush.finance.domain.creditcard.BankInfo;
 import cn.zhishush.finance.domain.creditcard.CreditCardApplyInfo;
+import cn.zhishush.finance.domain.creditcard.CreditCardDetails;
+import cn.zhishush.finance.domain.creditcard.CreditCardInfo;
+import cn.zhishush.finance.domainservice.repository.account.BankInfoRepository;
+import cn.zhishush.finance.domainservice.repository.third.impl.product.CashBackConfigRepository;
+import cn.zhishush.finance.domainservice.repository.third.impl.product.CreditCardApplyInfoRepository;
+import cn.zhishush.finance.domainservice.repository.third.impl.product.CreditCardDetailsRepository;
+import cn.zhishush.finance.domainservice.repository.third.impl.product.CreditCardInfoRepository;
+import cn.zhishush.finance.domainservice.service.creditcard.CreditCardQueryService;
+
+import com.google.common.collect.Lists;
 
 /**
  * <p>信用卡明细查询</p>
@@ -42,15 +42,15 @@ import cn.zhishush.finance.domain.creditcard.CreditCardApplyInfo;
 public class CreditCardQueryServiceImpl implements CreditCardQueryService {
 
     @Resource
-    private BankInfoRepository bankInfoRepository;
+    private BankInfoRepository            bankInfoRepository;
     @Resource
-    private CashBackConfigRepository cashBackConfigRepository;
+    private CashBackConfigRepository      cashBackConfigRepository;
     @Resource
-    private CreditCardInfoRepository creditCardInfoRepository;
+    private CreditCardInfoRepository      creditCardInfoRepository;
     @Resource
     private CreditCardApplyInfoRepository creditCardApplyInfoRepository;
     @Resource
-    private CreditCardDetailsRepository creditCardDetailsRepository;
+    private CreditCardDetailsRepository   creditCardDetailsRepository;
 
     @Override
     public CreditCardDetailVO queryCreditCardDetail(String cardCode) {
@@ -143,6 +143,8 @@ public class CreditCardQueryServiceImpl implements CreditCardQueryService {
                 creditCardApplyInfoVO.setApplyTime(DateUtils
                     .format(creditCardApplyInfo.getUpdateTime(), DateUtils.LONG_WEB_FORMAT));
                 creditCardApplyInfoVO.setApplyStatus("申请中");
+                creditCardApplyInfoVO
+                    .setIdentificationNumber(creditCardApplyInfo.getIdentificationNumber());
                 creditCardApplyInfoVOList.add(creditCardApplyInfoVO);
             }
             page.setDataList(creditCardApplyInfoVOList);
