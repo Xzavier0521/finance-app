@@ -12,11 +12,9 @@ public interface WeChatPubQrService {
 
     /**
      * 生成带邀请码参数的微信公众号二维码
-     * 
-     * @param activityCode
-     *            活动代码 四位 0000-默认
-     * @param inviteCode
-     *            邀请码
+     *
+     * @param activityCode 活动代码 四位 0000-默认
+     * @param inviteCode   邀请码
      * @return String
      */
     WeCharQrInfo createTempQr(String activityCode, String inviteCode);

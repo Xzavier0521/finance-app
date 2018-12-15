@@ -21,9 +21,7 @@ import cn.zhishush.finance.domain.dto.LoginParamDto;
 import cn.zhishush.finance.domainservice.service.validate.LoginValidateService;
 
 /**
- * <p>
- * 用户登陆参数验证
- * </p>
+ * <p>用户登陆参数验证</p>
  *
  * @author lili
  * @version 1.0: LoginValidateServiceImpl.java, v0.1 2018/11/14 4:11 PM PM lili

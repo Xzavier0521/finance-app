@@ -12,6 +12,6 @@ import cn.zhishush.finance.api.model.vo.userinfo.UserInfoVo;
  */
 public interface UserInfoService {
 
-	List<UserInfoVo> queryUserInfos(List<Long> userIds);
+    List<UserInfoVo> queryUserInfos(List<Long> userIds);
 
 }

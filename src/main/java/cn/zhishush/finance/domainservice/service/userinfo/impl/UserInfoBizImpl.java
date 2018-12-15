@@ -561,7 +561,7 @@ public class UserInfoBizImpl implements UserInfoBiz {
      * @date 2018/8/22 17:12
      */
     public void sort(List<Map<String, Object>> list, String pkey) {
-        Collections.sort(list, (o1, o2) -> {
+        list.sort((o1, o2) -> {
             String map1value = (String) o1.get(pkey);
             String map2value = (String) o2.get(pkey);
             return map2value.compareTo(map1value);

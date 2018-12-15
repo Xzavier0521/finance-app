@@ -1,11 +1,13 @@
 package cn.zhishush.finance.domainservice.service.userinfo.impl;
 
-import java.time.LocalDate;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Resource;
-
+import cn.zhishush.finance.api.model.base.XMap;
+import cn.zhishush.finance.api.model.response.ResponseResult;
+import cn.zhishush.finance.api.model.vo.coin.EverydayClockDateListVO;
+import cn.zhishush.finance.api.model.vo.coin.EverydayClockVO;
+import cn.zhishush.finance.api.model.vo.coin.GrowTaskVO;
+import cn.zhishush.finance.api.model.vo.coin.NewRegisterListVO;
+import cn.zhishush.finance.core.common.constants.Constant;
+import cn.zhishush.finance.core.common.enums.*;
 import cn.zhishush.finance.core.dal.dao.account.IdCardInfoDAO;
 import cn.zhishush.finance.core.dal.dao.account.UserAccountDAO;
 import cn.zhishush.finance.core.dal.dao.coin.CoinGameDAO;
@@ -18,6 +20,10 @@ import cn.zhishush.finance.core.dal.dataobject.coin.CoinGameDO;
 import cn.zhishush.finance.core.dal.dataobject.coin.CoinLogDO;
 import cn.zhishush.finance.core.dal.dataobject.order.OrderDO;
 import cn.zhishush.finance.core.dal.dataobject.user.UserTaskInfoDO;
+import cn.zhishush.finance.domainservice.service.jwt.JwtService;
+import cn.zhishush.finance.domainservice.service.userinfo.UserTaskBiz;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,34 +32,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import cn.zhishush.finance.api.model.base.XMap;
-import cn.zhishush.finance.api.model.response.ResponseResult;
-import cn.zhishush.finance.api.model.vo.coin.EverydayClockDateListVO;
-import cn.zhishush.finance.api.model.vo.coin.EverydayClockVO;
-import cn.zhishush.finance.api.model.vo.coin.GrowTaskVO;
-import cn.zhishush.finance.api.model.vo.coin.NewRegisterListVO;
-import cn.zhishush.finance.core.common.constants.Constant;
-import cn.zhishush.finance.core.common.enums.*;
-import cn.zhishush.finance.domainservice.service.jwt.JwtService;
-import cn.zhishush.finance.domainservice.service.userinfo.UserTaskBiz;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
+import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @program: finance-server
- *
  * @description: 签到
- *
  * @author: MORUIHAI
- *
  * @create: 2018-08-26 11:47
  **/
 @Service
 public class UserTaskBizImpl implements UserTaskBiz {
     private static final Logger logger = LoggerFactory.getLogger(UserTaskBizImpl.class);
     @Resource
-    private JwtService          jwtService;
+    private JwtService jwtService;
     @Resource
     private CoinGameDAO financeCoinGameMapper;
     @Resource
@@ -72,9 +66,9 @@ public class UserTaskBizImpl implements UserTaskBiz {
     private OrderDAO financeOrderMapper;
 
     @Value("${everydayclock.user.key.prefix}")
-    private String              everydayClockUserPrefix;
+    private String everydayClockUserPrefix;
     @Value("${growtask.invite.stage.num}")
-    private int                 growTaskInviteStageNum;
+    private int growTaskInviteStageNum;
 
     @Override
     public EverydayClockVO findEveryDayClockInfo() {
@@ -83,16 +77,16 @@ public class UserTaskBizImpl implements UserTaskBiz {
         Long userId = jwtService.getUserInfo().getId();
         String everydayClockUserRedisKey = everydayClockUserPrefix + userId;
         String everydayClockUserRedisValue = stringRedisTemplate.opsForValue()
-            .get(everydayClockUserRedisKey);
+                .get(everydayClockUserRedisKey);
         if (!StringUtils.isEmpty(everydayClockUserRedisValue)) {
             EverydayClockVO everydayClockRedis = JSON.parseObject(everydayClockUserRedisValue,
-                new TypeReference<EverydayClockVO>() {
-                });
+                    new TypeReference<EverydayClockVO>() {
+                    });
 
             // 当前可用金币
             Integer totalCanUserCoin = financeCoinLogMapper.selectCoinNumByUserId(userId);
             everydayClockRedis
-                .setCurrentCanUseTotalCoin(totalCanUserCoin == null ? 0 : totalCanUserCoin);
+                    .setCurrentCanUseTotalCoin(totalCanUserCoin == null ? 0 : totalCanUserCoin);
             return everydayClockRedis;
 
         }
@@ -101,21 +95,21 @@ public class UserTaskBizImpl implements UserTaskBiz {
 
         /** 2.活动表里查询每日签到的信息 **/
         CoinGameDO coinGameDO = financeCoinGameMapper.selectByTaskType(Constant.EVERYDAY_CLOCK,
-            GameType.task.getCode());
+                GameType.task.getCode());
         everydayClockVO.setCoinNum(coinGameDO.getNum());
         /** 3.查询用户所有签到信息 **/
         List<CoinLogDO> coinLogDOList = financeCoinLogMapper.selectByUserIdAndTaskId(userId,
-            coinGameDO.getId());
+                coinGameDO.getId());
         Map<Integer, CoinLogDO> currentMonthClockMap = new HashMap<>();
         Integer totalCoinNum = new Integer(0);
         int count = 0;
         if (coinLogDOList != null && coinLogDOList.size() > 0) {
             // 3.1 查询昨天签到信息
             CoinLogDO yesterdayClockInfo = financeCoinLogMapper
-                .selectYesAndToDatClockByUserId(userId, coinGameDO.getId(), "Y", "");
+                    .selectYesAndToDatClockByUserId(userId, coinGameDO.getId(), "Y", "");
             // 3.2查询今日签到信息
             CoinLogDO todayClockInfo = financeCoinLogMapper.selectYesAndToDatClockByUserId(userId,
-                coinGameDO.getId(), "", "Y");
+                    coinGameDO.getId(), "", "Y");
 
             int currentMonth = LocalDate.now().getMonthValue();
             Calendar cal = Calendar.getInstance();
@@ -141,7 +135,7 @@ public class UserTaskBizImpl implements UserTaskBiz {
                     if (yesterdayClockInfo != null) {
                         if (preDate != null) {
                             if ((preDate.getTime() - cal.getTimeInMillis())
-                                / (1000 * 60 * 60 * 24) == 1) {
+                                    / (1000 * 60 * 60 * 24) == 1) {
                                 count++;
                             } else {
                                 isContinuous = false;
@@ -181,7 +175,7 @@ public class UserTaskBizImpl implements UserTaskBiz {
         String userClockJson = JSON.toJSONString(everydayClockVO);
 
         stringRedisTemplate.opsForValue().set(everydayClockUserRedisKey, userClockJson, 12,
-            TimeUnit.HOURS);
+                TimeUnit.HOURS);
         // 当前可用金币
         Integer totalCanUserCoin = financeCoinLogMapper.selectCoinNumByUserId(userId);
         everydayClockVO.setCurrentCanUseTotalCoin(totalCanUserCoin == null ? 0 : totalCanUserCoin);
@@ -215,14 +209,14 @@ public class UserTaskBizImpl implements UserTaskBiz {
         /** 2.查询 完善资料 **/
         // 查询新手任务
         List<CoinGameDO> newRegisterTaskList = financeCoinGameMapper
-            .selectNewRegisterTask(Constant.NEWREGISTERTASK, GameType.task.getCode());
+                .selectNewRegisterTask(Constant.NEWREGISTERTASK, GameType.task.getCode());
         Map<String, CoinGameDO> financeCoinGameMap = new HashMap<>();
         newRegisterTaskList.forEach(financeCoinGame -> financeCoinGameMap
-            .put(financeCoinGame.getTaskName(), financeCoinGame));
+                .put(financeCoinGame.getTaskName(), financeCoinGame));
         // 2.1 先查询用户任务表
         CoinGameDO perfectInfoTask = financeCoinGameMap.get(GameTaskType.perfectInfoTask.getCode());
         UserTaskInfoDO userTaskInfoDO = financeUserTaskInfoMapper.selectByUserIdAndTaskId(userId,
-            perfectInfoTask.getId());
+                perfectInfoTask.getId());
         if (userTaskInfoDO != null) {
             newRegisterListVO.setStatus(userTaskInfoDO.getFinishStatus());
 
@@ -237,7 +231,7 @@ public class UserTaskBizImpl implements UserTaskBiz {
         newRegisterListVO.setCoinNum(perfectInfoTask.getNum());
         newRegisterListVO.setPic(perfectInfoTask.getLogoUrl());
         newRegisterListVO
-            .setTitle(GameTaskType.getParam().get(perfectInfoTask.getTaskName()).getMsg());
+                .setTitle(GameTaskType.getParam().get(perfectInfoTask.getTaskName()).getMsg());
         newRegisterListVO.setTaskId(perfectInfoTask.getId());
         newRegisterListVOList.add(newRegisterListVO);
 
@@ -246,7 +240,7 @@ public class UserTaskBizImpl implements UserTaskBiz {
         // 3.1 先查询用户任务表
         CoinGameDO withdrawalTask = financeCoinGameMap.get(GameTaskType.withdrawalTask.getCode());
         UserTaskInfoDO withdrawalUserTaskInfo = financeUserTaskInfoMapper
-            .selectByUserIdAndTaskId(userId, withdrawalTask.getId());
+                .selectByUserIdAndTaskId(userId, withdrawalTask.getId());
         if (withdrawalUserTaskInfo != null) {
             newRegisterListVO.setStatus(withdrawalUserTaskInfo.getFinishStatus());
 
@@ -266,7 +260,7 @@ public class UserTaskBizImpl implements UserTaskBiz {
         newRegisterListVO.setCoinNum(withdrawalTask.getNum());
         newRegisterListVO.setPic(withdrawalTask.getLogoUrl());
         newRegisterListVO
-            .setTitle(GameTaskType.getParam().get(withdrawalTask.getTaskName()).getMsg());
+                .setTitle(GameTaskType.getParam().get(withdrawalTask.getTaskName()).getMsg());
         newRegisterListVO.setTaskId(withdrawalTask.getId());
         newRegisterListVOList.add(newRegisterListVO);
 
@@ -282,18 +276,18 @@ public class UserTaskBizImpl implements UserTaskBiz {
         List<Long> parentIdList = new ArrayList<>();
         parentIdList.add(userId);
         Long financeUserInviteInfo = financeUserInviteInfoMapper.selectCountByParentId(parentIdList,
-            "");
+                "");
         /** 3.查询成长任务 **/
         List<CoinGameDO> growTaskList = financeCoinGameMapper
-            .selectNewRegisterTask(Constant.GROWTASK, GameType.task.getCode());
+                .selectNewRegisterTask(Constant.GROWTASK, GameType.task.getCode());
         Map<String, CoinGameDO> financeCoinGameMap = new HashMap<>();
         growTaskList.forEach(financeCoinGame -> financeCoinGameMap
-            .put(financeCoinGame.getTaskName(), financeCoinGame));
+                .put(financeCoinGame.getTaskName(), financeCoinGame));
 
         // 3.1 先查询用户任务表
         CoinGameDO invitePersonTask = financeCoinGameMap.get(GameTaskType.invitePerson.getCode());
         UserTaskInfoDO userTaskInfoDO = financeUserTaskInfoMapper.selectByUserIdAndTaskId(userId,
-            invitePersonTask.getId());
+                invitePersonTask.getId());
         if (userTaskInfoDO != null) {
             if (financeUserInviteInfo.intValue() >= userTaskInfoDO.getNextStageNum()) {
                 growTaskVO.setStatus(TaskStatus.finishNotReceive.getCode());
@@ -322,7 +316,7 @@ public class UserTaskBizImpl implements UserTaskBiz {
 
     /**
      * 功能描述:每日签到
-     * 
+     *
      * @author: moruihai
      * @date: 2018/8/28 16:08
      * @param: []
@@ -335,10 +329,10 @@ public class UserTaskBizImpl implements UserTaskBiz {
 
         /** 2.活动表里查询每日签到的信息 **/
         CoinGameDO coinGameDO = financeCoinGameMapper.selectByTaskType(Constant.EVERYDAY_CLOCK,
-            GameType.task.getCode());
+                GameType.task.getCode());
         /** 3.查询今日签到信息 **/
         CoinLogDO todayClockInfo = financeCoinLogMapper.selectYesAndToDatClockByUserId(userId,
-            coinGameDO.getId(), "", "Y");
+                coinGameDO.getId(), "", "Y");
         if (todayClockInfo != null) {
             return ResponseResult.error(CodeEnum.todayAlreadySign);
         }
@@ -357,7 +351,7 @@ public class UserTaskBizImpl implements UserTaskBiz {
 
     /**
      * 功能描述:新手任务
-     * 
+     *
      * @author: moruihai
      * @date: 2018/8/28 16:03
      * @param: [taskId]
@@ -373,7 +367,7 @@ public class UserTaskBizImpl implements UserTaskBiz {
         CoinGameDO coinGameDO = financeCoinGameMapper.selectByPrimaryKey(tasksId);
         logger.info("coinGameDO:" + coinGameDO.toString());
         logger.info("coinGameDO.getTaskName().equals(GameTaskType.withdrawalTask.getCode()):"
-                    + coinGameDO.getTaskName().equals(GameTaskType.withdrawalTask.getCode()));
+                + coinGameDO.getTaskName().equals(GameTaskType.withdrawalTask.getCode()));
         if (GameTaskType.perfectInfoTask.getCode().equals(coinGameDO.getTaskName())) {
             IdCardInfoDO idCardInfoDO = financeIdCardInfoMapper.selectByUserId(userId);
             if (idCardInfoDO != null && idCardInfoDO.getAuthStatus().intValue() == 1) {
@@ -390,7 +384,7 @@ public class UserTaskBizImpl implements UserTaskBiz {
             }
         }
         UserTaskInfoDO newRegisterTaskRecord = financeUserTaskInfoMapper
-            .selectByUserIdAndTaskId(userId, tasksId);
+                .selectByUserIdAndTaskId(userId, tasksId);
         if (newRegisterTaskRecord != null) {
             isValid = false;
         }
@@ -421,7 +415,7 @@ public class UserTaskBizImpl implements UserTaskBiz {
 
     /**
      * 功能描述:成长任务：邀请好友
-     * 
+     *
      * @author: moruihai
      * @date: 2018/8/28 16:02
      * @param: [taskId]
@@ -438,12 +432,12 @@ public class UserTaskBizImpl implements UserTaskBiz {
         List<Long> parentIdList = new ArrayList<>();
         parentIdList.add(userId);
         Long financeUserInviteInfo = financeUserInviteInfoMapper.selectCountByParentId(parentIdList,
-            "");
+                "");
         UserTaskInfoDO inviteTaskInfo = financeUserTaskInfoMapper.selectByUserIdAndTaskId(userId,
-            tasksId);
+                tasksId);
         if (inviteTaskInfo != null) {
             if (financeUserInviteInfo < (inviteTaskInfo.getNextStageNum()
-                                         - growTaskInviteStageNum)) {
+                    - growTaskInviteStageNum)) {
                 isValid = false;
             }
 
@@ -467,7 +461,7 @@ public class UserTaskBizImpl implements UserTaskBiz {
         if (inviteTaskInfo != null) {
             userTaskInfoDO.setId(inviteTaskInfo.getId());
             userTaskInfoDO
-                .setNextStageNum(inviteTaskInfo.getNextStageNum() + growTaskInviteStageNum);
+                    .setNextStageNum(inviteTaskInfo.getNextStageNum() + growTaskInviteStageNum);
             financeUserTaskInfoMapper.updateByPrimaryKeySelective(userTaskInfoDO);
         } else {
             userTaskInfoDO.setNextStageNum(growTaskInviteStageNum * 2);
@@ -490,7 +484,7 @@ public class UserTaskBizImpl implements UserTaskBiz {
 
     /**
      * 功能描述:获取当月的天数
-     * 
+     *
      * @author: moruihai
      * @date: 2018/8/27 10:51
      * @param: []

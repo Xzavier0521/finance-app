@@ -1,25 +1,21 @@
 package cn.zhishush.finance.domainservice.service.wechat.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
+import cn.zhishush.finance.core.common.enums.ConcernStatusEnum;
+import cn.zhishush.finance.domain.weixin.InviteOpenInfo;
 import cn.zhishush.finance.domainservice.repository.user.InviteOpenInfoRepository;
+import cn.zhishush.finance.domainservice.service.wechat.WeChatOpenInfoService;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Maps;
-
-import cn.zhishush.finance.core.common.enums.ConcernStatusEnum;
-import cn.zhishush.finance.domain.weixin.InviteOpenInfo;
-import cn.zhishush.finance.domainservice.service.wechat.WeChatOpenInfoService;
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>微信公众号open_info和邀请代码绑定</p>
- * 
+ *
  * @author lili
  * @version $Id: WeChatOpenInfoServiceImpl.java, v0.1 2018/10/31 6:27 PM lili Exp $
  */
@@ -33,20 +29,17 @@ public class WeChatOpenInfoServiceImpl implements WeChatOpenInfoService {
     /**
      * 保存用户open_info
      *
-     * @param activityCode
-     *            活动代码
-     * @param inviteCode
-     *            邀请代码
-     * @param openId
-     *            open_id
+     * @param activityCode 活动代码
+     * @param inviteCode   邀请代码
+     * @param openId       open_id
      */
     @Override
     public void save(String activityCode, String inviteCode, String openId) {
         log.info("[开始绑定邀请代码和open_info],请求参数,activityCode:{},inviteCode:{},openId:{}", activityCode,
-            inviteCode, openId);
+                inviteCode, openId);
         this.process(activityCode, inviteCode, openId);
         log.info("[结束绑定邀请代码和open_info],请求参数,activityCode:{},inviteCode:{},openId:{}", activityCode,
-            inviteCode, openId);
+                inviteCode, openId);
     }
 
     private void process(String activityCode, String inviteCode, String openId) {
@@ -58,15 +51,14 @@ public class WeChatOpenInfoServiceImpl implements WeChatOpenInfoService {
             return;
         }
         inviteOpenInfoRepository
-            .save(InviteOpenInfo.builder().activityCode(activityCode).inviteCode(inviteCode)
-                .openId(openId).concernStatus(ConcernStatusEnum.SUBSCRIBE).build());
+                .save(InviteOpenInfo.builder().activityCode(activityCode).inviteCode(inviteCode)
+                        .openId(openId).concernStatus(ConcernStatusEnum.SUBSCRIBE).build());
     }
 
     /**
      * 查询微信公众号open_info和邀请代码绑定信息
      *
-     * @param inviteCode
-     *            邀请代码
+     * @param inviteCode 邀请代码
      * @return InviteOpenInfo
      */
     @Override
@@ -79,8 +71,7 @@ public class WeChatOpenInfoServiceImpl implements WeChatOpenInfoService {
     /**
      * 查询微信公众号open_info和邀请代码绑定信息
      *
-     * @param openId
-     *            open_id
+     * @param openId open_id
      * @return InviteOpenInfo
      */
     @Override
