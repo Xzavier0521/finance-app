@@ -1,9 +1,7 @@
 package cn.zhishush.finance.core.common.enums;
 
 /**
- * <p>
- * 数值类型
- * </p>
+ * <p>数值类型</p>
  *
  * @author lili
  * @version 1.0: AmountType.java, v0.1 2018/11/14 2:13 PM PM lili Exp $

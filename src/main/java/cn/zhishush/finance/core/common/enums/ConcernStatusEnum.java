@@ -1,9 +1,7 @@
 package cn.zhishush.finance.core.common.enums;
 
 /**
- * <p>
- * 微信公众号关注状态
- * </p>
+ * <p>微信公众号关注状态</p>
  * 
  * @author lili
  * @version $Id: ConcernStatusEnum.java, v0.1 2018/11/7 4:03 PM lili Exp $

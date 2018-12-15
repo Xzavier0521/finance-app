@@ -5,9 +5,7 @@ import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * <p>
- * 注释
- * </p>
+ * <p>注释</p>
  * 
  * @author lili
  * @version $Id: AgentLevelEnum.java, v0.1 2018/10/11 12:04 PM lili Exp $

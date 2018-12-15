@@ -3,9 +3,7 @@ package cn.zhishush.finance.core.common.enums;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * <p>
- * 返回码
- * </p>
+ * <p>返回码</p>
  * 
  * @author lili
  * @version $Id: ReturnCode.java, v0.1 2018/11/13 1:40 PM lili Exp $

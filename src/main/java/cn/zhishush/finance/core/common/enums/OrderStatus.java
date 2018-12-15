@@ -34,7 +34,7 @@ public enum OrderStatus {
 
 	/**
 	 * 是否已审核.
-	 * 
+	 *
 	 * @param code
 	 * @return
 	 * @author hewenbin
