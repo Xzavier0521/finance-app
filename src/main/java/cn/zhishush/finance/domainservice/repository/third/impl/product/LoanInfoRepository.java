@@ -1,5 +1,7 @@
 package cn.zhishush.finance.domainservice.repository.third.impl.product;
 
+import java.util.List;
+
 import cn.zhishush.finance.api.model.base.Page;
 import cn.zhishush.finance.domain.loan.LoanInfo;
 
@@ -14,4 +16,6 @@ public interface LoanInfoRepository {
     Page<LoanInfo> query(int pageSize, int pageNum);
 
     LoanInfo query(String productCode);
+
+    List<LoanInfo> query();
 }

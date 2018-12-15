@@ -1,5 +1,7 @@
 package cn.zhishush.finance.domainservice.repository.third.impl.product;
 
+import java.util.List;
+
 import cn.zhishush.finance.domain.cashbak.CashBackConfig;
 
 /**
@@ -9,5 +11,8 @@ import cn.zhishush.finance.domain.cashbak.CashBackConfig;
  * @version 1.0: CashBackConfigRepository.java, v0.1 2018/11/29 2:12 AM PM lili Exp $
  */
 public interface CashBackConfigRepository {
+    
     CashBackConfig query(String configId);
+
+    List<CashBackConfig> query(List<String> configIds);
 }

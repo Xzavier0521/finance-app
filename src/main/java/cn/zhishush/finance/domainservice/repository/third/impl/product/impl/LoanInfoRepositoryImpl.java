@@ -6,17 +6,17 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import cn.zhishush.finance.core.dal.dao.product.LoanInfoDAO;
-import cn.zhishush.finance.domain.loan.LoanInfo;
-import cn.zhishush.finance.domainservice.repository.third.impl.product.LoanDetailsRepository;
-import cn.zhishush.finance.domainservice.repository.third.impl.product.LoanInfoRepository;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
-import com.google.common.collect.Maps;
-
 import cn.zhishush.finance.api.model.base.Page;
+import cn.zhishush.finance.core.dal.dao.product.LoanInfoDAO;
+import cn.zhishush.finance.domain.loan.LoanInfo;
 import cn.zhishush.finance.domainservice.converter.product.LoanInfoConverter;
+import cn.zhishush.finance.domainservice.repository.third.impl.product.LoanDetailsRepository;
+import cn.zhishush.finance.domainservice.repository.third.impl.product.LoanInfoRepository;
+
+import com.google.common.collect.Maps;
 
 /**
  * <p>贷款产品信息</p>
@@ -28,7 +28,7 @@ import cn.zhishush.finance.domainservice.converter.product.LoanInfoConverter;
 public class LoanInfoRepositoryImpl implements LoanInfoRepository {
 
     @Resource
-    private LoanInfoDAO loanInfoDAO;
+    private LoanInfoDAO           loanInfoDAO;
 
     @Resource
     private LoanDetailsRepository loanDetailsRepository;
@@ -62,5 +62,11 @@ public class LoanInfoRepositoryImpl implements LoanInfoRepository {
             loanInfo = loanInfoList.get(0);
         }
         return loanInfo;
+    }
+
+    @Override
+    public List<LoanInfo> query() {
+        Map<String, Object> parameters = Maps.newHashMap();
+        return LoanInfoConverter.convert2List(loanInfoDAO.query(parameters));
     }
 }

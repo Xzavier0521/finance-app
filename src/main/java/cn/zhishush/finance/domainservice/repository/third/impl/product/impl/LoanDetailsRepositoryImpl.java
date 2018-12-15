@@ -5,15 +5,15 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import cn.zhishush.finance.domain.loan.LoanDetails;
-import cn.zhishush.finance.domainservice.converter.product.LoanDetailsConverter;
-import cn.zhishush.finance.domainservice.repository.third.impl.product.LoanDetailsRepository;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
-import com.google.common.collect.Maps;
-
 import cn.zhishush.finance.core.dal.dao.product.LoanDetailsDAO;
+import cn.zhishush.finance.domain.loan.LoanDetails;
+import cn.zhishush.finance.domainservice.converter.product.LoanDetailsConverter;
+import cn.zhishush.finance.domainservice.repository.third.impl.product.LoanDetailsRepository;
+
+import com.google.common.collect.Maps;
 
 /**
  * <p>贷款产品明细</p>
@@ -38,5 +38,11 @@ public class LoanDetailsRepositoryImpl implements LoanDetailsRepository {
             loanDetails = loanDetailsList.get(0);
         }
         return loanDetails;
+    }
+
+    @Override
+    public List<LoanDetails> query() {
+        Map<String, Object> parameters = Maps.newHashMap();
+        return LoanDetailsConverter.convert2List(loanDetailsDAO.query(parameters));
     }
 }

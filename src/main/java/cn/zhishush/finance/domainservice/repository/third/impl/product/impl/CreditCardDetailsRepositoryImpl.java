@@ -5,15 +5,15 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import cn.zhishush.finance.core.dal.dao.product.CreditCardDetailsDAO;
-import cn.zhishush.finance.domain.creditcard.CreditCardDetails;
-import cn.zhishush.finance.domainservice.converter.product.CreditCardDetailsConverter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
-import com.google.common.collect.Maps;
-
+import cn.zhishush.finance.core.dal.dao.product.CreditCardDetailsDAO;
+import cn.zhishush.finance.domain.creditcard.CreditCardDetails;
+import cn.zhishush.finance.domainservice.converter.product.CreditCardDetailsConverter;
 import cn.zhishush.finance.domainservice.repository.third.impl.product.CreditCardDetailsRepository;
+
+import com.google.common.collect.Maps;
 
 /**
  * <p>信用卡明细</p>
@@ -38,5 +38,11 @@ public class CreditCardDetailsRepositoryImpl implements CreditCardDetailsReposit
             creditCardDetails = creditCardDetailsList.get(0);
         }
         return creditCardDetails;
+    }
+
+    @Override
+    public List<CreditCardDetails> query() {
+        Map<String, Object> parameters = Maps.newHashMap();
+        return CreditCardDetailsConverter.convert2List(creditCardDetailsDAO.query(parameters));
     }
 }

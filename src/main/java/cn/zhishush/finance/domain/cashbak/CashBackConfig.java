@@ -22,7 +22,7 @@ public class CashBackConfig implements Serializable {
     /**
      * 配置id
      */
-    private String              configId;
+    private String             configId;
 
     /**
      * 产品id

@@ -1,5 +1,7 @@
 package cn.zhishush.finance.domainservice.repository.third.impl.product;
 
+import java.util.List;
+
 import cn.zhishush.finance.domain.creditcard.CreditCardDetails;
 
 /**
@@ -12,4 +14,5 @@ public interface CreditCardDetailsRepository {
 
     CreditCardDetails query(String cardCode);
 
+    List<CreditCardDetails> query();
 }

@@ -2,6 +2,8 @@ package cn.zhishush.finance.domainservice.repository.third.impl.product;
 
 import cn.zhishush.finance.domain.loan.LoanDetails;
 
+import java.util.List;
+
 /**
  * <p>贷款产品明细</p>
  *
@@ -11,4 +13,6 @@ import cn.zhishush.finance.domain.loan.LoanDetails;
 public interface LoanDetailsRepository {
 
     LoanDetails query(String productCode);
+
+    List<LoanDetails> query();
 }
