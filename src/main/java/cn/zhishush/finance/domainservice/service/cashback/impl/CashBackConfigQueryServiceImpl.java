@@ -1,16 +1,5 @@
 package cn.zhishush.finance.domainservice.service.cashback.impl;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.MessageFormat;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import cn.zhishush.finance.api.model.base.Page;
 import cn.zhishush.finance.api.model.vo.cashback.CashBackConfigRuleVO;
 import cn.zhishush.finance.core.common.enums.CashBackTypeEnum;
@@ -24,8 +13,16 @@ import cn.zhishush.finance.domainservice.repository.third.impl.product.CashBackC
 import cn.zhishush.finance.domainservice.repository.third.impl.product.CreditCardDetailsRepository;
 import cn.zhishush.finance.domainservice.repository.third.impl.product.LoanDetailsRepository;
 import cn.zhishush.finance.domainservice.service.cashback.CashBackConfigQueryService;
-
 import com.google.common.collect.Lists;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.MessageFormat;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * <p>返现规则查询</p>
@@ -40,10 +37,10 @@ public class CashBackConfigQueryServiceImpl implements CashBackConfigQueryServic
     private CreditCardDetailsRepository creditCardDetailsRepository;
 
     @Resource
-    private LoanDetailsRepository       loanDetailsRepository;
+    private LoanDetailsRepository loanDetailsRepository;
 
     @Resource
-    private CashBackConfigRepository    cashBackConfigRepository;
+    private CashBackConfigRepository cashBackConfigRepository;
 
     @Override
     public Page<CashBackConfigRuleVO> queryCashBackRule(ProductTypeEnum productType) {
@@ -57,15 +54,15 @@ public class CashBackConfigQueryServiceImpl implements CashBackConfigQueryServic
             case CREDIT_CARD:
                 List<CreditCardDetails> creditCardDetailsList = creditCardDetailsRepository.query();
                 cashBackConfigList = cashBackConfigRepository.query(creditCardDetailsList.stream()
-                    .map(CreditCardDetails::getCashbackConfigId).collect(Collectors.toList()));
+                        .map(CreditCardDetails::getCashbackConfigId).collect(Collectors.toList()));
                 for (CreditCardDetails creditCardDetails : creditCardDetailsList) {
                     cashBackConfigRuleVO = new CashBackConfigRuleVO();
                     cashBackConfigRuleVO.setProductCode(creditCardDetails.getCardCode());
                     cashBackConfigRuleVO.setProductName(creditCardDetails.getCardName());
                     cashBackConfig = cashBackConfigList.stream()
-                        .filter(config -> config.getConfigId()
-                            .equals(creditCardDetails.getCashbackConfigId()))
-                        .collect(Collectors.toList()).get(0);
+                            .filter(config -> config.getConfigId()
+                                    .equals(creditCardDetails.getCashbackConfigId()))
+                            .collect(Collectors.toList()).get(0);
                     buildData(cashBackConfigRuleVO, cashBackConfig);
                     cashBackConfigRuleVOList.add(cashBackConfigRuleVO);
                 }
@@ -73,16 +70,15 @@ public class CashBackConfigQueryServiceImpl implements CashBackConfigQueryServic
             case LOAN:
                 List<LoanDetails> loanDetailsList = loanDetailsRepository.query();
                 cashBackConfigList = cashBackConfigRepository.query(loanDetailsList.stream()
-                    .map(LoanDetails::getCashbackConfigId).collect(Collectors.toList()));
+                        .map(LoanDetails::getCashbackConfigId).collect(Collectors.toList()));
                 for (LoanDetails loanDetails : loanDetailsList) {
                     cashBackConfigRuleVO = new CashBackConfigRuleVO();
                     cashBackConfigRuleVO.setProductCode(loanDetails.getProductCode());
                     cashBackConfigRuleVO.setProductName(loanDetails.getProductName());
-                    cashBackConfigRuleVOList.add(cashBackConfigRuleVO);
                     cashBackConfig = cashBackConfigList.stream()
-                        .filter(config -> config.getConfigId()
-                            .equals(loanDetails.getCashbackConfigId()))
-                        .collect(Collectors.toList()).get(0);
+                            .filter(config -> config.getConfigId()
+                                    .equals(loanDetails.getCashbackConfigId()))
+                            .collect(Collectors.toList()).get(0);
                     buildData(cashBackConfigRuleVO, cashBackConfig);
                     cashBackConfigRuleVOList.add(cashBackConfigRuleVO);
                 }
@@ -97,26 +93,26 @@ public class CashBackConfigQueryServiceImpl implements CashBackConfigQueryServic
     private void buildData(CashBackConfigRuleVO cashBackConfigRuleVO,
                            CashBackConfig cashBackConfig) {
         CashBackTypeEnum cashBackType = CashBackTypeEnum
-            .getByCode(cashBackConfig.getCashbackType());
+                .getByCode(cashBackConfig.getCashbackType());
         PreconditionUtils.checkArgument(Objects.nonNull(cashBackType), ReturnCode.SYS_ERROR);
         switch (cashBackType) {
             case AMOUNT:
                 cashBackConfigRuleVO.setTotalBonus(formatMoney(cashBackConfig.getTotalBonus()));
                 cashBackConfigRuleVO
-                    .setTerminalBonus(formatMoney(cashBackConfig.getTerminalBonus()));
+                        .setTerminalBonus(formatMoney(cashBackConfig.getTerminalBonus()));
                 cashBackConfigRuleVO.setDirectBonus(formatMoney(cashBackConfig.getDirectBonus()));
                 cashBackConfigRuleVO
-                    .setIndirectBonus(formatMoney(cashBackConfig.getIndirectBonus()));
+                        .setIndirectBonus(formatMoney(cashBackConfig.getIndirectBonus()));
                 break;
             case PERCENTAGE:
                 cashBackConfigRuleVO.setTotalBonus(
-                    MessageFormat.format("{0}%", formatMoney(cashBackConfig.getTotalBonus())));
+                        MessageFormat.format("{0}%", formatMoney(cashBackConfig.getTotalBonus())));
                 cashBackConfigRuleVO.setTerminalBonus(
-                    MessageFormat.format("{0}%", formatMoney(cashBackConfig.getTerminalBonus())));
+                        MessageFormat.format("{0}%", formatMoney(cashBackConfig.getTerminalBonus())));
                 cashBackConfigRuleVO.setDirectBonus(
-                    MessageFormat.format("{0}%", formatMoney(cashBackConfig.getDirectBonus())));
+                        MessageFormat.format("{0}%", formatMoney(cashBackConfig.getDirectBonus())));
                 cashBackConfigRuleVO.setIndirectBonus(
-                    MessageFormat.format("{0}%", formatMoney(cashBackConfig.getIndirectBonus())));
+                        MessageFormat.format("{0}%", formatMoney(cashBackConfig.getIndirectBonus())));
                 break;
             default:
         }
