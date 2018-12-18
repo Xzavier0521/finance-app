@@ -34,6 +34,9 @@
             </if>
             <if test="inviteCode != null">
                 invite_code,
+            </if>,
+            <if test="activityCode != null">
+                activity_code,
             </if>
             <if test="status != null">
                 `status`,
@@ -63,6 +66,9 @@
             </if>
             <if test="inviteCode != null">
                 #{inviteCode,jdbcType=VARCHAR},
+            </if>
+            <if test="activityCode != null">
+                #{activityCode,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
                 #{status,jdbcType=VARCHAR},

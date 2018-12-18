@@ -32,4 +32,6 @@ public interface UserInfoRepository {
      * @return UserInfo
      */
     UserInfo queryByMobileNum(String mobileNum);
+
+    UserInfo query(Long userId);
 }

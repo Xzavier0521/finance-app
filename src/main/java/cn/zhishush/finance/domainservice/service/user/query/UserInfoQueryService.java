@@ -1,6 +1,7 @@
 package cn.zhishush.finance.domainservice.service.user.query;
 
 import cn.zhishush.finance.api.model.base.Page;
+import cn.zhishush.finance.api.model.vo.userinfo.UserParentInfoDetailVO;
 import cn.zhishush.finance.domain.user.UserInfo;
 
 /**
@@ -20,4 +21,11 @@ public interface UserInfoQueryService {
      * @return Page<UserInfo>
      */
     Page<UserInfo> querySleepUserInfo(Long userId, int pageNum, int pageSize);
+
+    /**
+     * 查询用户的上级用户信息
+     * @param userInfo 用户信息
+     * @return UserParentInfoDetailVO
+     */
+    UserParentInfoDetailVO queryParentUserInfo(UserInfo userInfo);
 }

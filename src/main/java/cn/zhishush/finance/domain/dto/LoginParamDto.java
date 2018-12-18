@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>登录接口参数</p>
- * 
+ *
  * @author lili
  * @version $Id: LoginParamDto.java, v0.1 2018/11/14 4:35 PM lili Exp $
  */
@@ -31,6 +31,9 @@ public class LoginParamDto implements Serializable {
      * 活动代码
      */
     private String            activityCode;
+    /**
+     * open_id
+     */
     private String            openId;
 
     /**

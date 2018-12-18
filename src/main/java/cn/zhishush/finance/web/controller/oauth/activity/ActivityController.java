@@ -4,25 +4,6 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 
-import cn.zhishush.finance.core.common.constants.RedEnvelopConstant;
-import cn.zhishush.finance.core.common.enums.ActivityCodeEnum;
-import cn.zhishush.finance.core.common.enums.CodeEnum;
-import cn.zhishush.finance.core.common.enums.LeaderBoardTypeEnum;
-import cn.zhishush.finance.core.common.enums.ReturnCode;
-import cn.zhishush.finance.core.common.exception.BizException;
-import cn.zhishush.finance.core.common.util.ConvertBeanUtil;
-import cn.zhishush.finance.core.common.util.PreconditionUtils;
-import cn.zhishush.finance.core.common.util.ResponseResultUtils;
-import cn.zhishush.finance.core.common.util.ValidatorTools;
-import cn.zhishush.finance.domain.activity.ActivityConfig;
-import cn.zhishush.finance.domain.activity.LeaderBoard;
-import cn.zhishush.finance.domain.user.UserInfo;
-import cn.zhishush.finance.domainservice.converter.user.UserInfoConverter;
-import cn.zhishush.finance.domainservice.service.activity.ActivityOperationRecordService;
-import cn.zhishush.finance.domainservice.service.activity.query.ActivityConfigQueryService;
-import cn.zhishush.finance.domainservice.service.activity.query.LeaderBoardQueryService;
-import cn.zhishush.finance.domainservice.service.jwt.JwtService;
-import cn.zhishush.finance.core.dal.dataobject.user.UserInfoDO;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -33,6 +14,25 @@ import cn.zhishush.finance.api.model.response.ActivityRecordResponse;
 import cn.zhishush.finance.api.model.response.ResponseResult;
 import cn.zhishush.finance.api.model.response.ValidateResponse;
 import cn.zhishush.finance.api.model.vo.redenvelope.LeaderBoardVO;
+import cn.zhishush.finance.core.common.constants.RedEnvelopConstant;
+import cn.zhishush.finance.core.common.enums.ActivityCodeEnum;
+import cn.zhishush.finance.core.common.enums.CodeEnum;
+import cn.zhishush.finance.core.common.enums.LeaderBoardTypeEnum;
+import cn.zhishush.finance.core.common.enums.ReturnCode;
+import cn.zhishush.finance.core.common.exception.BizException;
+import cn.zhishush.finance.core.common.util.ConvertBeanUtil;
+import cn.zhishush.finance.core.common.util.PreconditionUtils;
+import cn.zhishush.finance.core.common.util.ResponseResultUtils;
+import cn.zhishush.finance.core.common.util.ValidatorTools;
+import cn.zhishush.finance.core.dal.dataobject.user.UserInfoDO;
+import cn.zhishush.finance.domain.activity.ActivityConfig;
+import cn.zhishush.finance.domain.activity.LeaderBoard;
+import cn.zhishush.finance.domain.user.UserInfo;
+import cn.zhishush.finance.domainservice.converter.user.UserInfoConverter;
+import cn.zhishush.finance.domainservice.service.activity.ActivityOperationRecordService;
+import cn.zhishush.finance.domainservice.service.activity.query.ActivityConfigQueryService;
+import cn.zhishush.finance.domainservice.service.activity.query.LeaderBoardQueryService;
+import cn.zhishush.finance.domainservice.service.jwt.JwtService;
 
 /**
  * <p>推广活动</p>
@@ -46,13 +46,13 @@ import cn.zhishush.finance.api.model.vo.redenvelope.LeaderBoardVO;
 public class ActivityController {
 
     @Resource
-    private ActivityConfigQueryService activityConfigQueryService;
+    private ActivityConfigQueryService     activityConfigQueryService;
 
     @Resource
-    private LeaderBoardQueryService leaderBoardQueryService;
+    private LeaderBoardQueryService        leaderBoardQueryService;
 
     @Resource
-    private JwtService jwtService;
+    private JwtService                     jwtService;
 
     @Resource
     private ActivityOperationRecordService activityOperationRecordService;
@@ -64,7 +64,7 @@ public class ActivityController {
         if (Objects.nonNull(financeUserInfo)) {
             UserInfo userInfo = UserInfoConverter.convert(financeUserInfo);
             activityConfig = activityConfigQueryService.querySpreadUrlByCode(userInfo,
-                ActivityCodeEnum.EBAY_ONE_CENT);
+                ActivityCodeEnum.STEP_RED_ENVELOPE);
             return ResponseResult.success(activityConfig);
         } else {
             return ResponseResult.error(CodeEnum.bankCardNotExist);

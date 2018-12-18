@@ -1,17 +1,5 @@
 package cn.zhishush.finance.web.controller.noauth.cashback;
 
-import java.util.Objects;
-
-import javax.annotation.Resource;
-
-import lombok.extern.slf4j.Slf4j;
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import cn.zhishush.finance.api.model.base.Page;
 import cn.zhishush.finance.api.model.response.ResponseResult;
 import cn.zhishush.finance.api.model.vo.cashback.CashBackConfigRuleVO;
@@ -20,6 +8,15 @@ import cn.zhishush.finance.core.common.enums.ReturnCode;
 import cn.zhishush.finance.core.common.util.PreconditionUtils;
 import cn.zhishush.finance.core.common.util.ResponseResultUtils;
 import cn.zhishush.finance.domainservice.service.cashback.CashBackConfigQueryService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import java.util.Objects;
 
 /**
  * <p>返现规则</p>
@@ -43,7 +40,7 @@ public class CashBackConfigController {
             //ProductTypeEnum productTypeEnum = ProductTypeEnum.getByCode(productType);
             PreconditionUtils.checkArgument(Objects.nonNull(productType), ReturnCode.SYS_ERROR);
             Page<CashBackConfigRuleVO> page = cashBackConfigQueryService
-                .queryCashBackRule(productType);
+                    .queryCashBackRule(productType);
             response = ResponseResultUtils.success(page);
         } catch (final Exception e) {
             response = ResponseResultUtils.error(ReturnCode.SYS_ERROR);

@@ -1,8 +1,8 @@
 package cn.zhishush.finance.api.model.vo.userinfo;
 
-import cn.zhishush.finance.core.dal.dataobject.user.UserInfoDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import cn.zhishush.finance.core.dal.dataobject.user.UserInfoDO;
 
 /**
  * 用户信息展示实体类.
@@ -14,14 +14,18 @@ import lombok.EqualsAndHashCode;
 @Data
 public class UserInfoVo extends UserInfoDO {
 
-	private static final long serialVersionUID = 8243220380361884211L;
-	private String channelCode;
-	private String channelDetail;
-	private String platformCode;
-	private String platformDetail;
-	private String realName;
-	private String accountNo;
-	private String inviteMobileNum;
-	private String registerTime;
+    private static final long serialVersionUID = 8243220380361884211L;
+
+    /**
+     *  渠道编码
+     */
+    private String            channelCode;
+    private String            channelDetail;
+    private String            platformCode;
+    private String            platformDetail;
+    private String            realName;
+    private String            accountNo;
+    private String            inviteMobileNum;
+    private String            registerTime;
 
 }

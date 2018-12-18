@@ -9,15 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.zhishush.finance.domainservice.converter.user.UserInfoConverter;
-import cn.zhishush.finance.domainservice.repository.user.InviteOpenInfoRepository;
-import cn.zhishush.finance.domainservice.service.activity.RedEnvelopeRainRegisterRewardService;
-import cn.zhishush.finance.domainservice.service.register.RegisterService;
-import cn.zhishush.finance.domainservice.service.trans.InviteActivityService;
-import cn.zhishush.finance.domainservice.service.validate.ImgValidateService;
-import cn.zhishush.finance.domainservice.service.validate.SmsValidateService;
-import cn.zhishush.finance.core.dal.dataobject.log.UserFirstLoginLogDO;
-import cn.zhishush.finance.core.dal.dataobject.user.UserInfoDO;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -27,9 +18,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 
 import cn.zhishush.finance.api.model.response.ResponseResult;
 import cn.zhishush.finance.core.common.constants.Constant;
@@ -43,17 +31,29 @@ import cn.zhishush.finance.core.common.util.PreconditionUtils;
 import cn.zhishush.finance.core.common.util.ResponseResultUtils;
 import cn.zhishush.finance.core.dal.dao.account.FinanceThirdAccountInfoDAO;
 import cn.zhishush.finance.core.dal.dao.log.UserFirstLoginLogDAO;
-import cn.zhishush.finance.core.dal.dao.user.UserInfoDAO;
 import cn.zhishush.finance.core.dal.dao.log.UserLoginLogDAO;
+import cn.zhishush.finance.core.dal.dao.user.UserInfoDAO;
 import cn.zhishush.finance.core.dal.dataobject.account.FinanceThirdAccountInfo;
+import cn.zhishush.finance.core.dal.dataobject.log.UserFirstLoginLogDO;
+import cn.zhishush.finance.core.dal.dataobject.user.UserInfoDO;
 import cn.zhishush.finance.core.dal.dataobject.user.UserLoginLogDO;
 import cn.zhishush.finance.domain.dto.LoginParamDto;
 import cn.zhishush.finance.domain.dto.ThirdLoginParamDto;
 import cn.zhishush.finance.domain.user.UserInfo;
 import cn.zhishush.finance.domain.weixin.InviteOpenInfo;
+import cn.zhishush.finance.domainservice.converter.user.UserInfoConverter;
+import cn.zhishush.finance.domainservice.repository.user.InviteOpenInfoRepository;
+import cn.zhishush.finance.domainservice.service.activity.RedEnvelopeRainRegisterRewardService;
 import cn.zhishush.finance.domainservice.service.jwt.JwtService;
 import cn.zhishush.finance.domainservice.service.login.LoginService;
+import cn.zhishush.finance.domainservice.service.register.RegisterService;
+import cn.zhishush.finance.domainservice.service.trans.InviteActivityService;
 import cn.zhishush.finance.domainservice.service.user.ThirdBindService;
+import cn.zhishush.finance.domainservice.service.validate.ImgValidateService;
+import cn.zhishush.finance.domainservice.service.validate.SmsValidateService;
+
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 /**
  * <p>登录逻辑</p>
@@ -70,13 +70,13 @@ public class LoginServiceImpl implements LoginService {
     @Value("${third.openId.cacke.key.prefix}")
     private String                               openIdCacheKeyPrefix;
     @Resource
-    private ImgValidateService imgValidateService;
+    private ImgValidateService                   imgValidateService;
     @Resource
-    private SmsValidateService smsValidateService;
+    private SmsValidateService                   smsValidateService;
     @Resource
     private UserInfoDAO                          uerInfoMapper;
     @Resource
-    private RegisterService registerService;
+    private RegisterService                      registerService;
     @Resource
     private UserFirstLoginLogDAO                 firstLoginLogMapper;
     @Resource
@@ -88,11 +88,11 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     private StringRedisTemplate                  stringRedisTemplate;
     @Resource
-    private InviteActivityService inviteActivityService;
+    private InviteActivityService                inviteActivityService;
     @Resource
     private FinanceThirdAccountInfoDAO           thirdAccountInfoMapper;
     @Resource
-    private InviteOpenInfoRepository inviteOpenInfoRepository;
+    private InviteOpenInfoRepository             inviteOpenInfoRepository;
     @Resource
     private RedEnvelopeRainRegisterRewardService redEnvelopeRainRegisterRewardService;
 
@@ -133,10 +133,12 @@ public class LoginServiceImpl implements LoginService {
             if (isRegister) {
                 // 红包雨活动奖励
                 UserInfo user = UserInfoConverter.convert(userInfo);
-                String activityCode = getActivityCode(user, paramDto);
-                log.info("用户:{},活动代码:{}", user.getMobileNum(), activityCode);
-                if (RedEnvelopConstant.RED_ENVELOPE_RAIN_CODE.equals(activityCode)) {
-                    redEnvelopeRainRegisterRewardService.process(user, paramDto);
+                if (StringUtils.isBlank(paramDto.getActivityCode())) {
+                    String activityCode = getActivityCode(user, paramDto);
+                    log.info("用户:{},活动代码:{}", user.getMobileNum(), activityCode);
+                    if (RedEnvelopConstant.RED_ENVELOPE_RAIN_CODE.equals(activityCode)) {
+                        redEnvelopeRainRegisterRewardService.process(user, paramDto);
+                    }
                 }
             }
             //
@@ -231,8 +233,7 @@ public class LoginServiceImpl implements LoginService {
     /**
      * 红包活动奖励
      */
-    private Map<String, Object> redEnvelopeRewards(UserInfoDO userInfo,
-                                                   LoginParamDto paramDto) {
+    private Map<String, Object> redEnvelopeRewards(UserInfoDO userInfo, LoginParamDto paramDto) {
         Map<String, Object> redEnvelopeMap = Maps.newHashMap();
         String activityType = paramDto.getActivityType();
         // 判断是否成功绑定openId
@@ -276,8 +277,8 @@ public class LoginServiceImpl implements LoginService {
             return;
         }
         // 判断是否是首次登录某个平台（模块）
-        UserFirstLoginLogDO firstLoginLog = firstLoginLogMapper
-            .selectByUserId(userInfo.getId(), paramDto.getPlatformCode());
+        UserFirstLoginLogDO firstLoginLog = firstLoginLogMapper.selectByUserId(userInfo.getId(),
+            paramDto.getPlatformCode());
         if (Objects.nonNull(firstLoginLog)) {
             return;
         }

@@ -1,25 +1,5 @@
 package cn.zhishush.finance.domainservice.service.activity.query.impl;
 
-import java.text.MessageFormat;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.annotation.Resource;
-
-import lombok.extern.slf4j.Slf4j;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ZSetOperations;
-import org.springframework.stereotype.Service;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
 import cn.zhishush.finance.core.common.constants.RedEnvelopConstant;
 import cn.zhishush.finance.core.common.enums.LeaderBoardTypeEnum;
 import cn.zhishush.finance.core.common.util.CommonUtils;
@@ -27,32 +7,45 @@ import cn.zhishush.finance.domain.activity.LeaderBoard;
 import cn.zhishush.finance.domain.user.UserInfo;
 import cn.zhishush.finance.domainservice.repository.activity.RedEnvelopeRepository;
 import cn.zhishush.finance.domainservice.service.activity.query.LeaderBoardQueryService;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.text.MessageFormat;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <p>排行榜查询</p>
  *
  * @author lili
  * @version 1.0: LeaderBoardQueryServiceImpl.java, v0.1 2018/10/19 5:39 PM lili
- *          Exp $
+ * Exp $
  */
 @Slf4j
 @Service("leaderBoardQueryService")
 public class LeaderBoardQueryServiceImpl implements LeaderBoardQueryService {
 
     @Resource
-    private RedEnvelopeRepository         redEnvelopeRepository;
+    private RedEnvelopeRepository redEnvelopeRepository;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 查询排行榜
-     * 
-     * @param leaderBoardType
-     *            排行榜类型
-     * @param activityCode
-     *            活动代码
-     * @param num
-     *            展示记录数
+     *
+     * @param leaderBoardType 排行榜类型
+     * @param activityCode    活动代码
+     * @param num             展示记录数
      * @return List<LeaderBoardVO>
      */
     @Override
@@ -60,7 +53,7 @@ public class LeaderBoardQueryServiceImpl implements LeaderBoardQueryService {
                                          int num) {
         List<LeaderBoard> leaderBoards = Lists.newArrayList();
         String key = MessageFormat.format("{0}:{1}:{2}", RedEnvelopConstant.LEADER_BOARD,
-            activityCode, leaderBoardType.getCode());
+                activityCode, leaderBoardType.getCode());
         ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
         Set<Object> leadBoardSet = zSetOperations.range(key, 0, num - 1);
         if (CollectionUtils.isEmpty(leadBoardSet)) {
@@ -69,12 +62,12 @@ public class LeaderBoardQueryServiceImpl implements LeaderBoardQueryService {
         }
         // 排行榜的key
         Set<String> leaderBoardKeys = leadBoardSet.stream().map(v -> (String) v)
-            .collect(Collectors.toSet());
+                .collect(Collectors.toSet());
         HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
         for (String leadBoardKey : leaderBoardKeys) {
             Map<String, Object> fieldMap = Maps.newHashMap();
             LeaderBoard.fieldSet()
-                .forEach(field -> fieldMap.put(field, hashOperations.get(leadBoardKey, field)));
+                    .forEach(field -> fieldMap.put(field, hashOperations.get(leadBoardKey, field)));
             leaderBoards.add(LeaderBoard.mapToObject(fieldMap));
         }
         if (CollectionUtils.isEmpty(leaderBoards)) {
@@ -85,11 +78,9 @@ public class LeaderBoardQueryServiceImpl implements LeaderBoardQueryService {
 
     /**
      * 查询用户当前排行榜
-     * 
-     * @param userInfo
-     *            用户信息
-     * @param leaderBoardType
-     *            排行榜类型
+     *
+     * @param userInfo        用户信息
+     * @param leaderBoardType 排行榜类型
      * @return LeaderBoard
      */
     @Override
@@ -99,12 +90,12 @@ public class LeaderBoardQueryServiceImpl implements LeaderBoardQueryService {
         leaderBoard.setUserId(userInfo.getId());
         leaderBoard.setMobilePhone(CommonUtils.mobileEncrypt(userInfo.getMobileNum()));
         String leaderBoardKey = MessageFormat.format("{0}:{1}:{2}", leaderBoardType.getCode(),
-            RedEnvelopConstant.LEADER_BOARD, RedEnvelopConstant.ACTIVITY_CODE);
+                RedEnvelopConstant.LEADER_BOARD, RedEnvelopConstant.ACTIVITY_CODE);
         HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
         // 邀请人数保存的hash key
         String inviteNumbersKey = MessageFormat.format("{0}:{1}:{2}:{3}",
-            RedEnvelopConstant.LEADER_BOARD, RedEnvelopConstant.ACTIVITY_CODE,
-            RedEnvelopConstant.INVITE_NUMBERS, leaderBoardType.getCode());
+                RedEnvelopConstant.LEADER_BOARD, RedEnvelopConstant.ACTIVITY_CODE,
+                RedEnvelopConstant.INVITE_NUMBERS, leaderBoardType.getCode());
         // 从缓存出查询用户的排名，没有则为1000+
         // first:leader_board:0001
         // second:leader_board:activity_code
@@ -120,7 +111,7 @@ public class LeaderBoardQueryServiceImpl implements LeaderBoardQueryService {
                     leaderBoard.setRanking(1001L);
                 }
                 Integer inviteNumbers = (Integer) hashOperations.get(inviteNumbersKey,
-                    userInfo.getId());
+                        userInfo.getId());
                 if (Objects.nonNull(inviteNumbers)) {
                     leaderBoard.setInviteNumber(inviteNumbers.longValue());
                 } else {

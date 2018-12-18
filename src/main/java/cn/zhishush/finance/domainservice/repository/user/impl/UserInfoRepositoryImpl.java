@@ -8,14 +8,14 @@ import javax.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
 import cn.zhishush.finance.core.dal.dao.user.UserInfoDAO;
 import cn.zhishush.finance.core.dal.dataobject.user.UserInfoDO;
 import cn.zhishush.finance.domain.user.UserInfo;
 import cn.zhishush.finance.domainservice.converter.user.UserInfoConverter;
 import cn.zhishush.finance.domainservice.repository.user.UserInfoRepository;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * <p>用户信息</p>
@@ -69,6 +69,18 @@ public class UserInfoRepositoryImpl implements UserInfoRepository {
         UserInfo userInfo = null;
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("mobileNum", mobileNum);
+        List<UserInfo> userInfoList = UserInfoConverter.convert2List(userInfoDAO.query(parameters));
+        if (CollectionUtils.isNotEmpty(userInfoList)) {
+            userInfo = userInfoList.get(0);
+        }
+        return userInfo;
+    }
+
+    @Override
+    public UserInfo query(Long userId) {
+        UserInfo userInfo = null;
+        Map<String, Object> parameters = Maps.newHashMap();
+        parameters.put("userId", userId);
         List<UserInfo> userInfoList = UserInfoConverter.convert2List(userInfoDAO.query(parameters));
         if (CollectionUtils.isNotEmpty(userInfoList)) {
             userInfo = userInfoList.get(0);
