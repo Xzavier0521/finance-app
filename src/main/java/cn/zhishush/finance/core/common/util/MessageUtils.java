@@ -20,9 +20,7 @@ import cn.zhishush.finance.domain.weixin.TextMessage;
 import com.thoughtworks.xstream.XStream;
 
 /**
- * <p>
- * 注释
- * </p>
+ * <p>注释</p>
  * 
  * @author lili
  * @version $Id: MessageUtils.java, v0.1 2018/10/22 4:38 PM lili Exp $
@@ -98,7 +96,7 @@ public class MessageUtils {
         b.append("热门活动等您来参加：\n");
         b.append("\n");
         b.append(
-            "<a href='https://finance.zhishush.cn/finance-h5/msite/#/login?activityName=jtxyk&am_id=jinrongjia2'>新用户首次核卡成功奖励100元\uD83C\uDF81</a>\n");
+            "<a href='https://dwz.cn/cMPUHwOq'>推荐好友申请光大银行信用卡，进件即得20元/每人\uD83C\uDF81</a>\n");
         b.append("\n");
         b.append(
             "<a href='https://dwz.cn/MxgZSfDn'>邀请好友瓜分20万，奥买家全场9.9包邮，注册即得20元无门槛现金券\uD83C\uDF81</a>\n");

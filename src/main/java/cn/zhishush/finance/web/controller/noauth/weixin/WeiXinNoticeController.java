@@ -38,8 +38,7 @@ import com.google.common.collect.Lists;
  * <p>微信-事件推送</p>
  * 
  * @author lili
- * @version $Id: WeiXinTemplateMessageNoticeController.java, v0.1 2018/10/22
- *          2:10 PM lili Exp $
+ * @version $Id: WeiXinTemplateMessageNoticeController.java, v0.1 2018/10/22  2:10 PM lili Exp $
  */
 @Slf4j
 @RestController
