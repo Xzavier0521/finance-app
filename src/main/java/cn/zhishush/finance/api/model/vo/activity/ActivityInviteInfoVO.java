@@ -1,6 +1,7 @@
 package cn.zhishush.finance.api.model.vo.activity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.Data;
 
@@ -13,30 +14,35 @@ import lombok.Data;
 @Data
 public class ActivityInviteInfoVO implements Serializable {
 
-    private static final long serialVersionUID = -9217610347427503017L;
-    private Long              userId;
+    private static final long               serialVersionUID = -9217610347427503017L;
+    private Long                            userId;
 
     /**
      * 手机号码
      */
-    private String            mobileNum;
+    private String                          mobileNum;
 
     /**
      * 微信昵称
      */
-    private String            nickName;
+    private String                          nickName;
 
     /**
      * 微信头像
      */
-    private String            headImgUrl;
+    private String                          headImgUrl;
     /**
      * 邀请人数
      */
-    private int               inviteNum;
+    private int                             inviteNum;
     /**
      * 邀请码
      */
-    private String            inviteCode;
+    private String                          inviteCode;
+
+    /**
+     * 每日邀请明细
+     */
+    private List<ActivityDailyInviteInfoVO> items;
 
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import lombok.Data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @version 1.0: ActivityParticipantInfoVO.java, v0.1 2018/12/18 4:04 PM PM lili Exp $
  */
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ActivityParticipantInfoVO implements Serializable {
 
     private static final long serialVersionUID = 5188690321276693905L;

@@ -9,7 +9,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import cn.zhishush.finance.core.dal.dao.activity.ActivityProcessInfoDAO;
+import cn.zhishush.finance.domain.activity.ActivityDailyInviteInfo;
 import cn.zhishush.finance.domain.activity.ActivityProcessInfo;
+import cn.zhishush.finance.domainservice.converter.activity.ActivityDailyInviteInfoConverter;
 import cn.zhishush.finance.domainservice.converter.activity.ActivityProcessInfoConverter;
 import cn.zhishush.finance.domainservice.repository.activity.ActivityProcessInfoRepository;
 
@@ -56,5 +58,11 @@ public class ActivityProcessInfoRepositoryImpl implements ActivityProcessInfoRep
     @Override
     public int queryInviteNum(Long userId, String activityCode) {
         return activityProcessInfoDAO.queryInviteNum(userId, activityCode);
+    }
+
+    @Override
+    public List<ActivityDailyInviteInfo> queryDailyInviteInfo(Long userId, String activityCode) {
+        return ActivityDailyInviteInfoConverter
+            .convert2List(activityProcessInfoDAO.queryDailyInviteInfo(userId, activityCode));
     }
 }

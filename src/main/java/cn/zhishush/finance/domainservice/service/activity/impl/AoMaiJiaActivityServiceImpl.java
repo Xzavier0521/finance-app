@@ -1,17 +1,21 @@
 package cn.zhishush.finance.domainservice.service.activity.impl;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import cn.zhishush.finance.api.model.vo.activity.ActivityDailyInviteInfoVO;
 import cn.zhishush.finance.api.model.vo.activity.ActivityInviteInfoVO;
 import cn.zhishush.finance.api.model.vo.activity.ActivityParticipantInfoVO;
 import cn.zhishush.finance.api.model.vo.weixin.WeiXinUserInfoDetailVO;
 import cn.zhishush.finance.core.common.enums.ActivityEventTypeEnum;
 import cn.zhishush.finance.core.common.enums.ReturnCode;
+import cn.zhishush.finance.core.common.util.ConvertBeanUtil;
 import cn.zhishush.finance.core.common.util.PreconditionUtils;
+import cn.zhishush.finance.domain.activity.ActivityDailyInviteInfo;
 import cn.zhishush.finance.domain.activity.ActivityProcessInfo;
 import cn.zhishush.finance.domain.user.UserInfo;
 import cn.zhishush.finance.domain.user.UserInviteInfo;
@@ -20,6 +24,8 @@ import cn.zhishush.finance.domainservice.repository.user.UserInfoRepository;
 import cn.zhishush.finance.domainservice.repository.user.UserInviteInfoRepository;
 import cn.zhishush.finance.domainservice.service.activity.AoMaiJiaActivityService;
 import cn.zhishush.finance.domainservice.service.wechat.WeiXinUserInfoQueryService;
+
+import com.google.common.collect.Lists;
 
 /**
  * <p>奥买家活动</p>
@@ -49,18 +55,19 @@ public class AoMaiJiaActivityServiceImpl implements AoMaiJiaActivityService {
         activityParticipantInfoVO.setMobileNum(userInfo.getMobileNum());
         ActivityProcessInfo activityProcessInfo = activityProcessInfoRepository
             .query(userInfo.getId(), activityCode);
-        if (Objects.isNull(activityProcessInfo)) {
-            activityParticipantInfoVO.setParticipate(false);
-            activityParticipantInfoVO.setFinished(false);
+        if (Objects.nonNull(activityProcessInfo)) {
+            activityParticipantInfoVO
+                .setParticipate("Y".equals(activityProcessInfo.getIsParticipate()));
+            activityParticipantInfoVO.setFinished("Y".equals(activityProcessInfo.getIsFinished()));
         }
         UserInviteInfo userInviteInfo = userInviteInfoRepository.queryByCondition(userInfo.getId());
         if (Objects.isNull(userInviteInfo)) {
-            activityParticipantInfoVO.setParticipate(false);
+            activityParticipantInfoVO.setSubordinate(false);
             return activityParticipantInfoVO;
         }
         UserInfo parentUserInfo = userInfoRepository.query(userInviteInfo.getParentUserId());
         if (Objects.isNull(parentUserInfo)) {
-            activityParticipantInfoVO.setParticipate(false);
+            activityParticipantInfoVO.setSubordinate(false);
             return activityParticipantInfoVO;
         }
         activityParticipantInfoVO.setParticipate(inviteCode.equals(parentUserInfo.getInviteCode()));
@@ -80,6 +87,13 @@ public class AoMaiJiaActivityServiceImpl implements AoMaiJiaActivityService {
         }
         activityInviteInfoVO.setInviteNum(
             activityProcessInfoRepository.queryInviteNum(userInfo.getId(), activityCode));
+        //
+        List<ActivityDailyInviteInfoVO> items = Lists.newArrayList();
+        List<ActivityDailyInviteInfo> activityDailyInviteInfos = activityProcessInfoRepository
+            .queryDailyInviteInfo(userInfo.getId(), activityCode);
+        ConvertBeanUtil.copyListBeanPropertiesToList(activityDailyInviteInfos, items,
+            ActivityDailyInviteInfoVO.class);
+        activityInviteInfoVO.setItems(items);
         return activityInviteInfoVO;
     }
 

@@ -1,5 +1,8 @@
 package cn.zhishush.finance.domainservice.repository.activity;
 
+import java.util.List;
+
+import cn.zhishush.finance.domain.activity.ActivityDailyInviteInfo;
 import cn.zhishush.finance.domain.activity.ActivityProcessInfo;
 
 /**
@@ -17,4 +20,6 @@ public interface ActivityProcessInfoRepository {
     ActivityProcessInfo query(Long userId, String activityCode);
 
     int queryInviteNum(Long userId, String activityCode);
+
+    List<ActivityDailyInviteInfo> queryDailyInviteInfo(Long userId, String activityCode);
 }

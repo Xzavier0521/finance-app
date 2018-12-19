@@ -427,7 +427,7 @@ public class UserInfoApi {
             response = ResponseResultUtils.error(ReturnCode.SYS_ERROR);
             log.error("[查询用户的上级用户信息],异常:{}", ExceptionUtils.getStackTrace(e));
         }
-        log.info("[开始查询用户的上级用户信息]，返回结果:{}", response);
+        log.info("[结束查询用户的上级用户信息]，返回结果:{}", response);
         return response;
     }
 }

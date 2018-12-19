@@ -62,7 +62,7 @@ public class AoMaiJiaActivityController {
     }
 
     /**
-     * 邀请数据查询x
+     * 邀请数据查询
      * @param activityCode 活动代码
      */
     @GetMapping("getInviteInfo")

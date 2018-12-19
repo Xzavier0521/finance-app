@@ -16,6 +16,11 @@
         <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
         <result column="version" property="version" jdbcType="INTEGER"/>
     </resultMap>
+    <resultMap id="dailyInviteInfoMap"
+               type="cn.zhishush.finance.core.dal.dataobject.activity.ActivityDailyInviteInfoDO">
+        <result column="invite_num" property="inviteNum" jdbcType="BIGINT"/>
+        <result column="invite_date" property="inviteDate" jdbcType="VARCHAR"/>
+    </resultMap>
     <sql id="Base_Column_List">
         id, user_id, mobile_num, activity_code, is_participate, is_finished, is_promoter,
         create_time, update_time, creator, updator, is_delete, version
@@ -269,5 +274,19 @@
         AND activity_code =#{activityCode} )
         AND is_participate = 'Y'
         AND is_finished = 'Y'
+    </select>
+    <select id="queryDailyInviteInfo" resultMap="dailyInviteInfoMap">
+        SELECT
+        DATE_FORMAT(update_time,'%Y-%m-%d') as invite_date,
+        count(user_id) as invite_num
+        FROM
+        finance_activity_process_info
+        WHERE
+        activity_code=#{activityCode}
+        and user_id IN ( SELECT user_id FROM finance_user_invite_info WHERE parent_user_id = #{userId}
+        AND activity_code =#{activityCode} )
+        AND is_participate = 'Y'
+        AND is_finished = 'Y'
+        GROUP BY DATE_FORMAT(update_time,'%Y-%m-%d')
     </select>
 </mapper>

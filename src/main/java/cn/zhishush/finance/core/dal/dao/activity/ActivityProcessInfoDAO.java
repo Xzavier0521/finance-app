@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.zhishush.finance.core.dal.dataobject.activity.ActivityDailyInviteInfoDO;
 import cn.zhishush.finance.core.dal.dataobject.activity.ActivityProcessInfoDO;
 
 /**
@@ -25,5 +26,8 @@ public interface ActivityProcessInfoDAO {
     int updateByPrimaryKeySelective(ActivityProcessInfoDO record);
 
     int queryInviteNum(@Param("userId") Long userId, @Param("activityCode") String activityCode);
+
+    List<ActivityDailyInviteInfoDO> queryDailyInviteInfo(@Param("userId") Long userId,
+                                                         @Param("activityCode") String activityCode);
 
 }
