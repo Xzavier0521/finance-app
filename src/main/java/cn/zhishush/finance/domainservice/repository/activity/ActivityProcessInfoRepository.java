@@ -22,4 +22,6 @@ public interface ActivityProcessInfoRepository {
     int queryInviteNum(Long userId, String activityCode);
 
     List<ActivityDailyInviteInfo> queryDailyInviteInfo(Long userId, String activityCode);
+
+    int queryDailyInviteNum(String activityCode, String inviteDate);
 }

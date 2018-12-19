@@ -65,4 +65,9 @@ public class ActivityProcessInfoRepositoryImpl implements ActivityProcessInfoRep
         return ActivityDailyInviteInfoConverter
             .convert2List(activityProcessInfoDAO.queryDailyInviteInfo(userId, activityCode));
     }
+
+    @Override
+    public int queryDailyInviteNum(String activityCode, String inviteDate) {
+        return activityProcessInfoDAO.queryDailyInviteNum(activityCode,inviteDate);
+    }
 }

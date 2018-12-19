@@ -18,4 +18,6 @@ public interface AoMaiJiaActivityService {
     ActivityInviteInfoVO queryInviteInfo(UserInfo userInfo, String activityCode);
 
     void saveOperationEvent(UserInfo userInfo, String activityCode, String eventType);
+
+    int queryDailyInviteNum(String activityCode, String inviteDate);
 }

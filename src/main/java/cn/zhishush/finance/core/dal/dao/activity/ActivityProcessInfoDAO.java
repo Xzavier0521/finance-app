@@ -30,4 +30,7 @@ public interface ActivityProcessInfoDAO {
     List<ActivityDailyInviteInfoDO> queryDailyInviteInfo(@Param("userId") Long userId,
                                                          @Param("activityCode") String activityCode);
 
+    int queryDailyInviteNum(@Param("activityCode") String activityCode,
+                            @Param("inviteDate") String inviteDate);
+
 }

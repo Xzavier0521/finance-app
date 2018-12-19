@@ -1,10 +1,14 @@
 package cn.zhishush.finance.web.controller.oauth.activity;
 
+import java.util.Date;
+import java.util.Objects;
+
 import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import cn.zhishush.finance.api.model.request.ActivitySaveOperationEventRequest;
@@ -12,6 +16,9 @@ import cn.zhishush.finance.api.model.response.ResponseResult;
 import cn.zhishush.finance.api.model.vo.activity.ActivityInviteInfoVO;
 import cn.zhishush.finance.api.model.vo.activity.ActivityParticipantInfoVO;
 import cn.zhishush.finance.core.common.enums.ReturnCode;
+import cn.zhishush.finance.core.common.exception.BizException;
+import cn.zhishush.finance.core.common.util.DateUtils;
+import cn.zhishush.finance.core.common.util.PreconditionUtils;
 import cn.zhishush.finance.core.common.util.ResponseResultUtils;
 import cn.zhishush.finance.domain.user.UserInfo;
 import cn.zhishush.finance.domainservice.converter.user.UserInfoConverter;
@@ -28,7 +35,8 @@ import cn.zhishush.finance.domainservice.service.jwt.JwtService;
 @RestController
 @RequestMapping("api/activity/aomaijia")
 public class AoMaiJiaActivityController {
-
+    @Value("${activity.aomaijia.dailyInviteMaxNum}")
+    private int                     dailyInviteMaxNum;
     @Resource
     private AoMaiJiaActivityService aoMaiJiaActivityService;
 
@@ -47,10 +55,19 @@ public class AoMaiJiaActivityController {
         log.info("[开始查询活动参与者信息],请求参数,inviteCode:{},activityCode:{}", inviteCode, activityCode);
         ResponseResult<ActivityParticipantInfoVO> response;
         try {
+            valid(activityCode);
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
             ActivityParticipantInfoVO activityParticipantInfoVO = aoMaiJiaActivityService
                 .queryParticipantInfo(userInfo, inviteCode, activityCode);
             response = ResponseResultUtils.success(activityParticipantInfoVO);
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+
         } catch (final Exception e) {
             response = ResponseResultUtils.error(ReturnCode.SYS_ERROR);
             log.error("[查询活动参与者信息],请求参数,inviteCode:{},activityCode:{},异常:{}", inviteCode,
@@ -70,10 +87,19 @@ public class AoMaiJiaActivityController {
         ResponseResult<ActivityInviteInfoVO> response;
         log.info("[开始查询邀请数据],请求参数,activityCode:{}", activityCode);
         try {
+            valid(activityCode);
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
             ActivityInviteInfoVO activityInviteInfoVO = aoMaiJiaActivityService
                 .queryInviteInfo(userInfo, activityCode);
             response = ResponseResultUtils.success(activityInviteInfoVO);
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+
         } catch (final Exception e) {
             response = ResponseResultUtils.error(ReturnCode.SYS_ERROR);
             log.error("[查询邀请数据],请求参数,activityCode:{},异常:{}", activityCode, activityCode,
@@ -93,15 +119,30 @@ public class AoMaiJiaActivityController {
         ResponseResult<Void> response;
         log.info("[开始保存用户操作事件],请求参数:{}", request);
         try {
+            valid(request.getActivityCode());
             UserInfo userInfo = UserInfoConverter.convert(jwtService.getUserInfo());
             aoMaiJiaActivityService.saveOperationEvent(userInfo, request.getActivityCode(),
                 request.getEventType());
             response = ResponseResultUtils.success(null);
+        } catch (BizException bizEx) {
+            ReturnCode code = ReturnCode.getByCode(bizEx.getErrorCode());
+            if (Objects.nonNull(code)) {
+                response = ResponseResultUtils.error(code);
+            } else {
+                response = ResponseResultUtils.error(bizEx.getErrorMsg());
+            }
+
         } catch (final Exception e) {
             response = ResponseResultUtils.error(ReturnCode.SYS_ERROR);
             log.error("[保存用户操作事件],请求参数:{},异常:{}", request, ExceptionUtils.getStackTrace(e));
         }
         log.info("[结束保存用户操作事件],请求参数:{},返回结果:{}", request, response);
         return response;
+    }
+
+    private void valid(String activityCode) {
+        int inviteNum = aoMaiJiaActivityService.queryDailyInviteNum(activityCode,
+            DateUtils.format(new Date(), "yyyy-MM-dd"));
+        PreconditionUtils.checkArgument(inviteNum < dailyInviteMaxNum, ReturnCode.ACTIVITY_FINISH);
     }
 }

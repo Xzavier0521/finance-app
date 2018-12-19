@@ -287,4 +287,9 @@
         AND is_finished = 'Y'
         GROUP BY DATE_FORMAT(update_time,'%Y-%m-%d')
     </select>
+    <select id="queryDailyInviteNum" resultType="int">
+        SELECT count(1) from finance_activity_process_info where
+        activity_code=#{activityCode} and
+        is_participate='Y' and DATE_FORMAT(create_time,'%Y-%m-%d') = #{inviteDate}
+    </select>
 </mapper>

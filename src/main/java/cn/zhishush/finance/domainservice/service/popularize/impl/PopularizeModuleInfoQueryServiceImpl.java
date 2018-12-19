@@ -251,6 +251,10 @@ public class PopularizeModuleInfoQueryServiceImpl implements PopularizeModuleInf
             popularizeLoanInfoVO = new PopularizeLoanInfoVO();
             ConvertBeanUtil.copyBeanProperties(productInfo, popularizeLoanInfoVO);
             loanInfo = loanInfoRepository.query(productInfo.getProductCode());
+            //
+            if (Objects.isNull(loanInfo)) {
+                continue;
+            }
             ConvertBeanUtil.copyBeanProperties(loanInfo, popularizeLoanInfoVO);
             popularizeLoanInfoVO.setPredictPassingRateStr(loanInfo.getPredictPassingRate());
             popularizeLoanInfoVO.setOrder(productInfo.getProductOrder());

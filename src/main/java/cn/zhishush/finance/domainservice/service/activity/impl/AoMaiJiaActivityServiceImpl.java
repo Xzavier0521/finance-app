@@ -136,4 +136,9 @@ public class AoMaiJiaActivityServiceImpl implements AoMaiJiaActivityService {
 
     }
 
+    @Override
+    public int queryDailyInviteNum(String activityCode, String inviteDate) {
+        return activityProcessInfoRepository.queryDailyInviteNum(activityCode, inviteDate);
+    }
+
 }
