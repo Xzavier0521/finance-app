@@ -78,13 +78,6 @@ public class UserInfoRepositoryImpl implements UserInfoRepository {
 
     @Override
     public UserInfo query(Long userId) {
-        UserInfo userInfo = null;
-        Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("userId", userId);
-        List<UserInfo> userInfoList = UserInfoConverter.convert2List(userInfoDAO.query(parameters));
-        if (CollectionUtils.isNotEmpty(userInfoList)) {
-            userInfo = userInfoList.get(0);
-        }
-        return userInfo;
+        return UserInfoConverter.convert(userInfoDAO.selectByPrimaryKey(userId));
     }
 }

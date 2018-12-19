@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import cn.zhishush.finance.api.model.vo.activity.ActivityDailyInviteInfoVO;
@@ -33,6 +34,7 @@ import com.google.common.collect.Lists;
  * @author lili
  * @version 1.0: AoMaiJiaActivityServiceImpl.java, v0.1 2018/12/18 4:11 PM PM lili Exp $
  */
+@Slf4j
 @Service("aoMaiJiaActivityService")
 public class AoMaiJiaActivityServiceImpl implements AoMaiJiaActivityService {
 
@@ -70,7 +72,8 @@ public class AoMaiJiaActivityServiceImpl implements AoMaiJiaActivityService {
             activityParticipantInfoVO.setSubordinate(false);
             return activityParticipantInfoVO;
         }
-        activityParticipantInfoVO.setParticipate(inviteCode.equals(parentUserInfo.getInviteCode()));
+        log.error("parentUserInfo:{}",parentUserInfo);
+        activityParticipantInfoVO.setSubordinate(inviteCode.equals(parentUserInfo.getInviteCode()));
         return activityParticipantInfoVO;
     }
 
