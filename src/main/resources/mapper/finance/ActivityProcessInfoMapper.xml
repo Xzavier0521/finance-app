@@ -270,8 +270,7 @@
         finance_activity_process_info
         WHERE
         activity_code=#{activityCode}
-        and user_id IN ( SELECT user_id FROM finance_user_invite_info WHERE parent_user_id = #{userId}
-        AND activity_code =#{activityCode} )
+        and user_id IN ( SELECT user_id FROM finance_user_invite_info WHERE parent_user_id = #{userId} )
         AND is_participate = 'Y'
         AND is_finished = 'Y'
     </select>
@@ -283,8 +282,7 @@
         finance_activity_process_info
         WHERE
         activity_code=#{activityCode}
-        and user_id IN ( SELECT user_id FROM finance_user_invite_info WHERE parent_user_id = #{userId}
-        AND activity_code =#{activityCode} )
+        and user_id IN ( SELECT user_id FROM finance_user_invite_info WHERE parent_user_id = #{userId} )
         AND is_participate = 'Y'
         AND is_finished = 'Y'
         GROUP BY DATE_FORMAT(update_time,'%Y-%m-%d')
