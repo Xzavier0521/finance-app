@@ -1,18 +1,22 @@
 package cn.zhishush.finance.domainservice.service.wechat.impl;
 
+import java.io.InputStream;
 import java.util.Objects;
 
 import javax.annotation.Resource;
 
-import cn.zhishush.finance.api.model.vo.weixin.WeiXinUserInfoDetailVO;
-import cn.zhishush.finance.domainservice.service.wechat.WeiXinUserInfoQueryService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import cn.zhishush.finance.api.model.vo.weixin.WeiXinUserInfoDetailVO;
 import cn.zhishush.finance.core.common.util.ConvertBeanUtil;
+import cn.zhishush.finance.core.common.util.HttpClientUtil;
 import cn.zhishush.finance.domain.user.ThirdAccountInfo;
 import cn.zhishush.finance.domain.user.UserInfo;
 import cn.zhishush.finance.domainservice.repository.third.ThirdAccountInfoRepository;
+import cn.zhishush.finance.domainservice.service.aliyunOss.StoreClient;
 import cn.zhishush.finance.domainservice.service.wechat.WechatService;
+import cn.zhishush.finance.domainservice.service.wechat.WeiXinUserInfoQueryService;
 import cn.zhishush.finance.ext.api.model.WeiXinUserInfoDetail;
 import cn.zhishush.finance.ext.integration.weixin.WeiXinUserInfoQueryClient;
 
@@ -32,6 +36,8 @@ public class WeiXinUserInfoQueryServiceImpl implements WeiXinUserInfoQueryServic
     private ThirdAccountInfoRepository thirdAccountInfoRepository;
     @Resource
     private WechatService              wechatService;
+    @Resource
+    private StoreClient                storeClient;
 
     @Override
     public WeiXinUserInfoDetailVO query(UserInfo userInfo) {
@@ -45,6 +51,15 @@ public class WeiXinUserInfoQueryServiceImpl implements WeiXinUserInfoQueryServic
                 .queryUserInfo(token, thirdAccountInfo.getOpenId());
             weiXinUserInfoDetailVO = new WeiXinUserInfoDetailVO();
             ConvertBeanUtil.copyBeanProperties(weiXinUserInfoDetail, weiXinUserInfoDetailVO);
+            if (StringUtils.isNotBlank(weiXinUserInfoDetailVO.getHeadimgurl())) {
+                String picName = userInfo.getMobileNum() + "headImg.jpg";
+                storeClient.init();
+                InputStream inputStream = HttpClientUtil
+                    .getImageStream(weiXinUserInfoDetailVO.getHeadimgurl());
+                String headImgUrl = storeClient.putObject(picName, inputStream);
+                weiXinUserInfoDetailVO.setHeadimgurl(headImgUrl);
+            }
+
         }
         return weiXinUserInfoDetailVO;
     }
