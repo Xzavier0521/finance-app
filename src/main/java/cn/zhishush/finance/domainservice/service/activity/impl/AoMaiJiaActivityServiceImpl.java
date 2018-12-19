@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 
 import cn.zhishush.finance.api.model.vo.activity.ActivityDailyInviteInfoVO;
@@ -61,6 +62,7 @@ public class AoMaiJiaActivityServiceImpl implements AoMaiJiaActivityService {
             activityParticipantInfoVO
                 .setParticipate("Y".equals(activityProcessInfo.getIsParticipate()));
             activityParticipantInfoVO.setFinished("Y".equals(activityProcessInfo.getIsFinished()));
+            activityParticipantInfoVO.setPromoter("Y".equals(activityProcessInfo.getIsPromoter()));
         }
         UserInviteInfo userInviteInfo = userInviteInfoRepository.queryByCondition(userInfo.getId());
         if (Objects.isNull(userInviteInfo)) {
@@ -72,7 +74,7 @@ public class AoMaiJiaActivityServiceImpl implements AoMaiJiaActivityService {
             activityParticipantInfoVO.setSubordinate(false);
             return activityParticipantInfoVO;
         }
-        log.error("parentUserInfo:{}",parentUserInfo);
+        log.error("parentUserInfo:{}", parentUserInfo);
         activityParticipantInfoVO.setSubordinate(inviteCode.equals(parentUserInfo.getInviteCode()));
         return activityParticipantInfoVO;
     }

@@ -45,5 +45,9 @@ public class ActivityParticipantInfoVO implements Serializable {
      */
     @JsonProperty("isFinished")
     private boolean           isFinished;
-
+    /**
+     * 是否成为推广人员
+     */
+    @JsonProperty("isPromoter")
+    private boolean           isPromoter;
 }
