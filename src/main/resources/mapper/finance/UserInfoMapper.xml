@@ -34,7 +34,7 @@
             </if>
             <if test="inviteCode != null">
                 invite_code,
-            </if>,
+            </if>
             <if test="activityCode != null">
                 activity_code,
             </if>
