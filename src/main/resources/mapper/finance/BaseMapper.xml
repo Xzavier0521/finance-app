@@ -9,7 +9,7 @@
 			limit #{page.beginNum,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
 		</if>
 	</sql>
-	<!-- 
+	<!--
 	示例：
 	<select id="queryRecordCount" resultType="java.lang.Long">
 		SELECT count(*)
@@ -25,6 +25,6 @@
 		and update_time &lt;= #{endTime,jdbcType=TIMESTAMP}
 		order by id
 		<include refid="finance.limit" />
-	</select> 
+	</select>
 	-->
 </mapper>

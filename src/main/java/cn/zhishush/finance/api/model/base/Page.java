@@ -1,14 +1,17 @@
 package cn.zhishush.finance.api.model.base;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 分页对象.
- * 
+ *
  * @author hewenbin
  * @version $Id: Page.java, v 0.1 2017年10月30日 下午7:39:49 hewenbin Exp $
  */
+@Data
 public class Page<T> {
 
     public final static Integer PAGE_SIZE = 10;
@@ -37,9 +40,9 @@ public class Page<T> {
         if (pageNum != null) {
             this.pageNum = pageNum;
         }
-        this.totalCount = 0L;
-        this.totalPage = 0L;
-        this.dataList = new ArrayList();
+//        this.totalCount = 0L;
+//        this.totalPage = 0L;
+//        this.dataList = new ArrayList();
     }
 
     public Integer getPageSize() {

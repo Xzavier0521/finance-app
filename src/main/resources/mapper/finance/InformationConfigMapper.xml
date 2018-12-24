@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.zhishush.finance.core.dal.dao.flash.InformationConfigMapper" >
+  <resultMap id="BaseResultMap" type="cn.zhishush.finance.core.dal.dataobject.flash.InformationConfigDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="information_text" property="informationText" jdbcType="VARCHAR" />
+    <result column="redirect_url" property="redirectUrl" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="BIGINT" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="tail" property="tail" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
+    <result column="application_page" property="applicationPage" jdbcType="VARCHAR" />
+    <result column="amount_of" property="amountOf" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, information_text, redirect_url, status, create_time, update_time, creater, updater,
+    version, bank, tail, is_delete, application_page, amount_of, type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from finance_information_config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from finance_information_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishush.finance.domain.flash.InformationConfig" >
+    insert into finance_information_config (id, information_text, redirect_url,
+      status, create_time, update_time,
+      creater, updater, version,
+      bank, tail, is_delete,
+      application_page, amount_of, type
+      )
+    values (#{id,jdbcType=BIGINT}, #{informationText,jdbcType=VARCHAR}, #{redirectUrl,jdbcType=VARCHAR},
+      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR}, #{version,jdbcType=BIGINT},
+      #{bank,jdbcType=VARCHAR}, #{tail,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR},
+      #{applicationPage,jdbcType=VARCHAR}, #{amountOf,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishush.finance.domain.flash.InformationConfig" >
+    insert into finance_information_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="informationText != null" >
+        information_text,
+      </if>
+      <if test="redirectUrl != null" >
+        redirect_url,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="bank != null" >
+        bank,
+      </if>
+      <if test="tail != null" >
+        tail,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="applicationPage != null" >
+        application_page,
+      </if>
+      <if test="amountOf != null" >
+        amount_of,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="informationText != null" >
+        #{informationText,jdbcType=VARCHAR},
+      </if>
+      <if test="redirectUrl != null" >
+        #{redirectUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="tail != null" >
+        #{tail,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationPage != null" >
+        #{applicationPage,jdbcType=VARCHAR},
+      </if>
+      <if test="amountOf != null" >
+        #{amountOf,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishush.finance.domain.flash.InformationConfig" >
+    update finance_information_config
+    <set >
+      <if test="informationText != null" >
+        information_text = #{informationText,jdbcType=VARCHAR},
+      </if>
+      <if test="redirectUrl != null" >
+        redirect_url = #{redirectUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="bank != null" >
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="tail != null" >
+        tail = #{tail,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationPage != null" >
+        application_page = #{applicationPage,jdbcType=VARCHAR},
+      </if>
+      <if test="amountOf != null" >
+        amount_of = #{amountOf,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishush.finance.domain.flash.InformationConfig" >
+    update finance_information_config
+    set information_text = #{informationText,jdbcType=VARCHAR},
+      redirect_url = #{redirectUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR},
+      version = #{version,jdbcType=BIGINT},
+      bank = #{bank,jdbcType=VARCHAR},
+      tail = #{tail,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=VARCHAR},
+      application_page = #{applicationPage,jdbcType=VARCHAR},
+      amount_of = #{amountOf,jdbcType=BIGINT},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="finance_information_config_query_fuzzy_condition" >
+    <trim prefix="WHERE" prefixOverrides="AND |OR " >
+      <if test="informationText != null and informationText.trim().length() != 0" >
+         AND (information_text like '%' || #{informationText} || '%')
+      </if>
+      <if test="redirectUrl != null and redirectUrl.trim().length() != 0" >
+         AND (redirect_url like '%' || #{redirectUrl} || '%')
+      </if>
+      <if test="status != null and status.trim().length() != 0" >
+         AND (status like '%' || #{status} || '%')
+      </if>
+      <if test="createTime != null and createTime.trim().length() != 0" >
+        AND (create_time = #{createTime})
+      </if>
+      <if test="updateTime != null and updateTime.trim().length() != 0" >
+        AND (update_time = #{updateTime})
+      </if>
+      <if test="creater != null and creater.trim().length() != 0" >
+         AND (creater like '%' || #{creater} || '%')
+      </if>
+      <if test="updater != null and updater.trim().length() != 0" >
+         AND (updater like '%' || #{updater} || '%')
+      </if>
+      <if test="version != null and version.trim().length() != 0" >
+        AND (version = #{version})
+      </if>
+      <if test="bank != null and bank.trim().length() != 0" >
+         AND (bank like '%' || #{bank} || '%')
+      </if>
+      <if test="tail != null and tail.trim().length() != 0" >
+         AND (tail like '%' || #{tail} || '%')
+      </if>
+      <if test="isDelete != null and isDelete.trim().length() != 0" >
+         AND (is_delete like '%' || #{isDelete} || '%')
+      </if>
+      <if test="applicationPage != null and applicationPage.trim().length() != 0" >
+         AND (application_page like '%' || #{applicationPage} || '%')
+      </if>
+      <if test="amountOf != null and amountOf.trim().length() != 0" >
+        AND (amount_of = #{amountOf})
+      </if>
+      <if test="type != null and type.trim().length() != 0" >
+         AND (type like '%' || #{type} || '%')
+      </if>
+    </trim>
+  </sql>
+  <sql id="finance_information_config_query_condition" >
+    <trim prefix="WHERE" prefixOverrides="AND |OR " >
+      <if test="informationText != null and informationText.trim().length() != 0" >
+        AND (information_text = #{informationText})
+      </if>
+      <if test="redirectUrl != null and redirectUrl.trim().length() != 0" >
+        AND (redirect_url = #{redirectUrl})
+      </if>
+      <if test="status != null and status.trim().length() != 0" >
+        AND (status = #{status})
+      </if>
+      <if test="createTime != null and createTime.trim().length() != 0" >
+        AND (create_time = #{createTime})
+      </if>
+      <if test="updateTime != null and updateTime.trim().length() != 0" >
+        AND (update_time = #{updateTime})
+      </if>
+      <if test="creater != null and creater.trim().length() != 0" >
+        AND (creater = #{creater})
+      </if>
+      <if test="updater != null and updater.trim().length() != 0" >
+        AND (updater = #{updater})
+      </if>
+      <if test="version != null and version.trim().length() != 0" >
+        AND (version = #{version})
+      </if>
+      <if test="bank != null and bank.trim().length() != 0" >
+        AND (bank = #{bank})
+      </if>
+      <if test="tail != null and tail.trim().length() != 0" >
+        AND (tail = #{tail})
+      </if>
+      <if test="isDelete != null and isDelete.trim().length() != 0" >
+        AND (is_delete = #{isDelete})
+      </if>
+      <if test="applicationPage != null and applicationPage.trim().length() != 0" >
+        AND (application_page = #{applicationPage})
+      </if>
+      <if test="amountOf != null and amountOf.trim().length() != 0" >
+        AND (amount_of = #{amountOf})
+      </if>
+      <if test="type != null and type.trim().length() != 0" >
+        AND (type = #{type})
+      </if>
+    </trim>
+  </sql>
+  <select id="query" resultMap="BaseResultMap" >
+    <!--<include refid="Base_Column_List" />-->
+    select
+    <include refid="Base_Column_List" />
+     from finance_information_config
+    <!--<if test="!fuzzy" >-->
+      <!--<include refid="finance_information_config_query_fuzzy_condition" />-->
+    <!--</if>-->
+    <include refid="base.limit"/>
+  </select>
+  <select id="count" resultType="int" >
+    select count(*) from finance_information_config 
+    <if test="fuzzy" >
+      <include refid="finance_information_config_query_fuzzy_condition" />
+    </if>
+    <if test="!fuzzy" >
+      <include refid="finance_information_config_query_condition" />
+    </if>
+  </select>
+</mapper>

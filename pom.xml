@@ -364,7 +364,7 @@
                 <groupId>net.revelc.code.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
                 <configuration>
-                    <configFile>/Users/lili/Documents/config/convertion.xml</configFile>
+                    <configFile>/Users/user//config/convertion.xml</configFile>
                     <encoding>UTF-8</encoding>
                     <compilerSource>${jdk.version}</compilerSource>
                     <compilerCompliance>${jdk.version}</compilerCompliance>
