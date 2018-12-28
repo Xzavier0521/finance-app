@@ -54,6 +54,10 @@ public class CreditCardScheduleController {
     public  ResponseResult<Page<CreditCardScheduleVO>>query(@Valid CardParameter cardParameter,
                                                             BindingResult bindingResult){
 
+
+
+
+
         log.info("[信用卡进度查询],请求参数cardParameter{}",cardParameter);
         ResponseResult<Page<CreditCardScheduleVO>> response;
         if (bindingResult.hasErrors()) {
