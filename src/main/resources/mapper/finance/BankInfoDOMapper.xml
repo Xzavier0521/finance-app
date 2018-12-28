@@ -29,6 +29,15 @@
         from finance_bank_info
         where id = #{id,jdbcType=BIGINT}
     </select>
+
+
+    <select id="selectByPrimaryCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_bank_info
+        where bank_code = #{bankCode,jdbcType=VARCHAR}
+    </select>
+
     <sql id="finance_bank_info_query_fuzzy_condition">
         <trim prefix="WHERE" prefixOverrides="AND |OR ">
             <if test="bankCode != null and bankCode.trim().length() != 0">

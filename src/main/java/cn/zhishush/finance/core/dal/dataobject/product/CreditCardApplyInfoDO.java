@@ -61,5 +61,26 @@ public class CreditCardApplyInfoDO implements Serializable {
      * 版本号
      */
     private Long              version;
+    /**
+     * 银行code
+     */
+    private String            bankCode;
+    /**
+     *审核状态
+     */
+    private String            progressStatus;
+    /**
+     * 进件日期
+     */
+    private Date              incomingTime;
+    /**
+     * 名字
+     */
+    private String            realName;
+//    /**
+//     * 申请时间
+//     */
+//    private Date              applyTime;
+
 
 }

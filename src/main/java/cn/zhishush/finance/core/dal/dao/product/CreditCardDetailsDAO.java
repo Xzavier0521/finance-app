@@ -17,4 +17,6 @@ public interface CreditCardDetailsDAO {
 
     CreditCardDetailsDO selectByPrimaryKey(Long id);
 
+    CreditCardDetailsDO selectByCardcode(String codeId);
+
 }

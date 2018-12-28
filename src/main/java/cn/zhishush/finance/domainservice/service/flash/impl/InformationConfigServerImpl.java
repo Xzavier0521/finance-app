@@ -31,8 +31,6 @@ public class InformationConfigServerImpl implements InformationConfigServer {
     @Override
     public Page<InformationConfig> query4Page(Integer pageSize, Integer beginNum) {
         Page<InformationConfig> page = new Page<>(pageSize, (long) beginNum);
-
-            log.info("aaaaa{}",page);
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("page",  page);
         int count = informationConfigMapper.count(parameters);

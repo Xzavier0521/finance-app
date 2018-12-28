@@ -33,7 +33,7 @@ public class InformationConfigController {
     public ResponseResult<Page> queryStepRewardsInfo(
             @RequestParam(name = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum) {
-            log.info("dd{}"+pageNum);
+
         Page<InformationConfig> page = informationConfigServer.query4Page(pageSize,pageNum);
         return ResponseResult.success(page);
     }

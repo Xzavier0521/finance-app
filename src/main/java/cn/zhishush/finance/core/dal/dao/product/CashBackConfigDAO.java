@@ -17,4 +17,7 @@ public interface CashBackConfigDAO {
     int count(Map parameters);
 
     CashBackConfigDO selectByPrimaryKey(Long id);
+
+
+    CashBackConfigDO selectByConfigKey(String configId);
 }

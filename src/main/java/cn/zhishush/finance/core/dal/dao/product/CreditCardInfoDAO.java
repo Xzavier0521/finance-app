@@ -18,4 +18,8 @@ public interface CreditCardInfoDAO {
 
     CreditCardInfoDO selectByPrimaryKey(Long id);
 
+     CreditCardInfoDO selectBycardId(String cardId);
+    List<CreditCardInfoDO> selectByBankcode(String codeId);
+
+
 }

@@ -12,5 +12,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/creditCard")
 @RestController
 public class CreditCardQueryController {
-
 }

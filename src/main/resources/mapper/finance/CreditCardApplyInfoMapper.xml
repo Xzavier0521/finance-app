@@ -12,10 +12,13 @@
         <result column="updator" property="updator" jdbcType="VARCHAR"/>
         <result column="is_delete" property="isDelete" jdbcType="VARCHAR"/>
         <result column="version" property="version" jdbcType="BIGINT"/>
+        <result column="progress_status" property="progressStatus" jdbcType="VARCHAR"/>
+        <result column="incoming_time" property="incomingTime" jdbcType="TIMESTAMP"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
         id, user_id, product_code,identification_number, create_time, update_time, creator, updator, is_delete,
-        version
+        version,progress_status,incoming_time,real_name
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
@@ -56,6 +59,16 @@
             <if test="version != null">
                 version,
             </if>
+            <if test="progressStatus != null">
+                progress_status,
+            </if>
+            <if test="incomingTime != null">
+                incoming_time,
+            </if>
+            <if test="realName != null">
+                real_rame,
+            </if>
+
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -88,6 +101,16 @@
             <if test="version != null">
                 #{version,jdbcType=BIGINT},
             </if>
+            <if test="progressStatus != null">
+                #{progressStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="incomingTime != null">
+                #{incomingTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective"
@@ -123,6 +146,15 @@
             <if test="version != null and version.trim().length() != 0">
                 AND (version = #{version})
             </if>
+            <if test="progressStatus != null and progressStatus.trim().length() != 0">
+                AND (progress_status like '%' || #{progressStatus} || '%')
+            </if>
+            <if test="incomingTime != null and incomingTime.trim().length() != 0">
+                AND (incoming_time like '%' || #{incomingTime} || '%')
+            </if>
+            <if test="realName != null and realName.trim().length() != 0">
+                AND (real_name = #{realName})
+            </if>
         </trim>
     </sql>
     <sql id="finance_credit_card_apply_info_query_condition">
@@ -151,9 +183,38 @@
             <if test="version != null and version.trim().length() != 0">
                 AND (version = #{version})
             </if>
+            <if test="progressStatus != null and progressStatus.trim().length() != 0">
+                AND (progress_status = #{progressStatus})
+            </if>
+            <if test="incomingTime != null and incomingTime.trim().length() != 0">
+                AND (incoming_time = #{incomingTime})
+            </if>
+            <if test="realName != null and realName.trim().length() != 0">
+                AND (real_name = #{realName})
+            </if>
         </trim>
     </sql>
     <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_credit_card_apply_info
+        <if test="fuzzy">
+            <include refid="finance_credit_card_apply_info_query_fuzzy_condition"/>
+        </if>
+        <if test="!fuzzy">
+            <include refid="finance_credit_card_apply_info_query_condition"/>
+        </if>
+        order by ID desc
+        <include refid="base.limit"/>
+    </select>
+    <select id="selectByMessage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_credit_card_apply_info
+        where user_id =#{userId} and product_code =#{productCode}
+    </select>
+
+    <select id="query4Page" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from finance_credit_card_apply_info

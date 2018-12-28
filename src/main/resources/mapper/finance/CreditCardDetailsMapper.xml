@@ -22,10 +22,16 @@
         cashback_config_id, card_welfare, card_conditions, card_basic_info, card_process_url,share_img_url
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List"/>
+    from finance_credit_card_details
+    where id = #{id,jdbcType=BIGINT}
+</select>
+    <select id="selectByCardcode" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
         from finance_credit_card_details
-        where id = #{id,jdbcType=BIGINT}
+        where card_code = #{codeId,jdbcType=VARCHAR}
     </select>
     <sql id="finance_credit_card_details_query_fuzzy_condition">
         <trim prefix="WHERE" prefixOverrides="AND |OR ">

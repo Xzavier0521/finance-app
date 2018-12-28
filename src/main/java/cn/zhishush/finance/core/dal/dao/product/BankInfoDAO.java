@@ -18,4 +18,11 @@ public interface BankInfoDAO {
 
     BankInfoDO selectByPrimaryKey(Long id);
 
+    /**
+     * 根据银行code查找银行信息
+     * @param bankcode
+     * @return
+     */
+    BankInfoDO selectByPrimaryCode(String bankcode);
+
 }

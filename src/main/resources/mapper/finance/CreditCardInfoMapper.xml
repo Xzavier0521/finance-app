@@ -31,6 +31,20 @@
         from finance_credit_card_info
         where id = #{id,jdbcType=BIGINT}
     </select>
+
+    <select id="selectBycardId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_credit_card_info
+        where card_code = #{cardId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByBankcode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from finance_credit_card_info
+        where bank_code = #{codeId,jdbcType=VARCHAR}
+    </select>
+
     <sql id="finance_credit_card_info_query_fuzzy_condition">
         <trim prefix="WHERE" prefixOverrides="AND |OR ">
             <if test="bankCode != null and bankCode.trim().length() != 0">

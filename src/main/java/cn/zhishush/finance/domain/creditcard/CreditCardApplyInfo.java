@@ -61,5 +61,16 @@ public class CreditCardApplyInfo implements Serializable {
      * 版本号
      */
     private Long              version;
+    /**
+     * 名字
+     */
+    private String            realName;
+    /**
+     * 核卡状态 not_queried-未查询
+     */
+    private String            progressStatus;
+
+
+
 
 }

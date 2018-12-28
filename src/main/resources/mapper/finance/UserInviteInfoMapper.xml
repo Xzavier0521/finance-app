@@ -254,6 +254,26 @@
         FROM finance_user_invite_info
         where user_id = #{userId,jdbcType=BIGINT}
     </select>
+
+      <select id="selectOneByParentUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM finance_user_invite_info
+        where parent_user_id = #{parentId,jdbcType=BIGINT}
+          order by id asc
+          <include refid="base.limit"/>
+    </select>
+
+
+    <select id="selectOneByParentTwoUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM finance_user_invite_info
+        where parent_user_id in (
+        select user_id from finance_user_invite_info where parent_user_id = #{parentId,jdbcType=BIGINT}
+        );
+    </select>
+
     <select id="query" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

@@ -33,7 +33,9 @@ public class ResponseResult<T> {
 	public static <T> ResponseResult<T> success(T data) {
 		return new ResponseResult<T>(SUCCESS_CODE, "success", data);
 	}
-
+	public static <T> ResponseResult<T> success() {
+		return new ResponseResult<T>(SUCCESS_CODE, "success");
+	}
 	/**
 	 * 建议使用error(CodeEnum codeEnum)
 	 *

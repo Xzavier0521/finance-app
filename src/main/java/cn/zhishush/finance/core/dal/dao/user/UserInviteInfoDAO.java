@@ -3,6 +3,7 @@ package cn.zhishush.finance.core.dal.dao.user;
 import java.util.List;
 import java.util.Map;
 
+import cn.zhishush.finance.api.model.vo.creditCard.CreditCardTeamVO;
 import cn.zhishush.finance.core.dal.dao.base.BaseDAO;
 import org.apache.ibatis.annotations.Param;
 
@@ -116,6 +117,25 @@ public interface UserInviteInfoDAO extends BaseDAO<UserInviteInfoDO, Long> {
      * @date 2018/9/12 11:33
      */
     UserInviteInfoDO selectOneByUserId(@Param("userId") Long userId);
+
+    /**
+     * 根据父ID查找邀请信息
+     * @param parentId
+     * @return
+     */
+    List<UserInviteInfoDO> selectOneByParentUserId(@Param("parentId") Long parentId,
+                                                   @Param("page") Page<CreditCardTeamVO> page);
+
+
+    /**
+     * 根据父ID查找邀请信息二级好友
+     * @param parentId
+     * @return
+     */
+    List<UserInviteInfoDO> selectOneByParentTwoUserId(@Param("parentId") Long parentId,
+                                                        @Param("page") Page<CreditCardTeamVO> page);
+
+
 
     /**
      * 分页查询邀请信息列表

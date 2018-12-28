@@ -21,7 +21,7 @@ public class PopularizeModuleInfoVO implements Serializable {
     /**
      * 模块代码
      */
-    private String                          moduleCode;
+    private String                          info;
     /**
      * 模块名称
      */
