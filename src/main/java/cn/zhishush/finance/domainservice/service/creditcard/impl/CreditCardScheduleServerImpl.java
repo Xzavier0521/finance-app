@@ -58,12 +58,13 @@ public class CreditCardScheduleServerImpl implements CreditCardScheduleServer {
     @Override
     public Page<CreditCardTeamVO> query4Page(Map<String, Object> params, int pageSize, Long pageNum) {
         /** 1.jwt 获取用户user_id **/
+        Long userId = jwtService.getUserInfo().getId();
 
         Page<CreditCardTeamVO> page = new Page<>(pageSize, pageNum);
 
         if (params.get("queryType").equals(UserInviteInfoEnum.FIRST.getCode())) {
             /**根据id查找用户关系**/
-            List<UserInviteInfoDO> userInviteInfoDOList = userInviteInfoDAO.selectOneByParentUserId(1398L,page);
+            List<UserInviteInfoDO> userInviteInfoDOList = userInviteInfoDAO.selectOneByParentUserId(userId,page);
             log.info("得到一级好友的结果为{}", userInviteInfoDOList);
             if (userInviteInfoDOList.isEmpty()) {
                 return page;
@@ -71,7 +72,7 @@ public class CreditCardScheduleServerImpl implements CreditCardScheduleServer {
             return query4Page(userInviteInfoDOList,params,pageSize,pageNum);
 
         } else if (params.get("queryType").equals(UserInviteInfoEnum.SECOND.getCode())) {
-            List<UserInviteInfoDO> userInviteInfoDOList = userInviteInfoDAO.selectOneByParentTwoUserId(1398L,page);
+            List<UserInviteInfoDO> userInviteInfoDOList = userInviteInfoDAO.selectOneByParentTwoUserId(userId,page);
             log.info("二级好友{}",userInviteInfoDOList);
             if (userInviteInfoDOList.isEmpty()) {
                 return page;
@@ -80,7 +81,7 @@ public class CreditCardScheduleServerImpl implements CreditCardScheduleServer {
 
 
         }else if(params.get("queryType").equals(UserInviteInfoEnum.FLEF.getCode())){
-            UserInfoDO userInfoDO =userInfoDAO.selectByPrimaryKey(1398L);
+            UserInfoDO userInfoDO =userInfoDAO.selectByPrimaryKey(userId);
             if (userInfoDO==null){
                 return page;
             }
@@ -150,6 +151,8 @@ public class CreditCardScheduleServerImpl implements CreditCardScheduleServer {
 
     @Override
     public Page<CreditCardScheduleVO> querySchedule(CardParameter cardParameter) {
+        /** 1.jwt 获取用户user_id **/
+        Long userId = jwtService.getUserInfo().getId();
         Page<CreditCardScheduleVO> page = new Page<>(cardParameter.getPageSize(), cardParameter.getPageNum());
         CreditCardApplyInfoDO creditCardApplyInfoDO = new CreditCardApplyInfoDO();
         creditCardApplyInfoDO.setRealName(cardParameter.getRealName());
@@ -168,7 +171,7 @@ public class CreditCardScheduleServerImpl implements CreditCardScheduleServer {
         log.info("creditCardDetailsDOList的值,{}",creditCardDetailsDOList);
         for (CreditCardInfoDO creditCardInfoDO:creditCardDetailsDOList) {
             /**根据信用卡**用户申请信用卡记录**/
-            CreditCardApplyInfoDO creditCardApplyInfoDO1 = creditCardApplyInfoDAO.selectByMessage(1398L, creditCardInfoDO.getCardCode());
+            CreditCardApplyInfoDO creditCardApplyInfoDO1 = creditCardApplyInfoDAO.selectByMessage(userId, creditCardInfoDO.getCardCode());
 
             if (creditCardApplyInfoDO1 != null) {
                 CreditCardScheduleVO creditCardScheduleVO = new CreditCardScheduleVO();
