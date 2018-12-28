@@ -40,9 +40,9 @@ public class Page<T> {
         if (pageNum != null) {
             this.pageNum = pageNum;
         }
-//        this.totalCount = 0L;
-//        this.totalPage = 0L;
-//        this.dataList = new ArrayList();
+        this.totalCount = 0L;
+        this.totalPage = 0L;
+        this.dataList = new ArrayList();
     }
 
     public Integer getPageSize() {

@@ -248,6 +248,16 @@
         order by i.id desc
         <include refid="base.limit"/>
     </select>
+
+    <select id="selectListByPrrentId" resultType="java.lang.Long">
+        SELECT
+        i.user_id
+        FROM finance_user_invite_info i
+        where parent_user_id = #{parentId,jdbcType=BIGINT}
+        order by i.id desc
+        <include refid="base.limit"/>
+    </select>
+
     <select id="selectOneByUserId" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
@@ -265,9 +275,9 @@
     </select>
 
 
-    <select id="selectOneByParentTwoUserId" resultMap="BaseResultMap">
+    <select id="selectOneByParentTwoUserId" resultType="java.lang.Long">
         SELECT
-        <include refid="Base_Column_List"/>
+        user_id
         FROM finance_user_invite_info
         where parent_user_id in (
         select user_id from finance_user_invite_info where parent_user_id = #{parentId,jdbcType=BIGINT}

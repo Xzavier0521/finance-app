@@ -110,6 +110,20 @@ public interface UserInviteInfoDAO extends BaseDAO<UserInviteInfoDO, Long> {
                                 @Param("page") Page<StepRewardsDetailVo> page);
 
     /**
+     * 查找一级邀请人id
+     *
+     * @param parentId
+     * @param page
+     * @return
+     * @author panzhongkang
+     * @version UserInviteInfoDAO.java, v1.0 2018年9月11日 上午15:46:29 panzhongkang
+     */
+    List<Long> selectListByPrrentId(@Param("parentId") Long parentId,
+                                   @Param("page") Page<CreditCardTeamVO> page);
+
+
+
+    /**
      * 根据userId查询用户的邀请信息
      *
      * @param userId
@@ -123,7 +137,7 @@ public interface UserInviteInfoDAO extends BaseDAO<UserInviteInfoDO, Long> {
      * @param parentId
      * @return
      */
-    List<UserInviteInfoDO> selectOneByParentUserId(@Param("parentId") Long parentId,
+    List<Long> selectOneByParentUserId(@Param("parentId") Long parentId,
                                                    @Param("page") Page<CreditCardTeamVO> page);
 
 
@@ -132,7 +146,7 @@ public interface UserInviteInfoDAO extends BaseDAO<UserInviteInfoDO, Long> {
      * @param parentId
      * @return
      */
-    List<UserInviteInfoDO> selectOneByParentTwoUserId(@Param("parentId") Long parentId,
+    List<Long> selectOneByParentTwoUserId(@Param("parentId") Long parentId,
                                                         @Param("page") Page<CreditCardTeamVO> page);
 
 

@@ -21,7 +21,7 @@ public enum  UserInviteInfoEnum {
     /**
      * 第三次红包雨
      */
-    FLEF("slef", "本人");
+    SELF("self", "本人");
 
     private String code;
     private String desc;
@@ -31,11 +31,11 @@ public enum  UserInviteInfoEnum {
         this.desc = desc;
     }
 
-    public static RedEnvelopeRainTimeCodeEnum getByCode(String code) {
+    public static UserInviteInfoEnum getByCode(String code) {
         if (StringUtils.isBlank(code)) {
             return null;
         }
-        for (RedEnvelopeRainTimeCodeEnum temp : RedEnvelopeRainTimeCodeEnum.values()) {
+        for (UserInviteInfoEnum temp : UserInviteInfoEnum.values()) {
             if (temp.getCode().equals(code)) {
                 return temp;
             }

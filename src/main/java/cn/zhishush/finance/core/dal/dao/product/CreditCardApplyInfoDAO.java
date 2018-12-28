@@ -26,8 +26,10 @@ public interface CreditCardApplyInfoDAO {
 
     Page<CreditCardApplyInfoDO> query4Page(Map parameters);
 
-    CreditCardApplyInfoDO selectByMessage(@Param("userId")Long userId,
-                                          @Param("productCode")String productCode);
+    List <CreditCardApplyInfoDO> selectByMessage(@Param("userId")Long userId,
+                                          @Param("progressStatus")String progressStatus);
+
+    List<CreditCardApplyInfoDO> queryByUserId(Long userId);
 
 
 }

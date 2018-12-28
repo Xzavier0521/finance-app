@@ -5,8 +5,11 @@ import cn.zhishush.finance.api.model.vo.creditCard.CardParameter;
 import cn.zhishush.finance.api.model.vo.creditCard.CreditCardScheduleVO;
 import cn.zhishush.finance.api.model.vo.creditCard.CreditCardTeamVO;
 import cn.zhishush.finance.core.common.enums.CreditCardStateType;
+import cn.zhishush.finance.core.common.enums.PopularizeModuleTypeEnum;
+import cn.zhishush.finance.core.common.enums.ReturnCode;
 import cn.zhishush.finance.core.common.enums.UserInviteInfoEnum;
 import cn.zhishush.finance.core.common.util.DateUtils;
+import cn.zhishush.finance.core.common.util.PreconditionUtils;
 import cn.zhishush.finance.core.dal.dao.product.*;
 import cn.zhishush.finance.core.dal.dao.user.UserInfoDAO;
 import cn.zhishush.finance.core.dal.dao.user.UserInviteInfoDAO;
@@ -19,8 +22,11 @@ import cn.zhishush.finance.core.dal.dataobject.user.UserInfoDO;
 import cn.zhishush.finance.core.dal.dataobject.user.UserInviteInfoDO;
 import cn.zhishush.finance.domainservice.service.creditcard.CreditCardScheduleServer;
 import cn.zhishush.finance.domainservice.service.jwt.JwtService;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +34,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @program: finance-app
@@ -57,233 +64,143 @@ public class CreditCardScheduleServerImpl implements CreditCardScheduleServer {
     private CreditCardInfoDAO creditCardInfoDAO;
     @Override
     public Page<CreditCardTeamVO> query4Page(Map<String, Object> params, int pageSize, Long pageNum) {
-        /** 1.jwt 获取用户user_id **/
-        Long userId = jwtService.getUserInfo().getId();
+            /*
+             * .jwt 获取用户user_id
+             */
+            UserInfoDO userInfoDO = jwtService.getUserInfo();
+            Long userId = userInfoDO.getId();
+            Page<CreditCardTeamVO> page = new Page<>(pageSize, pageNum);
+            UserInviteInfoEnum userInviteInfoEnum = UserInviteInfoEnum
+                    .getByCode(MapUtils.getString(params, "queryType"));
+            log.info("userInviteInfoEnum{}",userInviteInfoEnum);
+            String progressStatus = MapUtils.getString(params, "progressStatus");
+            List<Long> userIds = Lists.newArrayList();
+            PreconditionUtils.checkArgument(Objects.nonNull(userInviteInfoEnum), ReturnCode.SYS_ERROR);
+            switch (userInviteInfoEnum) {
+                case FIRST:
+                    // 根据userId查询一级好友
+                     userIds = userInviteInfoDAO.selectListByPrrentId(userId,page);
+                    log.info("[开始查询用户一级好友]userIds{}",userIds);
+                     break;
+                case SECOND:
+                    userIds= userInviteInfoDAO.selectOneByParentTwoUserId(userId,page);
+                    // 根据userId查询二级好友
+                    break;
+                case SELF:
+                    // 根据userId查询一级好
+                    userIds.add(userId);
 
-        Page<CreditCardTeamVO> page = new Page<>(pageSize, pageNum);
-
-        if (params.get("queryType").equals(UserInviteInfoEnum.FIRST.getCode())) {
-            /**根据id查找用户关系**/
-            List<UserInviteInfoDO> userInviteInfoDOList = userInviteInfoDAO.selectOneByParentUserId(userId,page);
-            log.info("得到一级好友的结果为{}", userInviteInfoDOList);
-            if (userInviteInfoDOList.isEmpty()) {
-                return page;
+                    break;
+                default:
             }
-            return query4Page(userInviteInfoDOList,params,pageSize,pageNum);
-
-        } else if (params.get("queryType").equals(UserInviteInfoEnum.SECOND.getCode())) {
-            List<UserInviteInfoDO> userInviteInfoDOList = userInviteInfoDAO.selectOneByParentTwoUserId(userId,page);
-            log.info("二级好友{}",userInviteInfoDOList);
-            if (userInviteInfoDOList.isEmpty()) {
-                return page;
-            }
-            return query4Page(userInviteInfoDOList,params,pageSize,pageNum);
-
-
-        }else if(params.get("queryType").equals(UserInviteInfoEnum.FLEF.getCode())){
-            UserInfoDO userInfoDO =userInfoDAO.selectByPrimaryKey(userId);
-            if (userInfoDO==null){
-                return page;
-            }
-            Map<String, Object> parameters = Maps.newHashMap();
-            parameters.put("userId",userInfoDO.getId());
-            parameters.put("progressStatus",params.get("progressStatus"));
-            parameters.put("page",page);
-            List<CreditCardApplyInfoDO> creditCardApplyInfoDOList ;
-
-
-            List<CreditCardTeamVO> creditCardApplyInfoVOList = new ArrayList<>() ;
-            CashBackConfigDO cashBackConfigDO = new CashBackConfigDO();
-
-            /**得到好友信用卡信息**/
-            creditCardApplyInfoDOList = creditCardApplyInfoDAO.query(parameters);
-            log.info("得到的好友信用卡信息{}",creditCardApplyInfoDOList);
-
-            for (CreditCardApplyInfoDO creditCardApplyInfoDO1:creditCardApplyInfoDOList) {
-                /**银行明细**/
-                CreditCardDetailsDO creditCardDetailsDO = new CreditCardDetailsDO();
-                /**银行明细**/
-                creditCardDetailsDO =creditCardDetailsDAO.selectByCardcode(creditCardApplyInfoDO1.getProductCode());
-                log.info("查出来的银行信息为{}",creditCardDetailsDO);
-                if(creditCardDetailsDO==null){
-                    return page;
-                }
-                CreditCardTeamVO creditCardTeamVO = new CreditCardTeamVO();
-                /**信用卡申请信息拷贝到放回VO**/
-                BeanUtils.copyProperties(creditCardApplyInfoDO1,creditCardTeamVO);
-                creditCardTeamVO.setApplyTime(DateUtils.format(creditCardApplyInfoDO1.getCreateTime(), DateUtils.LONG_WEB_FORMAT));
-                creditCardTeamVO.setMobileNum(userInfoDO.getMobileNum());
-                creditCardTeamVO.setProductName(creditCardDetailsDO.getCardName());
-                /**查找银行信用得到银行code**/
-                CreditCardInfoDO creditCardInfoDO = creditCardInfoDAO.selectBycardId(creditCardDetailsDO.getCardCode());
-                if(creditCardInfoDO ==null){
-                    return  page;
-                }
-                creditCardTeamVO.setBankCode(creditCardInfoDO.getBankCode());
-                creditCardTeamVO.setLogoUrl(creditCardInfoDO.getCardLogoUrl());
-                if (params.get("progressStatus").equals(CreditCardStateType.not_queried.getCode())){
-                    creditCardTeamVO.setQueryType(UserInviteInfoEnum.FLEF.getCode());
-                    creditCardTeamVO.setProgressStatus(CreditCardStateType.not_queried.getDesc());
-                }else if(params.get("progressStatus").equals(CreditCardStateType.check_sucess.getCode())){
-                    creditCardTeamVO.setQueryType(UserInviteInfoEnum.FLEF.getCode());
-                    creditCardTeamVO.setProgressStatus(CreditCardStateType.check_sucess.getDesc());
-                    cashBackConfigDO =cashBackConfigDAO.selectByConfigKey(creditCardDetailsDO.getCashbackConfigId());
-                    if (cashBackConfigDO==null){
-                        return page;
-                    }
-                    log.info("推广返佣对象的值{}",cashBackConfigDO);
-                    creditCardTeamVO.setContent("恭喜您获得返现"+cashBackConfigDO.getTotalBonus());
-                }else if(params.get("progressStatus").equals(CreditCardStateType.check_failure.getCode())){
-
-                    creditCardTeamVO.setQueryType(UserInviteInfoEnum.FLEF.getCode());
-                    creditCardTeamVO.setProgressStatus(CreditCardStateType.check_failure.getDesc());
-
-                }
-                 creditCardApplyInfoVOList.add(creditCardTeamVO);
-                 page.setDataList(creditCardApplyInfoVOList);
-                page.setTotalCount((long)creditCardApplyInfoDOList.size());
-
+            if (CollectionUtils.isNotEmpty(userIds)) {
+                page = queryByType(userIds, userInviteInfoEnum, progressStatus,page);
+                page.setTotalCount((long)userIds.size());
             }
             return page;
         }
-    return page;
-    }
+
+        private Page<CreditCardTeamVO> queryByType(List<Long> userIds, UserInviteInfoEnum userInviteInfoEnum,
+                String progressStatus,Page<CreditCardTeamVO>page) {
+        List<CreditCardTeamVO> creditCardTeamVOS = new ArrayList<>();
+            CreditCardTeamVO creditCardTeamVO;
+            for (Long userId:userIds){
+                // 1.查询信用卡申请记录表
+                List<CreditCardApplyInfoDO> creditCardApplyInfoDOList = creditCardApplyInfoDAO.selectByMessage(userId,progressStatus);
+                log.info("得到的信用卡申请进度{}",creditCardApplyInfoDOList);
+                for (CreditCardApplyInfoDO creditCardApplyInfoDO: creditCardApplyInfoDOList) {
+                    // 2.根据产品代码查询 finance_credit_card_info 获取到bank_code product_name
+                    CreditCardInfoDO creditCardInfoDO = creditCardInfoDAO.selectBycardId(creditCardApplyInfoDO.getProductCode());
+                    log.info("信用卡信息{}",creditCardInfoDO);
+                    // 3.查询信用卡明细表获取到返现配置id，根据cashback_config_id 查询返现配置表 拿到返现配置,根据类型 拼接返现文本
+                    CreditCardDetailsDO creditCardDetailsDO =creditCardDetailsDAO.selectByCardcode(creditCardInfoDO.getCardCode());
+                    // 3.查询信用卡明细表获取到返现配置id，根据cashback_config_id 查询返现配置表 拿到返现配置,根据类型 拼接返现文本
+                    // 直推推广(一级) ，间接推广(二级)，本人
+                    CashBackConfigDO cashBackConfigDO = cashBackConfigDAO.selectByConfigKey(creditCardDetailsDO.getCashbackConfigId());
+                    UserInfoDO userInfoDO = userInfoDAO.selectByPrimaryKey(userId);
+                    creditCardTeamVO = new CreditCardTeamVO();
+                    BeanUtils.copyProperties(userInfoDO,creditCardTeamVO);
+                    BeanUtils.copyProperties(creditCardInfoDO,creditCardTeamVO);
+                    BeanUtils.copyProperties(creditCardDetailsDO,creditCardTeamVO);
+                    creditCardTeamVO.setUserId(userInfoDO.getId());
+                    creditCardTeamVO.setProductName(creditCardDetailsDO.getCardName());
+                    creditCardTeamVO.setRealName(creditCardApplyInfoDO.getRealName());
+                    creditCardTeamVO.setQueryType(userInviteInfoEnum.getCode());
+                    creditCardTeamVO.setLogoUrl(creditCardInfoDO.getCardLogoUrl());
+                    creditCardTeamVO.setApplyTime(DateUtils.format(creditCardApplyInfoDO.getCreateTime(), DateUtils.LONG_WEB_FORMAT));
+                    if(userInviteInfoEnum.getCode().equals(UserInviteInfoEnum.FIRST.getCode())){
+                        creditCardTeamVO.setContent("恭喜您获得返现"+cashBackConfigDO.getDirectBonus());
+                    }else if (userInviteInfoEnum.getCode().equals(UserInviteInfoEnum.SECOND.getCode())){
+                        creditCardTeamVO.setContent("恭喜您获得返现"+cashBackConfigDO.getIndirectBonus());
+                    }else if(userInviteInfoEnum.getCode().equals(UserInviteInfoEnum.SELF.getCode())){
+                        creditCardTeamVO.setContent("恭喜您获得返现"+cashBackConfigDO.getTerminalBonus());
+                    }
+                    if(progressStatus.equals(CreditCardStateType.not_queried.getCode())){
+                        creditCardTeamVO.setProgressStatus(CreditCardStateType.not_queried.getDesc());
+                    }else if(progressStatus.equals(CreditCardStateType.check_sucess.getCode())){
+                        creditCardTeamVO.setProgressStatus(CreditCardStateType.check_sucess.getDesc());
+                    }else if(progressStatus.equals(CreditCardStateType.check_failure.getCode())){
+                        creditCardTeamVO.setProgressStatus(CreditCardStateType.check_failure.getDesc());
+                    }
+                    creditCardTeamVOS.add(creditCardTeamVO);
+                    log.info("最终得到的值为{}",creditCardTeamVOS);
+                }
+            }
+            page.setDataList(creditCardTeamVOS);
+                return page;
+
+        }
+
+
 
     @Override
     public Page<CreditCardScheduleVO> querySchedule(CardParameter cardParameter) {
         /** 1.jwt 获取用户user_id **/
-        Long userId = jwtService.getUserInfo().getId();
+//        Long userId = jwtService.getUserInfo().getId();
         Page<CreditCardScheduleVO> page = new Page<>(cardParameter.getPageSize(), cardParameter.getPageNum());
-        CreditCardApplyInfoDO creditCardApplyInfoDO = new CreditCardApplyInfoDO();
-        creditCardApplyInfoDO.setRealName(cardParameter.getRealName());
-        creditCardApplyInfoDO.setIdentificationNumber(cardParameter.getIdCard());
-        creditCardApplyInfoDO.setBankCode(cardParameter.getBankCode());
-        creditCardApplyInfoDO.setUserId(1398L);
-        List<CreditCardScheduleVO> creditCardScheduleVOList = new ArrayList<>();
-        /**根据银行代码查找信用卡信息查找信用卡申请记录**/
 
-        Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("bankCode",cardParameter.getBankCode());
-
-        parameters.put("page",page);
-
-        List<CreditCardInfoDO> creditCardDetailsDOList = creditCardInfoDAO.query(parameters);
-        log.info("creditCardDetailsDOList的值,{}",creditCardDetailsDOList);
-        for (CreditCardInfoDO creditCardInfoDO:creditCardDetailsDOList) {
-            /**根据信用卡**用户申请信用卡记录**/
-            CreditCardApplyInfoDO creditCardApplyInfoDO1 = creditCardApplyInfoDAO.selectByMessage(userId, creditCardInfoDO.getCardCode());
-
-            if (creditCardApplyInfoDO1 != null) {
-                CreditCardScheduleVO creditCardScheduleVO = new CreditCardScheduleVO();
-                creditCardScheduleVO.setCardName(creditCardInfoDO.getCardName());
-                creditCardScheduleVO.setIncomingDate(DateUtils.format(creditCardInfoDO.getCreateTime(), DateUtils.LONG_WEB_FORMAT));
-                if (creditCardApplyInfoDO1.getProgressStatus().equals(CreditCardStateType.not_queried.getCode())) {
-                    creditCardScheduleVO.setApplyStatus(CreditCardStateType.not_queried.getDesc());
-                } else if (creditCardApplyInfoDO1.getProgressStatus().equals(CreditCardStateType.check_sucess.getCode())) {
-                    creditCardScheduleVO.setApplyStatus(CreditCardStateType.check_sucess.getDesc());
-                } else if (creditCardApplyInfoDO1.getProgressStatus().equals(CreditCardStateType.check_failure.getCode())) {
-                    creditCardScheduleVO.setApplyStatus(CreditCardStateType.check_failure.getDesc());
-                }
-                 log.info("CreditCardScheduleVO{}", creditCardScheduleVO);
-                 creditCardScheduleVOList.add(creditCardScheduleVO);
-                 page.setDataList(creditCardScheduleVOList);
-            }
-            page.setTotalCount((long)creditCardDetailsDOList.size());
-
-        }
-
-        return page;
+        //查找银行
+        return null;
+//        CreditCardApplyInfoDO creditCardApplyInfoDO = new CreditCardApplyInfoDO();
+//        creditCardApplyInfoDO.setRealName(cardParameter.getRealName());
+//        creditCardApplyInfoDO.setIdentificationNumber(cardParameter.getIdCard());
+//        creditCardApplyInfoDO.setBankCode(cardParameter.getBankCode());
+//        creditCardApplyInfoDO.setUserId(1398L);
+//        List<CreditCardScheduleVO> creditCardScheduleVOList = new ArrayList<>();
+//        /**根据银行代码查找信用卡信息查找信用卡申请记录**/
+//
+//        Map<String, Object> parameters = Maps.newHashMap();
+//        parameters.put("bankCode",cardParameter.getBankCode());
+//
+//        parameters.put("page",page);
+//
+//        List<CreditCardInfoDO> creditCardDetailsDOList = creditCardInfoDAO.query(parameters);
+//        log.info("creditCardDetailsDOList的值,{}",creditCardDetailsDOList);
+//        for (CreditCardInfoDO creditCardInfoDO:creditCardDetailsDOList) {
+//            /**根据信用卡**用户申请信用卡记录**/
+//            CreditCardApplyInfoDO creditCardApplyInfoDO1 = creditCardApplyInfoDAO.selectByMessage(1398L, creditCardInfoDO.getCardCode());
+//
+//            if (creditCardApplyInfoDO1 != null) {
+//                CreditCardScheduleVO creditCardScheduleVO = new CreditCardScheduleVO();
+//                creditCardScheduleVO.setCardName(creditCardInfoDO.getCardName());
+//                creditCardScheduleVO.setIncomingDate(DateUtils.format(creditCardInfoDO.getCreateTime(), DateUtils.LONG_WEB_FORMAT));
+//                if (creditCardApplyInfoDO1.getProgressStatus().equals(CreditCardStateType.not_queried.getCode())) {
+//                    creditCardScheduleVO.setApplyStatus(CreditCardStateType.not_queried.getDesc());
+//                } else if (creditCardApplyInfoDO1.getProgressStatus().equals(CreditCardStateType.check_sucess.getCode())) {
+//                    creditCardScheduleVO.setApplyStatus(CreditCardStateType.check_sucess.getDesc());
+//                } else if (creditCardApplyInfoDO1.getProgressStatus().equals(CreditCardStateType.check_failure.getCode())) {
+//                    creditCardScheduleVO.setApplyStatus(CreditCardStateType.check_failure.getDesc());
+//                }
+//                 log.info("CreditCardScheduleVO{}", creditCardScheduleVO);
+//                 creditCardScheduleVOList.add(creditCardScheduleVO);
+//                 page.setDataList(creditCardScheduleVOList);
+//            }
+//            page.setTotalCount((long)creditCardDetailsDOList.size());
+//
+//        }
+//
+//        return page;
     }
 
-    private Page<CreditCardTeamVO> query4Page(List<UserInviteInfoDO> userInviteInfoDOList, Map<String, Object> params, int pageSize,long pageNum) {
-        Page<CreditCardTeamVO> page = new Page<>(pageSize, (long)pageNum);
-        /**用户申请信用卡记录**/
-        List<CreditCardApplyInfoDO> creditCardApplyInfoDOList ;
-        /**返回结果list**/
-        List<CreditCardTeamVO> creditCardTeamVOS = new ArrayList<>() ;
-        Map<String, Object> parameters = Maps.newHashMap();
 
-        /**根据queryType查找信息**/
-
-
-        for (UserInviteInfoDO userInviteInfoDO:userInviteInfoDOList) {
-            /**查找一级好友信息**/
-            UserInfoDO userInfoDO =  userInfoDAO.selectByPrimaryKey(userInviteInfoDO.getUserId());
-            log.info("得到的好友信息为{}",userInfoDO);
-            /**根据用好友的id,查找银行配置**/
-            parameters.put("userId",userInviteInfoDO.getUserId());
-            parameters.put("progressStatus",params.get("progressStatus"));
-            parameters.put("page",page);
-            /**得到一级好友信用卡信息**/
-            creditCardApplyInfoDOList = creditCardApplyInfoDAO.query(parameters);
-            log.info("查出信用卡的信息为{}",creditCardApplyInfoDOList);
-            /**循环遍历一级好友信用卡信息**/
-            for (CreditCardApplyInfoDO creditCardApplyInfoDO1:creditCardApplyInfoDOList) {
-                /**银行明细**/
-                CreditCardDetailsDO creditCardDetailsDO = new CreditCardDetailsDO();
-                /**银行明细**/
-                creditCardDetailsDO =creditCardDetailsDAO.selectByCardcode(creditCardApplyInfoDO1.getProductCode());
-                log.info("查出来的银行详情{}",creditCardDetailsDO);
-                if(creditCardDetailsDO==null){
-                    return page;
-                }
-                CreditCardTeamVO creditCardTeamVO = new CreditCardTeamVO();
-                /**信用卡申请信息拷贝到放回VO**/
-                BeanUtils.copyProperties(creditCardApplyInfoDO1,creditCardTeamVO);
-                creditCardTeamVO.setApplyTime(DateUtils.format(creditCardApplyInfoDO1.getCreateTime(), DateUtils.LONG_WEB_FORMAT));
-                creditCardTeamVO.setMobileNum(userInfoDO.getMobileNum());
-                creditCardTeamVO.setProductName(creditCardDetailsDO.getCardName());
-                /**查找银行信用得到银行code**/
-                CreditCardInfoDO creditCardInfoDO = creditCardInfoDAO.selectBycardId(creditCardDetailsDO.getCardCode());
-                log.info("查找银行信用得到银行code{}",creditCardInfoDO);
-                if(creditCardInfoDO ==null){
-                    return  page;
-                }
-                creditCardTeamVO.setBankCode(creditCardInfoDO.getBankCode());
-                creditCardTeamVO.setLogoUrl(creditCardInfoDO.getCardLogoUrl());
-
-                if(params.get("progressStatus").equals(CreditCardStateType.not_queried.getCode())) {
-                    creditCardTeamVO.setQueryType(params.get("queryType").equals(UserInviteInfoEnum.FIRST.getCode())?UserInviteInfoEnum.FIRST.getCode():UserInviteInfoEnum.SECOND.getCode());
-                    creditCardTeamVO.setProgressStatus(CreditCardStateType.not_queried.getDesc());
-
-                }else if(params.get("progressStatus").equals(CreditCardStateType.check_sucess.getCode())){
-                    creditCardTeamVO.setProgressStatus(CreditCardStateType.check_sucess.getDesc());
-                    CashBackConfigDO cashBackConfigDO =cashBackConfigDAO.selectByConfigKey(creditCardDetailsDO.getCashbackConfigId());
-                    if (cashBackConfigDO==null){
-                        return page;
-                    }
-
-                    log.info("推广返佣对象的值{}",cashBackConfigDO);
-                    cashBackConfigDO =cashBackConfigDAO.selectByConfigKey(cashBackConfigDO.getConfigId());
-                    if (cashBackConfigDO==null){
-                        return page;
-                    }
-                    creditCardTeamVO.setQueryType(params.get("queryType").equals(UserInviteInfoEnum.FIRST.getCode())?UserInviteInfoEnum.FIRST.getCode():UserInviteInfoEnum.SECOND.getCode());
-                  if (params.get("queryType").equals(UserInviteInfoEnum.FIRST.getCode())){
-                      creditCardTeamVO.setContent("恭喜您获得返现"+cashBackConfigDO.getDirectBonus());
-                  }else if(params.get("queryType").equals(UserInviteInfoEnum.SECOND.getCode())){
-                      creditCardTeamVO.setContent("恭喜您获得返现"+cashBackConfigDO.getIndirectBonus());
-                  }
-                    creditCardTeamVO.setProgressStatus(CreditCardStateType.check_sucess.getDesc());
-
-
-                }else if(params.get("progressStatus").equals(CreditCardStateType.check_failure.getCode())){
-                    creditCardTeamVO.setQueryType(params.get("queryType").equals(UserInviteInfoEnum.FIRST.getCode())?UserInviteInfoEnum.FIRST.getCode():UserInviteInfoEnum.SECOND.getCode());
-                    creditCardTeamVO.setQueryType(UserInviteInfoEnum.FIRST.getCode());
-                    creditCardTeamVO.setProgressStatus(CreditCardStateType.check_failure.getDesc());
-                }
-
-                page.setTotalCount((long)creditCardApplyInfoDOList.size());
-                creditCardTeamVOS.add(creditCardTeamVO);
-                page.setDataList(creditCardTeamVOS);
-
-            }
-
-        }
-
-
-
-        return page;
-
-    }
 }

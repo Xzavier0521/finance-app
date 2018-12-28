@@ -2,15 +2,17 @@
 //
 //import cn.zhishush.finance.api.model.base.Page;
 //import cn.zhishush.finance.api.model.response.ResponseResult;
+//import cn.zhishush.finance.api.model.response.ValidateResponse;
 //import cn.zhishush.finance.api.model.vo.creditCard.CardParameter;
 //import cn.zhishush.finance.api.model.vo.creditCard.CreditCardScheduleVO;
 //import cn.zhishush.finance.api.model.vo.creditCard.CreditCardTeamVO;
 //import cn.zhishush.finance.core.common.enums.ReturnCode;
+//import cn.zhishush.finance.core.common.util.PreconditionUtils;
 //import cn.zhishush.finance.core.common.util.ResponseResultUtils;
+//import cn.zhishush.finance.core.common.util.ValidatorTools;
 //import cn.zhishush.finance.domainservice.service.creditcard.CreditCardScheduleServer;
 //import lombok.extern.slf4j.Slf4j;
 //import org.apache.commons.lang3.exception.ExceptionUtils;
-//import org.springframework.validation.BindingResult;
 //import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -51,23 +53,19 @@
 //        return response;
 //    }
 //    @GetMapping("query")
-//    public  ResponseResult<Page<CreditCardScheduleVO>>query(@Valid CardParameter cardParameter,
-//                                                            BindingResult bindingResult){
-//
+//    public  ResponseResult<Page<CreditCardScheduleVO>>query(@Valid CardParameter cardParameter){
 //        log.info("[信用卡进度查询],请求参数cardParameter{}",cardParameter);
 //        ResponseResult<Page<CreditCardScheduleVO>> response;
-//        if (bindingResult.hasErrors()) {
-//            log.error("【进度查询】参数不正确, cardParameter={}", cardParameter);
-//            throw null;
-//        }
-//        try {
-//            Page<CreditCardScheduleVO> page= creditCardScheduleServer.querySchedule(cardParameter);
 //
+//        try {
+//            ValidateResponse validateResponse = ValidatorTools.validate(cardParameter);
+//            PreconditionUtils.checkArgument(validateResponse.isStatus(), ReturnCode.PARAM_EMPTY);
+//            Page<CreditCardScheduleVO> page= creditCardScheduleServer.querySchedule(cardParameter);
 //            response = ResponseResultUtils.success(page);
 //        } catch (final Exception e) {
 //            response = ResponseResultUtils.error(ReturnCode.SYS_ERROR);
-//            log.error("查询推广模块信息],请求参数:bindingResult:{},异常:{}", bindingResult,
-//                    ExceptionUtils.getStackTrace(e));
+//            log.error("[信用卡进度查询],异常:{}", ExceptionUtils.getStackTrace(e));
+//                    ExceptionUtils.getStackTrace(e);
 //        }
 //
 //
